@@ -1,0 +1,28 @@
+[
+  {
+    "A": "index",
+    "V": "10102",
+    "N": "equipmentBoardIndex",
+    "D": "Index",
+    "H": "An arbitrary index assigned to each board entry.",
+    "P": 134217729,
+    "I": 0,
+    "R": 0,
+    "M": 4294967295,
+    "J": 3,
+    "O": 0
+  },
+  {
+    "A": "name",
+    "V": "tp10g:1:2",
+    "N": "equipmentBoardName",
+    "D": "Name",
+    "H": "The name of the board, for example 'tpmr2500:1:2' where the first number indicates in which sub-rack the board is present and the second number in which slot.",
+    "P": 33,
+    "I": 0,
+    "R": 0,
+    "M": 0,
+    "J": 4,
+    "O": 1
+  }
+]

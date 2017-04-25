@@ -1,0 +1,83 @@
+subprojects {
+    group "com.infinera.metro.dnam.test.acceptance"
+    version "1.0-SNAPSHOT"
+
+    apply plugin: 'idea'
+    apply plugin: 'maven-publish'
+
+    apply plugin: 'java'
+    compileJava {
+        options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
+        options.encoding = 'UTF-8'
+    }
+
+    publishing {
+        publications {
+            mavenJava(MavenPublication) {
+                from components.java
+            }
+        }
+    }
+
+    repositories {
+        mavenCentral()
+        maven {
+            url 'https://dl.bintray.com/palantir/releases' // docker-compose-rule is published on bintray
+        }
+    }
+
+    dependencies {
+        compile "org.slf4j:slf4j-api:1.7.21"
+        compile "org.slf4j:slf4j-simple:1.7.13"
+        compile "com.google.guava:guava:21.0"
+        compile "org.projectlombok:lombok:1.16.8"
+        testCompile "junit:junit:4.12"
+    }
+}
+
+project(':xtm-rest-client-api') {
+    dependencies {
+        compile "com.fasterxml.jackson.core:jackson-annotations:2.9.0.pr2"
+        compile "com.fasterxml.jackson.core:jackson-databind:2.9.0.pr2"
+    }
+}
+
+project(':xtm-rest-client-impl') {
+    test {
+        //Show that tests are run in the command-line output
+        testLogging {
+            events 'started', 'passed'
+        }
+        useJUnit {
+            excludeCategories 'com.infinera.metro.dnam.acceptance.test.node.IntegrationTest'
+        }
+    }
+
+    task integrationTest(type: Test) {
+        testLogging {
+            events 'started', 'passed'
+        }
+        useJUnit {
+            includeCategories 'com.infinera.metro.dnam.acceptance.test.node.IntegrationTest'
+        }
+    }
+
+    dependencies {
+        compile project(':shared'), project(':xtm-rest-client-api')
+        compile "org.apache.httpcomponents:httpclient:4.5.3"
+        compile "org.springframework:spring-web:4.2.2.RELEASE"
+        compile "org.antlr:stringtemplate:4.0.2"
+        compile "com.fasterxml.jackson.core:jackson-annotations:2.9.0.pr2"
+        compile "com.fasterxml.jackson.core:jackson-databind:2.9.0.pr2"
+        testCompile 'com.palantir.docker.compose:docker-compose-rule-junit4:0.31.1'
+    }
+}
+
+project(':xtm-rest-client-factory') {
+    dependencies {
+        compile project(':shared'), project(':xtm-rest-client-api')
+        compile project(':shared'), project(':xtm-rest-client-impl')
+    }
+}

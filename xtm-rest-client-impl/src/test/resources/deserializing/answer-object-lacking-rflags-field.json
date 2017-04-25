@@ -1,0 +1,26 @@
+{
+  "A": "AVNDHPUIMJOSE",
+  "I": 0,
+  "S": true,
+  "B": false,
+  "M": "eq",
+  "G": "board",
+  "N": "tp10g:1:2",
+  "O": "get",
+  "Q": "_RFLAGS_=RAISEMGNOQPCYVULTBJK&_AFLAGS_=AVNDHPUIMJOSE",
+  "T": [
+    {
+      "A": "index",
+      "V": "10102",
+      "N": "equipmentBoardIndex",
+      "D": "Index",
+      "H": "An arbitrary index assigned to each board entry.",
+      "P": 134217729,
+      "I": 0,
+      "R": 0,
+      "M": 4294967295,
+      "J": 3,
+      "O": 0
+    }
+  ]
+}

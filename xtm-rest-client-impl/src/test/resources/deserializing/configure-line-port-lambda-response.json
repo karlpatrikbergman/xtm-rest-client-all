@@ -1,0 +1,29 @@
+[
+  {
+    "R": "RAISEMGNOQPCYVULTBJK",
+    "A": "AVNDHPUIMJOSE",
+    "I": 0,
+    "S": true,
+    "B": false,
+    "M": "wdm",
+    "G": "if",
+    "N": "wdm:1:2:3-4",
+    "O": "set",
+    "Q": "_RFLAGS_=RAISEMGNOQPCYVULTBJK&_AFLAGS_=AVNDHPUIMJOSE&wdmIfExpectedTxLambda=ch918",
+    "T": [
+      {
+        "A": "expectedFrequency",
+        "V": "ch918",
+        "N": "wdmIfExpectedTxLambda",
+        "D": "Expected frequency",
+        "P": 11,
+        "U": "",
+        "I": 2147483648,
+        "R": 0,
+        "M": 2147483647,
+        "J": 7,
+        "O": 0
+      }
+    ]
+  }
+]

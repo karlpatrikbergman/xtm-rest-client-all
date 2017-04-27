@@ -6,10 +6,7 @@ import com.infinera.metro.dnam.acceptance.test.mib.Operation;
 import com.infinera.metro.dnam.acceptance.test.node.dto.AnswerObject;
 import com.infinera.metro.dnam.acceptance.test.node.dto.AnswerObjects;
 import com.infinera.metro.dnam.acceptance.test.node.dto.AttributeObject;
-import com.palantir.docker.compose.DockerComposeRule;
-import com.palantir.docker.compose.connection.waiting.HealthChecks;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.ClassRule;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
@@ -24,14 +21,14 @@ import static org.junit.Assert.assertThat;
 @Slf4j
 public class NodeImplTest {
 
-    @ClassRule
-    public static DockerComposeRule docker = DockerComposeRule.builder()
-            .file("src/test/resources/docker-compose.yml")
-            .waitingForService("node1", HealthChecks.toHaveAllPortsOpen())
-            .build();
+//    @ClassRule
+//    public static DockerComposeRule docker = DockerComposeRule.builder()
+//            .file("src/test/resources/docker-compose.yml")
+//            .waitingForService("node1", HealthChecks.toHaveAllPortsOpen())
+//            .build();
 
-//    private final String nodeIpAddress ="172.17.0.2";
-    private final String nodeIpAddress = "172.45.0.101";
+    private final String nodeIpAddress ="172.17.0.2";
+//    private final String nodeIpAddress = "172.45.0.101";
 
     private final NodeImpl node = new NodeImpl(
         new NodeRestClient(
@@ -48,7 +45,7 @@ public class NodeImplTest {
     );
 
     private final BoardEntry BOARD_ENTRY = BoardEntry.builder()
-            .board(Board.TP10G)
+            .board(Board.TPD10GBE)
             .subrack(1)
             .slot(2)
             .build();
@@ -67,13 +64,13 @@ public class NodeImplTest {
         getBoardSuccessful(BOARD_ENTRY);
 
         //Clean up after test
-        node.deleteBoard(BOARD_ENTRY);
+//        node.deleteBoard(BOARD_ENTRY);
     }
 
     private void getBoardSuccessful(BoardEntry boardEntry) throws IOException {
         AnswerObjects answerObjects = node.getBoard(boardEntry);
-        Optional<AnswerObject> answerObjectOptional = answerObjects.getAnswerObject(Operation.get.getName(), boardEntry.getMibString());
-        assertThat("AnswerObject.operation=get and entry="+BOARD_ENTRY.getMibString()+" exists", answerObjectOptional.isPresent(), is(true));
+        Optional<AnswerObject> answerObjectOptional = answerObjects.getAnswerObject(Operation.GET, boardEntry);
+        assertThat("AnswerObject.operation=get and entry="+BOARD_ENTRY.getMibEntryString()+" exists", answerObjectOptional.isPresent(), is(true));
 
         AnswerObject answerObject = answerObjectOptional.get();
         assertThat("AnswerObject.isSuccess=true" , answerObject.isSuccess(), is(true));
@@ -81,27 +78,27 @@ public class NodeImplTest {
         Optional<AttributeObject> attributeObjectOptional = answerObject.getAttributeObject("equipmentBoardName");
         assertThat("AttributeObject.name=equipmentBoardName' exists", attributeObjectOptional.isPresent(), is(true));
         AttributeObject attributeObject = attributeObjectOptional.get();
-        assertThat("AttributeObject.value="+BOARD_ENTRY.getMibString(), attributeObject.getValue(), is(BOARD_ENTRY.getMibString()));
+        assertThat("AttributeObject.value="+BOARD_ENTRY.getMibEntryString(), attributeObject.getValue(), is(BOARD_ENTRY.getMibEntryString()));
     }
 
     private void createBoardSucceeded(AnswerObjects answerObjects) {
-        Optional<AnswerObject> answerObjectOptional = answerObjects.getAnswerObject(Operation.create.getName()); //Create response has no entry set in R-attributes
-        assertThat("AnswerObject.operation=create' and 'entry="+BOARD_ENTRY.getMibString()+"' exists", answerObjectOptional.isPresent(), is(true));
+        Optional<AnswerObject> answerObjectOptional = answerObjects.getAnswerObject(Operation.CREATE); //Create response has no entry set in R-attributes
+        assertThat("AnswerObject.operation=create' and 'entry="+BOARD_ENTRY.getMibEntryString()+"' exists", answerObjectOptional.isPresent(), is(true));
 
         AnswerObject answerObject = answerObjectOptional.get();
-        assertThat("AttributeObject.isSuccess=true" , answerObject.isSuccess(), is(true));
+        assertThat("answerObject.isSuccess=true" , answerObject.isSuccess(), is(true));
 
-        Optional<AttributeObject> attributeObjectOptional = answerObject.getAttributeObject(BOARD_ENTRY.getMibString());
-        assertThat("AttributeObject.name=" + BOARD_ENTRY.getMibString(), attributeObjectOptional.isPresent(), is(true));
+        Optional<AttributeObject> attributeObjectOptional = answerObject.getAttributeObject(BOARD_ENTRY.getMibEntryString());
+        assertThat("AttributeObject.name=" + BOARD_ENTRY.getMibEntryString(), attributeObjectOptional.isPresent(), is(true));
     }
 
     private void boardIsNotAdded(BoardEntry boardEntry) throws IOException {
         AnswerObjects answerObjects = node.getBoard(boardEntry);
-        Optional<AnswerObject> answerObjectOptional = answerObjects.getAnswerObject(Operation.error.getName());
+        Optional<AnswerObject> answerObjectOptional = answerObjects.getAnswerObject(Operation.ERROR);
         assertThat("AnswerObject.operation=error exists", answerObjectOptional.isPresent(), is(true));
 
         AnswerObject answerObject = answerObjectOptional.get();
-        assertThat("AnswerObject.entry=" + BOARD_ENTRY.getMibString(), answerObject.getEntry(), is(BOARD_ENTRY.getMibString()));
+        assertThat("AnswerObject.entry=" + BOARD_ENTRY.getMibEntryString(), answerObject.getEntry(), is(BOARD_ENTRY.getMibEntryString()));
         assertThat("AnswerObject.isSuccess=false" , answerObject.isSuccess(), is(false));
         assertThat("Error message contains 'Entry not found'", answerObject.getError().contains("Entry not found"), is(true));
     }

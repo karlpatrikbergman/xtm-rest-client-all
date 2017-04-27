@@ -4,7 +4,8 @@ public enum Command {
     GET_JSON("get.json"),
     LIST_JSON("list.json"),
     CREATE_JSON("create.json"),
-    DELETE_JSON("delete.json");
+    DELETE_JSON("delete.json"),
+    SET_JSON("set.json");
 
     private final String value;
 

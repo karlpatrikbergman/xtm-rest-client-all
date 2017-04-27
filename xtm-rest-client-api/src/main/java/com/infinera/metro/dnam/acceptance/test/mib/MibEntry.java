@@ -1,5 +1,6 @@
 package com.infinera.metro.dnam.acceptance.test.mib;
 
 public interface MibEntry {
-    String getMibString();
+    String getMibEntryString();
+    String getMibEntryPath();
 }

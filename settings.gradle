@@ -3,4 +3,5 @@ include 'xtm-rest-client-api'
 include 'xtm-rest-client-impl'
 include 'shared'
 include 'xtm-rest-client-factory'
+include 'node-configuration'
 

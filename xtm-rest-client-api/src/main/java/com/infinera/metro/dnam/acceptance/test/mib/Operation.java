@@ -1,9 +1,10 @@
 package com.infinera.metro.dnam.acceptance.test.mib;
 
 public enum Operation {
-    create("create"),
-    get("get"),
-    error("error");
+    CREATE("create"),
+    GET("get"),
+    SET("set"),
+    ERROR("error");
 
     private final String name;
 

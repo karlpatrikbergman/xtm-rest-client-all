@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="dockercompose.DockerComposeYamlTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2017-04-27T09:13:06" hostname="gentoo-pabe2.infinera.com" time="0.024">
+  <properties/>
+  <testcase name="test" classname="dockercompose.DockerComposeYamlTest" time="0.024"/>
+  <system-out><![CDATA[{
+  "version" : "2",
+  "services" : {
+    "alarmservice" : {
+      "build" : null,
+      "image" : "com.infinera.metro.service.alarm/alarmservice:1.0-SNAPSHOT",
+      "restart" : "unless-stopped",
+      "container_name" : "alarmservice",
+      "environment" : {
+        "SPRING_PROFILES_ACTIVE" : "docker-compose"
+      },
+      "ports" : [ "8080:8080" ],
+      "networks" : {
+        "alarmservice_network" : null
+      },
+      "depends_on" : [ "alarmservice_db" ],
+      "links" : [ "alarmservice_db" ],
+      "entrypoint" : "./wait-for-it.sh",
+      "command" : "alarmservice_db:3306 --timeout=20 --strict -- ./entrypoint.sh"
+    },
+    "alarmservice_db" : {
+      "build" : null,
+      "image" : "mariadb:latest",
+      "restart" : null,
+      "container_name" : "alarmservice_db",
+      "environment" : {
+        "MYSQL_USER" : "admin",
+        "MYSQL_PASSWORD" : "admin",
+        "MYSQL_DATABASE" : "alarmservice",
+        "MYSQL_ROOT_PASSWORD" : "root"
+      },
+      "ports" : null,
+      "networks" : {
+        "alarmservice_network" : null
+      },
+      "depends_on" : null,
+      "links" : null,
+      "entrypoint" : null,
+      "command" : null
+    },
+    "node1" : {
+      "build" : null,
+      "image" : "artifactory.transmode.se/tm3k/trunk-hostenv",
+      "restart" : null,
+      "container_name" : "node1",
+      "environment" : null,
+      "ports" : [ "8001:80" ],
+      "networks" : {
+        "alarmservice_network" : {
+          "ipv4_address" : "172.25.0.101"
+        }
+      },
+      "depends_on" : null,
+      "links" : null,
+      "entrypoint" : null,
+      "command" : null
+    },
+    "node2" : {
+      "build" : null,
+      "image" : "artifactory.transmode.se/tm3k/trunk-hostenv",
+      "restart" : null,
+      "container_name" : "node2",
+      "environment" : null,
+      "ports" : [ "8002:80" ],
+      "networks" : {
+        "alarmservice_network" : {
+          "ipv4_address" : "172.25.0.102"
+        }
+      },
+      "depends_on" : null,
+      "links" : null,
+      "entrypoint" : null,
+      "command" : null
+    },
+    "nodes_setup" : {
+      "build" : "nodes_setup",
+      "image" : null,
+      "restart" : null,
+      "container_name" : "nodes_setup",
+      "environment" : null,
+      "ports" : null,
+      "networks" : {
+        "alarmservice_network" : null
+      },
+      "depends_on" : [ "node1", "node2" ],
+      "links" : [ "node1", "node2" ],
+      "entrypoint" : null,
+      "command" : null
+    }
+  },
+  "networks" : {
+    "alarmservice_network" : {
+      "driver" : "bridge",
+      "ipam" : {
+        "config" : [ {
+          "subnet" : "172.25.0.0/24"
+        } ]
+      }
+    }
+  }
+}
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

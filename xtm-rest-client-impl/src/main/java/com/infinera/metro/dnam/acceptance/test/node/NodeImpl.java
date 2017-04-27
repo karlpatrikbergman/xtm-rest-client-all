@@ -3,6 +3,8 @@ package com.infinera.metro.dnam.acceptance.test.node;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectReader;
 import com.infinera.metro.dnam.acceptance.test.mib.BoardEntry;
+import com.infinera.metro.dnam.acceptance.test.mib.Configuration;
+import com.infinera.metro.dnam.acceptance.test.mib.LinePortEntry;
 import com.infinera.metro.dnam.acceptance.test.node.dto.AnswerObject;
 import com.infinera.metro.dnam.acceptance.test.node.dto.AnswerObjects;
 import com.infinera.metro.dnam.acceptance.test.node.dto.deserializer.JacksonUtil;
@@ -15,7 +17,6 @@ import java.util.List;
 public class NodeImpl implements Node {
     private final NodeRestClient nodeRestClient;
     private final ObjectReader reader = JacksonUtil.INSTANCE.getReader().forType(new TypeReference<List<AnswerObject>>(){});
-
 
     public NodeImpl(NodeRestClient nodeRestClient) {
         this.nodeRestClient = nodeRestClient;
@@ -41,6 +42,12 @@ public class NodeImpl implements Node {
     public AnswerObjects deleteBoard(BoardEntry boardEntry) throws IOException {
         return getAnswerObjects(nodeRestClient.deleteBoard(boardEntry));
     }
+
+    public AnswerObject setLinePortConfiguration(LinePortEntry linePortEntry, Configuration configuration) {
+//        nodeRestClient.setLinePortConfiguration(linePortEntry, configuration);
+        return null;
+    }
+
 
     private AnswerObjects getAnswerObjects(ResponseEntity<String> responseEntity) throws IOException {
         return new AnswerObjects(readValueAsList(responseEntity));

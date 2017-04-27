@@ -62,10 +62,11 @@ public class NodeFactoryTest {
 
     }
 
+    //TODO: Add this to published interface? Can it be part of Node?
     private void getBoardSuccessful(BoardEntry boardEntry) throws IOException {
         AnswerObjects answerObjects = node.getBoard(boardEntry);
-        Optional<AnswerObject> answerObjectOptional = answerObjects.getAnswerObject(Operation.get.getName(), boardEntry.getMibString());
-        assertThat("AnswerObject.operation=get and entry="+BOARD_ENTRY.getMibString()+" exists", answerObjectOptional.isPresent(), is(true));
+        Optional<AnswerObject> answerObjectOptional = answerObjects.getAnswerObject(Operation.GET, boardEntry);
+        assertThat("AnswerObject.operation=get and entry="+BOARD_ENTRY.getMibEntryString()+" exists", answerObjectOptional.isPresent(), is(true));
 
         AnswerObject answerObject = answerObjectOptional.get();
         assertThat("AnswerObject.isSuccess=true" , answerObject.isSuccess(), is(true));
@@ -73,27 +74,29 @@ public class NodeFactoryTest {
         Optional<AttributeObject> attributeObjectOptional = answerObject.getAttributeObject("equipmentBoardName");
         assertThat("AttributeObject.name=equipmentBoardName' exists", attributeObjectOptional.isPresent(), is(true));
         AttributeObject attributeObject = attributeObjectOptional.get();
-        assertThat("AttributeObject.value="+BOARD_ENTRY.getMibString(), attributeObject.getValue(), is(BOARD_ENTRY.getMibString()));
+        assertThat("AttributeObject.value="+BOARD_ENTRY.getMibEntryString(), attributeObject.getValue(), is(BOARD_ENTRY.getMibEntryString()));
     }
 
+    //TODO: Add this to published interface? Can it be part of Node?
     private void createBoardSucceeded(AnswerObjects answerObjects) {
-        Optional<AnswerObject> answerObjectOptional = answerObjects.getAnswerObject(Operation.create.getName()); //Create response has no entry set in R-attributes
-        assertThat("AnswerObject.operation=create' and 'entry="+BOARD_ENTRY.getMibString()+"' exists", answerObjectOptional.isPresent(), is(true));
+        Optional<AnswerObject> answerObjectOptional = answerObjects.getAnswerObject(Operation.CREATE); //Create response has no entry set in R-attributes
+        assertThat("AnswerObject.operation=create' and 'entry="+BOARD_ENTRY.getMibEntryString()+"' exists", answerObjectOptional.isPresent(), is(true));
 
         AnswerObject answerObject = answerObjectOptional.get();
         assertThat("AttributeObject.isSuccess=true" , answerObject.isSuccess(), is(true));
 
-        Optional<AttributeObject> attributeObjectOptional = answerObject.getAttributeObject(BOARD_ENTRY.getMibString());
-        assertThat("AttributeObject.name=" + BOARD_ENTRY.getMibString(), attributeObjectOptional.isPresent(), is(true));
+        Optional<AttributeObject> attributeObjectOptional = answerObject.getAttributeObject(BOARD_ENTRY.getMibEntryString());
+        assertThat("AttributeObject.name=" + BOARD_ENTRY.getMibEntryString(), attributeObjectOptional.isPresent(), is(true));
     }
 
+    //TODO: Add this to published interface? Can it be part of Node?
     private void boardIsNotAdded(BoardEntry boardEntry) throws IOException {
         AnswerObjects answerObjects = node.getBoard(boardEntry);
-        Optional<AnswerObject> answerObjectOptional = answerObjects.getAnswerObject(Operation.error.getName());
+        Optional<AnswerObject> answerObjectOptional = answerObjects.getAnswerObject(Operation.ERROR);
         assertThat("AnswerObject.operation=error exists", answerObjectOptional.isPresent(), is(true));
 
         AnswerObject answerObject = answerObjectOptional.get();
-        assertThat("AnswerObject.entry=" + BOARD_ENTRY.getMibString(), answerObject.getEntry(), is(BOARD_ENTRY.getMibString()));
+        assertThat("AnswerObject.entry=" + BOARD_ENTRY.getMibEntryString(), answerObject.getEntry(), is(BOARD_ENTRY.getMibEntryString()));
         assertThat("AnswerObject.isSuccess=false" , answerObject.isSuccess(), is(false));
         assertThat("Error message contains 'Entry not found'", answerObject.getError().contains("Entry not found"), is(true));
     }

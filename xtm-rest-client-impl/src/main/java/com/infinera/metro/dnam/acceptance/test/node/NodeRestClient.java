@@ -30,13 +30,18 @@ class NodeRestClient {
         return performEquipmentBoardRequest(Command.LIST_JSON);
     }
 
-    //TODO: Make more generic
-    ResponseEntity<String> performEquipmentBoardRequest(BoardEntry boardEntry, Command command) {
-        final String mibPath = xtmRestMibUtil.mibRestUrl(Module.EQUIPMENT, GroupOrTable.BOARD, boardEntry, command);
-        return nodeConnection.performRestAction(mibPath + "?_RFLAGS_=RAISEMGNOQPCYVULTBJK&_AFLAGS_=AVNDHPUIMJOSE");
+    private ResponseEntity<String> performEquipmentBoardRequest(MibEntry mibEntry, Command command) {
+        final String mibPathAndOperation = xtmRestMibUtil.mibRestUrl(mibEntry, command);
+        return nodeConnection.performRestAction(mibPathAndOperation + "?_RFLAGS_=RAISEMGNOQPCYVULTBJK&_AFLAGS_=AVNDHPUIMJOSE");
     }
 
-    ResponseEntity<String> performEquipmentBoardRequest(Command command) {
+    //TODO: Make more generic
+//    private ResponseEntity<String> performEquipmentBoardRequest(BoardEntry boardEntry, Command command) {
+//        final String mibPath = xtmRestMibUtil.mibRestUrl(Module.EQUIPMENT, GroupOrTable.BOARD, boardEntry, command);
+//        return nodeConnection.performRestAction(mibPath + "?_RFLAGS_=RAISEMGNOQPCYVULTBJK&_AFLAGS_=AVNDHPUIMJOSE");
+//    }
+
+    private ResponseEntity<String> performEquipmentBoardRequest(Command command) {
         final String mibPath = xtmRestMibUtil.mibRestUrl(Module.EQUIPMENT, GroupOrTable.BOARD, command);
         return nodeConnection.performRestAction(mibPath + "?_RFLAGS_=RAISEMGNOQPCYVULTBJK&_AFLAGS_=AVNDHPUIMJOSE");
     }

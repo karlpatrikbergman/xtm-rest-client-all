@@ -1,3 +1,7 @@
+
+def spring_version = "4.3.8.RELEASE"
+def jackson_version = "2.9.0.pr2"
+
 subprojects {
     group "com.infinera.metro.dnam.test.acceptance"
     version "1.0-SNAPSHOT"
@@ -22,6 +26,7 @@ subprojects {
     }
 
     repositories {
+        jcenter()
         mavenCentral()
         maven {
             url 'https://dl.bintray.com/palantir/releases' // docker-compose-rule is published on bintray
@@ -37,10 +42,26 @@ subprojects {
     }
 }
 
+project(':node-configuration') {
+    test {
+        testLogging {
+            showStandardStreams = true
+            events 'started', 'passed'
+        }
+    }
+
+    dependencies {
+        compile project(':shared')
+        compile("org.yaml:snakeyaml:1.17")
+        compile "com.fasterxml.jackson.core:jackson-databind:${jackson_version}"
+    }
+}
+
 project(':xtm-rest-client-api') {
     dependencies {
-        compile "com.fasterxml.jackson.core:jackson-annotations:2.9.0.pr2"
-        compile "com.fasterxml.jackson.core:jackson-databind:2.9.0.pr2"
+        compile "com.fasterxml.jackson.core:jackson-annotations:${jackson_version}"
+        compile "com.fasterxml.jackson.core:jackson-databind:${jackson_version}"
+        compile "org.antlr:stringtemplate:4.0.2"
     }
 }
 
@@ -67,10 +88,10 @@ project(':xtm-rest-client-impl') {
     dependencies {
         compile project(':shared'), project(':xtm-rest-client-api')
         compile "org.apache.httpcomponents:httpclient:4.5.3"
-        compile "org.springframework:spring-web:4.2.2.RELEASE"
+        compile "org.springframework:spring-web:${spring_version}"
         compile "org.antlr:stringtemplate:4.0.2"
-        compile "com.fasterxml.jackson.core:jackson-annotations:2.9.0.pr2"
-        compile "com.fasterxml.jackson.core:jackson-databind:2.9.0.pr2"
+        compile "com.fasterxml.jackson.core:jackson-annotations:${jackson_version}"
+        compile "com.fasterxml.jackson.core:jackson-databind:${jackson_version}"
         testCompile 'com.palantir.docker.compose:docker-compose-rule-junit4:0.31.1'
     }
 }
@@ -86,7 +107,8 @@ project(':xtm-rest-client-factory') {
 
 project(':shared') {
     dependencies {
-        compile project(':xtm-rest-client-api')
+        compile "org.springframework:spring-core:${spring_version}"
+
     }
 }
 

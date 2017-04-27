@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=edge"/>
+<title>Test results - Class dockercompose.DockerComposeYamlTest</title>
+<link href="../css/base-style.css" rel="stylesheet" type="text/css"/>
+<link href="../css/style.css" rel="stylesheet" type="text/css"/>
+<script src="../js/report.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="content">
+<h1>Class dockercompose.DockerComposeYamlTest</h1>
+<div class="breadcrumbs">
+<a href="../index.html">all</a> &gt; 
+<a href="../packages/dockercompose.html">dockercompose</a> &gt; DockerComposeYamlTest</div>
+<div id="summary">
+<table>
+<tr>
+<td>
+<div class="summaryGroup">
+<table>
+<tr>
+<td>
+<div class="infoBox" id="tests">
+<div class="counter">1</div>
+<p>tests</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="failures">
+<div class="counter">0</div>
+<p>failures</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="ignored">
+<div class="counter">0</div>
+<p>ignored</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="duration">
+<div class="counter">0.024s</div>
+<p>duration</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td>
+<div class="infoBox success" id="successRate">
+<div class="percent">100%</div>
+<p>successful</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div id="tabs">
+<ul class="tabLinks">
+<li>
+<a href="#tab0">Tests</a>
+</li>
+<li>
+<a href="#tab1">Standard output</a>
+</li>
+</ul>
+<div id="tab0" class="tab">
+<h2>Tests</h2>
+<table>
+<thead>
+<tr>
+<th>Test</th>
+<th>Duration</th>
+<th>Result</th>
+</tr>
+</thead>
+<tr>
+<td class="success">test</td>
+<td>0.024s</td>
+<td class="success">passed</td>
+</tr>
+</table>
+</div>
+<div id="tab1" class="tab">
+<h2>Standard output</h2>
+<span class="code">
+<pre>{
+  &quot;version&quot; : &quot;2&quot;,
+  &quot;services&quot; : {
+    &quot;alarmservice&quot; : {
+      &quot;build&quot; : null,
+      &quot;image&quot; : &quot;com.infinera.metro.service.alarm/alarmservice:1.0-SNAPSHOT&quot;,
+      &quot;restart&quot; : &quot;unless-stopped&quot;,
+      &quot;container_name&quot; : &quot;alarmservice&quot;,
+      &quot;environment&quot; : {
+        &quot;SPRING_PROFILES_ACTIVE&quot; : &quot;docker-compose&quot;
+      },
+      &quot;ports&quot; : [ &quot;8080:8080&quot; ],
+      &quot;networks&quot; : {
+        &quot;alarmservice_network&quot; : null
+      },
+      &quot;depends_on&quot; : [ &quot;alarmservice_db&quot; ],
+      &quot;links&quot; : [ &quot;alarmservice_db&quot; ],
+      &quot;entrypoint&quot; : &quot;./wait-for-it.sh&quot;,
+      &quot;command&quot; : &quot;alarmservice_db:3306 --timeout=20 --strict -- ./entrypoint.sh&quot;
+    },
+    &quot;alarmservice_db&quot; : {
+      &quot;build&quot; : null,
+      &quot;image&quot; : &quot;mariadb:latest&quot;,
+      &quot;restart&quot; : null,
+      &quot;container_name&quot; : &quot;alarmservice_db&quot;,
+      &quot;environment&quot; : {
+        &quot;MYSQL_USER&quot; : &quot;admin&quot;,
+        &quot;MYSQL_PASSWORD&quot; : &quot;admin&quot;,
+        &quot;MYSQL_DATABASE&quot; : &quot;alarmservice&quot;,
+        &quot;MYSQL_ROOT_PASSWORD&quot; : &quot;root&quot;
+      },
+      &quot;ports&quot; : null,
+      &quot;networks&quot; : {
+        &quot;alarmservice_network&quot; : null
+      },
+      &quot;depends_on&quot; : null,
+      &quot;links&quot; : null,
+      &quot;entrypoint&quot; : null,
+      &quot;command&quot; : null
+    },
+    &quot;node1&quot; : {
+      &quot;build&quot; : null,
+      &quot;image&quot; : &quot;artifactory.transmode.se/tm3k/trunk-hostenv&quot;,
+      &quot;restart&quot; : null,
+      &quot;container_name&quot; : &quot;node1&quot;,
+      &quot;environment&quot; : null,
+      &quot;ports&quot; : [ &quot;8001:80&quot; ],
+      &quot;networks&quot; : {
+        &quot;alarmservice_network&quot; : {
+          &quot;ipv4_address&quot; : &quot;172.25.0.101&quot;
+        }
+      },
+      &quot;depends_on&quot; : null,
+      &quot;links&quot; : null,
+      &quot;entrypoint&quot; : null,
+      &quot;command&quot; : null
+    },
+    &quot;node2&quot; : {
+      &quot;build&quot; : null,
+      &quot;image&quot; : &quot;artifactory.transmode.se/tm3k/trunk-hostenv&quot;,
+      &quot;restart&quot; : null,
+      &quot;container_name&quot; : &quot;node2&quot;,
+      &quot;environment&quot; : null,
+      &quot;ports&quot; : [ &quot;8002:80&quot; ],
+      &quot;networks&quot; : {
+        &quot;alarmservice_network&quot; : {
+          &quot;ipv4_address&quot; : &quot;172.25.0.102&quot;
+        }
+      },
+      &quot;depends_on&quot; : null,
+      &quot;links&quot; : null,
+      &quot;entrypoint&quot; : null,
+      &quot;command&quot; : null
+    },
+    &quot;nodes_setup&quot; : {
+      &quot;build&quot; : &quot;nodes_setup&quot;,
+      &quot;image&quot; : null,
+      &quot;restart&quot; : null,
+      &quot;container_name&quot; : &quot;nodes_setup&quot;,
+      &quot;environment&quot; : null,
+      &quot;ports&quot; : null,
+      &quot;networks&quot; : {
+        &quot;alarmservice_network&quot; : null
+      },
+      &quot;depends_on&quot; : [ &quot;node1&quot;, &quot;node2&quot; ],
+      &quot;links&quot; : [ &quot;node1&quot;, &quot;node2&quot; ],
+      &quot;entrypoint&quot; : null,
+      &quot;command&quot; : null
+    }
+  },
+  &quot;networks&quot; : {
+    &quot;alarmservice_network&quot; : {
+      &quot;driver&quot; : &quot;bridge&quot;,
+      &quot;ipam&quot; : {
+        &quot;config&quot; : [ {
+          &quot;subnet&quot; : &quot;172.25.0.0/24&quot;
+        } ]
+      }
+    }
+  }
+}
+</pre>
+</span>
+</div>
+</div>
+<div id="footer">
+<p>
+<div>
+<label class="hidden" id="label-for-line-wrapping-toggle" for="line-wrapping-toggle">Wrap lines
+<input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
+</label>
+</div>Generated by 
+<a href="http://www.gradle.org">Gradle 3.5</a> at 27-Apr-2017 11:13:06</p>
+</div>
+</div>
+</body>
+</html>

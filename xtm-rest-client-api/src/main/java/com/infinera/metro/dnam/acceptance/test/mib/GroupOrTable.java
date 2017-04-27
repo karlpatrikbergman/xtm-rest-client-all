@@ -1,7 +1,8 @@
 package com.infinera.metro.dnam.acceptance.test.mib;
 
 public enum GroupOrTable {
-    BOARD("board");
+    BOARD("board"),
+    IF("if");
 
     private final String value;
 

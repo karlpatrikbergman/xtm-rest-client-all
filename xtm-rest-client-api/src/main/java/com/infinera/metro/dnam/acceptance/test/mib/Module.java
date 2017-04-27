@@ -1,7 +1,9 @@
 package com.infinera.metro.dnam.acceptance.test.mib;
 
 public enum Module {
-    EQUIPMENT("eq");
+    EQUIPMENT("eq"),
+    WDM("wdm"),
+    CLIENT("client");
 
     private final String value;
 

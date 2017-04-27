@@ -1,5 +1,6 @@
 package com.infinera.metro.dnam.acceptance.test.xtmrest;
 
+import com.infinera.metro.dnam.acceptance.test.mib.Board;
 import com.infinera.metro.dnam.acceptance.test.mib.BoardEntry;
 import com.infinera.metro.dnam.acceptance.test.mib.MibEntry;
 import com.infinera.metro.dnam.acceptance.test.mib.Module;
@@ -27,5 +28,23 @@ public class XtmRestMibUtilTest {
         String actualMibPath = xtmRestUtil.mibRestUrl(Module.EQUIPMENT, BOARD, mibEntry, GET_JSON);
         assertEquals(expectedMibPath, actualMibPath);
         log.info("Mib path: {}", actualMibPath);
+    }
+
+    @Test
+    public void createMibPath2() {
+        String expectedMibPath = "/mib/eq/board/tp10g:1:2/get.json";
+        String actualMibPath = xtmRestUtil.mibRestUrl(mibEntry, GET_JSON);
+        assertEquals(expectedMibPath, actualMibPath);
+        log.info("Mib path: {}", actualMibPath);
+    }
+
+    @Test
+    public void getFullMibPath() {
+        BoardEntry boardEntry = BoardEntry.builder()
+                .board(Board.TP10G)
+                .slot(1)
+                .subrack(2)
+                .build();
+        log.info(boardEntry.getMibEntryPath());
     }
 }

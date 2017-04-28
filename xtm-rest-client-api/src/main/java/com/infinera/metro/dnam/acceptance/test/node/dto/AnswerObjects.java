@@ -11,79 +11,66 @@ import java.util.Optional;
 public class AnswerObjects {
     private final List<AnswerObject> answerObjects;
 
-    public List<AnswerObject> getAnswerObjects() {
-        return answerObjects;
-    }
-
     public AnswerObjects(List<AnswerObject> answerObjects) {
         this.answerObjects = answerObjects;
     }
 
     /**
-     * Doesn't work with "get", "set", "error" (and more?) since they have both operation and mibentry in
-     * response.
-     * Does now work with "create" since it only has operation and not mibentry in response. For create the
-     * mibentry is instead in the attributes array.
+     * Check if AnswerObjects contains a success response (of type AnswerObject to a specific operation
+     * on a specific mibEntry. If no AnswerObject is found a RuntimeException is thrown.
+     *
+     * If an error response (AnswerObject) corresponding to the specific operation and mibEntry is found
+     * the error message of that response is included in the RuntimeException.
+     *
+     * @param operation             The operation performed
+     * @param mibEntry              The mibEntry upon which the operation was performed
+     * @throws RuntimeException     Thrown if no AnswerObject fulfills conditions for a successful message
+     *                              for this specific operation
      */
-    public Optional<AnswerObject> getAnswerObject(Operation operation, MibEntry mibEntry) {
+    public void checkResponse(Operation operation, MibEntry mibEntry) throws RuntimeException {
+        Optional<AnswerObject> answerObjectOptional = findSuccessAnswerObject(operation, mibEntry);
+        if (!answerObjectOptional.isPresent()) {
+            throw new RuntimeException(getErrorMessage(operation, mibEntry));
+        }
+    }
+
+    /**
+     * Checks if an success AnswerObject for a specific operation on a specific mibEntry exists in this AnswerObjects
+     * instance.
+     *
+     * @param operation             The operation performed
+     * @param mibEntry              The mibEntry upon with the operation was performed
+     * @return                      Optional AnswerObject
+     */
+    private Optional<AnswerObject> findSuccessAnswerObject(Operation operation, MibEntry mibEntry) {
         return answerObjects.stream()
-                .filter(answerObject -> answerObject.getOperation().equals(operation.getName()) && answerObject.getEntry().equals(mibEntry.getMibEntryString()))
+                .filter(answerObject -> answerObject.isSuccessAnswerObject(operation, mibEntry))
                 .findFirst();
     }
 
-    public Optional<AnswerObject> getAnswerObject(MibEntry mibEntry) {
-        return answerObjects.stream()
-                .filter(answerObject -> answerObject.getEntry().equals(mibEntry.getMibEntryString()))
-                .findFirst();
+    private String getErrorMessage(Operation operation, MibEntry mibEntry) {
+        String errorMessage;
+        Optional<AnswerObject> answerObjectOptional = findErrorAnswerObject(operation, mibEntry);
+        if (!answerObjectOptional.isPresent()) {
+            errorMessage = String.format("Failed to get error message. No AnswerObject found corresponding to operation" +
+                    " 'error' and mibEntry %s. Assure responses are returned synchronously", mibEntry.getMibEntryString());
+        } else {
+            errorMessage = answerObjectOptional.map(answerObject -> String.format("Error: %s", answerObject.getError())).orElse("Error message was null");
+        }
+        return errorMessage;
     }
 
-    public Optional<AnswerObject> getAnswerObject(Operation operation) {
+    /**
+     * Checks if an error AnswerObject for a specific operation on a specific mibEntry exists in this AnswerObjects
+     * instance.
+     *
+     * @param operation             The operation performed, that did not succeed
+     * @param mibEntry              The mibEntry upon with the operation was performed
+     * @return                      Optional AnswerObject
+     */
+    private Optional<AnswerObject> findErrorAnswerObject(Operation operation, MibEntry mibEntry) {
         return answerObjects.stream()
-                .filter(answerObject -> answerObject.getOperation().equals(operation.getName()))
+                .filter(answerObject -> answerObject.isErrorAnswerObject(operation, mibEntry))
                 .findFirst();
     }
-
-    public Optional<AnswerObject> getErrorAnswerObject(MibEntry mibEntry) {
-        return answerObjects.stream()
-                .filter(answerObject -> answerObject.isSuccess() == false &&
-                        answerObject.getOperation().equals(Operation.ERROR.getName()) &&
-                        answerObject.getEntry().equals(mibEntry.getMibEntryString()))
-                .findFirst();
-    }
-
-    public Optional<AnswerObject> getCreateErrorAnswerObject(MibEntry mibEntry) {
-        return answerObjects.stream()
-                .filter(answerObject -> answerObject.isSuccess() == false &&
-                                        answerObject.getOperation().equals(Operation.ERROR.getName()) &&
-                                        answerObject.getAttributeObjectList().stream()
-                                                .filter(attributeObject -> attributeObject.getName().equals(mibEntry.getMibEntryString()))
-                                                .findAny().isPresent())
-                .findFirst();
-    }
-//
-//    public void checkSetResponse(MibEntry mibEntry) throws RuntimeException{
-//        checkResponse(Operation.CREATE.SET, mibEntry);
-//    }
-//
-//    public void checkGetResonse(MibEntry mibEntry) {
-//        checkResponse(Operation.CREATE.GET, mibEntry);
-//    }
-//
-//    private void checkResponse(Operation operation, MibEntry mibEntry) throws RuntimeException {
-//        Optional<AnswerObject> answerObjectOptional = getAnswerObject(operation, mibEntry);
-//        if (answerObjectOptional.isPresent() == false || answerObjectOptional.get().isSuccess() == false) {
-//            throw new RuntimeException(getErrorMessage(mibEntry));
-//        }
-//    }
-//
-//    private String getErrorMessage(MibEntry mibEntry) {
-//        String errorMessage;
-//        Optional<AnswerObject> answerObjectOptional = getErrorAnswerObject(mibEntry);
-//        if(answerObjectOptional.isPresent() == false) {
-//            errorMessage = String.format("Failed to get error message. No AnswerObject found corresponding to operation 'error' and mibEntry %s.", mibEntry.getMibEntryString());
-//        } else {
-//            errorMessage = String.format("Error: %s", answerObjectOptional.get().getError());
-//        }
-//        return errorMessage;
-//    }
 }

@@ -1,21 +1,15 @@
 package com.infinera.metro.dnam.acceptance.test.node;
 
-import com.infinera.metro.dnam.acceptance.test.mib.Board;
-import com.infinera.metro.dnam.acceptance.test.mib.BoardEntry;
-import com.infinera.metro.dnam.acceptance.test.mib.Operation;
-import com.infinera.metro.dnam.acceptance.test.node.dto.AnswerObject;
+import com.infinera.metro.dnam.acceptance.test.mib.*;
 import com.infinera.metro.dnam.acceptance.test.node.dto.AnswerObjects;
-import com.infinera.metro.dnam.acceptance.test.node.dto.AttributeObject;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
 import java.io.IOException;
-import java.util.Optional;
 
 import static com.infinera.metro.dnam.acceptance.test.node.RestTemplateFactory.REST_TEMPLATE_FACTORY;
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertNotNull;
 
 @Category(IntegrationTest.class)
 @Slf4j
@@ -44,62 +38,52 @@ public class NodeImplTest {
         )
     );
 
-    private final BoardEntry BOARD_ENTRY = BoardEntry.builder()
+    private BoardEntry boardEntry = BoardEntry.builder()
             .board(Board.TPD10GBE)
             .subrack(1)
             .slot(2)
             .build();
 
+
     @Test
-    public void createBoard() throws IOException, InterruptedException {
+    public void createGetAndDeleteBoard() throws IOException, InterruptedException {
         //Given
-        boardIsNotAdded(BOARD_ENTRY);
+        boardEntry = BoardEntry.builder()
+                .board(Board.TPD10GBE)
+                .subrack(1)
+                .slot(2)
+                .build();
+        LinePortEntry linePortEntry = LinePortEntry.builder()
+                .linePort(LinePort.WDM)
+                .subrack(1)
+                .slot(2)
+                .transceiverPort(3)
+                .receiverPort(4)
+                .build();
+        Configuration configuration = Configuration.builder()
+                .key("expectedFrequency")
+                .value("ch926")
+                .build();
 
         //When
-        AnswerObjects answerObjects = node.createBoard(BOARD_ENTRY);
+        AnswerObjects createBoardAnswerObjects = node.createBoard(boardEntry);
+
+
+        AnswerObjects setLinePortConfigurationAnswerObjects = node.setLinePortConfiguration(linePortEntry, configuration);
 
         //Then
-        createBoardSucceeded(answerObjects);
+        //TODO: Verify that expected frequency is correctly set in response
+        AnswerObjects geBoardAnswerObjects = node.getBoard(boardEntry);
 
-        getBoardSuccessful(BOARD_ENTRY);
+        //Clean up
+        node.deleteBoard(boardEntry);
 
-        //Clean up after test
-//        node.deleteBoard(BOARD_ENTRY);
-    }
-
-    private void getBoardSuccessful(BoardEntry boardEntry) throws IOException {
-        AnswerObjects answerObjects = node.getBoard(boardEntry);
-        Optional<AnswerObject> answerObjectOptional = answerObjects.getAnswerObject(Operation.GET, boardEntry);
-        assertThat("AnswerObject.operation=get and entry="+BOARD_ENTRY.getMibEntryString()+" exists", answerObjectOptional.isPresent(), is(true));
-
-        AnswerObject answerObject = answerObjectOptional.get();
-        assertThat("AnswerObject.isSuccess=true" , answerObject.isSuccess(), is(true));
-
-        Optional<AttributeObject> attributeObjectOptional = answerObject.getAttributeObject("equipmentBoardName");
-        assertThat("AttributeObject.name=equipmentBoardName' exists", attributeObjectOptional.isPresent(), is(true));
-        AttributeObject attributeObject = attributeObjectOptional.get();
-        assertThat("AttributeObject.value="+BOARD_ENTRY.getMibEntryString(), attributeObject.getValue(), is(BOARD_ENTRY.getMibEntryString()));
-    }
-
-    private void createBoardSucceeded(AnswerObjects answerObjects) {
-        Optional<AnswerObject> answerObjectOptional = answerObjects.getAnswerObject(Operation.CREATE); //Create response has no entry set in R-attributes
-        assertThat("AnswerObject.operation=create' and 'entry="+BOARD_ENTRY.getMibEntryString()+"' exists", answerObjectOptional.isPresent(), is(true));
-
-        AnswerObject answerObject = answerObjectOptional.get();
-        assertThat("answerObject.isSuccess=true" , answerObject.isSuccess(), is(true));
-
-        Optional<AttributeObject> attributeObjectOptional = answerObject.getAttributeObject(BOARD_ENTRY.getMibEntryString());
-        assertThat("AttributeObject.name=" + BOARD_ENTRY.getMibEntryString(), attributeObjectOptional.isPresent(), is(true));
-    }
-
-    private void boardIsNotAdded(BoardEntry boardEntry) throws IOException {
-        AnswerObjects answerObjects = node.getBoard(boardEntry);
-        Optional<AnswerObject> answerObjectOptional = answerObjects.getAnswerObject(Operation.ERROR);
-        assertThat("AnswerObject.operation=error exists", answerObjectOptional.isPresent(), is(true));
-
-        AnswerObject answerObject = answerObjectOptional.get();
-        assertThat("AnswerObject.entry=" + BOARD_ENTRY.getMibEntryString(), answerObject.getEntry(), is(BOARD_ENTRY.getMibEntryString()));
-        assertThat("AnswerObject.isSuccess=false" , answerObject.isSuccess(), is(false));
-        assertThat("Error message contains 'Entry not found'", answerObject.getError().contains("Entry not found"), is(true));
+        //TODO: Verify error message?
+        //Then
+        try {
+            AnswerObjects geBoardAnswerObjectsAfterDelete = node.getBoard(boardEntry);
+        } catch (RuntimeException e) {
+            assertNotNull(e);
+        }
     }
 }

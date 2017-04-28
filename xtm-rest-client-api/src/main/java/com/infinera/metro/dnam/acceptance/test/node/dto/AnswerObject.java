@@ -2,6 +2,8 @@ package com.infinera.metro.dnam.acceptance.test.node.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.infinera.metro.dnam.acceptance.test.mib.MibEntry;
+import com.infinera.metro.dnam.acceptance.test.mib.Operation;
 import lombok.*;
 
 import java.io.Serializable;
@@ -94,10 +96,58 @@ public class AnswerObject implements Serializable {
     private String queryString;     //Q
     private List<AttributeObject> attributeObjectList; //T
 
-    public Optional<AttributeObject> getAttributeObject(String name) {
+    private Optional<AttributeObject> getAttributeObject(String name) {
         assert attributeObjectList != null;
         return attributeObjectList.stream()
                 .filter(attributeObject -> attributeObject.getName().equals(name))
                 .findFirst();
+    }
+
+    /**
+     * Checks if this AnswerObject is the SUCCESS response to a performed operation
+     * For get, set and configure operations the mibEntry is found in field AnswerObject.entry
+     * For create and delete operations the mibEntry is found in field AttributeObject.name
+     *
+     * @param operation     The performed operation, create, get, configure, delete
+     * @param mibEntry      The mibEntry for the performed operation
+     * @return
+     */
+    public boolean isSuccessAnswerObject(Operation operation, MibEntry mibEntry) {
+        final boolean mibEntryFound = mibEntryEqualsAnswerObjectEntryFieldOrAttributeObjectNameField(operation, mibEntry);
+        return isSuccess() && getModule().equals(mibEntry.getModule().getValue()) &&
+                getGroupOrTable().equals(mibEntry.getGroupOrTable().getValue()) && mibEntryFound;
+    }
+
+    /**
+     * Checks if this AnswerObject is the ERROR response to a performed operation.
+     * For get, set and configure operations the mibEntry is found in field AnswerObject.entry
+     * For create and delete operations the mibEntry is found in field AttributeObject.name
+     *
+     * IMPORTANT NOTE:
+     * If the operation initially performed was get/set/delete/configure, and it failed, the attribute
+     * AnswerObject.operation will be "error"and NOT "get/set/delete/configure".
+     *
+     * @param operation     The performed operation, create, get, configure, delete
+     * @param mibEntry      The mibEntry for the performed operation
+     * @return
+     */
+    public boolean isErrorAnswerObject(Operation operation, MibEntry mibEntry) {
+        final boolean mibEntryFound = mibEntryEqualsAnswerObjectEntryFieldOrAttributeObjectNameField(operation, mibEntry);
+        return isSuccess() && getModule().equals(mibEntry.getModule().getValue()) &&
+                getGroupOrTable().equals(mibEntry.getGroupOrTable().getValue()) && mibEntryFound;
+    }
+
+    private boolean mibEntryEqualsAnswerObjectEntryFieldOrAttributeObjectNameField(Operation operation, MibEntry mibEntry) {
+        boolean result;
+        if(operation.equals(Operation.CREATE) || operation.equals(Operation.DELETE)) {
+            result = containsAttributeObjectWithNameEqualToMibEntry(mibEntry);
+        } else {
+            result = getEntry().equals(mibEntry.getMibEntryString());
+        }
+        return result;
+    }
+
+    private boolean containsAttributeObjectWithNameEqualToMibEntry(MibEntry mibEntry) {
+        return getAttributeObject(mibEntry.getMibEntryString()).isPresent();
     }
 }

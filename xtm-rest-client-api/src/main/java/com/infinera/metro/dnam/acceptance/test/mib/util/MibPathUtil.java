@@ -1,12 +1,13 @@
 package com.infinera.metro.dnam.acceptance.test.mib.util;
 
+import com.infinera.metro.dnam.acceptance.test.mib.Command;
 import com.infinera.metro.dnam.acceptance.test.mib.GroupOrTable;
 import com.infinera.metro.dnam.acceptance.test.mib.MibEntry;
 import com.infinera.metro.dnam.acceptance.test.mib.Module;
 import org.stringtemplate.v4.ST;
 
+//TODO: This class does not belong in api. Should be in shared module. It us used by api and impl modules.
 //xtm-rest-client-api
-//TODO: Similar class exists in xtm-rest-client-impl. Maybe remove one.
 public enum MibPathUtil {
     MIB_PATH_UTIL;
 
@@ -33,6 +34,13 @@ public enum MibPathUtil {
         url.add("module", module.getValue());
         url.add("group", group.getValue());
         url.add("entry", entry.getMibEntryString());
+        return url.render();
+    }
+
+    public String getMibPathAndCommand(MibEntry entry, Command command) {
+        ST url = new ST("<entry>/<command>");
+        url.add("entry", entry.getMibEntryPath());
+        url.add("command", command.getValue());
         return url.render();
     }
 }

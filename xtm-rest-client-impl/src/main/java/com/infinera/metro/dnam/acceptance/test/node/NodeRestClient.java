@@ -1,48 +1,61 @@
 package com.infinera.metro.dnam.acceptance.test.node;
 
-import com.infinera.metro.dnam.acceptance.test.mib.*;
-import com.infinera.metro.dnam.acceptance.test.xtmrest.XtmRestMibUtil;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectReader;
+import com.infinera.metro.dnam.acceptance.test.mib.Command;
+import com.infinera.metro.dnam.acceptance.test.mib.Configuration;
+import com.infinera.metro.dnam.acceptance.test.mib.MibEntry;
+import com.infinera.metro.dnam.acceptance.test.mib.util.MibPathUtil;
+import com.infinera.metro.dnam.acceptance.test.node.dto.AnswerObject;
+import com.infinera.metro.dnam.acceptance.test.node.dto.AnswerObjects;
+import com.infinera.metro.dnam.acceptance.test.node.dto.deserializer.JacksonUtil;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import java.io.IOException;
+import java.util.List;
+
+@Slf4j
 class NodeRestClient {
 
     private final NodeConnection nodeConnection;
-    private final XtmRestMibUtil xtmRestMibUtil;
+    private final MibPathUtil mibPathUtil;
+    private final ObjectReader reader = JacksonUtil.INSTANCE.getReader().forType(new TypeReference<List<AnswerObject>>(){});
 
     NodeRestClient(NodeConnection nodeConnection) {
         this.nodeConnection = nodeConnection;
-        this.xtmRestMibUtil = XtmRestMibUtil.INSTANCE;
+        this.mibPathUtil = MibPathUtil.MIB_PATH_UTIL;
     }
 
-    ResponseEntity<String> createBoard(BoardEntry boardEntry) {
-        return performEquipmentBoardRequest(boardEntry, Command.CREATE_JSON);
+    AnswerObjects performRestAction(MibEntry mibEntry, Command command) throws IOException, RuntimeException {
+        return performRestAction(mibEntry, command, null);
     }
 
-    ResponseEntity<String> getBoard(BoardEntry boardEntry) {
-        return performEquipmentBoardRequest(boardEntry, Command.GET_JSON);
+    AnswerObjects performRestAction(MibEntry mibEntry, Command command, Configuration configuration) throws IOException, RuntimeException {
+        String mibPathAndCommand = mibPathUtil.getMibPathAndCommand(mibEntry, command);
+        String flags ="_RFLAGS_=RAISEMGNOQPCYVULTBJK&_AFLAGS_=AVNDHPUIMJOSE";
+        String parameters = (configuration == null) ? "" : configuration.asParameters();
+        String all = mibPathAndCommand + "?" + flags + "&" + parameters;
+        ResponseEntity<String> responseEntity = nodeConnection.performRestAction(all);
+
+        log.info(responseEntity.getBody());
+
+        checkHttpStatusCode(responseEntity);
+        List<AnswerObject> answerObjectList = readValueAsList(responseEntity);
+        AnswerObjects answerObjects = new AnswerObjects(answerObjectList);
+        answerObjects.checkResponse(command.getOperation(), mibEntry);
+        return answerObjects;
     }
 
-    ResponseEntity<String> deleteBoard(BoardEntry boardEntry) {
-        return performEquipmentBoardRequest(boardEntry, Command.DELETE_JSON);
+    private void checkHttpStatusCode(ResponseEntity<String> responseEntity) throws RuntimeException {
+        if(responseEntity.getStatusCode() != HttpStatus.OK) {
+            throw new RuntimeException("XTM responded with status code " + responseEntity.getStatusCode());
+        }
     }
 
-    ResponseEntity<String> listBoards() {
-        return performEquipmentBoardRequest(Command.LIST_JSON);
+    private List<AnswerObject> readValueAsList(ResponseEntity<String> responseEntity) throws IOException {
+        return reader.readValue(responseEntity.getBody());
     }
 
-    private ResponseEntity<String> performEquipmentBoardRequest(MibEntry mibEntry, Command command) {
-        final String mibPathAndOperation = xtmRestMibUtil.mibRestUrl(mibEntry, command);
-        return nodeConnection.performRestAction(mibPathAndOperation + "?_RFLAGS_=RAISEMGNOQPCYVULTBJK&_AFLAGS_=AVNDHPUIMJOSE");
-    }
-
-    //TODO: Make more generic
-//    private ResponseEntity<String> performEquipmentBoardRequest(BoardEntry boardEntry, Command command) {
-//        final String mibPath = xtmRestMibUtil.mibRestUrl(Module.EQUIPMENT, GroupOrTable.BOARD, boardEntry, command);
-//        return nodeConnection.performRestAction(mibPath + "?_RFLAGS_=RAISEMGNOQPCYVULTBJK&_AFLAGS_=AVNDHPUIMJOSE");
-//    }
-
-    private ResponseEntity<String> performEquipmentBoardRequest(Command command) {
-        final String mibPath = xtmRestMibUtil.mibRestUrl(Module.EQUIPMENT, GroupOrTable.BOARD, command);
-        return nodeConnection.performRestAction(mibPath + "?_RFLAGS_=RAISEMGNOQPCYVULTBJK&_AFLAGS_=AVNDHPUIMJOSE");
-    }
 }

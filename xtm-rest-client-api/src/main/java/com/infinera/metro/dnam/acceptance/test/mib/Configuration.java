@@ -9,7 +9,7 @@ public final class Configuration {
     private final String key;
     private final String value;
 
-    public String getKeyEqualsValue() {
+    public String asParameters() {
         return key + "=" + value;
     }
 }

@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 
-public class AnswerObjectDeserializer extends JsonDeserializer<AnswerObject> {
+class AnswerObjectDeserializer extends JsonDeserializer<AnswerObject> {
 
     @Override
     public AnswerObject deserialize(JsonParser jsonParser, DeserializationContext context) throws IOException {

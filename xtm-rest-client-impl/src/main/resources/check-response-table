@@ -1,0 +1,24 @@
+create.json or delete.json responses:
+
+AnswerObject
+    module              present
+    groupOrTable        present
+    entry               not present
+    operation           create | delete | error
+    isSuccess           true | false
+    error               present if error
+
+AttributeObject
+    name                present
+
+-------------------------------------------------
+
+get.json set.json or configure.json responses:
+
+AnswerObject
+    module              present
+    groupOrTable        present
+    entry               present
+    operation           get | set | error
+    isSuccess           true | false
+    error               present if error

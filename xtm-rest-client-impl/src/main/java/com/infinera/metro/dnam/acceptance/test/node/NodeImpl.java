@@ -1,22 +1,15 @@
 package com.infinera.metro.dnam.acceptance.test.node;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectReader;
 import com.infinera.metro.dnam.acceptance.test.mib.BoardEntry;
+import com.infinera.metro.dnam.acceptance.test.mib.Command;
 import com.infinera.metro.dnam.acceptance.test.mib.Configuration;
 import com.infinera.metro.dnam.acceptance.test.mib.LinePortEntry;
-import com.infinera.metro.dnam.acceptance.test.node.dto.AnswerObject;
 import com.infinera.metro.dnam.acceptance.test.node.dto.AnswerObjects;
-import com.infinera.metro.dnam.acceptance.test.node.dto.deserializer.JacksonUtil;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 
 import java.io.IOException;
-import java.util.List;
 
 public class NodeImpl implements Node {
     private final NodeRestClient nodeRestClient;
-    private final ObjectReader reader = JacksonUtil.INSTANCE.getReader().forType(new TypeReference<List<AnswerObject>>(){});
 
     public NodeImpl(NodeRestClient nodeRestClient) {
         this.nodeRestClient = nodeRestClient;
@@ -30,33 +23,23 @@ public class NodeImpl implements Node {
         );
     }
 
-    public AnswerObjects createBoard(BoardEntry boardEntry) throws IOException {
-        return getAnswerObjects(nodeRestClient.createBoard(boardEntry));
+    /** BoardEntry **/
 
+    public AnswerObjects createBoard(BoardEntry boardEntry) throws IOException {
+        return nodeRestClient.performRestAction(boardEntry, Command.CREATE_JSON);
     }
 
     public AnswerObjects getBoard(BoardEntry boardEntry) throws IOException {
-        return getAnswerObjects(nodeRestClient.getBoard(boardEntry));
+        return nodeRestClient.performRestAction(boardEntry, Command.GET_JSON);
     }
 
     public AnswerObjects deleteBoard(BoardEntry boardEntry) throws IOException {
-        return getAnswerObjects(nodeRestClient.deleteBoard(boardEntry));
-    }
+        return nodeRestClient.performRestAction(boardEntry, Command.DELETE_JSON);
+   }
 
-    public AnswerObject setLinePortConfiguration(LinePortEntry linePortEntry, Configuration configuration) {
-//        nodeRestClient.setLinePortConfiguration(linePortEntry, configuration);
-        return null;
-    }
+    /** LinePortEntry **/
 
-
-    private AnswerObjects getAnswerObjects(ResponseEntity<String> responseEntity) throws IOException {
-        return new AnswerObjects(readValueAsList(responseEntity));
-    }
-
-    private List<AnswerObject> readValueAsList(ResponseEntity<String> responseEntity) throws IOException {
-        if(responseEntity.getStatusCode() != HttpStatus.OK) {
-            throw new RuntimeException("XTM responded with status code " + responseEntity.getStatusCode());
-        }
-        return reader.readValue(responseEntity.getBody());
+    public AnswerObjects setLinePortConfiguration(LinePortEntry linePortEntry, Configuration configuration) throws IOException {
+        return nodeRestClient.performRestAction(linePortEntry, Command.SET_JSON, configuration);
     }
 }

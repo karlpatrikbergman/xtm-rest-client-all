@@ -30,7 +30,7 @@ As specified in ppt document:
     X               include all of the above
 
 */
-public class AttributeObjectDeserializer extends JsonDeserializer<AttributeObject> {
+class AttributeObjectDeserializer extends JsonDeserializer<AttributeObject> {
 
     @Override
     public AttributeObject deserialize(JsonParser jsonParser, DeserializationContext context) throws IOException {

@@ -25,7 +25,7 @@ public class LinePortEntryTest {
                 .linePort(LinePort.WDM)
                 .subrack(1)
                 .slot(2)
-                .transceiverPort(3)
+                .transmitterPort(3)
                 .receiverPort(4)
                 .build();
 

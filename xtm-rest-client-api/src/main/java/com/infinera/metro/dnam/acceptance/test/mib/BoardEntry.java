@@ -9,11 +9,11 @@ import static com.infinera.metro.dnam.acceptance.test.mib.util.MibPathUtil.MIB_P
 @Value
 @Builder
 public class BoardEntry implements MibEntry {
+    @NonNull private final Module module = Module.EQUIPMENT;
+    @NonNull private final GroupOrTable groupOrTable = GroupOrTable.BOARD;
     @NonNull private final Board board;
     @NonNull private final Integer subrack;
     @NonNull private final Integer slot;
-    @NonNull private final Module module = Module.EQUIPMENT;
-    @NonNull private final GroupOrTable groupOrTable = GroupOrTable.BOARD;
 
     @Override
     public String getMibEntryString() {

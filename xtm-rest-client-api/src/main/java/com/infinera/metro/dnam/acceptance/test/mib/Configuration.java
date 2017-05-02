@@ -5,7 +5,7 @@ import lombok.Value;
 
 @Value
 @Builder
-public final class Configuration {
+public class Configuration {
     private final String key;
     private final String value;
 

@@ -19,7 +19,6 @@ class NodeConnection {
         this.nodeAccessData = nodeAccessData;
         this.restTemplate = restTemplate;
         this.xtmRestBaseUtil = XtmRestBaseUtil.INSTANCE;
-        loginAndSetSessionId();
     }
 
     static NodeConnection create(NodeAccessData nodeAccessData) {
@@ -27,6 +26,9 @@ class NodeConnection {
     }
 
     ResponseEntity<String> performRestAction(String mibPath) {
+        if(sessionId == 0) {
+            loginAndSetSessionId();
+        }
         return performHttpGetRequest(mibPath, createHttpEntityWithSessionId());
     }
 

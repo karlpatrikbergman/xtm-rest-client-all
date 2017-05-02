@@ -9,6 +9,7 @@ import com.infinera.metro.dnam.acceptance.test.node.dto.AnswerObjects;
 import com.infinera.metro.dnam.acceptance.test.node.dto.deserializer.JacksonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.springframework.http.ResponseEntity;
 
 import java.io.IOException;
@@ -20,6 +21,7 @@ import static com.infinera.metro.dnam.acceptance.test.node.RestTemplateFactory.R
  * Workbench for misc testing. Tests will fail if XTM node is not started.
  * Tests are not supposed to run in pipeline.
  */
+@Category(DontLetGradleRun.class)
 @Slf4j
 public class Workbench {
 
@@ -112,7 +114,7 @@ public class Workbench {
                 .linePort(LinePort.WDM)
                 .subrack(1)
                 .slot(2)
-                .transceiverPort(3)
+                .transmitterPort(3)
                 .receiverPort(4)
                 .build();
         Configuration configuration = Configuration.builder()
@@ -135,7 +137,60 @@ public class Workbench {
     }
 
     /**
-     * Could be placed in NodeRestClient
+     * To these do the same thing?
+     * clientIfConfigurationCommand=lan10GbE yes
+     * configure=lan10GbE yes
+     */
+    @Test
+    public void configureClientPort() throws IOException {
+        MibEntry mibEntry = ClientPortEntry.builder()
+                .clientPort(ClientPort.CLIENT)
+                .subrack(1)
+                .slot(2)
+                .transmitterPort(1)
+                .receiverPort(2)
+                .build();
+        Configuration configuration = Configuration.builder()
+                .key("configure")
+                .value("lan10GbE yes")
+                .build();
+        common(mibEntry, Command.CONFIGURE, configuration);
+    }
+
+    @Test
+    public void createPeer() {
+        //A-end
+        //172.17.0.2
+        LinePortEntry linePortEntry_A_end = LinePortEntry.builder()
+                .linePort(LinePort.WDM)
+                .subrack(1)
+                .slot(2)
+                .transmitterPort(3)
+                .receiverPort(4)
+                .build();
+
+
+        //Z-end
+        //172.17.0.3
+        LinePortEntry linePortEntry_Z_end = LinePortEntry.builder()
+                .linePort(LinePort.WDM)
+                .subrack(1)
+                .slot(2)
+                .transmitterPort(3)
+                .receiverPort(4)
+                .build();
+
+//        MibEntry peerEntry_A_end = PeerEntry.builder()
+//                .linePortEntry(linePortEntry)
+//                .build();
+//
+//        String mibEntryString = peerEntry.getMibEntryString();
+
+
+    }
+
+    /**
+     * Placed in NodeRestClient
      */
     private void common(MibEntry mibEntry, Command command, Configuration configuration) throws IOException {
         String mibPathAndCommand = mibPathUtil.getMibPathAndCommand(mibEntry, command);

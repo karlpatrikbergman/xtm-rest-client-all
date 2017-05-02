@@ -13,7 +13,8 @@ public enum Operation {
     DELETE("delete"),
     GET("get"),
     SET("set"),
-    ERROR("error");
+    ERROR("error"),
+    CONFIGURE("configure");
 
     private final String name;
 

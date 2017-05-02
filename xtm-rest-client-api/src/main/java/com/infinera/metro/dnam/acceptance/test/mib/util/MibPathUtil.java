@@ -11,6 +11,23 @@ import org.stringtemplate.v4.ST;
 public enum MibPathUtil {
     MIB_PATH_UTIL;
 
+    public String getPeerLabel(int subrack, int slot, int port) {
+        ST result = new ST("<subrack>:<slot>:<port>");
+        result.add("subrack", subrack);
+        result.add("slot", slot);
+        result.add("port", port);
+        return result.render();
+    }
+
+    public String getMibEntryString(String entry, int subrack, int slot, int transceiverPort) {
+        ST result = new ST("<entry>:<subrack>:<slot>:<transceiverPort>");
+        result.add("entry", entry);
+        result.add("subrack", subrack);
+        result.add("slot", slot);
+        result.add("transceiverPort", transceiverPort);
+        return result.render();
+    }
+
     public String getMibEntryString(String entry, int subrack, int slot, int transceiverPort, int receiverPort) {
         ST result = new ST("<entry>:<subrack>:<slot>:<transceiverPort>-<receiverPort>");
         result.add("entry", entry);

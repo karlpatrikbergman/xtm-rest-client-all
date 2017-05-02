@@ -1,9 +1,6 @@
 package com.infinera.metro.dnam.acceptance.test.node;
 
-import com.infinera.metro.dnam.acceptance.test.mib.BoardEntry;
-import com.infinera.metro.dnam.acceptance.test.mib.Command;
-import com.infinera.metro.dnam.acceptance.test.mib.Configuration;
-import com.infinera.metro.dnam.acceptance.test.mib.LinePortEntry;
+import com.infinera.metro.dnam.acceptance.test.mib.*;
 import com.infinera.metro.dnam.acceptance.test.node.dto.AnswerObjects;
 
 import java.io.IOException;
@@ -42,4 +39,18 @@ public class NodeImpl implements Node {
     public AnswerObjects setLinePortConfiguration(LinePortEntry linePortEntry, Configuration configuration) throws IOException {
         return nodeRestClient.performRestAction(linePortEntry, Command.SET_JSON, configuration);
     }
+
+    /** ClientPortEntry **/
+
+    public AnswerObjects setClientPortConfiguration(ClientPortEntry clientPortEntry, Configuration configuration) throws IOException {
+        return nodeRestClient.performRestAction(clientPortEntry, Command.CONFIGURE, configuration);
+    }
+
+    /** PeerEntry **/
+
+    public AnswerObjects createPeers(PeerEntry localPeer, PeerEntry remotePeer) {
+        return null;
+    }
+
+
 }

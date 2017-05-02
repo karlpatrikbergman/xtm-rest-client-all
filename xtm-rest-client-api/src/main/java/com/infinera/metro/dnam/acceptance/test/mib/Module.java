@@ -3,7 +3,8 @@ package com.infinera.metro.dnam.acceptance.test.mib;
 public enum Module {
     EQUIPMENT("eq"),
     WDM("wdm"),
-    CLIENT("client");
+    CLIENT("client"),
+    TOPO("topo");
 
     private final String value;
 

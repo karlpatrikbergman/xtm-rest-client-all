@@ -7,6 +7,8 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 
 import static com.infinera.metro.dnam.acceptance.test.node.RestTemplateFactory.REST_TEMPLATE_FACTORY;
 
@@ -84,10 +86,36 @@ public class NodeImplTest {
                 .localLinePortEntry(linePortEntry)
                 .remoteLinePortEntry(remoteLinePortEntry)
                 .remoteNodeIpAddress("172.17.0.3")
-                .localMtoIdentifier(new MtoIdentifier(0))
-                .remoteMtoIdentifier(new MtoIdentifier(0))
+                .localMpoIdentifier(MpoIdentifier.createMpoIdentifierModuleNotPresent())
+                .remoteMpoIdentifier(MpoIdentifier.createMpoIdentifierModuleNotPresent())
                 .build();
 
+        List<Configuration> peerConfigurationList = Arrays.asList(
+                Configuration.builder()
+                    .key("topoPeerLocalLabel")
+                    .value(peerEntry.getLocalLabel())
+                    .build(),
+                Configuration.builder()
+                    .key("topoPeerRemoteIpAddress")
+                    .value(peerEntry.getPeerRemoteIpAddress())
+                    .build(),
+                Configuration.builder()
+                    .key("topoPeerRemoteSubrack")
+                    .value(peerEntry.getRemoteLinePortEntry().getSubrack().toString())
+                    .build(),
+                Configuration.builder()
+                    .key("topoPeerRemoteSlot")
+                    .value(peerEntry.getRemoteLinePortEntry().getSlot().toString())
+                    .build(),
+                Configuration.builder()
+                    .key("topoPeerRemotePort")
+                    .value(peerEntry.getRemoteLinePortEntry().getReceivePort().toString())
+                    .build(),
+                Configuration.builder()
+                    .key("topoPeerRemoteLabel")
+                    .value(peerEntry.getPeerRemoteLabel())
+                    .build()
+        );
 
         //When
         AnswerObjects createBoardAnswerObjects = node.createBoard(boardEntry);
@@ -96,7 +124,9 @@ public class NodeImplTest {
 
         AnswerObjects setClientPortConfigurationAnswerObjects = node.setClientPortConfiguration(clientPortEntry, clientPortConfiguration);
 
-        AnswerObjects createPeerAnswerObjects = node.createPeer(peerEntry);
+        AnswerObjects createPeerAnswerObjects = node.createLocalPeer(peerEntry);
+
+        AnswerObjects setPeerConfigAnswerObjects = node.configureLocalPeer(peerEntry, peerConfigurationList);
 
         //TODO: Verify line port settings in response
         //TODO: Verify client port settings in response

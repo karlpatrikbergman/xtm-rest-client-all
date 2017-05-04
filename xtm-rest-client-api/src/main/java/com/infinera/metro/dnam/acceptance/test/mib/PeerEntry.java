@@ -15,12 +15,12 @@ public class PeerEntry implements MibEntry {
     @NonNull private final LinePortEntry localLinePortEntry;
     @NonNull private final LinePortEntry remoteLinePortEntry;
     @NonNull private final String remoteNodeIpAddress;
-    @NonNull private final  MtoIdentifier localMtoIdentifier;
-    @NonNull private final  MtoIdentifier remoteMtoIdentifier;
-
+    @NonNull private final MpoIdentifier localMpoIdentifier;
+    @NonNull private final MpoIdentifier remoteMpoIdentifier;
+    @NonNull private final Boolean isTransmitSide;
 
     public String getLocalLabel() {
-        return MIB_PATH_UTIL.getPeerLabel(localLinePortEntry.getSubrack(), localLinePortEntry.getSlot(), localLinePortEntry.getTransmitPort(), localMtoIdentifier);
+        return MIB_PATH_UTIL.getPeerLabel(localLinePortEntry.getSubrack(), localLinePortEntry.getSlot(), getLocalPort(), localMpoIdentifier);
     }
 
     public String getPeerRemoteIpAddress() {
@@ -36,21 +36,29 @@ public class PeerEntry implements MibEntry {
     }
 
     public int getPeerRemotePort() {
-        return remoteLinePortEntry.getReceivePort();
+        return (isTransmitSide) ? remoteLinePortEntry.getReceivePort() : remoteLinePortEntry.getTransmitPort();
     }
 
     public String getPeerRemoteLabel() {
-        return MIB_PATH_UTIL.getPeerLabel(remoteLinePortEntry.getSubrack(), remoteLinePortEntry.getSlot(), remoteLinePortEntry.getReceivePort(), remoteMtoIdentifier);
+        return MIB_PATH_UTIL.getPeerLabel(remoteLinePortEntry.getSubrack(), remoteLinePortEntry.getSlot(), getPeerRemotePort(), remoteMpoIdentifier);
     }
 
     @Override
     public String getMibEntryString() {
         return MIB_PATH_UTIL.getMibEntryString (peer.getName(), localLinePortEntry.getSubrack(),
-                localLinePortEntry.getSlot(), localLinePortEntry.getTransmitPort(), localMtoIdentifier);
+                localLinePortEntry.getSlot(), getLocalPort(), localMpoIdentifier);
     }
 
     @Override
     public String getMibEntryPath() {
         return MIB_PATH_UTIL.getMibEntryPath(module, groupOrTable, this);
     }
+
+    private int getLocalPort() {
+        return (isTransmitSide) ? localLinePortEntry.getTransmitPort() : localLinePortEntry.getReceivePort();
+    }
+//
+//    private int getRemotePort() {
+//        return (isTransmitSide) ? remoteLinePortEntry.getReceivePort() : remoteLinePortEntry.getTransmitPort();
+//    }
 }

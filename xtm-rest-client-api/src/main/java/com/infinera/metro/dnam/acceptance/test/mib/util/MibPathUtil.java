@@ -8,22 +8,22 @@ import org.stringtemplate.v4.ST;
 public enum MibPathUtil {
     MIB_PATH_UTIL;
 
-    public String getPeerLabel(int subrack, int slot, int port, MtoIdentifier mtoIdentifier) {
+    public String getPeerLabel(int subrack, int slot, int port, MpoIdentifier mpoIdentifier) {
         ST result = new ST("<subrack>:<slot><mtoIdentifier>:<port>");
         result.add("subrack", subrack);
         result.add("slot", slot);
         result.add("port", port);
-        result.add("mtoIdentifier", mtoIdentifier);
+        result.add("mtoIdentifier", mpoIdentifier);
         return result.render();
     }
 
-    public String getMibEntryString(String entry, int subrack, int slot, int transmitPort, MtoIdentifier mtoIdentifier) {
+    public String getMibEntryString(String entry, int subrack, int slot, int transmitPort, MpoIdentifier mpoIdentifier) {
         ST result = new ST("<entry>:<subrack>:<slot><mtoIdentifier>:<transmitPort>");
         result.add("entry", entry);
         result.add("subrack", subrack);
         result.add("slot", slot);
         result.add("transmitPort", transmitPort);
-        result.add("mtoIdentifier", mtoIdentifier);
+        result.add("mtoIdentifier", mpoIdentifier);
         return result.render();
     }
 

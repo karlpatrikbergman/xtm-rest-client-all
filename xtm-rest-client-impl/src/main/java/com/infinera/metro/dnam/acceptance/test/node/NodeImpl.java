@@ -48,8 +48,8 @@ public class NodeImpl implements Node {
 
     /** PeerEntry **/
 
-    public AnswerObjects createPeers(PeerEntry localPeer, PeerEntry remotePeer) {
-        return null;
+    public AnswerObjects createPeer(PeerEntry peerEntry) throws IOException {
+        return nodeRestClient.performRestAction(peerEntry, Command.CREATE_JSON);
     }
 
 

@@ -35,8 +35,8 @@ class NodeRestClient {
     AnswerObjects performRestAction(MibEntry mibEntry, Command command, Configuration configuration) throws IOException, RuntimeException {
         String mibPathAndCommand = mibPathUtil.getMibPathAndCommand(mibEntry, command);
         String flags ="_RFLAGS_=RAISEMGNOQPCYVULTBJK&_AFLAGS_=AVNDHPUIMJOSE";
-        String parameters = (configuration == null) ? "" : configuration.asParameters();
-        String all = mibPathAndCommand + "?" + flags + "&" + parameters;
+        String parameters = (configuration == null) ? "" : "&" + configuration.asParameters();
+        String all = mibPathAndCommand + "?" + flags + parameters;
         ResponseEntity<String> responseEntity = nodeConnection.performRestAction(all);
 
         log.info(responseEntity.getBody());

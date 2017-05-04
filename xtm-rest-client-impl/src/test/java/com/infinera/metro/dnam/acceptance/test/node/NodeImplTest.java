@@ -9,7 +9,6 @@ import org.junit.experimental.categories.Category;
 import java.io.IOException;
 
 import static com.infinera.metro.dnam.acceptance.test.node.RestTemplateFactory.REST_TEMPLATE_FACTORY;
-import static org.junit.Assert.assertNotNull;
 
 @Category(IntegrationTest.class)
 @Slf4j
@@ -51,8 +50,8 @@ public class NodeImplTest {
                 .linePort(LinePort.WDM)
                 .subrack(1)
                 .slot(2)
-                .transmitterPort(3)
-                .receiverPort(4)
+                .transmitPort(3)
+                .receivePort(4)
                 .build();
 
         Configuration linePortConfiguration = Configuration.builder()
@@ -73,6 +72,23 @@ public class NodeImplTest {
                 .value("lan10GbE yes")
                 .build();
 
+        LinePortEntry remoteLinePortEntry = LinePortEntry.builder()
+                .linePort(LinePort.WDM)
+                .subrack(1)
+                .slot(2)
+                .transmitPort(7)
+                .receivePort(8)
+                .build();
+
+        PeerEntry peerEntry = PeerEntry.builder()
+                .localLinePortEntry(linePortEntry)
+                .remoteLinePortEntry(remoteLinePortEntry)
+                .remoteNodeIpAddress("172.17.0.3")
+                .localMtoIdentifier(new MtoIdentifier(0))
+                .remoteMtoIdentifier(new MtoIdentifier(0))
+                .build();
+
+
         //When
         AnswerObjects createBoardAnswerObjects = node.createBoard(boardEntry);
 
@@ -80,20 +96,22 @@ public class NodeImplTest {
 
         AnswerObjects setClientPortConfigurationAnswerObjects = node.setClientPortConfiguration(clientPortEntry, clientPortConfiguration);
 
+        AnswerObjects createPeerAnswerObjects = node.createPeer(peerEntry);
+
         //TODO: Verify line port settings in response
         //TODO: Verify client port settings in response
         //Then
         AnswerObjects geBoardAnswerObjects = node.getBoard(boardEntry);
 
-        //Clean up
-        node.deleteBoard(boardEntry);
-
-        //TODO: Verify error message?
-        //Then
-        try {
-            AnswerObjects geBoardAnswerObjectsAfterDelete = node.getBoard(boardEntry);
-        } catch (RuntimeException e) {
-            assertNotNull(e);
-        }
+//        //Clean up
+//        node.deleteBoard(boardEntry);
+//
+//        //TODO: Verify error message?
+//        //Then
+//        try {
+//            AnswerObjects geBoardAnswerObjectsAfterDelete = node.getBoard(boardEntry);
+//        } catch (RuntimeException e) {
+//            assertNotNull(e);
+//        }
     }
 }

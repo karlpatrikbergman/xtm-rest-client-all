@@ -32,6 +32,9 @@ class NodeConnection {
         return performHttpGetRequest(mibPath, createHttpEntityWithSessionId());
     }
 
+    /**
+     * * TODO: Implement back-off policy and max nr of attempts
+     */
     void loginAndSetSessionId() {
         while(this.sessionId == 0) {
             ResponseEntity<String> loginResponse = login();
@@ -61,6 +64,7 @@ class NodeConnection {
     }
 
     /**
+     * TODO: Implement back-off policy and max nr of attempts
      * Connection timeout is set to 3000 ms in createRestTemplate(). When time out occurs
      * we catch exception, sleeps for a while and tries again.
      */

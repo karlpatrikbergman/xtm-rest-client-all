@@ -25,8 +25,8 @@ public class LinePortEntryTest {
                 .linePort(LinePort.WDM)
                 .subrack(1)
                 .slot(2)
-                .transmitterPort(3)
-                .receiverPort(4)
+                .transmitPort(3)
+                .receivePort(4)
                 .build();
 
         final String actualMibEntryPath = mibEntry.getMibEntryPath();

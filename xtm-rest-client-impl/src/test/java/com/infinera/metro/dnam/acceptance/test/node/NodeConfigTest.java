@@ -1,6 +1,7 @@
 package com.infinera.metro.dnam.acceptance.test.node;
 
 import com.infinera.metro.dnam.acceptance.test.mib.*;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import static com.infinera.metro.dnam.acceptance.test.node.RestTemplateFactory.REST_TEMPLATE_FACTORY;
@@ -31,8 +32,8 @@ public class NodeConfigTest {
             .linePort(LinePort.WDM)
             .subrack(1)
             .slot(2)
-            .transmitterPort(3)
-            .receiverPort(4)
+            .transmitPort(3)
+            .receivePort(4)
             .build();
 
     Configuration linePortConfiguration = Configuration.builder()
@@ -53,6 +54,7 @@ public class NodeConfigTest {
             .value("lan10GbE yes")
             .build();
 
+    @Ignore
     @Test
     public void test() {
         NodeConfig nodeConfig = NodeConfig.builder()

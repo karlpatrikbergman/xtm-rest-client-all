@@ -105,6 +105,17 @@ project(':xtm-rest-client-factory') {
         compile project(':shared')
         testCompile 'com.palantir.docker.compose:docker-compose-rule-junit4:0.31.1'
     }
+
+    test {
+        //Show that tests are run in the command-line output
+        testLogging {
+            events 'started', 'passed'
+        }
+        useJUnit {
+            excludeCategories 'com.infinera.metro.dnam.acceptance.test.node.IntegrationTest'
+            excludeCategories 'com.infinera.metro.dnam.acceptance.test.node.DontLetGradleRun'
+        }
+    }
 }
 
 project(':shared') {

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="basic.BasicYamlTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2017-04-27T09:13:06" hostname="gentoo-pabe2.infinera.com" time="0.13">
+<testsuite name="basic.BasicYamlTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2017-05-04T10:16:28" hostname="gentoo-pabe2.infinera.com" time="0.122">
   <properties/>
-  <testcase name="test" classname="basic.BasicYamlTest" time="0.13"/>
+  <testcase name="test" classname="basic.BasicYamlTest" time="0.122"/>
   <system-out><![CDATA[*** toString() ***
 Configuration(released=Fri Nov 30 01:00:00 CET 2012, version=1.0, connection=Connection(url=jdbc:mysql://localhost:3306/db, poolSize=5), protocols=[http, https], users={tom=passwd, bob=passwd})
 

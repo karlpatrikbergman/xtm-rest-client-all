@@ -114,8 +114,8 @@ public class Workbench {
                 .linePort(LinePort.WDM)
                 .subrack(1)
                 .slot(2)
-                .transmitterPort(3)
-                .receiverPort(4)
+                .transmitPort(3)
+                .receivePort(4)
                 .build();
         Configuration configuration = Configuration.builder()
                 .key("expectedFrequency")
@@ -165,8 +165,8 @@ public class Workbench {
                 .linePort(LinePort.WDM)
                 .subrack(1)
                 .slot(2)
-                .transmitterPort(3)
-                .receiverPort(4)
+                .transmitPort(3)
+                .receivePort(4)
                 .build();
 
 
@@ -176,8 +176,8 @@ public class Workbench {
                 .linePort(LinePort.WDM)
                 .subrack(1)
                 .slot(2)
-                .transmitterPort(3)
-                .receiverPort(4)
+                .transmitPort(3)
+                .receivePort(4)
                 .build();
 
 //        MibEntry peerEntry_A_end = PeerEntry.builder()

@@ -133,7 +133,7 @@ public class AnswerObject implements Serializable {
      */
     public boolean isErrorAnswerObject(Operation operation, MibEntry mibEntry) {
         final boolean mibEntryFound = mibEntryEqualsAnswerObjectEntryFieldOrAttributeObjectNameField(operation, mibEntry);
-        return isSuccess() && getModule().equals(mibEntry.getModule().getValue()) &&
+        return !isSuccess() && getModule().equals(mibEntry.getModule().getValue()) &&
                 getGroupOrTable().equals(mibEntry.getGroupOrTable().getValue()) && mibEntryFound;
     }
 

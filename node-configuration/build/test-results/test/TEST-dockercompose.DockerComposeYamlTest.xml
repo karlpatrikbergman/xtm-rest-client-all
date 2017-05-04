@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="dockercompose.DockerComposeYamlTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2017-04-27T09:13:06" hostname="gentoo-pabe2.infinera.com" time="0.024">
+<testsuite name="dockercompose.DockerComposeYamlTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2017-05-04T10:16:28" hostname="gentoo-pabe2.infinera.com" time="0.029">
   <properties/>
-  <testcase name="test" classname="dockercompose.DockerComposeYamlTest" time="0.024"/>
+  <testcase name="test" classname="dockercompose.DockerComposeYamlTest" time="0.029"/>
   <system-out><![CDATA[{
   "version" : "2",
   "services" : {

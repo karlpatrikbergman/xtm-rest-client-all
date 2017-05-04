@@ -1,9 +1,6 @@
 package com.infinera.metro.dnam.acceptance.test.mib.util;
 
-import com.infinera.metro.dnam.acceptance.test.mib.Command;
-import com.infinera.metro.dnam.acceptance.test.mib.GroupOrTable;
-import com.infinera.metro.dnam.acceptance.test.mib.MibEntry;
-import com.infinera.metro.dnam.acceptance.test.mib.Module;
+import com.infinera.metro.dnam.acceptance.test.mib.*;
 import org.stringtemplate.v4.ST;
 
 //TODO: This class does not belong in api. Should be in shared module. It us used by api and impl modules.
@@ -11,30 +8,41 @@ import org.stringtemplate.v4.ST;
 public enum MibPathUtil {
     MIB_PATH_UTIL;
 
-    public String getPeerLabel(int subrack, int slot, int port) {
-        ST result = new ST("<subrack>:<slot>:<port>");
+    public String getPeerLabel(int subrack, int slot, int port, MtoIdentifier mtoIdentifier) {
+        ST result = new ST("<subrack>:<slot><mtoIdentifier>:<port>");
         result.add("subrack", subrack);
         result.add("slot", slot);
         result.add("port", port);
+        result.add("mtoIdentifier", mtoIdentifier);
         return result.render();
     }
 
-    public String getMibEntryString(String entry, int subrack, int slot, int transceiverPort) {
-        ST result = new ST("<entry>:<subrack>:<slot>:<transceiverPort>");
+    public String getMibEntryString(String entry, int subrack, int slot, int transmitPort, MtoIdentifier mtoIdentifier) {
+        ST result = new ST("<entry>:<subrack>:<slot><mtoIdentifier>:<transmitPort>");
         result.add("entry", entry);
         result.add("subrack", subrack);
         result.add("slot", slot);
-        result.add("transceiverPort", transceiverPort);
+        result.add("transmitPort", transmitPort);
+        result.add("mtoIdentifier", mtoIdentifier);
         return result.render();
     }
 
-    public String getMibEntryString(String entry, int subrack, int slot, int transceiverPort, int receiverPort) {
-        ST result = new ST("<entry>:<subrack>:<slot>:<transceiverPort>-<receiverPort>");
+    public String getMibEntryString(String entry, int subrack, int slot, int transmitPort) {
+        ST result = new ST("<entry>:<subrack>:<slot>:<transmitPort>");
         result.add("entry", entry);
         result.add("subrack", subrack);
         result.add("slot", slot);
-        result.add("transceiverPort", transceiverPort);
-        result.add("receiverPort", receiverPort);
+        result.add("transmitPort", transmitPort);
+        return result.render();
+    }
+
+    public String getMibEntryString(String entry, int subrack, int slot, int transmitPort, int receivePort) {
+        ST result = new ST("<entry>:<subrack>:<slot>:<transmitPort>-<receivePort>");
+        result.add("entry", entry);
+        result.add("subrack", subrack);
+        result.add("slot", slot);
+        result.add("transmitPort", transmitPort);
+        result.add("receivePort", receivePort);
         return result.render();
     }
 

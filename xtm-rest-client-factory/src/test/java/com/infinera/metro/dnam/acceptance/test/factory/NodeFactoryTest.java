@@ -1,5 +1,6 @@
 package com.infinera.metro.dnam.acceptance.test.factory;
 
+import com.infinera.metro.dnam.acceptance.test.node.IntegrationTest;
 import com.infinera.metro.dnam.acceptance.test.mib.Board;
 import com.infinera.metro.dnam.acceptance.test.mib.BoardEntry;
 import com.infinera.metro.dnam.acceptance.test.node.Node;
@@ -9,9 +10,11 @@ import com.palantir.docker.compose.DockerComposeRule;
 import com.palantir.docker.compose.connection.waiting.HealthChecks;
 import org.junit.ClassRule;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
 import java.io.IOException;
 
+@Category(IntegrationTest.class)
 public class NodeFactoryTest {
     @ClassRule
     public static DockerComposeRule docker = DockerComposeRule.builder()

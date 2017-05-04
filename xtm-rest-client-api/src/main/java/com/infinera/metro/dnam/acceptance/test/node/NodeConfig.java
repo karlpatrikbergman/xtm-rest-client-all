@@ -5,7 +5,7 @@ import com.infinera.metro.dnam.acceptance.test.mib.BoardEntry;
 import com.infinera.metro.dnam.acceptance.test.mib.ClientPortEntry;
 import com.infinera.metro.dnam.acceptance.test.mib.Configuration;
 import com.infinera.metro.dnam.acceptance.test.mib.LinePortEntry;
-import com.sun.istack.internal.NotNull;
+
 import lombok.NonNull;
 import lombok.Value;
 
@@ -18,7 +18,7 @@ import java.util.List;
 
 @Value
 public class NodeConfig {
-    @NotNull Node node;
+    @NonNull Node node;
     @NonNull BoardEntry boardEntry;
     @NonNull LinePortEntry linePortEntry;
     @NonNull Configuration linePortConfiguration;

@@ -15,11 +15,11 @@ public class LinePortEntry implements MibEntry {
     @NonNull private final LinePort linePort; //Always WDM?
     @NonNull private final Integer subrack;
     @NonNull private final Integer slot;
-    @NonNull private final Integer transmitterPort;
-    @NonNull private final Integer receiverPort;
+    @NonNull private final Integer transmitPort;
+    @NonNull private final Integer receivePort;
 
     public String getMibEntryString() {
-        return MIB_PATH_UTIL.getMibEntryString (linePort.getName(), getSubrack() ,getSlot(), this.getTransmitterPort(), getReceiverPort());
+        return MIB_PATH_UTIL.getMibEntryString (linePort.getName(), getSubrack() ,getSlot(), this.getTransmitPort(), this.getReceivePort());
     }
 
     public String getMibEntryPath() {

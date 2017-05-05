@@ -19,24 +19,12 @@ public class PeerEntry implements MibEntry {
     @NonNull private final MpoIdentifier remoteMpoIdentifier;
     @NonNull private final Boolean isTransmitSide;
 
-    public String getLocalLabel() {
+    public String getPeerLocalLabel() {
         return MIB_PATH_UTIL.getPeerLabel(localLinePortEntry.getSubrack(), localLinePortEntry.getSlot(), getLocalPort(), localMpoIdentifier);
     }
 
     public String getPeerRemoteIpAddress() {
         return remoteNodeIpAddress;
-    }
-
-    public int getPeerRemoteSubrack() {
-        return remoteLinePortEntry.getSubrack();
-    }
-
-    public int getPeerRemoteSlot() {
-        return remoteLinePortEntry.getSlot();
-    }
-
-    public int getPeerRemotePort() {
-        return (isTransmitSide) ? remoteLinePortEntry.getReceivePort() : remoteLinePortEntry.getTransmitPort();
     }
 
     public String getPeerRemoteLabel() {
@@ -57,8 +45,8 @@ public class PeerEntry implements MibEntry {
     private int getLocalPort() {
         return (isTransmitSide) ? localLinePortEntry.getTransmitPort() : localLinePortEntry.getReceivePort();
     }
-//
-//    private int getRemotePort() {
-//        return (isTransmitSide) ? remoteLinePortEntry.getReceivePort() : remoteLinePortEntry.getTransmitPort();
-//    }
+
+    private int getPeerRemotePort() {
+        return (isTransmitSide) ? remoteLinePortEntry.getReceivePort() : remoteLinePortEntry.getTransmitPort();
+    }
 }

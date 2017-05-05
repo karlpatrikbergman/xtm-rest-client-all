@@ -14,7 +14,6 @@ class NodeConnection {
     private final XtmRestBaseUtil xtmRestBaseUtil;
     private int sessionId;
 
-
     NodeConnection(NodeAccessData nodeAccessData, RestTemplate restTemplate) {
         this.nodeAccessData = nodeAccessData;
         this.restTemplate = restTemplate;

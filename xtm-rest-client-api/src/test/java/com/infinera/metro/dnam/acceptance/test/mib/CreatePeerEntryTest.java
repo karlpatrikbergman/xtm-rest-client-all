@@ -4,13 +4,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 /**
  * IMPORTANT NOTE:
  * For XTM with version >=27 an MPO identifier for port is necessary
  *
- *  From auto-node.setup
+ *  From auto-node.setup:
  *  Depending on container version, add a MPO identifier.
  *  if (nodeVersion === "latest" || nodeVersion >= 27) {
  *      const slotPortSepPos = subSlotPort.indexOf(":", 2);
@@ -50,14 +49,14 @@ public class CreatePeerEntryTest {
             .receivePort(8)
             .build();
 
-    //TODO: create static "invert" method for PeerEntry class
+    //TODO: create static "invert" method for PeerEntry class?
     /**
      * The PeerEntry created here will be used to create a transmit peer entry on Node A (172.17.0.2)
      * Local XTM version is below 27, so no MTO identifier is added to peer name
      * Local peer entry name will be peer:1:2:3
      *
      */
-    PeerEntry transmitPeerEntryNodeA = PeerEntry.builder()
+    private final PeerEntry transmitPeerEntryNodeA = PeerEntry.builder()
             .localLinePortEntry(linePortEntryNodeA)
             .remoteLinePortEntry(linePortEntryNodeZ)
             .remoteNodeIpAddress("172.17.0.3")
@@ -72,7 +71,7 @@ public class CreatePeerEntryTest {
      * Local peer entry name will be peer:2:3:0:8
      *
      */
-    PeerEntry receivePeerEntryNodeZ = PeerEntry.builder()
+    private final PeerEntry receivePeerEntryNodeZ = PeerEntry.builder()
             .localLinePortEntry(linePortEntryNodeZ)
             .remoteLinePortEntry(linePortEntryNodeA)
             .remoteNodeIpAddress("172.17.0.2")
@@ -83,190 +82,171 @@ public class CreatePeerEntryTest {
 
     @Test
     public void transmitPeerEntryMibString() {
-        verifyEntryMibString(linePortEntryNodeA, transmitPeerEntryNodeA, true, true);
+        verifyEntryMibString(linePortEntryNodeA, transmitPeerEntryNodeA);
     }
 
     @Test
     public void transmitPeerEntryMibPath() {
-        verifyMibEntryPath(linePortEntryNodeA, transmitPeerEntryNodeA, true, true);
+        verifyMibEntryPath(linePortEntryNodeA, transmitPeerEntryNodeA);
     }
 
     @Test
     public void transmitPeerEntryLocalLabel() {
-        verifyLocalLabel(linePortEntryNodeA, transmitPeerEntryNodeA, true, true);
+        verifyLocalLabel(linePortEntryNodeA, transmitPeerEntryNodeA);
     }
 
     @Test
     public void transmitPeerEntryRemoteNodeIpAddress() {
-        veriyRemoteNodeIpAddress(transmitPeerEntryNodeA, true);
-    }
-
-    @Test
-    public void transmitPeerRemoteSubrackSlotPort() {
-        verifyRemoteSubrackSlotPort(linePortEntryNodeZ, transmitPeerEntryNodeA, true);
+        verifyRemoteNodeIpAddress(transmitPeerEntryNodeA);
     }
 
     @Test
     public void transmitPeerRemoteLabel() {
-        verifyRemoteLabel(linePortEntryNodeZ, transmitPeerEntryNodeA, true, false);
+        verifyRemoteLabel(linePortEntryNodeZ, transmitPeerEntryNodeA);
     }
 
     @Test
     public void transmitPeerCreatePeerRequestPath() {
-        verifyCreatePeerRequestPath(linePortEntryNodeA, transmitPeerEntryNodeA, true, true);
+        verifyCreatePeerRequestPath(linePortEntryNodeA, transmitPeerEntryNodeA);
+    }
+
+    @Test
+    public void transmitPeerSetLocalLabelRequest() {
+        verifySetLocalLabelRequest(linePortEntryNodeA, transmitPeerEntryNodeA);
+    }
+
+    @Test
+    public void transmitPeerSetRemoteNodeIpAddressRequest() {
+        verifySetRemoteNodeIpAddressRequest(linePortEntryNodeA, transmitPeerEntryNodeA);
     }
 
     /***/
 
     @Test
     public void receivePeerEntryMibString() {
-        verifyEntryMibString(linePortEntryNodeZ, receivePeerEntryNodeZ, false, false);
+        verifyEntryMibString(linePortEntryNodeZ, receivePeerEntryNodeZ);
     }
 
     @Test
     public void receivePeerEntryMibPath() {
-        verifyMibEntryPath(linePortEntryNodeZ, receivePeerEntryNodeZ, false, false);
+        verifyMibEntryPath(linePortEntryNodeZ, receivePeerEntryNodeZ);
     }
 
     @Test
     public void receivePeerEntryLocalLabel() {
-        verifyLocalLabel(linePortEntryNodeZ, receivePeerEntryNodeZ, false, false);
+        verifyLocalLabel(linePortEntryNodeZ, receivePeerEntryNodeZ);
     }
 
     @Test
     public void receivePeerEntryRemoteNodeIpAddress() {
-        veriyRemoteNodeIpAddress(receivePeerEntryNodeZ, false);
-    }
-
-    @Test
-    public void receivePeerRemoteSubrackSlotPort() {
-        verifyRemoteSubrackSlotPort(linePortEntryNodeA, receivePeerEntryNodeZ, false);
+        verifyRemoteNodeIpAddress(receivePeerEntryNodeZ);
     }
 
     @Test
     public void receivePeerRemoteLabel() {
-        verifyRemoteLabel(linePortEntryNodeA, receivePeerEntryNodeZ, false, true);
+        verifyRemoteLabel(linePortEntryNodeA, receivePeerEntryNodeZ);
     }
 
     @Test
     public void receivePeerCreatePeerRequestPath() {
-        verifyCreatePeerRequestPath(linePortEntryNodeZ, receivePeerEntryNodeZ, false, false);
+        verifyCreatePeerRequestPath(linePortEntryNodeZ, receivePeerEntryNodeZ);
     }
 
-    private void verifyEntryMibString(LinePortEntry linePortEntry, PeerEntry peerEntry, boolean isTransmitSide, boolean isXtmVersionBelow27) {
-        final int port = (isTransmitSide) ? linePortEntry.getTransmitPort() : linePortEntry.getReceivePort();
-        final String mpoIdentifierString = (isXtmVersionBelow27) ? "" : MpoIdentifier.MODULE_NOT_PRESENT;
-        final String expectedMibEntryString = String.format("peer:%d:%d%s:%d", linePortEntry.getSubrack(),
-                linePortEntry.getSlot(), mpoIdentifierString, port);
+    @Test
+    public void receivePeerSetLocalLabelRequest() {
+        verifySetLocalLabelRequest(linePortEntryNodeZ, receivePeerEntryNodeZ);
+    }
+
+    @Test
+    public void receivePeerSetRemoteNodeIpAddressRequest() {
+        verifySetRemoteNodeIpAddressRequest(linePortEntryNodeZ, receivePeerEntryNodeZ);
+    }
+
+    /**
+     *
+     * Verify output of PeerEntry.getMibEntryString against the local LinePortEntry used when creating the PeerEntry
+     *
+     * @param localLinePortEntry        The local LinePortEntry of the PeerEntry under test. Used for verification.
+     * @param peerEntry                 Can be PeerEntry of the transmit side or PeerEntry of receive side.
+     */
+    private void verifyEntryMibString(LinePortEntry localLinePortEntry, PeerEntry peerEntry) {
+        final int expectedPort = (peerEntry.getIsTransmitSide()) ? localLinePortEntry.getTransmitPort() : localLinePortEntry.getReceivePort();
+        final String mpoIdentifierString = (!peerEntry.getLocalMpoIdentifier().isXtmVersionEqualOrHigherThan27()) ? "" : MpoIdentifier.MODULE_NOT_PRESENT; //Module not present = ":0"
+        final String expectedMibEntryString = String.format("peer:%d:%d%s:%d", localLinePortEntry.getSubrack(),
+                localLinePortEntry.getSlot(), mpoIdentifierString, expectedPort);
         final String actualMibEntryString = peerEntry.getMibEntryString();
         assertEquals("Expected mib entry string", expectedMibEntryString, actualMibEntryString);
         log.info("MibEntryString {}", actualMibEntryString);
     }
 
-    private void verifyMibEntryPath(LinePortEntry linePortEntry, PeerEntry peerEntry, boolean isTransmitSide, boolean isXtmVersionBelow27) {
-        final int port = (isTransmitSide) ? linePortEntry.getTransmitPort() : linePortEntry.getReceivePort();
-        final String mpoIdentifierString = (isXtmVersionBelow27) ? "" : MpoIdentifier.MODULE_NOT_PRESENT;
-        final String expectedMibEntryPath = String.format("/mib/topo/peer/peer:%d:%d%s:%d", linePortEntry.getSubrack(),
-                linePortEntry.getSlot(), mpoIdentifierString, port);
+    private void verifyMibEntryPath(LinePortEntry localLinePortEntry, PeerEntry peerEntry) {
+        final int port = (peerEntry.getIsTransmitSide()) ? localLinePortEntry.getTransmitPort() : localLinePortEntry.getReceivePort();
+        final String mpoIdentifierString = (!peerEntry.getLocalMpoIdentifier().isXtmVersionEqualOrHigherThan27()) ? "" : MpoIdentifier.MODULE_NOT_PRESENT;
+        final String expectedMibEntryPath = String.format("/mib/topo/peer/peer:%d:%d%s:%d", localLinePortEntry.getSubrack(),
+                localLinePortEntry.getSlot(), mpoIdentifierString, port);
         final String actualMibEntryPath = peerEntry.getMibEntryPath();
         assertEquals("MibEntryPath", expectedMibEntryPath, actualMibEntryPath);
         log.info("MibEntryPath {} ", actualMibEntryPath);
     }
 
-    private void verifyLocalLabel(LinePortEntry linePortEntry, PeerEntry peerEntry, boolean isTransmitSide, boolean isXtmVersionBelow27) {
-        final int port = (isTransmitSide) ? linePortEntry.getTransmitPort() : linePortEntry.getReceivePort();
-        final String mpoIdentifierString = (isXtmVersionBelow27) ? "" : MpoIdentifier.MODULE_NOT_PRESENT;
-        final String expectedPeerLocalLabel = String.format("%d:%d%s:%d", linePortEntry.getSubrack(),
-                linePortEntry.getSlot(), mpoIdentifierString, port);
-        final String actualPeerLocalLabel = peerEntry.getLocalLabel();
+    private void verifyLocalLabel(LinePortEntry localLinePortEntry, PeerEntry peerEntry) {
+        final int expectedPort = (peerEntry.getIsTransmitSide()) ? localLinePortEntry.getTransmitPort() : localLinePortEntry.getReceivePort();
+        final String mpoIdentifierString = (!peerEntry.getLocalMpoIdentifier().isXtmVersionEqualOrHigherThan27()) ? "" : MpoIdentifier.MODULE_NOT_PRESENT;
+        final String expectedPeerLocalLabel = String.format("%d:%d%s:%d", localLinePortEntry.getSubrack(),
+                localLinePortEntry.getSlot(), mpoIdentifierString, expectedPort);
+        final String actualPeerLocalLabel = peerEntry.getPeerLocalLabel();
         assertEquals("Expected local label", expectedPeerLocalLabel, actualPeerLocalLabel);
         log.info("Local label {}", actualPeerLocalLabel);
     }
 
-    private void veriyRemoteNodeIpAddress(PeerEntry peerEntry, boolean isTransmitSide) {
-        final String expectedPeerRemoteIpAddress = (isTransmitSide) ? "172.17.0.3" : "172.17.0.2";
+    private void verifyRemoteNodeIpAddress(PeerEntry peerEntry) {
+        final String expectedPeerRemoteIpAddress = (peerEntry.getIsTransmitSide()) ? "172.17.0.3" : "172.17.0.2";
         final String actualRemoteIpAddress = peerEntry.getPeerRemoteIpAddress();
         assertEquals("Expected remote node ip address", expectedPeerRemoteIpAddress, actualRemoteIpAddress);
         log.info("Remode nodeIpAddress {}", actualRemoteIpAddress);
     }
 
-    private void verifyRemoteSubrackSlotPort(LinePortEntry remoteLinePortEntry, PeerEntry peerEntry, boolean isTransmitSide) {
-        final int actualPeerRemoteSubrack = peerEntry.getPeerRemoteSubrack();
-        assertTrue("Expected remote subrack", remoteLinePortEntry.getSubrack() == actualPeerRemoteSubrack);
-        log.info("Remote subrack {}", actualPeerRemoteSubrack);
-
-        final int actualPeerRemoteSlot = peerEntry.getPeerRemoteSlot();
-        assertTrue("Expected remote slot", remoteLinePortEntry.getSlot() == actualPeerRemoteSlot);
-        log.info("Remote slot {}", actualPeerRemoteSlot);
-
-        final int expectedPeerRemotePort = (isTransmitSide) ? remoteLinePortEntry.getReceivePort() : remoteLinePortEntry.getTransmitPort();
-        final int actualPeerRemotePort = peerEntry.getPeerRemotePort();
-        assertTrue("Expected remote port", expectedPeerRemotePort == actualPeerRemotePort);
-        log.info("Remote port {}", actualPeerRemotePort);
-    }
-
-    private void verifyRemoteLabel(LinePortEntry linePortEntry, PeerEntry peerEntry, boolean isTransmitSide, boolean isXtmVersionBelow27) {
-        final int port = (isTransmitSide) ? linePortEntry.getReceivePort() : linePortEntry.getTransmitPort();
-        final String mpoIdentifierString = (isXtmVersionBelow27) ? "" : MpoIdentifier.MODULE_NOT_PRESENT;
-        final String expectedPeerRemoteLabel = String.format("%d:%d%s:%d", linePortEntry.getSubrack(),
-                linePortEntry.getSlot(), mpoIdentifierString, port);
+    private void verifyRemoteLabel(LinePortEntry remoteLinePortEntry, PeerEntry peerEntry) {
+        final int port = (peerEntry.getIsTransmitSide()) ? remoteLinePortEntry.getReceivePort() : remoteLinePortEntry.getTransmitPort();
+        final String mpoIdentifierString = (!peerEntry.getRemoteMpoIdentifier().isXtmVersionEqualOrHigherThan27()) ? "" : MpoIdentifier.MODULE_NOT_PRESENT;
+        final String expectedPeerRemoteLabel = String.format("%d:%d%s:%d", remoteLinePortEntry.getSubrack(),
+                remoteLinePortEntry.getSlot(), mpoIdentifierString, port);
         final String actualPeerRemoteLabel = peerEntry.getPeerRemoteLabel();
         assertEquals("Expected remote label", expectedPeerRemoteLabel, actualPeerRemoteLabel);
         log.info("Remote label {}", actualPeerRemoteLabel);
     }
 
-    private void verifyCreatePeerRequestPath(LinePortEntry linePortEntry, PeerEntry peerEntry, boolean isTransmitSide, boolean isXtmVersionBelow27) {
-        final int port = (isTransmitSide) ? linePortEntry.getTransmitPort() : linePortEntry.getReceivePort();
-        final String mpoIdentifierString = (isXtmVersionBelow27) ? "" : MpoIdentifier.MODULE_NOT_PRESENT;
+    private void verifyCreatePeerRequestPath(LinePortEntry localLinePortEntry, PeerEntry peerEntry) {
+        final int port = (peerEntry.getIsTransmitSide()) ? localLinePortEntry.getTransmitPort() : localLinePortEntry.getReceivePort();
+        final String mpoIdentifierString = (!peerEntry.getLocalMpoIdentifier().isXtmVersionEqualOrHigherThan27()) ? "" : MpoIdentifier.MODULE_NOT_PRESENT;
         final String expectedCreatePeerRequest = String.format("/mib/topo/peer/peer:%d:%d%s:%d/create.json",
-                linePortEntry.getSubrack(), linePortEntry.getSlot(), mpoIdentifierString, port);
+                localLinePortEntry.getSubrack(), localLinePortEntry.getSlot(), mpoIdentifierString, port);
         final String actualCreatePeerRequest = peerEntry.getMibEntryPath() + "/create.json";
         assertEquals("Expected create peer http request path", expectedCreatePeerRequest, actualCreatePeerRequest);
         log.info("Create peer http request path {}", actualCreatePeerRequest);
     }
 
-    private void foo() {
+    private void verifySetLocalLabelRequest(LinePortEntry localLinePortEntry, PeerEntry peerEntry) {
+        final int port = (peerEntry.getIsTransmitSide()) ? localLinePortEntry.getTransmitPort() : localLinePortEntry.getReceivePort();
+        final String mpoIdentifierString = (!peerEntry.getLocalMpoIdentifier().isXtmVersionEqualOrHigherThan27()) ? "" : MpoIdentifier.MODULE_NOT_PRESENT;
+        final String expectedPeerLocalLabel = String.format("%d:%d%s:%d", localLinePortEntry.getSubrack(),
+                localLinePortEntry.getSlot(), mpoIdentifierString, port);
+        final String expectedSetTopoPeerLocalLabelRequest = String.format("/mib/topo/peer/peer:%d:%d%s:%d/set.json?topoPeerLocalLabel=%s",
+                localLinePortEntry.getSubrack(), localLinePortEntry.getSlot(), mpoIdentifierString, port, expectedPeerLocalLabel);
+        final String actualSetTopoPeerLocalLabelRequest = peerEntry.getMibEntryPath() + "/set.json?topoPeerLocalLabel=" + peerEntry.getPeerLocalLabel();
+        assertEquals("Expected set local label http request path", expectedSetTopoPeerLocalLabelRequest, actualSetTopoPeerLocalLabelRequest);
+        log.info("Set local label http request path {}", actualSetTopoPeerLocalLabelRequest);
+    }
 
-//
-//        final String expectedSetTopoPeerLocalLabelRequest = String.format("/mib/topo/peer/peer:%d:%d%s:%d/set.json?topoPeerLocalLabel=%s",
-//                transmitLinePortEntry.getSubrack(), transmitLinePortEntry.getSlot(), mpoIdentifierString, transmitLinePortEntry.getTransmitPort(), expectedPeerLocalLabel);
-//        final String actualSetTopoPeerLocalLabelRequest = peerEntry.getMibEntryPath() + "/set.json?topoPeerLocalLabel=" + peerEntry.getLocalLabel();
-//        assertEquals("Expected set local label http request path", expectedSetTopoPeerLocalLabelRequest, actualSetTopoPeerLocalLabelRequest);
-//        log.info("Set local label http request path {}", actualSetTopoPeerLocalLabelRequest);
-//
-//        final String expectedSetRemoteIpAddressRequest = String.format("/mib/topo/peer/peer:%d:%d%s:%d/set.json?topoPeerRemoteIpAddress=%s",
-//                transmitLinePortEntry.getSubrack(), transmitLinePortEntry.getSlot(), mpoIdentifierString,
-//                transmitLinePortEntry.getTransmitPort(), expectedPeerRemoteIpAddress);
-//        final String actualSetRemoteIpAddressRequest = peerEntry.getMibEntryPath() + "/set.json?topoPeerRemoteIpAddress=" + peerEntry.getRemoteNodeIpAddress();
-//        assertEquals("Expected set remote node ip address http request path", expectedSetRemoteIpAddressRequest, actualSetRemoteIpAddressRequest);
-//        log.info("Set remote node ip address http request path {}", actualSetRemoteIpAddressRequest);
-//
-//        final String expectedSetRemoteSubrackRequest = String.format("/mib/topo/peer/peer:%d:%d%s:%d/set.json?topoPeerRemoteSubrack=%s",
-//                transmitLinePortEntry.getSubrack(), transmitLinePortEntry.getSlot(), mpoIdentifierString,
-//                transmitLinePortEntry.getTransmitPort(), receiveLinePortEntry.getSubrack());
-//        final String actualSetRemoteSubrackRequest = peerEntry.getMibEntryPath() + "/set.json?topoPeerRemoteSubrack=" + peerEntry.getRemoteLinePortEntry().getSubrack();
-//        assertEquals("Expected set remote subrack http request path", expectedSetRemoteSubrackRequest, actualSetRemoteSubrackRequest);
-//        log.info("Set remote subrack http request path {}", actualSetRemoteSubrackRequest);
-//
-//        final String expectedSetRemoteSlotRequest = String.format("/mib/topo/peer/peer:%d:%d%s:%d/set.json?topoPeerRemoteSlot=%s",
-//                transmitLinePortEntry.getSubrack(), transmitLinePortEntry.getSlot(), mpoIdentifierString,
-//                transmitLinePortEntry.getTransmitPort(), receiveLinePortEntry.getSlot());
-//        final String actualSetRemoteSlotRequest = peerEntry.getMibEntryPath() + "/set.json?topoPeerRemoteSlot=" + peerEntry.getRemoteLinePortEntry().getSlot();
-//        assertEquals("Expected set remote slot http request path", expectedSetRemoteSlotRequest, actualSetRemoteSlotRequest);
-//        log.info("Set remote slot http request path {}", actualSetRemoteSlotRequest);
-//
-//        final String expectedSetRemotePortRequest = String.format("/mib/topo/peer/peer:%d:%d%s:%d/set.json?topoPeerRemotePort=%s",
-//                transmitLinePortEntry.getSubrack(), transmitLinePortEntry.getSlot(), mpoIdentifierString,
-//                transmitLinePortEntry.getTransmitPort(), receiveLinePortEntry.getReceivePort());
-//        final String actualSetRemotePortRequest = peerEntry.getMibEntryPath() + "/set.json?topoPeerRemotePort=" + peerEntry.getRemoteLinePortEntry().getReceivePort();
-//        assertEquals("Expected set remote port http request path", expectedSetRemotePortRequest, actualSetRemotePortRequest);
-//        log.info("Set remote port http request path {}", actualSetRemotePortRequest);
-//
-//        final String expectedSetRemoteLabelRequest = String.format("/mib/topo/peer/peer:%d:%d%s:%d/set.json?topoPeerRemoteLabel=%s",
-//                transmitLinePortEntry.getSubrack(), transmitLinePortEntry.getSlot(), mpoIdentifierString,
-//                transmitLinePortEntry.getTransmitPort(), expectedPeerRemoteLabel);
-//        final String actualSetRemoteLabelRequest = peerEntry.getMibEntryPath() + "/set.json?topoPeerRemoteLabel=" + peerEntry.getPeerRemoteLabel();
-//        assertEquals("Expected set remote label http request path", expectedSetRemoteLabelRequest, actualSetRemoteLabelRequest);
-//        log.info("Set remote label http request path {}", actualSetRemoteLabelRequest);
+    private void verifySetRemoteNodeIpAddressRequest(LinePortEntry localLinePortEntry, PeerEntry peerEntry) {
+        final int port = (peerEntry.getIsTransmitSide()) ? localLinePortEntry.getTransmitPort() : localLinePortEntry.getReceivePort();
+        final String mpoIdentifierString = (!peerEntry.getLocalMpoIdentifier().isXtmVersionEqualOrHigherThan27()) ? "" : MpoIdentifier.MODULE_NOT_PRESENT;
+        final String expectedPeerRemoteIpAddress = (peerEntry.getIsTransmitSide()) ? "172.17.0.3" : "172.17.0.2";
+        final String expectedSetRemoteIpAddressRequest = String.format("/mib/topo/peer/peer:%d:%d%s:%d/set.json?topoPeerRemoteIpAddress=%s",
+                localLinePortEntry.getSubrack(), localLinePortEntry.getSlot(), mpoIdentifierString,
+                port, expectedPeerRemoteIpAddress);
+        final String actualSetRemoteIpAddressRequest = peerEntry.getMibEntryPath() + "/set.json?topoPeerRemoteIpAddress=" + peerEntry.getRemoteNodeIpAddress();
+        assertEquals("Expected set remote node ip address http request path", expectedSetRemoteIpAddressRequest, actualSetRemoteIpAddressRequest);
+        log.info("Set remote node ip address http request path {}", actualSetRemoteIpAddressRequest);
     }
 }

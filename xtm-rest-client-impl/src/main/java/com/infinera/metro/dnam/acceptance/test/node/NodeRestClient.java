@@ -3,8 +3,8 @@ package com.infinera.metro.dnam.acceptance.test.node;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectReader;
 import com.infinera.metro.dnam.acceptance.test.mib.Command;
-import com.infinera.metro.dnam.acceptance.test.mib.Configuration;
 import com.infinera.metro.dnam.acceptance.test.mib.MibEntry;
+import com.infinera.metro.dnam.acceptance.test.mib.ParameterList;
 import com.infinera.metro.dnam.acceptance.test.mib.util.MibPathUtil;
 import com.infinera.metro.dnam.acceptance.test.node.dto.AnswerObject;
 import com.infinera.metro.dnam.acceptance.test.node.dto.AnswerObjects;
@@ -32,10 +32,10 @@ class NodeRestClient {
         return performRestAction(mibEntry, command, null);
     }
 
-    AnswerObjects performRestAction(MibEntry mibEntry, Command command, Configuration configuration) throws IOException, RuntimeException {
+    AnswerObjects performRestAction(MibEntry mibEntry, Command command, ParameterList parameterList) throws IOException, RuntimeException {
         String mibPathAndCommand = mibPathUtil.getMibPathAndCommand(mibEntry, command);
         String flags ="_RFLAGS_=RAISEMGNOQPCYVULTBJK&_AFLAGS_=AVNDHPUIMJOSE";
-        String parameters = (configuration == null) ? "" : "&" + configuration.asParameters();
+        String parameters = (parameterList == null) ? "" : parameterList.toString();
         String all = mibPathAndCommand + "?" + flags + parameters;
         ResponseEntity<String> responseEntity = nodeConnection.performRestAction(all);
 

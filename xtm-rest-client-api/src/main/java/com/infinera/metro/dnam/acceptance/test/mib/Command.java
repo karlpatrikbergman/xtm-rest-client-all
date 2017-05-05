@@ -5,7 +5,7 @@ public enum Command {
     GET_JSON("get.json", Operation.GET),
     SET_JSON("set.json", Operation.SET),
     DELETE_JSON("delete.json", Operation.DELETE),
-    CONFIGURE("configure.json", Operation.CONFIGURE);
+    CONFIGURE_JSON("configure.json", Operation.CONFIGURE);
 
     private final String value;
     private final Operation operation;

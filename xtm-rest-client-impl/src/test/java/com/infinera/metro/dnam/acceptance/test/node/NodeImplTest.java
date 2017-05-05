@@ -8,7 +8,6 @@ import org.junit.experimental.categories.Category;
 
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.List;
 
 import static com.infinera.metro.dnam.acceptance.test.node.RestTemplateFactory.REST_TEMPLATE_FACTORY;
 
@@ -22,14 +21,14 @@ public class NodeImplTest {
 //            .waitingForService("node1", HealthChecks.toHaveAllPortsOpen())
 //            .build();
 
-    private final String nodeIpAddress ="172.17.0.2";
+    private final String nodeIpAddressNodeA ="172.17.0.2";
 //    private final String nodeIpAddress = "172.45.0.101";
 
     private final Node node = new NodeImpl(
         new NodeRestClient(
             new NodeConnection(
                     NodeAccessData.builder()
-                            .ipAddress(nodeIpAddress)
+                            .ipAddress(nodeIpAddressNodeA)
                             .port(80)
                             .userName("root")
                             .password("root")
@@ -40,7 +39,7 @@ public class NodeImplTest {
     );
 
     @Test
-    public void createBoardAndConfigureLineAncClientPort() throws IOException, InterruptedException {
+    public void configureNodeA() throws IOException, InterruptedException {
         //Given
         BoardEntry boardEntry = BoardEntry.builder()
                 .board(Board.TPD10GBE)
@@ -88,50 +87,41 @@ public class NodeImplTest {
                 .remoteNodeIpAddress("172.17.0.3")
                 .localMpoIdentifier(MpoIdentifier.createMpoIdentifierModuleNotPresent())
                 .remoteMpoIdentifier(MpoIdentifier.createMpoIdentifierModuleNotPresent())
+                .isTransmitSide(true)
                 .build();
 
-        List<Configuration> peerConfigurationList = Arrays.asList(
-                Configuration.builder()
-                    .key("topoPeerLocalLabel")
-                    .value(peerEntry.getLocalLabel())
-                    .build(),
-                Configuration.builder()
-                    .key("topoPeerRemoteIpAddress")
-                    .value(peerEntry.getPeerRemoteIpAddress())
-                    .build(),
-                Configuration.builder()
-                    .key("topoPeerRemoteSubrack")
-                    .value(peerEntry.getRemoteLinePortEntry().getSubrack().toString())
-                    .build(),
-                Configuration.builder()
-                    .key("topoPeerRemoteSlot")
-                    .value(peerEntry.getRemoteLinePortEntry().getSlot().toString())
-                    .build(),
-                Configuration.builder()
-                    .key("topoPeerRemotePort")
-                    .value(peerEntry.getRemoteLinePortEntry().getReceivePort().toString())
-                    .build(),
-                Configuration.builder()
-                    .key("topoPeerRemoteLabel")
-                    .value(peerEntry.getPeerRemoteLabel())
-                    .build()
-        );
+        ParameterList parameterList = ParameterList.builder()
+                .parameterList(Arrays.asList(
+                        Configuration.builder()
+                                .key("topoPeerLocalLabel")
+                                .value(peerEntry.getPeerLocalLabel())
+                                .build(),
+                        Configuration.builder()
+                                .key("topoPeerRemoteIpAddress")
+                                .value(peerEntry.getPeerRemoteIpAddress())
+                                .build(),
+                        Configuration.builder()
+                                .key("topoPeerRemoteLabel")
+                                .value(peerEntry.getPeerRemoteLabel())
+                                .build()
+                ))
+                .build();
 
         //When
         AnswerObjects createBoardAnswerObjects = node.createBoard(boardEntry);
 
-        AnswerObjects setLinePortConfigurationAnswerObjects = node.setLinePortConfiguration(linePortEntry, linePortConfiguration);
+        AnswerObjects setLinePortConfigurationAnswerObjects = node.setLinePortConfiguration(linePortEntry, ParameterList.of(linePortConfiguration));
 
-        AnswerObjects setClientPortConfigurationAnswerObjects = node.setClientPortConfiguration(clientPortEntry, clientPortConfiguration);
+        AnswerObjects setClientPortConfigurationAnswerObjects = node.setClientPortConfiguration(clientPortEntry, ParameterList.of(clientPortConfiguration));
 
         AnswerObjects createPeerAnswerObjects = node.createLocalPeer(peerEntry);
 
-        AnswerObjects setPeerConfigAnswerObjects = node.configureLocalPeer(peerEntry, peerConfigurationList);
+        AnswerObjects setPeerConfigAnswerObjects = node.configureLocalPeer(peerEntry, parameterList);
 
         //TODO: Verify line port settings in response
         //TODO: Verify client port settings in response
         //Then
-        AnswerObjects geBoardAnswerObjects = node.getBoard(boardEntry);
+//        AnswerObjects geBoardAnswerObjects = node.getBoard(boardEntry);
 
 //        //Clean up
 //        node.deleteBoard(boardEntry);

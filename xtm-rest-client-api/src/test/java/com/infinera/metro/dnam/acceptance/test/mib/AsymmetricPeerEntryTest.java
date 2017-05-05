@@ -89,7 +89,7 @@
 ////        assertEquals("Expected mib entry string", expectedMibEntryString, actualMibEntryString);
 ////        log.info("MibEntryString {}", actualMibEntryString);
 ////
-////        final String actualPeerLocalLabel = peerEntry.getLocalLabel();
+////        final String actualPeerLocalLabel = peerEntry.getPeerLocalLabel();
 ////        assertEquals("Expected local label", expectedPeerLocalLabel, actualPeerLocalLabel);
 ////        log.info("Local label {}", actualPeerLocalLabel);
 ////

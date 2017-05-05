@@ -116,7 +116,7 @@ public class NodeImplTest {
 
         AnswerObjects createPeerAnswerObjects = node.createLocalPeer(peerEntry);
 
-        AnswerObjects setPeerConfigAnswerObjects = node.configureLocalPeer(peerEntry, parameterList);
+        AnswerObjects setPeerConfigAnswerObjects = node.setLocalPeerConfiguration(peerEntry, parameterList);
 
         //TODO: Verify line port settings in response
         //TODO: Verify client port settings in response

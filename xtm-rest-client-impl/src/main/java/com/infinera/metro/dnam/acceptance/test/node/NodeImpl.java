@@ -52,7 +52,7 @@ public class NodeImpl implements Node {
         return nodeRestClient.performRestAction(peerEntry, Command.CREATE_JSON);
     }
 
-    public AnswerObjects configureLocalPeer(PeerEntry peerEntry, ParameterList parameterList) throws IOException {
+    public AnswerObjects setLocalPeerConfiguration(PeerEntry peerEntry, ParameterList parameterList) throws IOException {
         return nodeRestClient.performRestAction(peerEntry, Command.SET_JSON, parameterList);
     }
 

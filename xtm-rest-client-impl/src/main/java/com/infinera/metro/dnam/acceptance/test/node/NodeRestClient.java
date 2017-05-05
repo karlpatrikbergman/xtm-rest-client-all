@@ -36,7 +36,7 @@ class NodeRestClient {
         String mibPathAndCommand = mibPathUtil.getMibPathAndCommand(mibEntry, command);
         String flags ="_RFLAGS_=RAISEMGNOQPCYVULTBJK&_AFLAGS_=AVNDHPUIMJOSE";
         String parameters = (parameterList == null) ? "" : parameterList.toString();
-        String all = mibPathAndCommand + "?" + flags + parameters;
+        String all = mibPathAndCommand + "?" + flags + "&" + parameters;
         ResponseEntity<String> responseEntity = nodeConnection.performRestAction(all);
 
         log.info(responseEntity.getBody());

@@ -12,5 +12,5 @@ public interface Node {
     AnswerObjects setLinePortConfiguration(LinePortEntry linePortEntry, ParameterList parameterList) throws IOException;
     AnswerObjects setClientPortConfiguration(ClientPortEntry clientPortEntry, ParameterList parameterList) throws IOException;
     AnswerObjects createLocalPeer(PeerEntry peerEntry) throws IOException;
-    AnswerObjects configureLocalPeer(PeerEntry peerEntry, ParameterList parameterList) throws IOException;
+    AnswerObjects setLocalPeerConfiguration(PeerEntry peerEntry, ParameterList parameterList) throws IOException;
 }

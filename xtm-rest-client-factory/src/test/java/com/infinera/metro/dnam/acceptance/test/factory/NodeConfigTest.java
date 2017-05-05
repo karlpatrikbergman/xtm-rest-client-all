@@ -1,20 +1,16 @@
 package com.infinera.metro.dnam.acceptance.test.factory;
 
 import com.infinera.metro.dnam.acceptance.test.mib.*;
-import com.infinera.metro.dnam.acceptance.test.node.IntegrationTest;
 import com.infinera.metro.dnam.acceptance.test.node.Node;
 import com.infinera.metro.dnam.acceptance.test.node.NodeAccessData;
-import lombok.extern.slf4j.Slf4j;
+import com.infinera.metro.dnam.acceptance.test.node.NodeConfig;
 import org.junit.Test;
-import org.junit.experimental.categories.Category;
 
 import java.io.IOException;
 import java.util.Arrays;
 
-@Slf4j
-@Category(IntegrationTest.class)
-public class NodeFactoryTest {
-    private final String ipAddressNodeA = "172.17.0.2";
+public class NodeConfigTest {
+    private final String ipAddressNodeA ="172.17.0.2";
     private final String ipAddressNodeZ = "172.17.0.3";
 
     private final LinePortEntry linePortEntryNodeA = LinePortEntry.builder()
@@ -33,13 +29,24 @@ public class NodeFactoryTest {
             .receivePort(8)
             .build();
 
+
     @Test
-    public void test() throws IOException {
+    public void configureNodes() throws IOException {
         configureNodeA();
         configureNodeZ();
     }
 
     public void configureNodeA() throws IOException {
+        NodeConfig configNodeA = createNodeAConfig();
+        configNodeA.apply();
+    }
+
+    public void configureNodeZ() throws IOException {
+        NodeConfig configNodeZ = createNodeZConfig();
+        configNodeZ.apply();
+    }
+
+    private NodeConfig createNodeAConfig() {
         NodeAccessData nodeAccessDataNodeA = NodeAccessData.builder()
                 .ipAddress(ipAddressNodeA)
                 .port(80)
@@ -55,7 +62,23 @@ public class NodeFactoryTest {
                 .slot(2)
                 .build();
 
-        nodeA.createBoard(boardEntry);
+        Configuration linePortConfiguration = Configuration.builder()
+                .key("expectedFrequency")
+                .value("ch926")
+                .build();
+
+        ClientPortEntry clientPortEntry = ClientPortEntry.builder()
+                .clientPort(ClientPort.CLIENT)
+                .subrack(1)
+                .slot(2)
+                .transmitterPort(1)
+                .receiverPort(2)
+                .build();
+
+        Configuration clientPortConfiguration = Configuration.builder()
+                .key("configure")
+                .value("lan10GbE yes")
+                .build();
 
         PeerEntry peerEntryNodeA = PeerEntry.builder()
                 .localLinePortEntry(linePortEntryNodeA)
@@ -66,9 +89,7 @@ public class NodeFactoryTest {
                 .isTransmitSide(true)
                 .build();
 
-        nodeA.createLocalPeer(peerEntryNodeA);
-
-        ParameterList parameterList = ParameterList.builder()
+        ParameterList peerConfiguration = ParameterList.builder()
                 .parameterList(Arrays.asList(
                         Configuration.builder()
                                 .key("topoPeerLocalLabel")
@@ -85,10 +106,19 @@ public class NodeFactoryTest {
                 ))
                 .build();
 
-        nodeA.setLocalPeerConfiguration(peerEntryNodeA, parameterList);
+        return NodeConfig.builder()
+                .node(nodeA)
+                .boardEntry(boardEntry)
+                .linePortEntry(linePortEntryNodeA)
+                .linePortConfiguration(linePortConfiguration)
+                .clientPortEntry(clientPortEntry)
+                .clientPortConfiguration(clientPortConfiguration)
+                .peerEntry(peerEntryNodeA)
+                .peerConfiguration(peerConfiguration)
+                .build();
     }
 
-    private void configureNodeZ() throws IOException {
+    private NodeConfig createNodeZConfig() {
         NodeAccessData nodeAccessDataNodeZ = NodeAccessData.builder()
                 .ipAddress(ipAddressNodeZ)
                 .port(80)
@@ -104,7 +134,23 @@ public class NodeFactoryTest {
                 .slot(2)
                 .build();
 
-        nodeZ.createBoard(boardEntry);
+        Configuration linePortConfiguration = Configuration.builder()
+                .key("expectedFrequency")
+                .value("ch926")
+                .build();
+
+        ClientPortEntry clientPortEntry = ClientPortEntry.builder()
+                .clientPort(ClientPort.CLIENT)
+                .subrack(1)
+                .slot(2)
+                .transmitterPort(1)
+                .receiverPort(2)
+                .build();
+
+        Configuration clientPortConfiguration = Configuration.builder()
+                .key("configure")
+                .value("lan10GbE yes")
+                .build();
 
         PeerEntry peerEntryNodeZ = PeerEntry.builder()
                 .localLinePortEntry(linePortEntryNodeZ)
@@ -115,9 +161,7 @@ public class NodeFactoryTest {
                 .isTransmitSide(false)
                 .build();
 
-        nodeZ.createLocalPeer(peerEntryNodeZ);
-
-        ParameterList parameterList = ParameterList.builder()
+        ParameterList peerConfiguration = ParameterList.builder()
                 .parameterList(Arrays.asList(
                         Configuration.builder()
                                 .key("topoPeerLocalLabel")
@@ -134,6 +178,15 @@ public class NodeFactoryTest {
                 ))
                 .build();
 
-        nodeZ.setLocalPeerConfiguration(peerEntryNodeZ, parameterList);
+        return NodeConfig.builder()
+                .node(nodeZ)
+                .boardEntry(boardEntry)
+                .linePortEntry(linePortEntryNodeZ)
+                .linePortConfiguration(linePortConfiguration)
+                .clientPortEntry(clientPortEntry)
+                .clientPortConfiguration(clientPortConfiguration)
+                .peerEntry(peerEntryNodeZ)
+                .peerConfiguration(peerConfiguration)
+                .build();
     }
 }

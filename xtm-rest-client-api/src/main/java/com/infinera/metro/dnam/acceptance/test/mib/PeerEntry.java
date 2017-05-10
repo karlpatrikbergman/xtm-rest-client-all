@@ -14,6 +14,7 @@ public class PeerEntry implements MibEntry {
     @NonNull private final Peer peer = Peer.PEER;
     @NonNull private final LinePortEntry localLinePortEntry;
     @NonNull private final LinePortEntry remoteLinePortEntry;
+    @NonNull private final String nodeIpAddress;
     @NonNull private final String remoteNodeIpAddress;
     @NonNull private final MpoIdentifier localMpoIdentifier;
     @NonNull private final MpoIdentifier remoteMpoIdentifier;
@@ -48,5 +49,17 @@ public class PeerEntry implements MibEntry {
 
     private int getPeerRemotePort() {
         return (isTransmitSide) ? remoteLinePortEntry.getReceivePort() : remoteLinePortEntry.getTransmitPort();
+    }
+
+    public PeerEntry invert() {
+        return PeerEntry.builder()
+                .localLinePortEntry(remoteLinePortEntry)
+                .remoteLinePortEntry(localLinePortEntry)
+                .nodeIpAddress(remoteNodeIpAddress)
+                .remoteNodeIpAddress(nodeIpAddress)
+                .localMpoIdentifier(remoteMpoIdentifier)
+                .remoteMpoIdentifier(localMpoIdentifier)
+                .isTransmitSide(!isTransmitSide)
+                .build();
     }
 }

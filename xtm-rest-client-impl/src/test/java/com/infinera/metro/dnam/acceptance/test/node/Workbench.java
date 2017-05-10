@@ -120,8 +120,8 @@ public class Workbench {
                 .clientPort(ClientPort.CLIENT)
                 .subrack(1)
                 .slot(2)
-                .transmitterPort(1)
-                .receiverPort(2)
+                .transmitPort(1)
+                .receivePort(2)
                 .build();
         Configuration configuration = Configuration.builder()
                 .key("configure")

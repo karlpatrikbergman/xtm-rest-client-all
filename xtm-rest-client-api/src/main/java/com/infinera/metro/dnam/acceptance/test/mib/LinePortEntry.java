@@ -1,13 +1,17 @@
 package com.infinera.metro.dnam.acceptance.test.mib;
 
 
-import lombok.Builder;
-import lombok.NonNull;
-import lombok.Value;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.*;
 
 import static com.infinera.metro.dnam.acceptance.test.mib.util.MibPathUtil.MIB_PATH_UTIL;
 
-@Value
+@AllArgsConstructor(access = AccessLevel.PUBLIC) //Needed by Orika
+@NoArgsConstructor(access = AccessLevel.PRIVATE, force = true) //Needed by Hibernate and Jackson
+@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@Value //Needs jackson > 2.8
 @Builder
 public class LinePortEntry implements MibEntry {
     @NonNull private final Module module = Module.WDM;

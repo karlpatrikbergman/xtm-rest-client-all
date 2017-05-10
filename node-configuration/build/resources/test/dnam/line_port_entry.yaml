@@ -1,0 +1,5 @@
+lineport: wdm
+subrack: 1
+slot: 2
+transmitport: 3
+receiveport: 4

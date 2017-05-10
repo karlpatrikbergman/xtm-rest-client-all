@@ -2,7 +2,10 @@ package com.infinera.metro.dnam.acceptance.test.node;
 
 import com.infinera.metro.dnam.acceptance.test.mib.*;
 import com.infinera.metro.dnam.acceptance.test.node.dto.AnswerObjects;
+import com.palantir.docker.compose.DockerComposeRule;
+import com.palantir.docker.compose.connection.waiting.HealthChecks;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.ClassRule;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
@@ -15,11 +18,11 @@ import static com.infinera.metro.dnam.acceptance.test.node.RestTemplateFactory.R
 @Slf4j
 public class NodeImplTest {
 
-//    @ClassRule
-//    public static DockerComposeRule docker = DockerComposeRule.builder()
-//            .file("src/test/resources/docker-compose.yml")
-//            .waitingForService("node1", HealthChecks.toHaveAllPortsOpen())
-//            .build();
+    @ClassRule
+    public static DockerComposeRule docker = DockerComposeRule.builder()
+            .file("src/test/resources/docker-compose.yml")
+            .waitingForService("node1", HealthChecks.toHaveAllPortsOpen())
+            .build();
 
     private final String nodeIpAddressNodeA ="172.17.0.2";
 //    private final String nodeIpAddress = "172.45.0.101";
@@ -64,8 +67,8 @@ public class NodeImplTest {
                 .clientPort(ClientPort.CLIENT)
                 .subrack(1)
                 .slot(2)
-                .transmitterPort(1)
-                .receiverPort(2)
+                .transmitPort(1)
+                .receivePort(2)
                 .build();
 
         Configuration clientPortConfiguration = Configuration.builder()

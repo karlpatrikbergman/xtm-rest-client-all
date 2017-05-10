@@ -20,6 +20,10 @@ public class NodeImpl implements Node {
         );
     }
 
+    public String getIpAddress() {
+        return nodeRestClient.getNodeIpAddress();
+    }
+
     /** BoardEntry **/
 
     public AnswerObjects createBoard(BoardEntry boardEntry) throws IOException {

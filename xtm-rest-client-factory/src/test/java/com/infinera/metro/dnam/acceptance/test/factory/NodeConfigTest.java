@@ -3,47 +3,41 @@ package com.infinera.metro.dnam.acceptance.test.factory;
 import com.infinera.metro.dnam.acceptance.test.mib.*;
 import com.infinera.metro.dnam.acceptance.test.node.Node;
 import com.infinera.metro.dnam.acceptance.test.node.NodeAccessData;
-import com.infinera.metro.dnam.acceptance.test.node.NodeConfig;
+import com.infinera.metro.dnam.acceptance.test.node.config.NodeConfig;
+import com.infinera.metro.dnam.acceptance.test.node.config.PeerConfig;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.util.Arrays;
 
 public class NodeConfigTest {
     private final String ipAddressNodeA ="172.17.0.2";
     private final String ipAddressNodeZ = "172.17.0.3";
 
-    private final LinePortEntry linePortEntryNodeA = LinePortEntry.builder()
-            .linePort(LinePort.WDM)
-            .subrack(1)
-            .slot(2)
-            .transmitPort(3)
-            .receivePort(4)
-            .build();
-
-    private final LinePortEntry linePortEntryNodeZ = LinePortEntry.builder()
-            .linePort(LinePort.WDM)
-            .subrack(1)
-            .slot(2)
-            .transmitPort(7)
-            .receivePort(8)
-            .build();
-
+//    private final LinePortEntry linePortEntryNodeA = LinePortEntry.builder()
+//            .linePort(LinePort.WDM)
+//            .subrack(1)
+//            .slot(2)
+//            .transmitPort(3)
+//            .receivePort(4)
+//            .build();
+//
+//    private final LinePortEntry linePortEntryNodeZ = LinePortEntry.builder()
+//            .linePort(LinePort.WDM)
+//            .subrack(1)
+//            .slot(2)
+//            .transmitPort(7)
+//            .receivePort(8)
+//            .build();
 
     @Test
     public void configureNodes() throws IOException {
-        configureNodeA();
-        configureNodeZ();
-    }
-
-    public void configureNodeA() throws IOException {
-        NodeConfig configNodeA = createNodeAConfig();
-        configNodeA.apply();
-    }
-
-    public void configureNodeZ() throws IOException {
         NodeConfig configNodeZ = createNodeZConfig();
         configNodeZ.apply();
+        NodeConfig configNodeA = createNodeAConfig();
+        configNodeA.apply();
+
+        PeerConfig peerConfig = new PeerConfig(configNodeA, configNodeZ);
+        peerConfig.apply();
     }
 
     private NodeConfig createNodeAConfig() {
@@ -71,8 +65,8 @@ public class NodeConfigTest {
                 .clientPort(ClientPort.CLIENT)
                 .subrack(1)
                 .slot(2)
-                .transmitterPort(1)
-                .receiverPort(2)
+                .transmitPort(1)
+                .receivePort(2)
                 .build();
 
         Configuration clientPortConfiguration = Configuration.builder()
@@ -80,31 +74,39 @@ public class NodeConfigTest {
                 .value("lan10GbE yes")
                 .build();
 
-        PeerEntry peerEntryNodeA = PeerEntry.builder()
-                .localLinePortEntry(linePortEntryNodeA)
-                .remoteLinePortEntry(linePortEntryNodeZ)
-                .remoteNodeIpAddress(ipAddressNodeZ)
-                .localMpoIdentifier(MpoIdentifier.createMpoIdentifierModuleNotPresent())
-                .remoteMpoIdentifier(MpoIdentifier.createMpoIdentifierModuleNotPresent())
-                .isTransmitSide(true)
-                .build();
-
-        ParameterList peerConfiguration = ParameterList.builder()
-                .parameterList(Arrays.asList(
-                        Configuration.builder()
-                                .key("topoPeerLocalLabel")
-                                .value(peerEntryNodeA.getPeerLocalLabel())
-                                .build(),
-                        Configuration.builder()
-                                .key("topoPeerRemoteIpAddress")
-                                .value(peerEntryNodeA.getPeerRemoteIpAddress())
-                                .build(),
-                        Configuration.builder()
-                                .key("topoPeerRemoteLabel")
-                                .value(peerEntryNodeA.getPeerRemoteLabel())
-                                .build()
-                ))
-                .build();
+        LinePortEntry linePortEntryNodeA = LinePortEntry.builder()
+            .linePort(LinePort.WDM)
+            .subrack(1)
+            .slot(2)
+            .transmitPort(3)
+            .receivePort(4)
+            .build();
+//
+//        PeerEntry peerEntryNodeA = PeerEntry.builder()
+//                .localLinePortEntry(linePortEntryNodeA)
+//                .remoteLinePortEntry(linePortEntryNodeZ)
+//                .remoteNodeIpAddress(ipAddressNodeZ)
+//                .localMpoIdentifier(MpoIdentifier.createMpoIdentifierModuleNotPresent())
+//                .remoteMpoIdentifier(MpoIdentifier.createMpoIdentifierModuleNotPresent())
+//                .isTransmitSide(true)
+//                .build();
+//
+//        ParameterList peerConfiguration = ParameterList.builder()
+//                .parameterList(Arrays.asList(
+//                        Configuration.builder()
+//                                .key("topoPeerLocalLabel")
+//                                .value(peerEntryNodeA.getPeerLocalLabel())
+//                                .build(),
+//                        Configuration.builder()
+//                                .key("topoPeerRemoteIpAddress")
+//                                .value(peerEntryNodeA.getPeerRemoteIpAddress())
+//                                .build(),
+//                        Configuration.builder()
+//                                .key("topoPeerRemoteLabel")
+//                                .value(peerEntryNodeA.getPeerRemoteLabel())
+//                                .build()
+//                ))
+//                .build();
 
         return NodeConfig.builder()
                 .node(nodeA)
@@ -113,8 +115,9 @@ public class NodeConfigTest {
                 .linePortConfiguration(linePortConfiguration)
                 .clientPortEntry(clientPortEntry)
                 .clientPortConfiguration(clientPortConfiguration)
-                .peerEntry(peerEntryNodeA)
-                .peerConfiguration(peerConfiguration)
+//                .peerEntry(peerEntryNodeA)
+//                .peerConfiguration(peerConfiguration)
+                .mpoIdentifier(MpoIdentifier.createMpoIdentifierModuleNotPresent())
                 .build();
     }
 
@@ -143,8 +146,8 @@ public class NodeConfigTest {
                 .clientPort(ClientPort.CLIENT)
                 .subrack(1)
                 .slot(2)
-                .transmitterPort(1)
-                .receiverPort(2)
+                .transmitPort(1)
+                .receivePort(2)
                 .build();
 
         Configuration clientPortConfiguration = Configuration.builder()
@@ -152,31 +155,39 @@ public class NodeConfigTest {
                 .value("lan10GbE yes")
                 .build();
 
-        PeerEntry peerEntryNodeZ = PeerEntry.builder()
-                .localLinePortEntry(linePortEntryNodeZ)
-                .remoteLinePortEntry(linePortEntryNodeA)
-                .remoteNodeIpAddress(ipAddressNodeA)
-                .localMpoIdentifier(MpoIdentifier.createMpoIdentifierModuleNotPresent())
-                .remoteMpoIdentifier(MpoIdentifier.createMpoIdentifierModuleNotPresent())
-                .isTransmitSide(false)
-                .build();
+        LinePortEntry linePortEntryNodeZ = LinePortEntry.builder()
+            .linePort(LinePort.WDM)
+            .subrack(1)
+            .slot(2)
+            .transmitPort(7)
+            .receivePort(8)
+            .build();
 
-        ParameterList peerConfiguration = ParameterList.builder()
-                .parameterList(Arrays.asList(
-                        Configuration.builder()
-                                .key("topoPeerLocalLabel")
-                                .value(peerEntryNodeZ.getPeerLocalLabel())
-                                .build(),
-                        Configuration.builder()
-                                .key("topoPeerRemoteIpAddress")
-                                .value(peerEntryNodeZ.getPeerRemoteIpAddress())
-                                .build(),
-                        Configuration.builder()
-                                .key("topoPeerRemoteLabel")
-                                .value(peerEntryNodeZ.getPeerRemoteLabel())
-                                .build()
-                ))
-                .build();
+//        PeerEntry peerEntryNodeZ = PeerEntry.builder()
+//                .localLinePortEntry(linePortEntryNodeZ)
+//                .remoteLinePortEntry(linePortEntryNodeA)
+//                .remoteNodeIpAddress(ipAddressNodeA)
+//                .localMpoIdentifier(MpoIdentifier.createMpoIdentifierModuleNotPresent())
+//                .remoteMpoIdentifier(MpoIdentifier.createMpoIdentifierModuleNotPresent())
+//                .isTransmitSide(false)
+//                .build();
+//
+//        ParameterList peerConfiguration = ParameterList.builder()
+//                .parameterList(Arrays.asList(
+//                        Configuration.builder()
+//                                .key("topoPeerLocalLabel")
+//                                .value(peerEntryNodeZ.getPeerLocalLabel())
+//                                .build(),
+//                        Configuration.builder()
+//                                .key("topoPeerRemoteIpAddress")
+//                                .value(peerEntryNodeZ.getPeerRemoteIpAddress())
+//                                .build(),
+//                        Configuration.builder()
+//                                .key("topoPeerRemoteLabel")
+//                                .value(peerEntryNodeZ.getPeerRemoteLabel())
+//                                .build()
+//                ))
+//                .build();
 
         return NodeConfig.builder()
                 .node(nodeZ)
@@ -185,8 +196,9 @@ public class NodeConfigTest {
                 .linePortConfiguration(linePortConfiguration)
                 .clientPortEntry(clientPortEntry)
                 .clientPortConfiguration(clientPortConfiguration)
-                .peerEntry(peerEntryNodeZ)
-                .peerConfiguration(peerConfiguration)
+//                .peerEntry(peerEntryNodeZ)
+//                .peerConfiguration(peerConfiguration)
+                .mpoIdentifier(MpoIdentifier.createMpoIdentifierModuleNotPresent())
                 .build();
     }
 }

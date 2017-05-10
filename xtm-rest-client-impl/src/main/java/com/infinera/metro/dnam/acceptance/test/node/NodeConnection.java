@@ -54,6 +54,10 @@ class NodeConnection {
         return this.sessionId;
     }
 
+    String getNodeIpAddress() {
+        return nodeAccessData.getIpAddress();
+    }
+
     private ResponseEntity<String> login() {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.TEXT_HTML);

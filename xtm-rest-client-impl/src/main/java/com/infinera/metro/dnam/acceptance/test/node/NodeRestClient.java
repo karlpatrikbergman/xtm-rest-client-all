@@ -48,6 +48,10 @@ class NodeRestClient {
         return answerObjects;
     }
 
+    String getNodeIpAddress() {
+        return nodeConnection.getNodeIpAddress();
+    }
+
     private void checkHttpStatusCode(ResponseEntity<String> responseEntity) throws RuntimeException {
         if(responseEntity.getStatusCode() != HttpStatus.OK) {
             throw new RuntimeException("XTM responded with status code " + responseEntity.getStatusCode());

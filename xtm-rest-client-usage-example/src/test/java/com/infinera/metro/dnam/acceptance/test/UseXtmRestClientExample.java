@@ -1,6 +1,6 @@
 package com.infinera.metro.dnam.acceptance.test;
 
-import com.infinera.metro.dnam.acceptance.test.node.IntegrationTest;
+import com.infinera.metro.dnam.acceptance.test.node.DontLetGradleRun;
 import com.infinera.metro.dnam.acceptance.test.node.NodeAccessData;
 import com.infinera.metro.dnam.acceptance.test.node.NodeImpl;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.NodeConfiguration;
@@ -13,7 +13,7 @@ import org.junit.experimental.categories.Category;
 
 import java.io.IOException;
 
-@Category(IntegrationTest.class)
+@Category(DontLetGradleRun.class)
 @Slf4j
 public class UseXtmRestClientExample {
 

@@ -1,6 +1,17 @@
-
 def spring_version = "4.3.8.RELEASE"
 def jackson_version = "2.9.0.pr2"
+
+buildscript {
+    repositories {
+        mavenCentral()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath "org.jfrog.buildinfo:build-info-extractor-gradle:4.4.17"
+    }
+}
 
 subprojects {
     group "com.infinera.metro.dnam.test.acceptance"
@@ -15,6 +26,35 @@ subprojects {
         sourceCompatibility = 1.8
         targetCompatibility = 1.8
         options.encoding = 'UTF-8'
+    }
+
+    apply plugin: "com.jfrog.artifactory"
+
+    /** Artifactory settings **/
+    String repo = version.endsWith('SNAPSHOT') ? 'libs-snapshot-local' : 'libs-release-local'
+    artifactory {
+        contextUrl = "${artifactory_contextUrl}"   //The base Artifactory URL if not overridden by the publisher/resolver
+        publish {
+            repository {
+                repoKey = repo
+                username = "${artifactory_user}"
+                password = "${artifactory_password}"
+                maven = true
+            }
+            defaults {
+                publications ('impl')
+            }
+        }
+    }
+    publishing {
+        publications {
+            impl(MavenPublication) {
+                groupId project.group
+                artifactId project.name
+                version project.version
+                from components.java
+            }
+        }
     }
 
     test {
@@ -52,6 +92,14 @@ subprojects {
         maven {
             url 'https://dl.bintray.com/palantir/releases' // docker-compose-rule is published on bintray
         }
+
+        maven {
+            url "https://se-artif-prd.infinera.com/artifactory/repo"
+            credentials {
+                username = "tnmbuild"
+                password = "APGLa2kNd3Da4vLTKo6uWuMcdH"
+            }
+        }
     }
 
     dependencies {
@@ -63,16 +111,15 @@ subprojects {
     }
 }
 
-project(':node-configuration') {
+project(':xtm-rest-client-configuration') {
     test {
         testLogging {
             showStandardStreams = true
             events 'started', 'passed'
         }
     }
-
     dependencies {
-        compile project(':shared')
+        compile project(':xtm-rest-client-common')
         compile project(':xtm-rest-client-impl')
         compile "org.yaml:snakeyaml:1.17"
         compile "com.fasterxml.jackson.core:jackson-databind:${jackson_version}"
@@ -81,50 +128,29 @@ project(':node-configuration') {
     }
 }
 
-project(':xtm-rest-client-api') {
-    dependencies {
-        compile "com.fasterxml.jackson.core:jackson-annotations:${jackson_version}"
-        compile "com.fasterxml.jackson.core:jackson-databind:${jackson_version}"
-        compile "org.antlr:stringtemplate:4.0.2"
-    }
-}
-
 project(':xtm-rest-client-impl') {
     dependencies {
-        compile project(':shared'), project(':xtm-rest-client-api')
+        compile project(':xtm-rest-client-common')
         compile "org.apache.httpcomponents:httpclient:4.5.3"
         compile "org.springframework:spring-web:${spring_version}"
         compile "org.antlr:stringtemplate:4.0.2"
         compile "com.fasterxml.jackson.core:jackson-annotations:${jackson_version}"
         compile "com.fasterxml.jackson.core:jackson-databind:${jackson_version}"
-        testCompile project(':xtm-rest-client-api').sourceSets.test.output
         testCompile 'com.palantir.docker.compose:docker-compose-rule-junit4:0.31.1'
     }
 }
 
-project(':xtm-rest-client-factory') {
-    dependencies {
-        compile project(':xtm-rest-client-api')
-        compile project(':xtm-rest-client-impl')
-        compile project(':shared')
-        testCompile project(':xtm-rest-client-api').sourceSets.test.output
-        testCompile 'com.palantir.docker.compose:docker-compose-rule-junit4:0.31.1'
-    }
-}
-
-project(':shared') {
+project(':xtm-rest-client-common') {
     dependencies {
         compile "org.springframework:spring-core:${spring_version}"
-
     }
 }
 
 project(':xtm-rest-client-usage-example') {
+    artifactoryPublish.skip = true
     dependencies {
         compile project(':xtm-rest-client-impl')
-        compile project(':node-configuration')
+        compile project(':xtm-rest-client-configuration')
         testCompile 'com.palantir.docker.compose:docker-compose-rule-junit4:0.31.1'
     }
 }
-
-

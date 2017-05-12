@@ -1,1 +1,0 @@
-For retrieving implementation of (not yet existing) xtm-rest-client-api

@@ -1,7 +1,6 @@
 package com.infinera.metro.dnam.acceptance.test.node;
 
-import com.infinera.metro.dnam.acceptance.test.mib.*;
-import com.infinera.metro.dnam.acceptance.test.node.dto.AnswerObjects;
+import com.infinera.metro.dnam.acceptance.test.node.mib.*;
 
 import java.io.IOException;
 

@@ -52,7 +52,7 @@ project(':node-configuration') {
 
     dependencies {
         compile project(':shared')
-        compile project(':xtm-rest-client-api')
+        compile project(':xtm-rest-client-impl')
         compile "org.yaml:snakeyaml:1.17"
         compile "com.fasterxml.jackson.core:jackson-databind:${jackson_version}"
         compile "org.apache.commons:commons-lang3:3.5"
@@ -130,5 +130,12 @@ project(':shared') {
     }
 }
 
+project(':xtm-rest-client-usage-example') {
+    dependencies {
+        compile project(':xtm-rest-client-impl')
+        compile project(':node-configuration')
+
+    }
+}
 
 

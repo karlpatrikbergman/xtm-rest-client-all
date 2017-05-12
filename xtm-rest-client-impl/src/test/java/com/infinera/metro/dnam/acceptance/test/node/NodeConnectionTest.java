@@ -3,9 +3,12 @@ package com.infinera.metro.dnam.acceptance.test.node;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
-import com.infinera.metro.dnam.acceptance.test.node.dto.AnswerObject;
-import com.infinera.metro.dnam.acceptance.test.node.dto.deserializer.JacksonUtil;
+
+import com.palantir.docker.compose.DockerComposeRule;
+import com.palantir.docker.compose.connection.waiting.HealthChecks;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.ClassRule;
+import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
 import java.util.List;
@@ -17,14 +20,14 @@ import static org.junit.Assert.assertNotEquals;
 @Slf4j
 public class NodeConnectionTest {
 
-//    @ClassRule
-//    public static DockerComposeRule docker = DockerComposeRule.builder()
-//            .file("src/test/resources/docker-compose.yml")
-//            .waitingForService("node1", HealthChecks.toHaveAllPortsOpen())
-//            .build();
+    @ClassRule
+    public static DockerComposeRule docker = DockerComposeRule.builder()
+            .file("src/test/resources/docker-compose.yml")
+            .waitingForService("node1", HealthChecks.toHaveAllPortsOpen())
+            .build();
 
-    private final String nodeIpAddress ="172.17.0.2";
-    //    private final String nodeIpAddress = "172.45.0.101";
+//    private final String nodeIpAddress ="172.17.0.2";
+        private final String nodeIpAddress = "172.45.0.101";
 
     ObjectMapper mapper = new ObjectMapper();
 
@@ -40,11 +43,9 @@ public class NodeConnectionTest {
 
     private final ObjectReader objectReader = JacksonUtil.INSTANCE.getReader().forType(new TypeReference<List<AnswerObject>>(){});
 
-//    @Test
+    @Test
     public void loginAndSetSessionId() {
         nodeConnection.loginAndSetSessionId();
         assertNotEquals(0, nodeConnection.getSessionId());
     }
-
-
 }

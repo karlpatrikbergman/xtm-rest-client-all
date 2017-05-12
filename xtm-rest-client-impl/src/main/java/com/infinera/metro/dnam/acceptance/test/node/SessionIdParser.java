@@ -12,7 +12,7 @@ final class SessionIdParser {
      * A login request may return a <form> with session-id=0 during xtm startup.
      * By returning 0 we know we have to try to login again (see loginAndSetSessionId)
      */
-    public static int parseSessionId(String responseBody) {
+    static int parseSessionId(String responseBody) {
         Optional<Integer> sessionId = Pattern.compile("\\R").splitAsStream(responseBody)
                 .filter(s -> s.contains("sessionId"))
                 .map(s -> s.replaceFirst(".*?(\\d+).*", "$1"))

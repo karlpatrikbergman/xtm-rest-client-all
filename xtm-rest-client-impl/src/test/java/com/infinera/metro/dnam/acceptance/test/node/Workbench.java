@@ -2,12 +2,8 @@ package com.infinera.metro.dnam.acceptance.test.node;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectReader;
-import com.infinera.metro.dnam.acceptance.test.mib.*;
-import com.infinera.metro.dnam.acceptance.test.mib.util.MibPathUtil;
-import com.infinera.metro.dnam.acceptance.test.node.dto.AnswerObject;
-import com.infinera.metro.dnam.acceptance.test.node.dto.AnswerObjects;
-import com.infinera.metro.dnam.acceptance.test.node.dto.deserializer.JacksonUtil;
-import com.infinera.metro.dnam.acceptance.test.util.MibObjectFactory;
+import com.infinera.metro.dnam.acceptance.test.node.mib.*;
+import com.infinera.metro.dnam.acceptance.test.node.mib.util.MibPathUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -20,7 +16,7 @@ import java.util.List;
 import static com.infinera.metro.dnam.acceptance.test.node.RestTemplateFactory.REST_TEMPLATE_FACTORY;
 
 /**
- * Workbench for misc testing. Tests will fail if XTM node is not started.
+ * Workbench for misc testing. Tests will fail if XTM node is not started manually.
  * Tests are not supposed to run in pipeline.
  */
 @Category(DontLetGradleRun.class)

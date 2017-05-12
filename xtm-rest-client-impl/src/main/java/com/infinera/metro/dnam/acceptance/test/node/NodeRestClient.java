@@ -2,13 +2,10 @@ package com.infinera.metro.dnam.acceptance.test.node;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectReader;
-import com.infinera.metro.dnam.acceptance.test.mib.Command;
-import com.infinera.metro.dnam.acceptance.test.mib.MibEntry;
-import com.infinera.metro.dnam.acceptance.test.mib.ParameterList;
-import com.infinera.metro.dnam.acceptance.test.mib.util.MibPathUtil;
-import com.infinera.metro.dnam.acceptance.test.node.dto.AnswerObject;
-import com.infinera.metro.dnam.acceptance.test.node.dto.AnswerObjects;
-import com.infinera.metro.dnam.acceptance.test.node.dto.deserializer.JacksonUtil;
+import com.infinera.metro.dnam.acceptance.test.node.mib.Command;
+import com.infinera.metro.dnam.acceptance.test.node.mib.MibEntry;
+import com.infinera.metro.dnam.acceptance.test.node.mib.ParameterList;
+import com.infinera.metro.dnam.acceptance.test.node.mib.util.MibPathUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

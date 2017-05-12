@@ -1,7 +1,7 @@
 package com.infinera.metro.dnam.acceptance.test.node;
 
-import com.infinera.metro.dnam.acceptance.test.mib.*;
-import com.infinera.metro.dnam.acceptance.test.node.dto.AnswerObjects;
+import com.infinera.metro.dnam.acceptance.test.node.mib.*;
+
 import com.palantir.docker.compose.DockerComposeRule;
 import com.palantir.docker.compose.connection.waiting.HealthChecks;
 import lombok.extern.slf4j.Slf4j;
@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.util.Arrays;
 
 import static com.infinera.metro.dnam.acceptance.test.node.RestTemplateFactory.REST_TEMPLATE_FACTORY;
+import static org.junit.Assert.assertNotNull;
 
 @Category(IntegrationTest.class)
 @Slf4j
@@ -24,8 +25,8 @@ public class NodeImplTest {
             .waitingForService("node1", HealthChecks.toHaveAllPortsOpen())
             .build();
 
-    private final String nodeIpAddressNodeA ="172.17.0.2";
-//    private final String nodeIpAddress = "172.45.0.101";
+//    private final String nodeIpAddressNodeA ="172.17.0.2";
+    private final String nodeIpAddressNodeA = "172.45.0.101";
 
     private final Node node = new NodeImpl(
         new NodeRestClient(
@@ -87,6 +88,7 @@ public class NodeImplTest {
         PeerEntry peerEntry = PeerEntry.builder()
                 .localLinePortEntry(linePortEntry)
                 .remoteLinePortEntry(remoteLinePortEntry)
+                .nodeIpAddress(nodeIpAddressNodeA)
                 .remoteNodeIpAddress("172.17.0.3")
                 .localMpoIdentifier(MpoIdentifier.createMpoIdentifierModuleNotPresent())
                 .remoteMpoIdentifier(MpoIdentifier.createMpoIdentifierModuleNotPresent())
@@ -127,14 +129,13 @@ public class NodeImplTest {
 //        AnswerObjects geBoardAnswerObjects = node.getBoard(boardEntry);
 
 //        //Clean up
-//        node.deleteBoard(boardEntry);
+        node.deleteBoard(boardEntry);
 //
 //        //TODO: Verify error message?
-//        //Then
-//        try {
-//            AnswerObjects geBoardAnswerObjectsAfterDelete = node.getBoard(boardEntry);
-//        } catch (RuntimeException e) {
-//            assertNotNull(e);
-//        }
+        try {
+            AnswerObjects geBoardAnswerObjectsAfterDelete = node.getBoard(boardEntry);
+        } catch (RuntimeException e) {
+            assertNotNull(e);
+        }
     }
 }

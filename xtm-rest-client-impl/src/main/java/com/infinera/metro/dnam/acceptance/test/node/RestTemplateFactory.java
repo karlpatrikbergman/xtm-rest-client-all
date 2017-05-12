@@ -6,7 +6,7 @@ import org.springframework.web.client.RestTemplate;
 enum RestTemplateFactory {
     REST_TEMPLATE_FACTORY;
 
-    public RestTemplate createRestTemplate() {
+    RestTemplate createRestTemplate() {
         int timeout = 3000;
         HttpComponentsClientHttpRequestFactory clientHttpRequestFactory = new HttpComponentsClientHttpRequestFactory();
         clientHttpRequestFactory.setConnectTimeout(timeout);

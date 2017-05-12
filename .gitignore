@@ -94,3 +94,5 @@ xtm-rest-client-impl/src/main/resources/
 !/xtm-rest-client-api/src/test/
 !/xtm-rest-client-api/src/main/resources/
 !/xtm-rest-client-impl/src/main/resources/
+/xtm-rest-client-factory/delete-when-certain/
+/node-configuration/delete-when-certain/

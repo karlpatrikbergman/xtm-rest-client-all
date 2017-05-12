@@ -17,6 +17,27 @@ subprojects {
         options.encoding = 'UTF-8'
     }
 
+    test {
+        //Show that tests are run in the command-line output
+        testLogging {
+            events 'started', 'passed'
+        }
+        useJUnit {
+            excludeCategories 'com.infinera.metro.dnam.acceptance.test.node.IntegrationTest'
+            excludeCategories 'com.infinera.metro.dnam.acceptance.test.node.DontLetGradleRun'
+        }
+    }
+
+    task integrationTest(type: Test) {
+        testLogging {
+            events 'started', 'passed'
+        }
+        useJUnit {
+            includeCategories 'com.infinera.metro.dnam.acceptance.test.node.IntegrationTest'
+            excludeCategories 'com.infinera.metro.dnam.acceptance.test.node.DontLetGradleRun'
+        }
+    }
+
     publishing {
         publications {
             mavenJava(MavenPublication) {
@@ -69,27 +90,6 @@ project(':xtm-rest-client-api') {
 }
 
 project(':xtm-rest-client-impl') {
-    test {
-        //Show that tests are run in the command-line output
-        testLogging {
-            events 'started', 'passed'
-        }
-        useJUnit {
-            excludeCategories 'com.infinera.metro.dnam.acceptance.test.node.IntegrationTest'
-            excludeCategories 'com.infinera.metro.dnam.acceptance.test.node.DontLetGradleRun'
-        }
-    }
-
-    task integrationTest(type: Test) {
-        testLogging {
-            events 'started', 'passed'
-        }
-        useJUnit {
-            includeCategories 'com.infinera.metro.dnam.acceptance.test.node.IntegrationTest'
-            excludeCategories 'com.infinera.metro.dnam.acceptance.test.node.DontLetGradleRun'
-        }
-    }
-
     dependencies {
         compile project(':shared'), project(':xtm-rest-client-api')
         compile "org.apache.httpcomponents:httpclient:4.5.3"
@@ -110,17 +110,6 @@ project(':xtm-rest-client-factory') {
         testCompile project(':xtm-rest-client-api').sourceSets.test.output
         testCompile 'com.palantir.docker.compose:docker-compose-rule-junit4:0.31.1'
     }
-
-    test {
-        //Show that tests are run in the command-line output
-        testLogging {
-            events 'started', 'passed'
-        }
-        useJUnit {
-            excludeCategories 'com.infinera.metro.dnam.acceptance.test.node.IntegrationTest'
-            excludeCategories 'com.infinera.metro.dnam.acceptance.test.node.DontLetGradleRun'
-        }
-    }
 }
 
 project(':shared') {
@@ -134,7 +123,7 @@ project(':xtm-rest-client-usage-example') {
     dependencies {
         compile project(':xtm-rest-client-impl')
         compile project(':node-configuration')
-
+        testCompile 'com.palantir.docker.compose:docker-compose-rule-junit4:0.31.1'
     }
 }
 

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.infinera.metro.dnam.acceptance.test.node.configuration.MpoIdentifierDeserializationTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2017-05-12T08:50:31" hostname="gentoo-pabe2.infinera.com" time="0.226">
+  <properties/>
+  <testcase name="test" classname="com.infinera.metro.dnam.acceptance.test.node.configuration.MpoIdentifierDeserializationTest" time="0.226"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[[Test worker] INFO com.infinera.metro.dnam.acceptance.test.node.configuration.MpoIdentifierDeserializationTest - com.infinera.metro.dnam.acceptance.test.node.mib.MpoIdentifier@303d8df1[
+  xtmVersionEqualOrHigherThan27=false
+  mpoPort=0
+]
+]]></system-err>
+</testsuite>

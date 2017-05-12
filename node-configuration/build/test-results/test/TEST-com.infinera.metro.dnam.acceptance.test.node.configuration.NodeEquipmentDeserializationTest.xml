@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.infinera.metro.dnam.acceptance.test.node.configuration.NodeEquipmentDeserializationTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2017-05-12T08:50:31" hostname="gentoo-pabe2.infinera.com" time="0.01">
+  <properties/>
+  <testcase name="test" classname="com.infinera.metro.dnam.acceptance.test.node.configuration.NodeEquipmentDeserializationTest" time="0.01"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[[Test worker] INFO com.infinera.metro.dnam.acceptance.test.node.configuration.NodeEquipmentDeserializationTest - com.infinera.metro.dnam.acceptance.test.node.configuration.NodeEquipment@14aa918c[
+  board=TPD10GBE
+  boardEntry=BoardEntry(module=EQUIPMENT, groupOrTable=BOARD, board=TPD10GBE, subrack=1, slot=2)
+  linePortEntry=LinePortEntry(module=WDM, groupOrTable=IF, linePort=WDM, subrack=1, slot=2, transmitPort=3, receivePort=4)
+  linePortConfiguration=Configuration(key=expectedFrequency, value=ch926)
+  clientPortEntry=ClientPortEntry(module=CLIENT, groupOrTable=IF, clientPort=CLIENT, subrack=1, slot=2, transmitPort=1, receivePort=2)
+  clientPortConfiguration=Configuration(key=configure, value=lan10GbE yes)
+  mpoIdentifier=:0
+]
+]]></system-err>
+</testsuite>

@@ -1,0 +1,3 @@
+TODO:
+-----
+Rename packages, test should come before acceptance to match maven coordinates

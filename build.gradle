@@ -103,10 +103,10 @@ subprojects {
     }
 
     dependencies {
-        compile "org.slf4j:slf4j-api:1.7.21"
-        compile "org.slf4j:slf4j-simple:1.7.13"
+        compile "org.slf4j:slf4j-api:1.7.25"
+        compile "org.slf4j:slf4j-simple:1.7.25"
         compile "com.google.guava:guava:21.0"
-        compile "org.projectlombok:lombok:1.16.8"
+        compile "org.projectlombok:lombok:1.16.16"
         testCompile "junit:junit:4.12"
     }
 }

@@ -3,4 +3,5 @@ include 'xtm-rest-client-impl'
 include 'xtm-rest-client-common'
 include 'xtm-rest-client-configuration'
 include 'xtm-rest-client-usage-example'
+include 'xtm-docker-runner'
 

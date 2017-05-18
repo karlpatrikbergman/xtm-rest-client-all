@@ -18,7 +18,7 @@ public class NodeEquipmentDeserializationTest {
     @Test
     public void test() throws IOException {
         ObjectReader reader = JacksonYamlUtil.INSTANCE.getReader().forType(NodeEquipment.class);
-        InputStream in = new ResourceInputStream("yaml-files/node_equipment.yaml");
+        InputStream in = new ResourceInputStream("configuration/node_equipment.yaml");
         NodeEquipment nodeEquipment = reader.readValue(in);
 
         assertTrue(nodeEquipment.getBoard().equals(Board.TPD10GBE));

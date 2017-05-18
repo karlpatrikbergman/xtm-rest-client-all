@@ -17,7 +17,7 @@ public class ConfigurationDeserializationTest {
     @Test
     public void test() throws IOException {
         ObjectReader reader = JacksonYamlUtil.INSTANCE.getReader().forType(Configuration.class);
-        InputStream in = new ResourceInputStream("yaml-files/configuration.yaml");
+        InputStream in = new ResourceInputStream("configuration/configuration.yaml");
         Configuration configuration = reader.readValue(in);
         log.info(ReflectionToStringBuilder.toString(configuration, ToStringStyle.MULTI_LINE_STYLE));
     }

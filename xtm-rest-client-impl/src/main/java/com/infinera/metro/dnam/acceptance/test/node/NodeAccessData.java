@@ -11,4 +11,13 @@ public class NodeAccessData {
     @NonNull private final Integer port;
     @NonNull private final String userName;
     @NonNull private final String password;
+
+    public NodeAccessData copyAndChangeIpAddress(String newIpAddress) {
+        return NodeAccessData.builder()
+                .ipAddress(newIpAddress)
+                .port(port)
+                .password(password)
+                .userName(userName)
+                .build();
+    }
 }

@@ -11,8 +11,7 @@ import java.io.IOException;
 @Builder
 @Value
 public class NodeConfiguration {
-    @NonNull
-    Node node;
+    @NonNull Node node;
     @NonNull NodeEquipment nodeEquipment;
 
     public void apply() throws IOException {
@@ -22,7 +21,6 @@ public class NodeConfiguration {
         final LinePortEntry linePortEntry = nodeEquipment.getLinePortEntry();
         final Configuration linePortConfiguration = nodeEquipment.getLinePortConfiguration();
         node.setLinePortConfiguration(linePortEntry, ParameterList.of(linePortConfiguration));
-
 
         final ClientPortEntry clientPortEntry = nodeEquipment.getClientPortEntry();
         final Configuration clientPortConfiguration = nodeEquipment.getClientPortConfiguration();

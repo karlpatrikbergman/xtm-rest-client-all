@@ -16,7 +16,7 @@ public class LinePortEntryDeserializationTest {
     @Test
     public void test() throws IOException {
         ObjectReader reader = JacksonYamlUtil.INSTANCE.getReader().forType(LinePortEntry.class);
-        InputStream in = new ResourceInputStream("yaml-files/line_port_entry.yaml");
+        InputStream in = new ResourceInputStream("configuration/line_port_entry.yaml");
         LinePortEntry linePortEntry = reader.readValue(in);
         log.info(ReflectionToStringBuilder.toString(linePortEntry, ToStringStyle.MULTI_LINE_STYLE));
     }

@@ -17,7 +17,7 @@ public class MpoIdentifierDeserializationTest {
     @Test
     public void test() throws IOException {
         ObjectReader reader = JacksonYamlUtil.INSTANCE.getReader().forType(MpoIdentifier.class);
-        InputStream in = new ResourceInputStream("yaml-files/mpo_identifier.yaml");
+        InputStream in = new ResourceInputStream("configuration/mpo_identifier.yaml");
         MpoIdentifier mpoIdentifier = reader.readValue(in);
         log.info(ReflectionToStringBuilder.toString(mpoIdentifier, ToStringStyle.MULTI_LINE_STYLE));
     }

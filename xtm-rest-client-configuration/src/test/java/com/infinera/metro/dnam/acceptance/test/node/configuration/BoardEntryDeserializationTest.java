@@ -16,7 +16,7 @@ public class BoardEntryDeserializationTest {
     @Test
     public void test() throws IOException {
         ObjectReader reader = JacksonYamlUtil.INSTANCE.getReader().forType(BoardEntry.class);
-        InputStream in = new ResourceInputStream("yaml-files/board_entry.yaml");
+        InputStream in = new ResourceInputStream("configuration/board_entry.yaml");
         BoardEntry boardEntry = reader.readValue(in);
         log.info(ReflectionToStringBuilder.toString(boardEntry, ToStringStyle.MULTI_LINE_STYLE));
     }

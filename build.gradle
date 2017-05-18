@@ -151,6 +151,13 @@ project(':xtm-rest-client-usage-example') {
     dependencies {
         compile project(':xtm-rest-client-impl')
         compile project(':xtm-rest-client-configuration')
+        compile project(':xtm-docker-runner')
         testCompile 'com.palantir.docker.compose:docker-compose-rule-junit4:0.31.1'
+    }
+}
+
+project(':xtm-docker-runner') {
+    dependencies {
+        compile "com.spotify:docker-client:8.4.0"
     }
 }

@@ -16,7 +16,7 @@ public class ClientPortEntryDeserializationTest {
     @Test
     public void test() throws IOException {
         ObjectReader reader = JacksonYamlUtil.INSTANCE.getReader().forType(ClientPortEntry.class);
-        InputStream in = new ResourceInputStream("yaml-files/client_port_entry.yaml");
+        InputStream in = new ResourceInputStream("configuration/client_port_entry.yaml");
         ClientPortEntry clientPortEntry = reader.readValue(in);
         log.info(ReflectionToStringBuilder.toString(clientPortEntry, ToStringStyle.MULTI_LINE_STYLE));
     }

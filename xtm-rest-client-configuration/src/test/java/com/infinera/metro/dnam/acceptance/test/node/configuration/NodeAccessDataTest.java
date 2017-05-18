@@ -17,7 +17,7 @@ public class NodeAccessDataTest {
     @Test
     public void test2() throws IOException {
         ObjectReader reader = JacksonYamlUtil.INSTANCE.getReader().forType(NodeAccessData.class);
-        InputStream in = new ResourceInputStream("yaml-files/node_access_data.yaml");
+        InputStream in = new ResourceInputStream("configuration/node_access_data.yaml");
         NodeAccessData nodeAccessData = reader.readValue(in);
         log.info(ReflectionToStringBuilder.toString(nodeAccessData, ToStringStyle.MULTI_LINE_STYLE));
     }

@@ -12,7 +12,7 @@ public class NodeAccessData {
     @NonNull private final String userName;
     @NonNull private final String password;
 
-    public NodeAccessData copyAndChangeIpAddress(String newIpAddress) {
+    public NodeAccessData copyObjectAndChangeIpAddress(String newIpAddress) {
         return NodeAccessData.builder()
                 .ipAddress(newIpAddress)
                 .port(port)

@@ -98,3 +98,5 @@ xtm-rest-client-impl/src/main/resources/
 /node-configuration/delete-when-certain/
 /xtm-docker-node-runner/xtm-docker-node-runner.iml
 !/xtm-docker-node-runner/src/
+/xtm-docker-runner/delete-when-certain/
+/xtm-rest-client-usage-example/delete-when-certain/

@@ -22,6 +22,7 @@ public class LinePortEntry implements MibEntry {
     @NonNull private final Integer receivePort;
 
     public String getMibEntryString() {
+        assert linePort != null;
         return MibPathUtil.MIB_PATH_UTIL.getMibEntryString (linePort.getName(), getSubrack() ,getSlot(), this.getTransmitPort(), this.getReceivePort());
     }
 

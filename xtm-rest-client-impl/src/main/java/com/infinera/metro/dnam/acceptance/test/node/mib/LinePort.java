@@ -28,7 +28,7 @@ public enum LinePort {
                 .orElseThrow(() -> new IllegalArgumentException(string));
     }
 
-    private static Map<String, LinePort> LINE_PORT_MAP = Stream
+    private static final Map<String, LinePort> LINE_PORT_MAP = Stream
             .of(LinePort.values())
             .collect(Collectors.toMap(s -> s.name, Function.identity()));
 }

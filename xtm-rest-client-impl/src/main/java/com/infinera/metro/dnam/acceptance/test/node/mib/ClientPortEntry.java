@@ -22,6 +22,7 @@ public class ClientPortEntry implements MibEntry {
     @NonNull private final Integer receivePort;
 
     public String getMibEntryString() {
+        assert clientPort != null;
         return MibPathUtil.MIB_PATH_UTIL.getMibEntryString (clientPort.getName(), getSubrack() ,getSlot(), this.getTransmitPort(), this.getReceivePort());
     }
 

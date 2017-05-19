@@ -56,15 +56,15 @@ public class Workbench {
     }
 
     private void configureNodeA() throws IOException {
-        createBoard(nodeConnectionA, mibObjectFactory.createBoardEntry(Board.TPD10GBE));
-        PeerEntry peerEntryTransmitSide = mibObjectFactory.createDefaultTransmitPeerEntryNodeA();
+        createBoard(nodeConnectionA, MibObjectFactory.createBoardEntry(Board.TPD10GBE));
+        PeerEntry peerEntryTransmitSide = MibObjectFactory.createDefaultTransmitPeerEntryNodeA();
         createPeer(nodeConnectionA, peerEntryTransmitSide);
         configurePeer(nodeConnectionA, peerEntryTransmitSide, buildConfigurePeerParameterList(peerEntryTransmitSide));
     }
 
     private void configureNodeZ() throws IOException {
-        createBoard(nodeConnectionZ, mibObjectFactory.createBoardEntry(Board.TPD10GBE));
-        PeerEntry peerEntryReceiveSide = mibObjectFactory.createDefaultReceivePeerEntryNodeZ();
+        createBoard(nodeConnectionZ, MibObjectFactory.createBoardEntry(Board.TPD10GBE));
+        PeerEntry peerEntryReceiveSide = MibObjectFactory.createDefaultReceivePeerEntryNodeZ();
         createPeer(nodeConnectionZ, peerEntryReceiveSide);
         configurePeer(nodeConnectionZ, peerEntryReceiveSide, buildConfigurePeerParameterList(peerEntryReceiveSide));
     }

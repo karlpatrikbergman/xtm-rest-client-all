@@ -5,8 +5,8 @@ import java.util.Arrays;
 public enum MibObjectFactory {
     MIB_OBJECT_FACTORY;
 
-    public static final String DEFAULT_NODE_A_IP_ADDRESS = "172.17.0.2";
-    public static final String DEFAULT_NODE_Z_IP_ADDRESS = "172.17.0.3";
+    private static final String DEFAULT_NODE_A_IP_ADDRESS = "172.17.0.2";
+    private static final String DEFAULT_NODE_Z_IP_ADDRESS = "172.17.0.3";
 
     public static ParameterList buildConfigurePeerParameterList(PeerEntry peerEntry) {
         return ParameterList.builder()
@@ -45,7 +45,7 @@ public enum MibObjectFactory {
         return createDefaultTransmitPeerEntryNodeA(DEFAULT_NODE_Z_IP_ADDRESS);
     }
 
-    public static PeerEntry createDefaultTransmitPeerEntryNodeA(String remoteNodeIpAddress) {
+    private static PeerEntry createDefaultTransmitPeerEntryNodeA(String remoteNodeIpAddress) {
         return PeerEntry.builder()
                 .localLinePortEntry(createLinePortEntryNodeA())
                 .remoteLinePortEntry(createLinePortEntryNodeZ())
@@ -66,7 +66,7 @@ public enum MibObjectFactory {
         return createDefaultReceivePeerEntryNodeZ(DEFAULT_NODE_A_IP_ADDRESS);
     }
 
-    public static PeerEntry createDefaultReceivePeerEntryNodeZ(String remoteNodeIpAddress) {
+    private static PeerEntry createDefaultReceivePeerEntryNodeZ(String remoteNodeIpAddress) {
         return PeerEntry.builder()
                 .localLinePortEntry(createLinePortEntryNodeZ())
                 .remoteLinePortEntry(createLinePortEntryNodeA())
@@ -83,7 +83,7 @@ public enum MibObjectFactory {
      * The transmit port will be used when creating transmitting peer on Node A (peer:1:2:3):
      *      172.17.0.2/mib/topo/peer/peer:1:2:3/create.json
      */
-    public static LinePortEntry createLinePortEntryNodeA() {
+    private static LinePortEntry createLinePortEntryNodeA() {
         return LinePortEntry.builder()
                 .linePort(LinePort.WDM)
                 .subrack(1)
@@ -99,7 +99,7 @@ public enum MibObjectFactory {
      * The transmit port will be used when creating transmitting peer on Node Z (peer:1:2:0:3):
      *      172.17.0.3/mib/topo/peer/peer:1:2:0:3/create.json
      */
-    public static LinePortEntry createLinePortEntryNodeZ() {
+    private static LinePortEntry createLinePortEntryNodeZ() {
         return LinePortEntry.builder()
                 .linePort(LinePort.WDM)
                 .subrack(1)

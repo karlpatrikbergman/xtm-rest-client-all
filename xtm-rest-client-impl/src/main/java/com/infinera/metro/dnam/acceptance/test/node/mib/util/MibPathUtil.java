@@ -27,14 +27,16 @@ public enum MibPathUtil {
         return result.render();
     }
 
-    public String getMibEntryString(String entry, int subrack, int slot, int transmitPort) {
-        ST result = new ST("<entry>:<subrack>:<slot>:<transmitPort>");
-        result.add("entry", entry);
-        result.add("subrack", subrack);
-        result.add("slot", slot);
-        result.add("transmitPort", transmitPort);
-        return result.render();
-    }
+// --Commented out by Inspection START (19/05/17 12:04):
+//    public String getMibEntryString(String entry, int subrack, int slot, int transmitPort) {
+//        ST result = new ST("<entry>:<subrack>:<slot>:<transmitPort>");
+//        result.add("entry", entry);
+//        result.add("subrack", subrack);
+//        result.add("slot", slot);
+//        result.add("transmitPort", transmitPort);
+//        return result.render();
+//    }
+// --Commented out by Inspection STOP (19/05/17 12:04)
 
     public String getMibEntryString(String entry, int subrack, int slot, int transmitPort, int receivePort) {
         ST result = new ST("<entry>:<subrack>:<slot>:<transmitPort>-<receivePort>");

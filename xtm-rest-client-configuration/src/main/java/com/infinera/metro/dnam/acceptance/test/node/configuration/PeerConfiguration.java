@@ -6,7 +6,6 @@ import com.infinera.metro.dnam.acceptance.test.node.mib.ParameterList;
 import com.infinera.metro.dnam.acceptance.test.node.mib.PeerEntry;
 import lombok.Value;
 
-import java.io.IOException;
 import java.util.Arrays;
 
 @Value
@@ -27,18 +26,18 @@ public class PeerConfiguration {
         this.receivePeerConfig = createPeerConfig(receivePeerEntry);
     }
 
-    public void apply() throws IOException {
+    public void apply() throws RuntimeException {
         applyTransmitNodePeerConfig();
         applyReceiveNodePeerConfig();
     }
 
-    private void applyTransmitNodePeerConfig() throws IOException {
+    private void applyTransmitNodePeerConfig() throws RuntimeException {
         Node transmitNode = transmitNodeConfig.getNode();
         transmitNode.createLocalPeer(transmitPeerEntry);
         transmitNode.setLocalPeerConfiguration(transmitPeerEntry, transmitPeerConfig);
     }
 
-    private void applyReceiveNodePeerConfig() throws IOException {
+    private void applyReceiveNodePeerConfig() throws RuntimeException {
         Node receiveNode = receiveNodeConfig.getNode();
         receiveNode.createLocalPeer(receivePeerEntry);
         receiveNode.setLocalPeerConfiguration(receivePeerEntry, receivePeerConfig);

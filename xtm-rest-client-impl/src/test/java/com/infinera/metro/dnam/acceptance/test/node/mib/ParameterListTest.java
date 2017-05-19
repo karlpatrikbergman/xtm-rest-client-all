@@ -9,7 +9,7 @@ import static org.junit.Assert.assertEquals;
 
 @Slf4j
 public class ParameterListTest {
-    ParameterList parameterList = ParameterList.builder()
+    private final ParameterList parameterList = ParameterList.builder()
             .parameterList(Arrays.asList(
                 Configuration.builder()
                         .key("topoPeerLocalLabel")

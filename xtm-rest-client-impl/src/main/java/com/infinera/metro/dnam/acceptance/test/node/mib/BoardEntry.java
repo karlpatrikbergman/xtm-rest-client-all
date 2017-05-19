@@ -20,6 +20,7 @@ public class BoardEntry implements MibEntry {
 
     @Override
     public String getMibEntryString() {
+        assert board != null;
         return MibPathUtil.MIB_PATH_UTIL.getMibEntryString (board.getName(), getSubrack() ,getSlot());
     }
 

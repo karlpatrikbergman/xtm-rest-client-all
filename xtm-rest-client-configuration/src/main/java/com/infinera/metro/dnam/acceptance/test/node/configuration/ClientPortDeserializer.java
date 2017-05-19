@@ -7,7 +7,7 @@ import com.infinera.metro.dnam.acceptance.test.node.mib.ClientPort;
 
 import java.io.IOException;
 
-public class ClientPortDeserializer extends JsonDeserializer<ClientPort> {
+class ClientPortDeserializer extends JsonDeserializer<ClientPort> {
 
     @Override
     public ClientPort deserialize(JsonParser jsonParser, DeserializationContext context) throws IOException {

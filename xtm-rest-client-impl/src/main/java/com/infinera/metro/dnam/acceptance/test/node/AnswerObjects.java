@@ -16,6 +16,8 @@ public class AnswerObjects {
     }
 
     /**
+     * TODO: Make sure we find error when setting expected frequency on line port!
+     *
      * Check if AnswerObjects contains a success response (of type AnswerObject to a specific operation
      * on a specific mibEntry. If no AnswerObject is found a RuntimeException is thrown.
      *

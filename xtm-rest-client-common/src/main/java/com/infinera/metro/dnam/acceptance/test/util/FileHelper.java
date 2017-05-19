@@ -1,5 +1,4 @@
 package com.infinera.metro.dnam.acceptance.test.util;
-
 import com.google.common.base.Preconditions;
 
 import java.io.BufferedReader;

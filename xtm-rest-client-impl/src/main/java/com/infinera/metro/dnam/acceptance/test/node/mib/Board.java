@@ -32,7 +32,7 @@ public enum Board {
                 .orElseThrow(() -> new IllegalArgumentException(string));
     }
 
-    private static Map<String, Board> BOARD_MAP = Stream
+    private static final Map<String, Board> BOARD_MAP = Stream
             .of(Board.values())
             .collect(Collectors.toMap(s -> s.name, Function.identity()));
 }

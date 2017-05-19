@@ -21,6 +21,7 @@ public class XtmDockerRunner {
     @NonNull private final Integer port;
     @NonNull private final String userName;
     @NonNull private final String password;
+    private String dockerContainerIpAddress;
 
     public String runDockerContainer() throws DockerException, InterruptedException, DockerCertificateException {
 

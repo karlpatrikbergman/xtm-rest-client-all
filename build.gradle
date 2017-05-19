@@ -121,6 +121,7 @@ project(':xtm-rest-client-configuration') {
     dependencies {
         compile project(':xtm-rest-client-common')
         compile project(':xtm-rest-client-impl')
+        compile project(':xtm-docker-runner')
         compile "org.yaml:snakeyaml:1.17"
         compile "com.fasterxml.jackson.core:jackson-databind:${jackson_version}"
         compile "org.apache.commons:commons-lang3:3.5"

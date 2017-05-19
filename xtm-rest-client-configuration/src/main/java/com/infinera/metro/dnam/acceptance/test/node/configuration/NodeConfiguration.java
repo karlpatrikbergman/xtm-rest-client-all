@@ -6,21 +6,23 @@ import lombok.Builder;
 import lombok.NonNull;
 import lombok.Value;
 
-import java.io.IOException;
-
 @Builder
 @Value
 public class NodeConfiguration {
     @NonNull Node node;
     @NonNull NodeEquipment nodeEquipment;
 
-    public void apply() throws IOException {
+    public void apply() throws RuntimeException {
         final BoardEntry boardEntry = nodeEquipment.getBoardEntry();
         node.createBoard(boardEntry);
+
+//        TimeUnit.SECONDS.sleep(2);
 
         final LinePortEntry linePortEntry = nodeEquipment.getLinePortEntry();
         final Configuration linePortConfiguration = nodeEquipment.getLinePortConfiguration();
         node.setLinePortConfiguration(linePortEntry, ParameterList.of(linePortConfiguration));
+
+//        TimeUnit.SECONDS.sleep(2);
 
         final ClientPortEntry clientPortEntry = nodeEquipment.getClientPortEntry();
         final Configuration clientPortConfiguration = nodeEquipment.getClientPortConfiguration();

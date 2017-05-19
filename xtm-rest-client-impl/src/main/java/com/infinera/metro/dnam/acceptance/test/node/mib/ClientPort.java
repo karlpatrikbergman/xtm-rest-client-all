@@ -29,7 +29,7 @@ public enum ClientPort {
                 .orElseThrow(() -> new IllegalArgumentException(string));
     }
 
-    private static Map<String, ClientPort> CLIENT_PORT_MAP = Stream
+    private static final Map<String, ClientPort> CLIENT_PORT_MAP = Stream
             .of(ClientPort.values())
             .collect(Collectors.toMap(s -> s.name, Function.identity()));
 }

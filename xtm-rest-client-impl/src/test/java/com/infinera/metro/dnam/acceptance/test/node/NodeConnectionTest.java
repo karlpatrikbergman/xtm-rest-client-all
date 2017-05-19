@@ -31,7 +31,7 @@ public class NodeConnectionTest {
 
     ObjectMapper mapper = new ObjectMapper();
 
-    final NodeConnection nodeConnection = new NodeConnection(
+    private final NodeConnection nodeConnection = new NodeConnection(
             NodeAccessData.builder()
                 .ipAddress(nodeIpAddress)
                 .port(80)

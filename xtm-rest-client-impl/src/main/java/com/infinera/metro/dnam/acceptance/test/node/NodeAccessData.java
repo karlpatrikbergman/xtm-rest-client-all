@@ -20,4 +20,13 @@ public class NodeAccessData {
                 .userName(userName)
                 .build();
     }
+
+    public static NodeAccessData createDefault(String ipAddress) {
+        return NodeAccessData.builder()
+                .ipAddress(ipAddress)
+                .port(80)
+                .userName("root")
+                .password("root")
+                .build();
+    }
 }

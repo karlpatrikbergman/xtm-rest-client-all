@@ -2,8 +2,6 @@ package com.infinera.metro.dnam.acceptance.test.node;
 
 import com.infinera.metro.dnam.acceptance.test.node.mib.*;
 
-import java.io.IOException;
-
 public class NodeImpl implements Node {
     private final NodeRestClient nodeRestClient;
 
@@ -25,37 +23,37 @@ public class NodeImpl implements Node {
 
     /** BoardEntry **/
 
-    public AnswerObjects createBoard(BoardEntry boardEntry) throws IOException {
+    public AnswerObjects createBoard(BoardEntry boardEntry) throws RuntimeException {
         return nodeRestClient.performRestAction(boardEntry, Command.CREATE_JSON);
     }
 
-    public AnswerObjects getBoard(BoardEntry boardEntry) throws IOException {
+    public AnswerObjects getBoard(BoardEntry boardEntry) throws RuntimeException {
         return nodeRestClient.performRestAction(boardEntry, Command.GET_JSON);
     }
 
-    public AnswerObjects deleteBoard(BoardEntry boardEntry) throws IOException {
+    public AnswerObjects deleteBoard(BoardEntry boardEntry) throws RuntimeException {
         return nodeRestClient.performRestAction(boardEntry, Command.DELETE_JSON);
    }
 
     /** LinePortEntry **/
 
-    public AnswerObjects setLinePortConfiguration(LinePortEntry linePortEntry, ParameterList parameterList) throws IOException {
+    public AnswerObjects setLinePortConfiguration(LinePortEntry linePortEntry, ParameterList parameterList) throws RuntimeException {
         return nodeRestClient.performRestAction(linePortEntry, Command.SET_JSON, parameterList);
     }
 
     /** ClientPortEntry **/
 
-    public AnswerObjects setClientPortConfiguration(ClientPortEntry clientPortEntry, ParameterList parameterList) throws IOException {
+    public AnswerObjects setClientPortConfiguration(ClientPortEntry clientPortEntry, ParameterList parameterList) throws RuntimeException {
         return nodeRestClient.performRestAction(clientPortEntry, Command.CONFIGURE_JSON, parameterList);
     }
 
     /** PeerEntry **/
 
-    public AnswerObjects createLocalPeer(PeerEntry peerEntry) throws IOException {
+    public AnswerObjects createLocalPeer(PeerEntry peerEntry) throws RuntimeException {
         return nodeRestClient.performRestAction(peerEntry, Command.CREATE_JSON);
     }
 
-    public AnswerObjects setLocalPeerConfiguration(PeerEntry peerEntry, ParameterList parameterList) throws IOException {
+    public AnswerObjects setLocalPeerConfiguration(PeerEntry peerEntry, ParameterList parameterList) throws RuntimeException {
         return nodeRestClient.performRestAction(peerEntry, Command.SET_JSON, parameterList);
     }
 

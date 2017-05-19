@@ -39,9 +39,10 @@ class NodeConnection {
             log.info("loginResponse {}", loginResponse);
             if(SessionIdParser.parseSessionId(loginResponse.getBody()) == 0) {
                 try {
+                    log.info("Sleeping for 2 seconds");
                     TimeUnit.SECONDS.sleep(2);
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    log.error(e.getMessage());
                 }
             } else {
                 this.sessionId = SessionIdParser.parseSessionId(loginResponse.getBody());

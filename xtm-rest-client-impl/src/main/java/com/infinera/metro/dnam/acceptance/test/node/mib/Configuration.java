@@ -9,7 +9,7 @@ public class Configuration {
     private final String value;
 
     @java.beans.ConstructorProperties({"key", "value"})
-    Configuration(String key, String value) {
+    private Configuration(String key, String value) {
         this.key = key;
         this.value = value;
     }

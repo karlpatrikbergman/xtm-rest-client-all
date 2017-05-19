@@ -7,7 +7,7 @@ import com.infinera.metro.dnam.acceptance.test.node.mib.Board;
 
 import java.io.IOException;
 
-public class BoardDeserializer extends JsonDeserializer<Board> {
+class BoardDeserializer extends JsonDeserializer<Board> {
 
     @Override
     public Board deserialize(JsonParser jsonParser, DeserializationContext context) throws IOException {

@@ -13,8 +13,6 @@ import org.junit.experimental.categories.Category;
 import java.io.IOException;
 import java.util.Comparator;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -47,12 +45,12 @@ public class UseXtmRestClientRingNetworkExample {
     }
 
     /**
-     * TODO: Add sort field to NodeConfig
+     * TODO: Add sort field to NodeConfig. ExecutorService did not work, why?
      */
     private void applyPeerConfiguration(List<NodeConfiguration> nodeConfigurationList) throws IOException, InterruptedException {
         Preconditions.checkArgument(nodeConfigurationList.size() > 1, "We must have at least two nodes");
         nodeConfigurationList.sort(Comparator.comparing(p -> ipToLong(p.getNode().getIpAddress())));
-        ExecutorService executor = Executors.newCachedThreadPool();
+//        ExecutorService executor = Executors.newCachedThreadPool();
 
         for(int i=0; i<nodeConfigurationList.size(); i++) {
             log.info("apply peer iteration " + i);

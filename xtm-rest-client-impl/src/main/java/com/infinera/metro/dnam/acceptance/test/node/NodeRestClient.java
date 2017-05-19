@@ -37,7 +37,7 @@ class NodeRestClient {
         String all = mibPathAndCommand + "?" + flags + "&" + parameters;
 
         int attempts = 0;
-        while(attempts++ < 3) {
+        while(attempts++ < 4) {
             try  {
                 ResponseEntity<String> responseEntity = nodeConnection.performRestAction(all);
 
@@ -49,11 +49,9 @@ class NodeRestClient {
                 answerObjects.checkResponse(command.getOperation(), mibEntry);
                 return answerObjects;
 
-            } catch (RuntimeException e) {
+            } catch (RuntimeException | IOException e) {
                 log.error("performRestAction failed. Sleeps for 10 seconds. Error: " + e.getMessage());
                 ThreadSleepWrapper.sleep(10);
-            } catch (IOException e) {
-                e.printStackTrace();
             }
         }
         throw new RuntimeException("Tried performRestAction three times and failed. Command was: " + all);

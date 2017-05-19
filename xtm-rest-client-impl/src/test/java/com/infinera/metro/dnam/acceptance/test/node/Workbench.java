@@ -137,7 +137,7 @@ public class Workbench {
     /**
      * Placed in NodeRestClient
      */
-    private void configureNode(NodeConnection nodeConnection, MibEntry mibEntry, Command command, ParameterList parameterList) throws IOException {
+    private void configureNode(NodeConnection nodeConnection, MibEntry mibEntry, Command command, ParameterList parameterList) throws IOException, RuntimeException {
         String mibPathAndCommand = mibPathUtil.getMibPathAndCommand(mibEntry, command);
         String flags ="_RFLAGS_=RAISEMGNOQPCYVULTBJK&_AFLAGS_=AVNDHPUIMJOSE";
         String parameters = (parameterList == null) ? "" : parameterList.toString();

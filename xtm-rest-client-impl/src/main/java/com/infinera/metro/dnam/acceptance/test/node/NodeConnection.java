@@ -1,7 +1,9 @@
 package com.infinera.metro.dnam.acceptance.test.node;
 
+import com.infinera.metro.dnam.acceptance.test.util.ThreadSleepWrapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.*;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.concurrent.TimeUnit;
@@ -23,7 +25,7 @@ class NodeConnection {
         return new NodeConnection(nodeAccessData, RestTemplateFactory.REST_TEMPLATE_FACTORY.createRestTemplate());
     }
 
-    ResponseEntity<String> performRestAction(String mibPath) {
+    ResponseEntity<String> performRestAction(String mibPath) throws RuntimeException {
         if(sessionId == 0) {
             loginAndSetSessionId();
         }
@@ -58,7 +60,7 @@ class NodeConnection {
         return nodeAccessData.getIpAddress();
     }
 
-    private ResponseEntity<String> login() {
+    private ResponseEntity<String> login() throws RuntimeException {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.TEXT_HTML);
         HttpEntity<Object> httpEntity = new HttpEntity<>(headers);
@@ -71,25 +73,47 @@ class NodeConnection {
      * Connection timeout is set to 3000 ms in createRestTemplate(). When time out occurs
      * we catch exception, sleeps for a while and tries again.
      */
-    private ResponseEntity<String> performHttpGetRequest(String path, HttpEntity httpEntity) {
+    private ResponseEntity<String> performHttpGetRequest(String path, HttpEntity httpEntity) throws RuntimeException {
         String baseUrl = xtmRestBaseUtil.baseUrl(nodeAccessData.getIpAddress(), nodeAccessData.getPort());
         String url = xtmRestBaseUtil.url(baseUrl, path);
-        ResponseEntity<String> responseEntity = null;
-        int nrOfAttempts = 0;
-        while (responseEntity == null) {
+
+        int attempts = 0;
+        int maxAttempts = 10;
+        RestClientException lastAttemptException = null;
+        while(attempts++ < maxAttempts) {
             try {
                 log.info("Performing http GET with url {}", url);
-                responseEntity = restTemplate.exchange(
+                return restTemplate.exchange(
                         url,
                         HttpMethod.GET,
                         httpEntity,
                         String.class
                 );
-            } catch (Exception e) {
+            } catch (RestClientException e) {
                 log.error("Failed to perform http GET {} (Try nr {})\n{}", url, e.getMessage());
+                ThreadSleepWrapper.sleep(5);
+                lastAttemptException = e;
             }
         }
-        return responseEntity;
+        throw new RuntimeException("Failed to perform http request "+maxAttempts+" times. Exception: " + lastAttemptException);
+
+
+//
+//        int nrOfAttempts = 0;
+//        while (responseEntity == null) {
+//            try {
+//                log.info("Performing http GET with url {}", url);
+//                responseEntity = restTemplate.exchange(
+//                        url,
+//                        HttpMethod.GET,
+//                        httpEntity,
+//                        String.class
+//                );
+//            } catch (Exception e) {
+//                log.error("Failed to perform http GET {} (Try nr {})\n{}", url, e.getMessage());
+//            }
+//        }
+//        return responseEntity;
     }
 
     private HttpEntity createHttpEntityWithSessionId() {

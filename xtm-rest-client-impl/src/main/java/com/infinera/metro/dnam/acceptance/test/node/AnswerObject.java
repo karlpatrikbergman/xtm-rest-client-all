@@ -114,8 +114,8 @@ public class AnswerObject implements Serializable {
      */
     public boolean isSuccessAnswerObject(Operation operation, MibEntry mibEntry) {
         final boolean mibEntryFound = mibEntryEqualsAnswerObjectEntryFieldOrAttributeObjectNameField(operation, mibEntry);
-        return isSuccess() && getModule().equals(mibEntry.getModule().getValue()) &&
-                getGroupOrTable().equals(mibEntry.getGroupOrTable().getValue()) && mibEntryFound;
+        return isSuccess() && getModule().equals(mibEntry.getModuleType().getValue()) &&
+                getGroupOrTable().equals(mibEntry.getGroupOrTableType().getValue()) && mibEntryFound;
     }
 
     /**
@@ -133,8 +133,8 @@ public class AnswerObject implements Serializable {
      */
     public boolean isErrorAnswerObject(Operation operation, MibEntry mibEntry) {
         final boolean mibEntryFound = mibEntryEqualsAnswerObjectEntryFieldOrAttributeObjectNameField(operation, mibEntry);
-        return !isSuccess() && getModule().equals(mibEntry.getModule().getValue()) &&
-                getGroupOrTable().equals(mibEntry.getGroupOrTable().getValue()) && mibEntryFound;
+        return !isSuccess() && getModule().equals(mibEntry.getModuleType().getValue()) &&
+                getGroupOrTable().equals(mibEntry.getGroupOrTableType().getValue()) && mibEntryFound;
     }
 
     private boolean mibEntryEqualsAnswerObjectEntryFieldOrAttributeObjectNameField(Operation operation, MibEntry mibEntry) {

@@ -4,9 +4,9 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
-import com.infinera.metro.dnam.acceptance.test.node.mib.Board;
-import com.infinera.metro.dnam.acceptance.test.node.mib.ClientPort;
-import com.infinera.metro.dnam.acceptance.test.node.mib.LinePort;
+import com.infinera.metro.dnam.acceptance.test.node.mib.BoardType;
+import com.infinera.metro.dnam.acceptance.test.node.mib.ClientPortType;
+import com.infinera.metro.dnam.acceptance.test.node.mib.LinePortType;
 
 public enum JacksonYamlUtil {
     INSTANCE;
@@ -16,9 +16,9 @@ public enum JacksonYamlUtil {
     JacksonYamlUtil() {
         mapper = new ObjectMapper(new YAMLFactory());
         SimpleModule module = new SimpleModule();
-        module.addDeserializer(Board.class, new BoardDeserializer());
-        module.addDeserializer(LinePort.class, new LinePortDeserializer());
-        module.addDeserializer(ClientPort.class, new ClientPortDeserializer());
+        module.addDeserializer(BoardType.class, new BoardTypeDeserializer());
+        module.addDeserializer(LinePortType.class, new LinePortTypeDeserializer());
+        module.addDeserializer(ClientPortType.class, new ClientPortTypeDeserializer());
         mapper.registerModule(module);
 
         mapper.enable(SerializationFeature.INDENT_OUTPUT);

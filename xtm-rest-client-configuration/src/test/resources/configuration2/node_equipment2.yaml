@@ -1,0 +1,28 @@
+subracks:
+  - number: 1
+    name: subrack1
+    slots:
+      - number: 1
+        name: slot1
+        board:
+          boardtype: tpd10gbe
+          clientports:
+            - clientporttype: client
+              transmitport: 3
+              receiveport: 4
+            - clientporttype: client
+              transmitport: 5
+              receiveport: 6
+          lineports:
+            - lineporttype: wdm
+              transmitport: 3
+              receiveport: 4
+              configuration:
+                key: expectedFrequency
+                value: ch926
+            - lineporttype: wdm
+              transmitport: 7
+              receiveport: 8
+              configuration:
+                key: expectedFrequency
+                value: ch926

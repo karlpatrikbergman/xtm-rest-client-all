@@ -13,21 +13,21 @@ import lombok.*;
 @Value //Needs jackson > 2.8
 @Builder
 public class LinePortEntry implements MibEntry {
-    @NonNull private final Module module = Module.WDM;
-    @NonNull private final GroupOrTable groupOrTable = GroupOrTable.IF;
-    @NonNull private final LinePort linePort; //Always WDM?
+    @NonNull private final ModuleType moduleType = ModuleType.WDM;
+    @NonNull private final GroupOrTableType groupOrTableType = GroupOrTableType.IF;
+    @NonNull private final LinePortType linePortType; //Always WDM?
     @NonNull private final Integer subrack;
     @NonNull private final Integer slot;
     @NonNull private final Integer transmitPort;
     @NonNull private final Integer receivePort;
 
     public String getMibEntryString() {
-        assert linePort != null;
-        return MibPathUtil.MIB_PATH_UTIL.getMibEntryString (linePort.getName(), getSubrack() ,getSlot(), this.getTransmitPort(), this.getReceivePort());
+        assert linePortType != null;
+        return MibPathUtil.MIB_PATH_UTIL.getMibEntryString (linePortType.getName(), getSubrack() ,getSlot(), this.getTransmitPort(), this.getReceivePort());
     }
 
     public String getMibEntryPath() {
-        return MibPathUtil.MIB_PATH_UTIL.getMibEntryPath(module, groupOrTable, this);
+        return MibPathUtil.MIB_PATH_UTIL.getMibEntryPath(moduleType, groupOrTableType, this);
     }
 }
 

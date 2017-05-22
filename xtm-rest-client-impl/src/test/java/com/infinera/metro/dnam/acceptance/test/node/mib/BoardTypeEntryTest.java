@@ -5,14 +5,14 @@ import org.junit.Assert;
 import org.junit.Test;
 
 @Slf4j
-public class BoardEntryTest {
+public class BoardTypeEntryTest {
 
     @Test
     public void testMibEntryStringFunctions() {
         final String expectedMibEntryPath = "/mib/eq/board/tpd10gbe:1:2";
         final String expectedMibEntryString = "tpd10gbe:1:2";
         MibEntry mibEntry = BoardEntry.builder()
-                .board(Board.TPD10GBE)
+                .boardType(BoardType.TPD10GBE)
                 .subrack(1)
                 .slot(2)
                 .build();

@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 @Slf4j
-public class ClientPortEntryDeserializationTest {
+public class ClientPortTypeEntryDeserializationTest {
     @Test
     public void test() throws IOException {
         ObjectReader reader = JacksonYamlUtil.INSTANCE.getReader().forType(ClientPortEntry.class);

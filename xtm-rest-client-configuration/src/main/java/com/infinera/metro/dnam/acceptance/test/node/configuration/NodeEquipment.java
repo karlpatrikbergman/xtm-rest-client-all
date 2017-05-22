@@ -5,7 +5,7 @@ import lombok.Value;
 
 @Value
 public class NodeEquipment {
-    private final Board board;
+    private final BoardType boardType;
     private final BoardEntry boardEntry;
     private final LinePortEntry linePortEntry;
     private final Configuration linePortConfiguration;

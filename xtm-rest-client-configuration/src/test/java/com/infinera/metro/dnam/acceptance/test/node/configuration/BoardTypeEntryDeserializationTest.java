@@ -1,7 +1,7 @@
 package com.infinera.metro.dnam.acceptance.test.node.configuration;
 
 import com.fasterxml.jackson.databind.ObjectReader;
-import com.infinera.metro.dnam.acceptance.test.node.mib.Board;
+import com.infinera.metro.dnam.acceptance.test.node.mib.BoardEntry;
 import com.infinera.metro.dnam.acceptance.test.util.ResourceInputStream;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
@@ -12,12 +12,12 @@ import java.io.IOException;
 import java.io.InputStream;
 
 @Slf4j
-public class BoardDeserializationTest {
+public class BoardTypeEntryDeserializationTest {
     @Test
     public void test() throws IOException {
-        ObjectReader reader = JacksonYamlUtil.INSTANCE.getReader().forType(Board.class);
-        InputStream in = new ResourceInputStream("configuration/board.yaml");
-        Board board = reader.readValue(in);
-        log.info(ReflectionToStringBuilder.toString(board, ToStringStyle.MULTI_LINE_STYLE));
+        ObjectReader reader = JacksonYamlUtil.INSTANCE.getReader().forType(BoardEntry.class);
+        InputStream in = new ResourceInputStream("configuration/board_entry.yaml");
+        BoardEntry boardEntry = reader.readValue(in);
+        log.info(ReflectionToStringBuilder.toString(boardEntry, ToStringStyle.MULTI_LINE_STYLE));
     }
 }

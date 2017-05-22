@@ -1,4 +1,4 @@
-lineport: wdm
+lineporttype: wdm
 subrack: 1
 slot: 2
 transmitport: 3

@@ -6,12 +6,12 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 @Slf4j
-public class LinePortEntryTest {
+public class LinePortTypeEntryTest {
 
     @Test(expected=NullPointerException.class)
     public void testLinePortEntryBuilder() {
         LinePortEntry linePortEntry = LinePortEntry.builder()
-                .linePort(LinePort.WDM)
+                .linePortType(LinePortType.WDM)
                 .subrack(1)
                 .slot(2)
                 .build();
@@ -22,7 +22,7 @@ public class LinePortEntryTest {
         final String expectedMibEntryPath = "/mib/wdm/if/wdm:1:2:3-4";
         final String expectedMibEntryString = "wdm:1:2:3-4";
         MibEntry mibEntry = LinePortEntry.builder()
-                .linePort(LinePort.WDM)
+                .linePortType(LinePortType.WDM)
                 .subrack(1)
                 .slot(2)
                 .transmitPort(3)

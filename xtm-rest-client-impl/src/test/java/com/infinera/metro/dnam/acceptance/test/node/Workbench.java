@@ -56,14 +56,14 @@ public class Workbench {
     }
 
     private void configureNodeA() throws IOException {
-        createBoard(nodeConnectionA, MibObjectFactory.createBoardEntry(Board.TPD10GBE));
+        createBoard(nodeConnectionA, MibObjectFactory.createBoardEntry(BoardType.TPD10GBE));
         PeerEntry peerEntryTransmitSide = MibObjectFactory.createDefaultTransmitPeerEntryNodeA();
         createPeer(nodeConnectionA, peerEntryTransmitSide);
         configurePeer(nodeConnectionA, peerEntryTransmitSide, buildConfigurePeerParameterList(peerEntryTransmitSide));
     }
 
     private void configureNodeZ() throws IOException {
-        createBoard(nodeConnectionZ, MibObjectFactory.createBoardEntry(Board.TPD10GBE));
+        createBoard(nodeConnectionZ, MibObjectFactory.createBoardEntry(BoardType.TPD10GBE));
         PeerEntry peerEntryReceiveSide = MibObjectFactory.createDefaultReceivePeerEntryNodeZ();
         createPeer(nodeConnectionZ, peerEntryReceiveSide);
         configurePeer(nodeConnectionZ, peerEntryReceiveSide, buildConfigurePeerParameterList(peerEntryReceiveSide));
@@ -79,7 +79,7 @@ public class Workbench {
 
     private void deleteBoard(NodeConnection nodeConnection) throws IOException {
         MibEntry mibEntry = BoardEntry.builder()
-                .board(Board.TPD10GBE)
+                .boardType(BoardType.TPD10GBE)
                 .subrack(1)
                 .slot(2)
                 .build();
@@ -93,7 +93,7 @@ public class Workbench {
      */
     private void configureLinePortExpectedFrequency(NodeConnection nodeConnection) throws IOException {
         MibEntry mibEntry = LinePortEntry.builder()
-                .linePort(LinePort.WDM)
+                .linePortType(LinePortType.WDM)
                 .subrack(1)
                 .slot(2)
                 .transmitPort(3)
@@ -113,7 +113,7 @@ public class Workbench {
      */
     private void configureClientPort(NodeConnection nodeConnection) throws IOException {
         MibEntry mibEntry = ClientPortEntry.builder()
-                .clientPort(ClientPort.CLIENT)
+                .clientPortType(ClientPortType.CLIENT)
                 .subrack(1)
                 .slot(2)
                 .transmitPort(1)

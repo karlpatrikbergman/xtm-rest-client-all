@@ -8,8 +8,8 @@ import lombok.Value;
 @Value
 @Builder
 public class PeerEntry implements MibEntry {
-    @NonNull private final Module module = Module.TOPO;
-    @NonNull private final GroupOrTable groupOrTable = GroupOrTable.PEER;
+    @NonNull private final ModuleType moduleType = ModuleType.TOPO;
+    @NonNull private final GroupOrTableType groupOrTableType = GroupOrTableType.PEER;
     @NonNull private final Peer peer = Peer.PEER;
     @NonNull private final LinePortEntry localLinePortEntry;
     @NonNull private final LinePortEntry remoteLinePortEntry;
@@ -39,7 +39,7 @@ public class PeerEntry implements MibEntry {
 
     @Override
     public String getMibEntryPath() {
-        return MibPathUtil.MIB_PATH_UTIL.getMibEntryPath(module, groupOrTable, this);
+        return MibPathUtil.MIB_PATH_UTIL.getMibEntryPath(moduleType, groupOrTableType, this);
     }
 
     private int getLocalPort() {

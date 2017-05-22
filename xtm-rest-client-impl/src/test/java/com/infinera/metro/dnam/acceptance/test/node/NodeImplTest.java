@@ -46,13 +46,13 @@ public class NodeImplTest {
     public void configureNodeA() throws IOException, InterruptedException {
         //Given
         BoardEntry boardEntry = BoardEntry.builder()
-                .board(Board.TPD10GBE)
+                .boardType(BoardType.TPD10GBE)
                 .subrack(1)
                 .slot(2)
                 .build();
 
         LinePortEntry linePortEntry = LinePortEntry.builder()
-                .linePort(LinePort.WDM)
+                .linePortType(LinePortType.WDM)
                 .subrack(1)
                 .slot(2)
                 .transmitPort(3)
@@ -65,7 +65,7 @@ public class NodeImplTest {
                 .build();
 
         ClientPortEntry clientPortEntry = ClientPortEntry.builder()
-                .clientPort(ClientPort.CLIENT)
+                .clientPortType(ClientPortType.CLIENT)
                 .subrack(1)
                 .slot(2)
                 .transmitPort(1)
@@ -78,7 +78,7 @@ public class NodeImplTest {
                 .build();
 
         LinePortEntry remoteLinePortEntry = LinePortEntry.builder()
-                .linePort(LinePort.WDM)
+                .linePortType(LinePortType.WDM)
                 .subrack(1)
                 .slot(2)
                 .transmitPort(7)

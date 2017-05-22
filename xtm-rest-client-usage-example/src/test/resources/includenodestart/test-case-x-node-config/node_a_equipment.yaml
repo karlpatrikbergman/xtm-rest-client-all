@@ -1,10 +1,10 @@
-board: tpd10gbe
+boardtype: tpd10gbe
 boardentry:
-  board: tpd10gbe
+  boardtype: tpd10gbe
   subrack: 1
   slot: 2
 lineportentry:
-  lineport: wdm
+  lineporttype: wdm
   subrack: 1
   slot: 2
   transmitport: 3
@@ -13,7 +13,7 @@ lineportconfiguration:
   key: expectedFrequency
   value: ch926
 clientportentry:
-  clientport: client
+  clientporttype: client
   subrack: 1
   slot: 2
   transmitport: 1

@@ -8,12 +8,12 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public enum LinePort {
-    WDM("wdm");
+public enum ClientPortType {
+    CLIENT("client");
 
     private final String name;
 
-    LinePort(String name) {
+    ClientPortType(String name) {
         this.name = name;
     }
 
@@ -22,14 +22,13 @@ public enum LinePort {
     }
 
     @JsonCreator
-    public static LinePort fromString(String string) {
+    public static ClientPortType fromString(String string) {
         return Optional
-                .ofNullable(LINE_PORT_MAP.get(string))
+                .ofNullable(CLIENT_PORT_MAP.get(string))
                 .orElseThrow(() -> new IllegalArgumentException(string));
     }
 
-    private static final Map<String, LinePort> LINE_PORT_MAP = Stream
-            .of(LinePort.values())
+    private static final Map<String, ClientPortType> CLIENT_PORT_MAP = Stream
+            .of(ClientPortType.values())
             .collect(Collectors.toMap(s -> s.name, Function.identity()));
 }
-

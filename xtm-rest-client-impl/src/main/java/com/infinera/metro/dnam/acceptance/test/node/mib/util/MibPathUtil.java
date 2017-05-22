@@ -56,9 +56,9 @@ public enum MibPathUtil {
         return result.render();
     }
 
-    public String getMibEntryPath(Module module, GroupOrTable group, MibEntry entry) {
+    public String getMibEntryPath(ModuleType moduleType, GroupOrTableType group, MibEntry entry) {
         ST url = new ST("/mib/<module>/<group>/<entry>");
-        url.add("module", module.getValue());
+        url.add("module", moduleType.getValue());
         url.add("group", group.getValue());
         url.add("entry", entry.getMibEntryString());
         return url.render();

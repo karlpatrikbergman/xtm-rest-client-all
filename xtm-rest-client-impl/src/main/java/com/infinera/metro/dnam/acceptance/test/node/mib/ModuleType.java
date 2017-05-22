@@ -1,13 +1,14 @@
 package com.infinera.metro.dnam.acceptance.test.node.mib;
 
-public enum GroupOrTable {
-    BOARD("board"),
-    IF("if"),
-    PEER("peer");
+public enum ModuleType {
+    EQUIPMENT("eq"),
+    WDM("wdm"),
+    CLIENT("client"),
+    TOPO("topo");
 
     private final String value;
 
-    GroupOrTable(String value) {
+    ModuleType(String value) {
         this.value = value;
     }
 

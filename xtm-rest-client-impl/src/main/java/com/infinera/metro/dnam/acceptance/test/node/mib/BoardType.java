@@ -8,16 +8,13 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-
-//TODO: Change all enums to end with "Type"
-//Corresponds to first part of "entry" in mib table (without subrack:slot). Find a better name?
-public enum Board {
+public enum BoardType {
     TP10G("tp10g"),
     TPD10GBE("tpd10gbe");
 
     private final String name;
 
-    Board(String name) {
+    BoardType(String name) {
         this.name = name;
     }
 
@@ -26,13 +23,13 @@ public enum Board {
     }
 
     @JsonCreator
-    public static Board fromString(String string) {
+    public static BoardType fromString(String string) {
         return Optional
                 .ofNullable(BOARD_MAP.get(string))
                 .orElseThrow(() -> new IllegalArgumentException(string));
     }
 
-    private static final Map<String, Board> BOARD_MAP = Stream
-            .of(Board.values())
+    private static final Map<String, BoardType> BOARD_MAP = Stream
+            .of(BoardType.values())
             .collect(Collectors.toMap(s -> s.name, Function.identity()));
 }

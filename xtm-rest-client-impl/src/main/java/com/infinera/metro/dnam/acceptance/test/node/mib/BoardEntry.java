@@ -12,20 +12,20 @@ import lombok.*;
 @Value //Needs jackson > 2.8
 @Builder
 public class BoardEntry implements MibEntry {
-    @NonNull private final Module module = Module.EQUIPMENT;
-    @NonNull private final GroupOrTable groupOrTable = GroupOrTable.BOARD;
-    @NonNull private final Board board;
+    @NonNull private final ModuleType moduleType = ModuleType.EQUIPMENT;
+    @NonNull private final GroupOrTableType groupOrTableType = GroupOrTableType.BOARD;
+    @NonNull private final BoardType boardType;
     @NonNull private final Integer subrack;
     @NonNull private final Integer slot;
 
     @Override
     public String getMibEntryString() {
-        assert board != null;
-        return MibPathUtil.MIB_PATH_UTIL.getMibEntryString (board.getName(), getSubrack() ,getSlot());
+        assert boardType != null;
+        return MibPathUtil.MIB_PATH_UTIL.getMibEntryString (boardType.getName(), getSubrack() ,getSlot());
     }
 
     @Override
     public String getMibEntryPath() {
-        return MibPathUtil.MIB_PATH_UTIL.getMibEntryPath(module, groupOrTable, this);
+        return MibPathUtil.MIB_PATH_UTIL.getMibEntryPath(moduleType, groupOrTableType, this);
     }
 }

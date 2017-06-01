@@ -11,7 +11,7 @@ public class LinePortTypeEntryTest {
     @Test(expected=NullPointerException.class)
     public void testLinePortEntryBuilder() {
         LinePortEntry linePortEntry = LinePortEntry.builder()
-                .linePortType(LinePortType.WDM)
+                .linePortType(LinePortType.wdm)
                 .subrack(1)
                 .slot(2)
                 .build();
@@ -22,7 +22,7 @@ public class LinePortTypeEntryTest {
         final String expectedMibEntryPath = "/mib/wdm/if/wdm:1:2:3-4";
         final String expectedMibEntryString = "wdm:1:2:3-4";
         MibEntry mibEntry = LinePortEntry.builder()
-                .linePortType(LinePortType.WDM)
+                .linePortType(LinePortType.wdm)
                 .subrack(1)
                 .slot(2)
                 .transmitPort(3)

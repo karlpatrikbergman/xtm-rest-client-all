@@ -1,4 +1,4 @@
-package com.infinera.metro.dnam.acceptance.test.node.configuration2;
+package com.infinera.metro.dnam.acceptance.test.node.configuration;
 
 import com.infinera.metro.dnam.acceptance.test.node.mib.ClientPortType;
 import lombok.*;

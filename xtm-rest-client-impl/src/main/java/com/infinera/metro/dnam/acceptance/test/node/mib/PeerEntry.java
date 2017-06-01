@@ -8,7 +8,7 @@ import lombok.Value;
 @Value
 @Builder
 public class PeerEntry implements MibEntry {
-    @NonNull private final ModuleType moduleType = ModuleType.TOPO;
+    @NonNull private final ModuleType moduleType = ModuleType.topo;
     @NonNull private final GroupOrTableType groupOrTableType = GroupOrTableType.PEER;
     @NonNull private final Peer peer = Peer.PEER;
     @NonNull private final LinePortEntry localLinePortEntry;

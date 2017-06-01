@@ -1,28 +1,16 @@
 package com.infinera.metro.dnam.acceptance.test.node.configuration;
 
-import com.fasterxml.jackson.databind.ObjectReader;
-import com.infinera.metro.dnam.acceptance.test.node.mib.BoardType;
-import com.infinera.metro.dnam.acceptance.test.util.ResourceInputStream;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 import org.junit.Test;
-
-import java.io.IOException;
-import java.io.InputStream;
-
-import static org.junit.Assert.assertTrue;
 
 @Slf4j
 public class NodeEquipmentDeserializationTest {
+    private final String PATH = "configuration/nodeequipment2.yml";
+
     @Test
-    public void test() throws IOException {
-        ObjectReader reader = JacksonYamlUtil.INSTANCE.getReader().forType(NodeEquipment.class);
-        InputStream in = new ResourceInputStream("configuration/node_equipment.yaml");
-        NodeEquipment nodeEquipment = reader.readValue(in);
-
-        assertTrue(nodeEquipment.getBoardType().equals(BoardType.TPD10GBE));
-
-        log.info(ReflectionToStringBuilder.toString(nodeEquipment, ToStringStyle.MULTI_LINE_STYLE));
+    public void test2() {
+        ObjectFromFileUtil objectFromFileUtil = ObjectFromFileUtilJackson.INSTANCE;
+        NodeEquipment nodeEquipment = objectFromFileUtil.getObject(PATH, NodeEquipment.class);
+        log.info(nodeEquipment.toString());
     }
 }

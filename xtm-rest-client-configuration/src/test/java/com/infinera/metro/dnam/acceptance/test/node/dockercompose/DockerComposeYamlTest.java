@@ -1,13 +1,11 @@
 package com.infinera.metro.dnam.acceptance.test.node.dockercompose;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectReader;
-import com.infinera.metro.dnam.acceptance.test.node.configuration.JacksonYamlUtil;
-import com.infinera.metro.dnam.acceptance.test.util.ResourceInputStream;
+import com.infinera.metro.dnam.acceptance.test.node.configuration.ObjectFromFileUtil;
+import com.infinera.metro.dnam.acceptance.test.node.configuration.ObjectFromFileUtilFactory;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
 
@@ -19,9 +17,12 @@ public class DockerComposeYamlTest {
 
     @Test
     public void test() throws IOException {
-        ObjectReader reader = JacksonYamlUtil.INSTANCE.getReader().forType(DockerCompose.class);
-        InputStream in = new ResourceInputStream("dockercompose/docker-compose.yml");
-        DockerCompose dockerCompose = reader.readValue(in);
+//        ObjectReader reader = JacksonYamlUtil.INSTANCE.getReader().forType(DockerCompose.class);
+//        InputStream in = new ResourceInputStream("dockercompose/docker-compose.yml");
+//        DockerCompose dockerCompose = reader.readValue(in);
+
+        ObjectFromFileUtil objectFromFileUtil = ObjectFromFileUtilFactory.getObjectFromFileUtil();
+        DockerCompose dockerCompose = objectFromFileUtil.getObject("dockercompose/docker-compose.yml", DockerCompose.class);
 
         Service alarmService = dockerCompose.getServices().get("alarmservice");
         assertNotNull(alarmService);

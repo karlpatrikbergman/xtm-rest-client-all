@@ -12,7 +12,7 @@ public class BoardTypeEntryTest {
         final String expectedMibEntryPath = "/mib/eq/board/tpd10gbe:1:2";
         final String expectedMibEntryString = "tpd10gbe:1:2";
         MibEntry mibEntry = BoardEntry.builder()
-                .boardType(BoardType.TPD10GBE)
+                .boardType(BoardType.tpd10gbe)
                 .subrack(1)
                 .slot(2)
                 .build();

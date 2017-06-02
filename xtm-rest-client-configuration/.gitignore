@@ -83,3 +83,5 @@ gradle-app.setting
 hs_err_pid*
 /delete-when-certain/
 !/src/main/java/com/infinera/metro/dnam/acceptance/test/node/configuration/BoardTypeDeserializer.java
+!/src/main/java/com/infinera/metro/dnam/acceptance/test/node/configuration/ClientPortTypeDeserializer.java
+!/src/main/java/com/infinera/metro/dnam/acceptance/test/node/configuration/JacksonYamlUtil.java

@@ -4,7 +4,7 @@ import com.infinera.metro.dnam.acceptance.test.node.mib.*;
 import org.stringtemplate.v4.ST;
 
 //TODO: This class does not belong in api. Should be in shared module. It us used by api and impl modules.
-//xtm-rest-client-api
+//xtm-rest-CLIENT-api
 public enum MibPathUtil {
     MIB_PATH_UTIL;
 
@@ -58,8 +58,8 @@ public enum MibPathUtil {
 
     public String getMibEntryPath(ModuleType moduleType, GroupOrTableType group, MibEntry entry) {
         ST url = new ST("/mib/<module>/<group>/<entry>");
-        url.add("module", moduleType.toString().toLowerCase());
-        url.add("group", group.toString().toLowerCase());
+        url.add("module", moduleType.getValue());
+        url.add("group", group.getValue());
         url.add("entry", entry.getMibEntryString());
         return url.render();
     }

@@ -16,7 +16,7 @@ public class NodeEquipmentSerializationTest {
     public void test() throws IOException {
         Tpd10gbe tpd10gbe = Tpd10gbe.builder()
                 .subrack(1)
-                .slot(2)
+                .slot(Slot.slot2)
                 .clientPorts(Arrays.asList(
                         Port.builder()
                                 .transmitPort(1)
@@ -55,8 +55,8 @@ public class NodeEquipmentSerializationTest {
                 ))
                 .build();
 
-        Map<String, Board> boards = new HashMap<>();
-        boards.put("slot1", tpd10gbe);
+        Map<Slot, Board> boards = new HashMap<>();
+        boards.put(tpd10gbe.getSlot(), tpd10gbe);
 
         NodeEquipment nodeEquipment = NodeEquipment.builder()
                 .boards(boards)

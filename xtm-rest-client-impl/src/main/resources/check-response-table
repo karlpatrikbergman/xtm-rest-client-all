@@ -9,7 +9,7 @@ AnswerObject
     error               present if error
 
 AttributeObject
-    name                present
+    value                present
 
 -------------------------------------------------
 

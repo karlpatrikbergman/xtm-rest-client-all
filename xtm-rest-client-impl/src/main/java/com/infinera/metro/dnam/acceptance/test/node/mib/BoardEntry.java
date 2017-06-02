@@ -8,7 +8,7 @@ import lombok.Value;
 @Value //Needs jackson > 2.8
 @Builder
 public class BoardEntry implements MibEntry {
-    private final ModuleType moduleType = ModuleType.eq;
+    private final ModuleType moduleType = ModuleType.EQ;
     private final GroupOrTableType groupOrTableType = GroupOrTableType.BOARD;
     @NonNull private final BoardType boardType;
     @NonNull private final Integer subrack;
@@ -17,7 +17,7 @@ public class BoardEntry implements MibEntry {
     @Override
     public String getMibEntryString() {
         assert boardType != null;
-        return MibPathUtil.MIB_PATH_UTIL.getMibEntryString (boardType.toString(), getSubrack() ,getSlot());
+        return MibPathUtil.MIB_PATH_UTIL.getMibEntryString (boardType.getValue(), getSubrack(), getSlot());
     }
 
     @Override

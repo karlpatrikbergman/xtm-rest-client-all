@@ -85,7 +85,7 @@ public enum MibObjectFactory {
      */
     private static LinePortEntry createLinePortEntryNodeA() {
         return LinePortEntry.builder()
-                .linePortType(LinePortType.wdm)
+                .linePortType(LinePortType.WDM)
                 .subrack(1)
                 .slot(2)
                 .transmitPort(3)
@@ -101,7 +101,7 @@ public enum MibObjectFactory {
      */
     private static LinePortEntry createLinePortEntryNodeZ() {
         return LinePortEntry.builder()
-                .linePortType(LinePortType.wdm)
+                .linePortType(LinePortType.WDM)
                 .subrack(1)
                 .slot(2)
                 .transmitPort(7)

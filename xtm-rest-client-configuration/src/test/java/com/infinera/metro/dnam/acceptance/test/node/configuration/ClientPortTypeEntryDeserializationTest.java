@@ -10,10 +10,12 @@ import java.io.IOException;
 
 @Slf4j
 public class ClientPortTypeEntryDeserializationTest {
+    private final String PATH = "configuration/client_port_entry.yaml";
+    private final ObjectFromFileUtil objectFromFileUtil = ObjectFromFileUtilFactory.getObjectFromFileUtil();
+
     @Test
     public void test() throws IOException {
-        ObjectFromFileUtil objectFromFileUtil = ObjectFromFileUtilFactory.getObjectFromFileUtil();
-        ClientPortEntry clientPortEntry = objectFromFileUtil.getObject("configuration/client_port_entry.yaml", ClientPortEntry.class);
+        ClientPortEntry clientPortEntry = objectFromFileUtil.getObject(PATH, ClientPortEntry.class);
         log.info(ReflectionToStringBuilder.toString(clientPortEntry, ToStringStyle.MULTI_LINE_STYLE));
     }
 }

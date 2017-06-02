@@ -13,9 +13,9 @@ import lombok.*;
 @Value //Needs jackson > 2.8
 @Builder
 public class ClientPortEntry implements MibEntry {
-    @NonNull private final ModuleType moduleType = ModuleType.client;
-    @NonNull private final GroupOrTableType groupOrTableType = GroupOrTableType.IF;
-    @NonNull private final ClientPortType clientPortType; //Always ClientPort.client?
+    @NonNull private final ModuleType moduleType;
+    @NonNull private final GroupOrTableType groupOrTableType;
+    @NonNull private final ClientPortType clientPortType;
     @NonNull private final Integer subrack;
     @NonNull private final Integer slot;
     @NonNull private final Integer transmitPort;
@@ -23,7 +23,7 @@ public class ClientPortEntry implements MibEntry {
 
     public String getMibEntryString() {
         assert clientPortType != null;
-        return MibPathUtil.MIB_PATH_UTIL.getMibEntryString (clientPortType.toString(), getSubrack() ,getSlot(), this.getTransmitPort(), this.getReceivePort());
+        return MibPathUtil.MIB_PATH_UTIL.getMibEntryString (clientPortType.getValue(), getSubrack() ,getSlot(), this.getTransmitPort(), this.getReceivePort());
     }
 
     public String getMibEntryPath() {

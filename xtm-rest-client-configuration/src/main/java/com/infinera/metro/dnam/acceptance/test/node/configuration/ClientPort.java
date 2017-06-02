@@ -3,6 +3,7 @@ package com.infinera.metro.dnam.acceptance.test.node.configuration;
 import com.infinera.metro.dnam.acceptance.test.node.mib.ClientPortType;
 import lombok.*;
 
+//TODO: Delete?
 @NoArgsConstructor(access = AccessLevel.PRIVATE, force = true) //Needed by Hibernate
 @AllArgsConstructor(access = AccessLevel.PUBLIC) //Needed by Orika
 @Value

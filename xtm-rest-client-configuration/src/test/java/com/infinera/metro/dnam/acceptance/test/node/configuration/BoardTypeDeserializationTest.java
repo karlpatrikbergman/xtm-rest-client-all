@@ -18,7 +18,7 @@ public class BoardTypeDeserializationTest {
     public void deserializeBoardType() throws IOException {
         final BoardType boardType = objectFromFileUtil.getObject(PATH, BoardType.class);
         assertNotNull(boardType);
-        assertEquals(BoardType.tpd10gbe, boardType);
+        assertEquals(BoardType.TPD10GBE, boardType);
 
         log.info(boardType.toString());
     }

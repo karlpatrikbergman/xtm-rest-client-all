@@ -1,7 +1,6 @@
 package com.infinera.metro.dnam.acceptance.test.node;
 
 import com.infinera.metro.dnam.acceptance.test.node.mib.*;
-
 import com.palantir.docker.compose.DockerComposeRule;
 import com.palantir.docker.compose.connection.waiting.HealthChecks;
 import lombok.extern.slf4j.Slf4j;
@@ -46,13 +45,15 @@ public class NodeImplTest {
     public void configureNodeA() throws IOException, InterruptedException {
         //Given
         BoardEntry boardEntry = BoardEntry.builder()
-                .boardType(BoardType.tpd10gbe)
+                .boardType(BoardType.TPD10GBE)
                 .subrack(1)
                 .slot(2)
                 .build();
 
         LinePortEntry linePortEntry = LinePortEntry.builder()
-                .linePortType(LinePortType.wdm)
+                .moduleType(ModuleType.WDM)
+                .groupOrTableType(GroupOrTableType.IF)
+                .linePortType(LinePortType.WDM)
                 .subrack(1)
                 .slot(2)
                 .transmitPort(3)
@@ -65,7 +66,9 @@ public class NodeImplTest {
                 .build();
 
         ClientPortEntry clientPortEntry = ClientPortEntry.builder()
-                .clientPortType(ClientPortType.client)
+                .moduleType(ModuleType.CLIENT)
+                .groupOrTableType(GroupOrTableType.IF)
+                .clientPortType(ClientPortType.CLIENT)
                 .subrack(1)
                 .slot(2)
                 .transmitPort(1)
@@ -78,7 +81,9 @@ public class NodeImplTest {
                 .build();
 
         LinePortEntry remoteLinePortEntry = LinePortEntry.builder()
-                .linePortType(LinePortType.wdm)
+                .moduleType(ModuleType.WDM)
+                .groupOrTableType(GroupOrTableType.IF)
+                .linePortType(LinePortType.WDM)
                 .subrack(1)
                 .slot(2)
                 .transmitPort(7)
@@ -124,14 +129,14 @@ public class NodeImplTest {
         AnswerObjects setPeerConfigAnswerObjects = node.setLocalPeerConfiguration(peerEntry, parameterList);
 
         //TODO: Verify line port settings in response
-        //TODO: Verify client port settings in response
+        //TODO: Verify CLIENT port settings in response
         //Then
 //        AnswerObjects geBoardAnswerObjects = node.getBoard(boardEntry);
 
 //        //Clean up
         node.deleteBoard(boardEntry);
 //
-//        //TODO: Verify error message?
+//        //TODO: Verify error message instead of waiting for exceeding number of retries?
         try {
             AnswerObjects geBoardAnswerObjectsAfterDelete = node.getBoard(boardEntry);
         } catch (RuntimeException e) {

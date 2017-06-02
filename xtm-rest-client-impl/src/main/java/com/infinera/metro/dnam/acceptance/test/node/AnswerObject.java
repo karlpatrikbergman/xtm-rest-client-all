@@ -114,8 +114,8 @@ public class AnswerObject implements Serializable {
      */
     public boolean isSuccessAnswerObject(Operation operation, MibEntry mibEntry) {
         final boolean mibEntryFound = mibEntryEqualsAnswerObjectEntryFieldOrAttributeObjectNameField(operation, mibEntry);
-        return isSuccess() && getModule().equals(mibEntry.getModuleType().toString()) &&
-                getGroupOrTable().equals(mibEntry.getGroupOrTableType().toString()) && mibEntryFound;
+        return isSuccess() && getModule().equals(mibEntry.getModuleType().getValue()) &&
+                getGroupOrTable().equals(mibEntry.getGroupOrTableType().getValue()) && mibEntryFound;
     }
 
     /**

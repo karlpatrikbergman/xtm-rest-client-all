@@ -28,7 +28,9 @@ public class CreatePeerEntryTest {
      *      172.17.0.2/mib/topo/peer/peer:1:2:3/create.json
      */
     private final LinePortEntry linePortEntryNodeA = LinePortEntry.builder()
-            .linePortType(LinePortType.wdm)
+            .moduleType(ModuleType.WDM)
+            .groupOrTableType(GroupOrTableType.IF)
+            .linePortType(LinePortType.WDM)
             .subrack(1)
             .slot(2)
             .transmitPort(3)
@@ -42,7 +44,9 @@ public class CreatePeerEntryTest {
      *      172.17.0.3/mib/topo/peer/peer:1:2:0:3/create.json
      */
     private final LinePortEntry linePortEntryNodeZ = LinePortEntry.builder()
-            .linePortType(LinePortType.wdm)
+            .moduleType(ModuleType.WDM)
+            .groupOrTableType(GroupOrTableType.IF)
+            .linePortType(LinePortType.WDM)
             .subrack(2)
             .slot(3)
             .transmitPort(7)

@@ -10,8 +10,8 @@
 //import com.infinera.metro.dnam.acceptance.test.node.mib.BoardEntry;
 //import com.palantir.docker.compose.DockerComposeRule;
 //import com.palantir.docker.compose.connection.waiting.HealthChecks;
-//import com.spotify.docker.client.exceptions.DockerCertificateException;
-//import com.spotify.docker.client.exceptions.DockerException;
+//import com.spotify.docker.CLIENT.exceptions.DockerCertificateException;
+//import com.spotify.docker.CLIENT.exceptions.DockerException;
 //import lombok.extern.slf4j.Slf4j;
 //import org.junit.ClassRule;
 //import org.junit.Test;
@@ -43,7 +43,7 @@
 //
 //        nodeAccessDataNodeA = objectFromFileUtil.getObject("dockercompose/test-case-x-node-config/node_a_access_data.yaml", NodeAccessData.class)
 //                .copyObjectAndChangeIpAddress(dockerComposeIpAddressNodeA);
-//        nodeEquipmentNodeA = objectFromFileUtil.getObject("dockercompose/test-case-x-node-config/node_a_equipment.yaml", NodeEquipment.class);
+//        nodeEquipmentNodeA = objectFromFileUtil.getObject("dockercompose/test-case-x-node-config/node_a_equipment.yaml_old", NodeEquipment.class);
 //
 //        final Service serviceNodeZ = dockerCompose.getServices().get("nodeZ");
 //        final String dockerComposeIpAddressNodeZ = serviceNodeZ.getNetworks().get("xtm_rest_client_network").get("ipv4_address");

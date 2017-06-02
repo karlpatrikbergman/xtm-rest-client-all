@@ -1,4 +1,6 @@
-clientporttype: client
+moduleType: client
+groupOrTableType: if
+clientPortType: client
 subrack: 1
 slot: 2
 transmitport: 1

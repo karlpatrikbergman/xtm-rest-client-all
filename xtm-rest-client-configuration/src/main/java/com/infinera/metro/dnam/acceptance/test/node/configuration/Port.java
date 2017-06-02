@@ -11,4 +11,8 @@ public class Port {
     @NonNull private final Integer transmitPort;
     @NonNull private final Integer receivePort;
     @NonNull private final Configuration configuration;
+
+    public String getPortString() {
+        return transmitPort + "-" + receivePort;
+    }
 }

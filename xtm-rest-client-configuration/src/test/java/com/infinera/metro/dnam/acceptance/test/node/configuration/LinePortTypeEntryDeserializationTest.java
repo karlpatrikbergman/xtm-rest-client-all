@@ -17,6 +17,10 @@ public class LinePortTypeEntryDeserializationTest {
     public void test() throws IOException {
         final ObjectFromFileUtil objectFromFileUtil = ObjectFromFileUtilFactory.getObjectFromFileUtil();
         final LinePortEntry linePortEntry = objectFromFileUtil.getObject(PATH, LinePortEntry.class);
+
+//        JacksonYamlUtil jacksonYamlUtil = JacksonYamlUtil.INSTANCE;
+//        LinePortEntry linePortEntry = jacksonYamlUtil.getReader().forType(LinePortEntry.class).readValue(new ResourceInputStream(PATH));
+
         log.info(ReflectionToStringBuilder.toString(linePortEntry, ToStringStyle.MULTI_LINE_STYLE));
     }
 }

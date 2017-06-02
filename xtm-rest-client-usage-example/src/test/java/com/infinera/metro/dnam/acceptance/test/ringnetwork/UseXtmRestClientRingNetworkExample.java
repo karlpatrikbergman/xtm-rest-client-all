@@ -4,8 +4,8 @@
 //import com.infinera.metro.dnam.acceptance.test.XtmDockerRunner2;
 //import com.infinera.metro.dnam.acceptance.test.node.DontLetGradleRun;
 //import com.infinera.metro.dnam.acceptance.test.node.configuration.*;
-//import com.spotify.docker.client.exceptions.DockerCertificateException;
-//import com.spotify.docker.client.exceptions.DockerException;
+//import com.spotify.docker.CLIENT.exceptions.DockerCertificateException;
+//import com.spotify.docker.CLIENT.exceptions.DockerException;
 //import lombok.extern.slf4j.Slf4j;
 //import org.junit.Test;
 //import org.junit.experimental.categories.Category;

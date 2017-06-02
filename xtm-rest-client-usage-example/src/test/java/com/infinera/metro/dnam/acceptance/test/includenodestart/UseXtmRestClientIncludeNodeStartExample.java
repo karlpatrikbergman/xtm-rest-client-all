@@ -7,8 +7,8 @@
 //import com.infinera.metro.dnam.acceptance.test.node.NodeImpl;
 //import com.infinera.metro.dnam.acceptance.test.node.configuration.*;
 //import com.infinera.metro.dnam.acceptance.test.node.mib.BoardEntry;
-//import com.spotify.docker.client.exceptions.DockerCertificateException;
-//import com.spotify.docker.client.exceptions.DockerException;
+//import com.spotify.docker.CLIENT.exceptions.DockerCertificateException;
+//import com.spotify.docker.CLIENT.exceptions.DockerException;
 //import lombok.extern.slf4j.Slf4j;
 //import org.junit.Test;
 //import org.junit.experimental.categories.Category;
@@ -30,7 +30,7 @@
 //
 //        nodeAccessDataNodeA = objectFromFileUtil.getObject("includenodestart/test-case-x-node-config/node_a_access_data.yaml", NodeAccessData.class)
 //                .copyObjectAndChangeIpAddress(ipAddressNodeA);
-//        nodeEquipmentNodeA = objectFromFileUtil.getObject("includenodestart/test-case-x-node-config/node_a_equipment.yaml", NodeEquipment.class);
+//        nodeEquipmentNodeA = objectFromFileUtil.getObject("includenodestart/test-case-x-node-config/node_a_equipment.yaml_old", NodeEquipment.class);
 //
 //        final String ipAddressNodeZ = xtmDockerRunner.runDockerContainer("latest", "nodeZ");
 //        nodeAccessDataNodeZ = objectFromFileUtil.getObject("includenodestart/test-case-x-node-config/node_z_access_data.yaml", NodeAccessData.class)

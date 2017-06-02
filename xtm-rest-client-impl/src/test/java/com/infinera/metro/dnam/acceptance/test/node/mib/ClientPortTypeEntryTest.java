@@ -6,22 +6,22 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 @Slf4j
-public class LinePortTypeEntryTest {
+public class ClientPortTypeEntryTest {
 
-    private final  MibEntry mibEntry = LinePortEntry.builder()
-            .moduleType(ModuleType.WDM)
+    private final MibEntry mibEntry = ClientPortEntry.builder()
+            .moduleType(ModuleType.CLIENT)
             .groupOrTableType(GroupOrTableType.IF)
-            .linePortType(LinePortType.WDM)
+            .clientPortType(ClientPortType.CLIENT)
             .subrack(1)
             .slot(2)
-            .transmitPort(3)
-            .receivePort(4)
+            .transmitPort(1)
+            .receivePort(2)
             .build();
 
     @Test(expected=NullPointerException.class)
-    public void testLinePortEntryBuilder() {
-        LinePortEntry linePortEntry = LinePortEntry.builder()
-                .linePortType(LinePortType.WDM)
+    public void testClientPortEntryBuilder() {
+        ClientPortEntry clientPortEntry = ClientPortEntry.builder()
+                .clientPortType(ClientPortType.CLIENT)
                 .subrack(1)
                 .slot(2)
                 .build();
@@ -29,7 +29,7 @@ public class LinePortTypeEntryTest {
 
     @Test
     public void testMibEntryPath() {
-        final String expectedMibEntryPath = "/mib/wdm/if/wdm:1:2:3-4";
+        final String expectedMibEntryPath = "/mib/client/if/client:1:2:1-2";
         final String actualMibEntryPath = mibEntry.getMibEntryPath();
         assertEquals(expectedMibEntryPath, actualMibEntryPath);
         log.info(actualMibEntryPath);
@@ -37,7 +37,7 @@ public class LinePortTypeEntryTest {
 
     @Test
     public void testMibEntryString() {
-        final String expectedMibEntryString = "wdm:1:2:3-4";
+        final String expectedMibEntryString = "client:1:2:1-2";
         final String actualMibEntryString = mibEntry.getMibEntryString();
         assertEquals(expectedMibEntryString, actualMibEntryString);
         log.info(actualMibEntryString);

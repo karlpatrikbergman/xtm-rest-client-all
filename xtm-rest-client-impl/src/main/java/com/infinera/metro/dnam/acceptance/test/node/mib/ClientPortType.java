@@ -9,7 +9,9 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public enum ClientPortType {
-    CLIENT("client"), MRT("mrt");
+    CLIENT("client"),
+    MRT("mrt"),
+    ADD_DROP("addDrop");
 
     private final String value;
 

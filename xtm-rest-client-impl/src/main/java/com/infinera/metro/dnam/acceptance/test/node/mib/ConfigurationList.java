@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 
 @Value
 @Builder
-public class ParameterList {
+public class ConfigurationList {
     private final List<Configuration> parameterList;
 
     @Override
@@ -19,16 +19,15 @@ public class ParameterList {
                 .collect(Collectors.joining("&"));
     }
 
-    public static ParameterList of(Configuration configuration) {
-        return ParameterList.builder()
+    public static ConfigurationList of(Configuration configuration) {
+        return ConfigurationList.builder()
                 .parameterList(Arrays.asList(configuration))
                 .build();
     }
 
-    public static ParameterList of(List<Configuration> configurationList) {
-        return ParameterList.builder()
+    public static ConfigurationList of(List<Configuration> configurationList) {
+        return ConfigurationList.builder()
                 .parameterList(configurationList)
                 .build();
     }
-
 }

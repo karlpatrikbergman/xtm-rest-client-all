@@ -3,10 +3,15 @@ package com.infinera.metro.dnam.acceptance.test.node.mib;
 import lombok.NonNull;
 import lombok.Value;
 
+/**
+ * TODO: Add type of action: set.json or configure.json
+ */
+
 @Value
 public class Configuration {
     @NonNull private final String key;
     private final String value;
+//    private final Operation operation;
 
     @java.beans.ConstructorProperties({"key", "value"})
     private Configuration(String key, String value) {

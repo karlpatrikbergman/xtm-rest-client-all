@@ -13,7 +13,7 @@ import java.util.Map;
 public class NodeEquipment {
     private final Map<Slot, Board> boards;
 
-    Board getBoard(Slot slot) {
+    public Board getBoard(Slot slot) {
         if(!boards.containsKey(slot)) {
             throw new RuntimeException("No board in slot " + slot);
         }
@@ -25,6 +25,5 @@ public class NodeEquipment {
         boards.entrySet().stream()
         .map(map -> map.getValue())
                 .forEach(board -> board.applyTo(node));
-
     }
 }

@@ -100,7 +100,7 @@ public class NodeImplTest {
                 .isTransmitSide(true)
                 .build();
 
-        ParameterList parameterList = ParameterList.builder()
+        ConfigurationList configurationList = ConfigurationList.builder()
                 .parameterList(Arrays.asList(
                         Configuration.builder()
                                 .key("topoPeerLocalLabel")
@@ -120,13 +120,13 @@ public class NodeImplTest {
         //When
         AnswerObjects createBoardAnswerObjects = node.createBoard(boardEntry);
 
-        AnswerObjects setLinePortConfigurationAnswerObjects = node.setLinePortConfiguration(linePortEntry, ParameterList.of(linePortConfiguration));
+        AnswerObjects setLinePortConfigurationAnswerObjects = node.setLinePortConfiguration(linePortEntry, ConfigurationList.of(linePortConfiguration));
 
-        AnswerObjects setClientPortConfigurationAnswerObjects = node.setClientPortConfiguration(clientPortEntry, ParameterList.of(clientPortConfiguration));
+        AnswerObjects setClientPortConfigurationAnswerObjects = node.setClientPortConfiguration(clientPortEntry, ConfigurationList.of(clientPortConfiguration));
 
         AnswerObjects createPeerAnswerObjects = node.createLocalPeer(peerEntry);
 
-        AnswerObjects setPeerConfigAnswerObjects = node.setLocalPeerConfiguration(peerEntry, parameterList);
+        AnswerObjects setPeerConfigAnswerObjects = node.setLocalPeerConfiguration(peerEntry, configurationList);
 
         //TODO: Verify line port settings in response
         //TODO: Verify CLIENT port settings in response

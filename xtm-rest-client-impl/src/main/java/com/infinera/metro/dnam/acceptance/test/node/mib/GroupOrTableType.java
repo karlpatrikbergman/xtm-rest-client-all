@@ -11,7 +11,8 @@ import java.util.stream.Stream;
 public enum GroupOrTableType {
     BOARD("board"),
     IF("if"),
-    PEER("peer");
+    PEER("peer"),
+    ADD_DROP_IF("addDropIf");
 
     private final String value;
 

@@ -1,4 +1,4 @@
-package com.infinera.metro.dnam.acceptance.test.dockercompose;
+package com.infinera.metro.dnam.acceptance.test.dockercompose.testcasex;
 
 import com.infinera.metro.dnam.acceptance.test.node.DontLetGradleRun;
 import com.infinera.metro.dnam.acceptance.test.node.NodeAccessData;

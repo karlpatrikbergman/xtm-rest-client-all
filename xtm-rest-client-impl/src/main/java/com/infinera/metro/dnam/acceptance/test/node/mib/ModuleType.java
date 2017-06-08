@@ -12,7 +12,8 @@ public enum ModuleType {
     EQ("eq"),
     WDM("wdm"),
     CLIENT("client"),
-    TOPO("topo");
+    TOPO("topo"),
+    ROADM("roadm");
 
     private final String value;
 

@@ -8,8 +8,8 @@ import java.util.Arrays;
 import static org.junit.Assert.assertEquals;
 
 @Slf4j
-public class ParameterListTest {
-    private final ParameterList parameterList = ParameterList.builder()
+public class ConfigurationListTest {
+    private final ConfigurationList configurationList = ConfigurationList.builder()
             .parameterList(Arrays.asList(
                 Configuration.builder()
                         .key("topoPeerLocalLabel")
@@ -42,9 +42,9 @@ public class ParameterListTest {
     @Test
     public void parameterListToString() {
         final String expectedParameterString = "topoPeerLocalLabel=1:2:3&topoPeerRemoteIpAddress=172.17.0.2&topoPeerRemoteSubrack=1&topoPeerRemoteSlot=2&topoPeerRemotePort=4&topoPeerRemoteLabel=1:2:0:4";
-        final String acctualParameterString = parameterList.toString();
+        final String acctualParameterString = configurationList.toString();
         assertEquals(expectedParameterString, acctualParameterString);
-        log.info(parameterList.toString());
+        log.info(configurationList.toString());
     }
 
 }

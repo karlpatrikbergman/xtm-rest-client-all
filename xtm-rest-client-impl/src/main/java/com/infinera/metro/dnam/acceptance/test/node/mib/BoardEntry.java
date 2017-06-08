@@ -8,8 +8,8 @@ import lombok.Value;
 @Value //Needs jackson > 2.8
 @Builder
 public class BoardEntry implements MibEntry {
-    private final ModuleType moduleType = ModuleType.EQ;
-    private final GroupOrTableType groupOrTableType = GroupOrTableType.BOARD;
+    private final ModuleType moduleType = ModuleType.EQ; //The same for all boards?
+    private final GroupOrTableType groupOrTableType = GroupOrTableType.BOARD; //The same for all boards?
     @NonNull private final BoardType boardType;
     @NonNull private final Integer subrack;
     @NonNull private final Integer slot;

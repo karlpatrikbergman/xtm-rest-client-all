@@ -37,14 +37,14 @@ public class NodeImpl implements Node {
 
     /** LinePortEntry **/
 
-    public AnswerObjects setLinePortConfiguration(LinePortEntry linePortEntry, ParameterList parameterList) throws RuntimeException {
-        return nodeRestClient.performRestAction(linePortEntry, Command.SET_JSON, parameterList);
+    public AnswerObjects setLinePortConfiguration(LinePortEntry linePortEntry, ConfigurationList configurationList) throws RuntimeException {
+        return nodeRestClient.performRestAction(linePortEntry, Command.SET_JSON, configurationList);
     }
 
     /** ClientPortEntry **/
 
-    public AnswerObjects setClientPortConfiguration(ClientPortEntry clientPortEntry, ParameterList parameterList) throws RuntimeException {
-        return nodeRestClient.performRestAction(clientPortEntry, Command.CONFIGURE_JSON, parameterList);
+    public AnswerObjects setClientPortConfiguration(ClientPortEntry clientPortEntry, ConfigurationList configurationList) throws RuntimeException {
+        return nodeRestClient.performRestAction(clientPortEntry, Command.CONFIGURE_JSON, configurationList);
     }
 
     /** PeerEntry **/
@@ -53,8 +53,8 @@ public class NodeImpl implements Node {
         return nodeRestClient.performRestAction(peerEntry, Command.CREATE_JSON);
     }
 
-    public AnswerObjects setLocalPeerConfiguration(PeerEntry peerEntry, ParameterList parameterList) throws RuntimeException {
-        return nodeRestClient.performRestAction(peerEntry, Command.SET_JSON, parameterList);
+    public AnswerObjects setLocalPeerConfiguration(PeerEntry peerEntry, ConfigurationList configurationList) throws RuntimeException {
+        return nodeRestClient.performRestAction(peerEntry, Command.SET_JSON, configurationList);
     }
 
 }

@@ -2,7 +2,7 @@
 //
 //import com.infinera.metro.dnam.acceptance.test.node.Node;
 //import com.infinera.metro.dnam.acceptance.test.node.mib.Configuration;
-//import com.infinera.metro.dnam.acceptance.test.node.mib.ParameterList;
+//import com.infinera.metro.dnam.acceptance.test.node.mib.ConfigurationList;
 //import com.infinera.metro.dnam.acceptance.test.node.mib.PeerEntry;
 //import lombok.Value;
 //
@@ -14,8 +14,8 @@
 //    private final NodeConfiguration receiveNodeConfig;
 //    private final PeerEntry transmitPeerEntry;
 //    private final PeerEntry receivePeerEntry;
-//    private final ParameterList transmitPeerConfig;
-//    private final ParameterList receivePeerConfig;
+//    private final ConfigurationList transmitPeerConfig;
+//    private final ConfigurationList receivePeerConfig;
 //
 //    public PeerConfiguration(NodeConfiguration transmitNodeConfig, NodeConfiguration receiveNodeConfig) {
 //        this.transmitNodeConfig = transmitNodeConfig;
@@ -43,8 +43,8 @@
 //        receiveNode.setLocalPeerConfiguration(receivePeerEntry, receivePeerConfig);
 //    }
 //
-//    private ParameterList createPeerConfig(PeerEntry peerEntry) {
-//        return ParameterList.builder()
+//    private ConfigurationList createPeerConfig(PeerEntry peerEntry) {
+//        return ConfigurationList.builder()
 //                .parameterList(Arrays.asList(
 //                        Configuration.builder()
 //                                .key("topoPeerLocalLabel")

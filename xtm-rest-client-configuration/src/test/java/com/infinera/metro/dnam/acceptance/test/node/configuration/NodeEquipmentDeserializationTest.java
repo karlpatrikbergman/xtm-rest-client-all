@@ -24,8 +24,7 @@ public class NodeEquipmentDeserializationTest {
         List<Port> ports = tpd10gbe.getClientPorts();
         assertTrue(tpd10gbe.getClientPorts().size() == 2);
 
-//        log.info(nodeEquipment.toString());
+        log.info(nodeEquipment.toString());
 
-        tpd10gbe.foo();
     }
 }

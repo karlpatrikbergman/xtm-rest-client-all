@@ -9,7 +9,7 @@ import org.junit.Test;
 import java.io.IOException;
 
 @Slf4j
-public class NodeAccessDataTest {
+public class NodeAccessDataDeserializationTest {
 
     public static final String PATH = "configuration/node_access_data.yaml";
 

@@ -103,7 +103,7 @@ public class Workbench {
                 .key("expectedFrequency")
                 .value("ch926")
                 .build();
-        configureNode(nodeConnection, mibEntry, Command.SET_JSON, ParameterList.of(configuration));
+        configureNode(nodeConnection, mibEntry, Command.SET_JSON, ConfigurationList.of(configuration));
     }
 
     /**
@@ -123,24 +123,24 @@ public class Workbench {
                 .key("configure")
                 .value("lan10GbE yes")
                 .build();
-        configureNode(nodeConnection, mibEntry, Command.CONFIGURE_JSON, ParameterList.of(configuration));
+        configureNode(nodeConnection, mibEntry, Command.CONFIGURE_JSON, ConfigurationList.of(configuration));
     }
 
     private void createPeer(NodeConnection nodeConnection, PeerEntry peerEntry) throws IOException {
         configureNode(nodeConnection, peerEntry, Command.CREATE_JSON, null);
     }
 
-    private void configurePeer(NodeConnection nodeConnection, PeerEntry peerEntry, ParameterList parameterList) throws IOException {
-        configureNode(nodeConnection, peerEntry, Command.SET_JSON, parameterList);
+    private void configurePeer(NodeConnection nodeConnection, PeerEntry peerEntry, ConfigurationList configurationList) throws IOException {
+        configureNode(nodeConnection, peerEntry, Command.SET_JSON, configurationList);
     }
 
     /**
      * Placed in NodeRestClient
      */
-    private void configureNode(NodeConnection nodeConnection, MibEntry mibEntry, Command command, ParameterList parameterList) throws IOException, RuntimeException {
+    private void configureNode(NodeConnection nodeConnection, MibEntry mibEntry, Command command, ConfigurationList configurationList) throws IOException, RuntimeException {
         String mibPathAndCommand = mibPathUtil.getMibPathAndCommand(mibEntry, command);
         String flags ="_RFLAGS_=RAISEMGNOQPCYVULTBJK&_AFLAGS_=AVNDHPUIMJOSE";
-        String parameters = (parameterList == null) ? "" : parameterList.toString();
+        String parameters = (configurationList == null) ? "" : configurationList.toString();
         String all = mibPathAndCommand + "?" + flags + "&" + parameters;
 
         nodeConnection.loginAndSetSessionId();
@@ -152,8 +152,8 @@ public class Workbench {
         answerObjects.checkResponse(command.getOperation(), mibEntry);
     }
 
-    private ParameterList buildConfigurePeerParameterList(PeerEntry peerEntry) {
-        return ParameterList.builder()
+    private ConfigurationList buildConfigurePeerParameterList(PeerEntry peerEntry) {
+        return ConfigurationList.builder()
                 .parameterList(Arrays.asList(
                         Configuration.builder()
                                 .key("topoPeerLocalLabel")

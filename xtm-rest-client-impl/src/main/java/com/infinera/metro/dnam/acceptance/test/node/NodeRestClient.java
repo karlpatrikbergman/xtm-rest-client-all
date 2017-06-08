@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectReader;
 import com.infinera.metro.dnam.acceptance.test.node.mib.Command;
 import com.infinera.metro.dnam.acceptance.test.node.mib.MibEntry;
-import com.infinera.metro.dnam.acceptance.test.node.mib.ParameterList;
+import com.infinera.metro.dnam.acceptance.test.node.mib.ConfigurationList;
 import com.infinera.metro.dnam.acceptance.test.node.mib.util.MibPathUtil;
 import com.infinera.metro.dnam.acceptance.test.util.ThreadSleepWrapper;
 import lombok.extern.slf4j.Slf4j;
@@ -30,11 +30,11 @@ class NodeRestClient {
         return performRestAction(mibEntry, command, null);
     }
 
-    AnswerObjects performRestAction(MibEntry mibEntry, Command command, ParameterList parameterList) throws RuntimeException {
-        String mibPathAndCommand = mibPathUtil.getMibPathAndCommand(mibEntry, command);
-        String flags ="_RFLAGS_=RAISEMGNOQPCYVULTBJK&_AFLAGS_=AVNDHPUIMJOSE";
-        String parameters = (parameterList == null) ? "" : parameterList.toString();
-        String all = mibPathAndCommand + "?" + flags + "&" + parameters;
+    AnswerObjects performRestAction(MibEntry mibEntry, Command command, ConfigurationList configurationList) throws RuntimeException {
+        final String mibPathAndCommand = mibPathUtil.getMibPathAndCommand(mibEntry, command);
+        final String flags ="_RFLAGS_=RAISEMGNOQPCYVULTBJK&_AFLAGS_=AVNDHPUIMJOSE";
+        final String parameters = (configurationList == null) ? "" : configurationList.toString();
+        final String all = mibPathAndCommand + "?" + flags + "&" + parameters;
 
         int attempts = 0;
         while(attempts++ < 4) {

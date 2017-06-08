@@ -10,10 +10,9 @@ import java.util.stream.Stream;
 
 public enum BoardType {
     TPD10GBE("tpd10gbe"),
-    TPMR2500("tpmr2500");
+    TPMR2500("tpmr2500"),
+    ROADM1X2G50("roadm1x2G50");
 //    TP10G("tp10g"),
-//    ROADM1X2G5("roadm1x2G5"),
-
 //    OA2X17DBM("oa2x17dBm"),
 //    OCM2P("oa2x17dBm"),
 //    AD4EVEN50("ad4Even50"),

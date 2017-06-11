@@ -37,13 +37,17 @@ public class NodeImpl implements Node {
 
     /** LinePortEntry **/
 
-    public AnswerObjects setLinePortConfiguration(LinePortEntry linePortEntry, ConfigurationList configurationList) throws RuntimeException {
+    public AnswerObjects setLinePortAttributes(LinePortEntry linePortEntry, ConfigurationList configurationList) throws RuntimeException {
         return nodeRestClient.performRestAction(linePortEntry, Command.SET_JSON, configurationList);
     }
 
     /** ClientPortEntry **/
 
-    public AnswerObjects setClientPortConfiguration(ClientPortEntry clientPortEntry, ConfigurationList configurationList) throws RuntimeException {
+    public AnswerObjects setClientPortAttributes(ClientPortEntry clientPortEntry, ConfigurationList configurationList)  throws RuntimeException {
+        return nodeRestClient.performRestAction(clientPortEntry, Command.SET_JSON, configurationList);
+    }
+
+    public AnswerObjects configureClientPortAttributes(ClientPortEntry clientPortEntry, ConfigurationList configurationList) throws RuntimeException {
         return nodeRestClient.performRestAction(clientPortEntry, Command.CONFIGURE_JSON, configurationList);
     }
 

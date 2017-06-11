@@ -1,25 +1,25 @@
 package com.infinera.metro.dnam.acceptance.test.node.mib;
 
 public enum Command {
-    CREATE_JSON("create.json", Operation.CREATE),
-    GET_JSON("get.json", Operation.GET),
-    SET_JSON("set.json", Operation.SET),
-    DELETE_JSON("delete.json", Operation.DELETE),
-    CONFIGURE_JSON("configure.json", Operation.CONFIGURE);
+    CREATE_JSON("create.json", OperationType.CREATE),
+    GET_JSON("get.json", OperationType.GET),
+    SET_JSON("set.json", OperationType.SET),
+    DELETE_JSON("delete.json", OperationType.DELETE),
+    CONFIGURE_JSON("configure.json", OperationType.CONFIGURE);
 
     private final String value;
-    private final Operation operation;
+    private final OperationType operationType;
 
-    Command(String value, Operation operation) {
+    Command(String value, OperationType operationType) {
         this.value = value;
-        this.operation = operation;
+        this.operationType = operationType;
     }
 
     public String getValue() {
         return value;
     }
 
-    public Operation getOperation() {
-        return operation;
+    public OperationType getOperation() {
+        return operationType;
     }
 }

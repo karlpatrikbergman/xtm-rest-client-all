@@ -1,2 +1,3 @@
+operation: CONFIGURE
 key: configure
 value: lan10GbE yes

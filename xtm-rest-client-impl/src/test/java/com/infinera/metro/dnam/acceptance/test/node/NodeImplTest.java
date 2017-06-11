@@ -120,9 +120,9 @@ public class NodeImplTest {
         //When
         AnswerObjects createBoardAnswerObjects = node.createBoard(boardEntry);
 
-        AnswerObjects setLinePortConfigurationAnswerObjects = node.setLinePortConfiguration(linePortEntry, ConfigurationList.of(linePortConfiguration));
+        AnswerObjects setLinePortConfigurationAnswerObjects = node.setLinePortAttributes(linePortEntry, ConfigurationList.of(linePortConfiguration));
 
-        AnswerObjects setClientPortConfigurationAnswerObjects = node.setClientPortConfiguration(clientPortEntry, ConfigurationList.of(clientPortConfiguration));
+        AnswerObjects setClientPortConfigurationAnswerObjects = node.configureClientPortAttributes(clientPortEntry, ConfigurationList.of(clientPortConfiguration));
 
         AnswerObjects createPeerAnswerObjects = node.createLocalPeer(peerEntry);
 

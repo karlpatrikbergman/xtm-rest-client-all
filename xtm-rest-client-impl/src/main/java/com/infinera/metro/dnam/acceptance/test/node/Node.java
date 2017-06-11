@@ -21,8 +21,12 @@ public interface Node {
     AnswerObjects createBoard(BoardEntry boardEntry) throws RuntimeException;
     AnswerObjects getBoard(BoardEntry boardEntry) throws RuntimeException;
     AnswerObjects deleteBoard(BoardEntry boardEntry) throws RuntimeException;
-    AnswerObjects setLinePortConfiguration(LinePortEntry linePortEntry, ConfigurationList configurationList) throws RuntimeException;
-    AnswerObjects setClientPortConfiguration(ClientPortEntry clientPortEntry, ConfigurationList configurationList) throws RuntimeException;
+
+    AnswerObjects setLinePortAttributes(LinePortEntry linePortEntry, ConfigurationList configurationList) throws RuntimeException;
+
+    AnswerObjects setClientPortAttributes(ClientPortEntry clientPortEntry, ConfigurationList configurationList) throws RuntimeException;
+    AnswerObjects configureClientPortAttributes(ClientPortEntry clientPortEntry, ConfigurationList configurationList) throws RuntimeException;
+
     AnswerObjects createLocalPeer(PeerEntry peerEntry) throws RuntimeException;
     AnswerObjects setLocalPeerConfiguration(PeerEntry peerEntry, ConfigurationList configurationList) throws RuntimeException;
 }

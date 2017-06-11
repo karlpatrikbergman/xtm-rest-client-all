@@ -6,22 +6,44 @@ boards:
     clientPorts:
     - transmitPort: 1
       receivePort: 2
-      configuration:
-        key: "clientIfConfigurationCommand"
-        value: "wan10GbE yes"
+      portAttributes:
+      - !<com.infinera.metro.dnam.acceptance.test.node.configuration.ClientPortConfigAttribute>
+        configurationList:
+          parameterList:
+          - key: "clientIfConfigurationCommand"
+            value: "wan10GbE yes"
+      - !<com.infinera.metro.dnam.acceptance.test.node.configuration.ClientPortSetAttribute>
+        configurationList:
+          parameterList:
+          - key: "expectedFrequency"
+            value: "w1530"
     - transmitPort: 5
       receivePort: 6
-      configuration:
-        key: "clientIfConfigurationCommand"
-        value: "wan10GbE yes"
+      portAttributes:
+      - !<com.infinera.metro.dnam.acceptance.test.node.configuration.ClientPortConfigAttribute>
+        configurationList:
+          parameterList:
+          - key: "clientIfConfigurationCommand"
+            value: "wan10GbE yes"
+      - !<com.infinera.metro.dnam.acceptance.test.node.configuration.ClientPortSetAttribute>
+        configurationList:
+          parameterList:
+          - key: "expectedFrequency"
+            value: "w1530"
     linePorts:
     - transmitPort: 3
       receivePort: 4
-      configuration:
-        key: "expectedFrequency"
-        value: "ch926"
+      portAttributes:
+      - !<com.infinera.metro.dnam.acceptance.test.node.configuration.LinePortConfigAttribute>
+        configurationList:
+          parameterList:
+          - key: "expectedFrequency"
+            value: "ch926"
     - transmitPort: 7
       receivePort: 8
-      configuration:
-        key: "expectedFrequency"
-        value: "ch927"
+      portAttributes:
+      - !<com.infinera.metro.dnam.acceptance.test.node.configuration.LinePortConfigAttribute>
+        configurationList:
+          parameterList:
+          - key: "expectedFrequency"
+            value: "ch927"

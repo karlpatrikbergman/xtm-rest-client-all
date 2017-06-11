@@ -49,7 +49,7 @@ public class Tpd10gbe implements Board {
     public void applyTo(Node node) throws RuntimeException {
         createBoard(node);
         configureClientPorts(node);
-//        configureLinePorts(node);
+        configureLinePorts(node);
     }
 
     private void createBoard(Node node) {
@@ -60,26 +60,24 @@ public class Tpd10gbe implements Board {
         clientPorts.forEach(port -> configureClientPort(node, port));
     }
 
-    private void configureClientPort(Node node, Port port) {
+    private void configureClientPort(Node node, Port clientPort) {
         final ClientPortEntry clientPortEntry = clientPortEntryBuilder
-                .transmitPort(port.getTransmitPort())
-                .receivePort(port.getReceivePort())
+                .transmitPort(clientPort.getTransmitPort())
+                .receivePort(clientPort.getReceivePort())
                 .build();
-        final ConfigurationList configurationList = ConfigurationList.of(port.getConfiguration());
-        node.setClientPortConfiguration(clientPortEntry, configurationList);
+        clientPort.getPortAttributes().forEach(portAttribute -> portAttribute.applyTo(node, clientPortEntry));
     }
 
     private void configureLinePorts(Node node) {
         linePorts.forEach(port -> configureLinePort(node, port));
     }
 
-    private void configureLinePort(Node node, Port port) {
+    private void configureLinePort(Node node, Port linePort) {
         final LinePortEntry linePortEntry = linePortEntryBuilder
-                .transmitPort(port.getTransmitPort())
-                .receivePort(port.getReceivePort())
+                .transmitPort(linePort.getTransmitPort())
+                .receivePort(linePort.getReceivePort())
                 .build();
-        final ConfigurationList configurationList = ConfigurationList.of(port.getConfiguration());
-        node.setLinePortConfiguration(linePortEntry, configurationList);
+        linePort.getPortAttributes().forEach(portAttribute -> portAttribute.applyTo(node, linePortEntry));
     }
 
     @Override

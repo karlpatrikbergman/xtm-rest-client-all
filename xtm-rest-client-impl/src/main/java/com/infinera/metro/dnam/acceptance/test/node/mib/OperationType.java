@@ -8,7 +8,7 @@ package com.infinera.metro.dnam.acceptance.test.node.mib;
  * If the operation initially performed was get/set/delete/configure, and it failed, the attribute
  * AnswerObject.operation will be "error"and NOT "get/set/delete/configure".
  */
-public enum Operation {
+public enum OperationType {
     CREATE("create"),
     DELETE("delete"),
     GET("get"),
@@ -18,7 +18,7 @@ public enum Operation {
 
     private final String name;
 
-    Operation(String name) {
+    OperationType(String name) {
         this.name = name;
     }
 

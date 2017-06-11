@@ -1,5 +1,6 @@
 package com.infinera.metro.dnam.acceptance.test.dockercompose.kinell;
 
+import com.infinera.metro.dnam.acceptance.test.node.DontLetGradleRun;
 import com.infinera.metro.dnam.acceptance.test.node.NodeAccessData;
 import com.infinera.metro.dnam.acceptance.test.node.NodeImpl;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.*;
@@ -7,9 +8,11 @@ import com.infinera.metro.dnam.acceptance.test.node.dockercompose.DockerCompose;
 import com.infinera.metro.dnam.acceptance.test.node.dockercompose.Service;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
 import static org.junit.Assert.assertNotNull;
 
+@Category(DontLetGradleRun.class)
 @Slf4j
 public class KinellSetupTest {
 

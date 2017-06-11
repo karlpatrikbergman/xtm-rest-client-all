@@ -3,7 +3,8 @@ package com.infinera.metro.dnam.acceptance.test.node;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.infinera.metro.dnam.acceptance.test.node.mib.MibEntry;
-import com.infinera.metro.dnam.acceptance.test.node.mib.Operation;
+import com.infinera.metro.dnam.acceptance.test.node.mib.OperationType;
+import com.infinera.metro.dnam.acceptance.test.node.mib.OperationType;
 import lombok.*;
 
 import java.io.Serializable;
@@ -108,12 +109,12 @@ public class AnswerObject implements Serializable {
      * For get, set and configure operations the mibEntry is found in field AnswerObject.entry
      * For create and delete operations the mibEntry is found in field AttributeObject.name
      *
-     * @param operation     The performed operation, create, get, configure, delete
+     * @param operationType     The performed operation, create, get, configure, delete
      * @param mibEntry      The mibEntry for the performed operation
      * @return
      */
-    public boolean isSuccessAnswerObject(Operation operation, MibEntry mibEntry) {
-        final boolean mibEntryFound = mibEntryEqualsAnswerObjectEntryFieldOrAttributeObjectNameField(operation, mibEntry);
+    public boolean isSuccessAnswerObject(OperationType operationType, MibEntry mibEntry) {
+        final boolean mibEntryFound = mibEntryEqualsAnswerObjectEntryFieldOrAttributeObjectNameField(operationType, mibEntry);
         return isSuccess() && getModule().equals(mibEntry.getModuleType().getValue()) &&
                 getGroupOrTable().equals(mibEntry.getGroupOrTableType().getValue()) && mibEntryFound;
     }
@@ -127,19 +128,19 @@ public class AnswerObject implements Serializable {
      * If the operation initially performed was get/set/delete/configure, and it failed, the attribute
      * AnswerObject.operation will be "error"and NOT "get/set/delete/configure".
      *
-     * @param operation     The performed operation, create, get, configure, delete
+     * @param operationType     The performed operation, create, get, configure, delete
      * @param mibEntry      The mibEntry for the performed operation
      * @return
      */
-    public boolean isErrorAnswerObject(Operation operation, MibEntry mibEntry) {
-        final boolean mibEntryFound = mibEntryEqualsAnswerObjectEntryFieldOrAttributeObjectNameField(operation, mibEntry);
+    public boolean isErrorAnswerObject(OperationType operationType, MibEntry mibEntry) {
+        final boolean mibEntryFound = mibEntryEqualsAnswerObjectEntryFieldOrAttributeObjectNameField(operationType, mibEntry);
         return !isSuccess() && getModule().equals(mibEntry.getModuleType().toString()) &&
                 getGroupOrTable().equals(mibEntry.getGroupOrTableType().toString()) && mibEntryFound;
     }
 
-    private boolean mibEntryEqualsAnswerObjectEntryFieldOrAttributeObjectNameField(Operation operation, MibEntry mibEntry) {
+    private boolean mibEntryEqualsAnswerObjectEntryFieldOrAttributeObjectNameField(OperationType operationType, MibEntry mibEntry) {
         boolean result;
-        if(operation.equals(Operation.CREATE) || operation.equals(Operation.DELETE)) {
+        if(operationType.equals(OperationType.CREATE) || operationType.equals(OperationType.DELETE)) {
             result = containsAttributeObjectWithNameEqualToMibEntry(mibEntry);
         } else {
             result = getEntry().equals(mibEntry.getMibEntryString());

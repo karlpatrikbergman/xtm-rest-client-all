@@ -4,6 +4,7 @@ import com.infinera.metro.dnam.acceptance.test.node.DontLetGradleRun;
 import com.infinera.metro.dnam.acceptance.test.node.NodeAccessData;
 import com.infinera.metro.dnam.acceptance.test.node.NodeImpl;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.*;
+import com.infinera.metro.dnam.acceptance.test.node.configuration.board.Board;
 import com.infinera.metro.dnam.acceptance.test.node.dockercompose.DockerCompose;
 import com.infinera.metro.dnam.acceptance.test.node.dockercompose.Service;
 import lombok.extern.slf4j.Slf4j;

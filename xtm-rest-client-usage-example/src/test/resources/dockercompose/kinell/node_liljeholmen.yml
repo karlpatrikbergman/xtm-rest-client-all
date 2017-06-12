@@ -1,16 +1,11 @@
 --- !<.NodeEquipment>
 boards:
-  slot2: !<com.infinera.metro.dnam.acceptance.test.node.configuration.Roadm1x2G50>
+  slot2: !<com.infinera.metro.dnam.acceptance.test.node.configuration.board.Roadm1x2G50>
     subrack: 1
     slot: "slot2"
-    addDropPorts:
-    - transmitPort: 1
-      receivePort: 2
-      configuration:
-        key: "addChannel"
-        value: "ch937"
-    - transmitPort: 3
-      receivePort: 4
-      configuration:
-        key: "addChannel"
-        value: "ch9185"
+    addDropPorts: []
+    linePorts: []
+  slot3: !<com.infinera.metro.dnam.acceptance.test.node.configuration.board.Oa2x17>
+    subrack: 1
+    slot: "slot3"
+    ports: []

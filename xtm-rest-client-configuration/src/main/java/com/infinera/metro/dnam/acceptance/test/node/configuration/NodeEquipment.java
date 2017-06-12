@@ -2,6 +2,7 @@ package com.infinera.metro.dnam.acceptance.test.node.configuration;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.infinera.metro.dnam.acceptance.test.node.Node;
+import com.infinera.metro.dnam.acceptance.test.node.configuration.board.Board;
 import lombok.Builder;
 import lombok.Value;
 

@@ -1,7 +1,9 @@
-package com.infinera.metro.dnam.acceptance.test.node.configuration;
+package com.infinera.metro.dnam.acceptance.test.node.configuration.board;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.infinera.metro.dnam.acceptance.test.node.Node;
+import com.infinera.metro.dnam.acceptance.test.node.configuration.Port;
+import com.infinera.metro.dnam.acceptance.test.node.configuration.Slot;
 import com.infinera.metro.dnam.acceptance.test.node.mib.*;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
@@ -89,6 +91,7 @@ public class Tpd10gbe implements Board {
                 .build();
     }
 
+    //TODO: Make private?
     public ClientPortEntry.ClientPortEntryBuilder getClientPortEntryBuilder() {
         return ClientPortEntry.builder()
                 .moduleType(ModuleType.CLIENT)
@@ -98,6 +101,7 @@ public class Tpd10gbe implements Board {
                 .slot(this.slot.getValue());
     }
 
+    //TODO: Make private?
     public LinePortEntry.LinePortEntryBuilder getLinePortEntryBuilder() {
         return LinePortEntry.builder()
                 .moduleType(ModuleType.WDM)

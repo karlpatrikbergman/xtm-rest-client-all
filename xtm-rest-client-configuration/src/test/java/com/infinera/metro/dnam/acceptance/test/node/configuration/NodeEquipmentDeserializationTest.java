@@ -1,5 +1,6 @@
 package com.infinera.metro.dnam.acceptance.test.node.configuration;
 
+import com.infinera.metro.dnam.acceptance.test.node.configuration.board.Tpd10gbe;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 

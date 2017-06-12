@@ -1,19 +1,19 @@
 package com.infinera.metro.dnam.acceptance.test.node.mib;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.infinera.metro.dnam.acceptance.test.node.mib.util.MibPathUtil;
-import lombok.*;
+import lombok.Builder;
+import lombok.NonNull;
+import lombok.Value;
 
 //TODO: Check which constructors that are acctually needed
 //TODO: Check which json annotations that are actually needed
-//TODO: ClientPortEntry, LinePortEntry and AddDropEntry are exactly the same. Refactor to remedy code duplication
+//TODO: ClientPortEntry, LinePortEntry and AddDropEntry are almost exactly the same. Refactor to remedy code duplication
 
-@AllArgsConstructor(access = AccessLevel.PUBLIC) //Needed by Orika
-@NoArgsConstructor(access = AccessLevel.PRIVATE, force = true) //Needed by Hibernate and Jackson
-@JsonIgnoreProperties(ignoreUnknown = true)
-@JsonInclude(JsonInclude.Include.NON_NULL)
+//@AllArgsConstructor(access = AccessLevel.PUBLIC) //Needed by Orika
+//@NoArgsConstructor(access = AccessLevel.PRIVATE, force = true) //Needed by Hibernate and Jackson
+//@JsonIgnoreProperties(ignoreUnknown = true)
+//@JsonInclude(JsonInclude.Include.NON_NULL)
 @Value //Needs jackson > 2.8
 @Builder
 public class ClientPortEntry implements MibEntry {

@@ -1,6 +1,6 @@
 package com.infinera.metro.dnam.acceptance.test.node.configuration;
 
-import com.infinera.metro.dnam.acceptance.test.node.mib.ClientPortType;
+import com.infinera.metro.dnam.acceptance.test.node.mib.type.ClientPortType;
 import lombok.*;
 
 //TODO: Delete?

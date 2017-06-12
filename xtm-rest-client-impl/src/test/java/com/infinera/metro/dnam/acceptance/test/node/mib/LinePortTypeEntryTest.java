@@ -1,5 +1,10 @@
 package com.infinera.metro.dnam.acceptance.test.node.mib;
 
+import com.infinera.metro.dnam.acceptance.test.node.mib.entry.LinePortEntry;
+import com.infinera.metro.dnam.acceptance.test.node.mib.entry.MibEntry;
+import com.infinera.metro.dnam.acceptance.test.node.mib.type.GroupOrTableType;
+import com.infinera.metro.dnam.acceptance.test.node.mib.type.LinePortType;
+import com.infinera.metro.dnam.acceptance.test.node.mib.type.ModuleType;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 
@@ -8,7 +13,7 @@ import static org.junit.Assert.assertEquals;
 @Slf4j
 public class LinePortTypeEntryTest {
 
-    private final  MibEntry mibEntry = LinePortEntry.builder()
+    private final MibEntry mibEntry = LinePortEntry.builder()
             .moduleType(ModuleType.WDM)
             .groupOrTableType(GroupOrTableType.IF)
             .linePortType(LinePortType.WDM)

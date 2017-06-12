@@ -3,7 +3,7 @@ package com.infinera.metro.dnam.acceptance.test.node.configuration;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
-import com.infinera.metro.dnam.acceptance.test.node.mib.BoardType;
+import com.infinera.metro.dnam.acceptance.test.node.mib.type.BoardType;
 
 import java.io.IOException;
 

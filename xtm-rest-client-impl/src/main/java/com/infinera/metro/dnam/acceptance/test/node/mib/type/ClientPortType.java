@@ -1,4 +1,4 @@
-package com.infinera.metro.dnam.acceptance.test.node.mib;
+package com.infinera.metro.dnam.acceptance.test.node.mib.type;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 

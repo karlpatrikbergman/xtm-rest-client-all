@@ -1,5 +1,11 @@
 package com.infinera.metro.dnam.acceptance.test.node.mib;
 
+import com.infinera.metro.dnam.acceptance.test.node.mib.entry.BoardEntry;
+import com.infinera.metro.dnam.acceptance.test.node.mib.entry.LinePortEntry;
+import com.infinera.metro.dnam.acceptance.test.node.mib.entry.PeerEntry;
+import com.infinera.metro.dnam.acceptance.test.node.mib.type.BoardType;
+import com.infinera.metro.dnam.acceptance.test.node.mib.type.LinePortType;
+
 import java.util.Arrays;
 
 public enum MibObjectFactory {

@@ -2,7 +2,7 @@ package com.infinera.metro.dnam.acceptance.test.node.mib;
 
 /**
  * Values of the field AnswerObject.operation
- * Corresponds to some extent to enum "Command" (get.json, create.json, set.json)
+ * Corresponds to some extent to enum "CommandType" (get.json, create.json, set.json)
  *
  * IMPORTANT NOTE:
  * If the operation initially performed was get/set/delete/configure, and it failed, the attribute

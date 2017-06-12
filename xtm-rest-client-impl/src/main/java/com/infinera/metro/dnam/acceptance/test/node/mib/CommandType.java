@@ -1,6 +1,6 @@
 package com.infinera.metro.dnam.acceptance.test.node.mib;
 
-public enum Command {
+public enum CommandType {
     CREATE_JSON("create.json", OperationType.CREATE),
     GET_JSON("get.json", OperationType.GET),
     SET_JSON("set.json", OperationType.SET),
@@ -10,7 +10,7 @@ public enum Command {
     private final String value;
     private final OperationType operationType;
 
-    Command(String value, OperationType operationType) {
+    CommandType(String value, OperationType operationType) {
         this.value = value;
         this.operationType = operationType;
     }

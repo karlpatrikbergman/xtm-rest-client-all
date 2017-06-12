@@ -1,6 +1,9 @@
 package com.infinera.metro.dnam.acceptance.test.node.mib.util;
 
 import com.infinera.metro.dnam.acceptance.test.node.mib.*;
+import com.infinera.metro.dnam.acceptance.test.node.mib.entry.MibEntry;
+import com.infinera.metro.dnam.acceptance.test.node.mib.type.GroupOrTableType;
+import com.infinera.metro.dnam.acceptance.test.node.mib.type.ModuleType;
 import org.stringtemplate.v4.ST;
 
 //TODO: This class does not belong in api. Should be in shared module. It us used by api and impl modules.
@@ -64,10 +67,10 @@ public enum MibPathUtil {
         return url.render();
     }
 
-    public String getMibPathAndCommand(MibEntry entry, Command command) {
-        ST url = new ST("<entry>/<command>");
+    public String getMibPathAndCommand(MibEntry entry, CommandType commandType) {
+        ST url = new ST("<entry>/<commandType>");
         url.add("entry", entry.getMibEntryPath());
-        url.add("command", command.getValue());
+        url.add("commandType", commandType.getValue());
         return url.render();
     }
 }

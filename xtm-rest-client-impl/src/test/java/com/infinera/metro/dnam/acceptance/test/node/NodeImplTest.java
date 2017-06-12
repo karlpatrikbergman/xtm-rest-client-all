@@ -1,6 +1,11 @@
 package com.infinera.metro.dnam.acceptance.test.node;
 
 import com.infinera.metro.dnam.acceptance.test.node.mib.*;
+import com.infinera.metro.dnam.acceptance.test.node.mib.entry.BoardEntry;
+import com.infinera.metro.dnam.acceptance.test.node.mib.entry.ClientPortEntry;
+import com.infinera.metro.dnam.acceptance.test.node.mib.entry.LinePortEntry;
+import com.infinera.metro.dnam.acceptance.test.node.mib.entry.PeerEntry;
+import com.infinera.metro.dnam.acceptance.test.node.mib.type.*;
 import com.palantir.docker.compose.DockerComposeRule;
 import com.palantir.docker.compose.connection.waiting.HealthChecks;
 import lombok.extern.slf4j.Slf4j;

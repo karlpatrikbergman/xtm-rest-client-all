@@ -1,5 +1,9 @@
-package com.infinera.metro.dnam.acceptance.test.node.mib;
+package com.infinera.metro.dnam.acceptance.test.node.mib.entry;
 
+import com.infinera.metro.dnam.acceptance.test.node.mib.*;
+import com.infinera.metro.dnam.acceptance.test.node.mib.type.GroupOrTableType;
+import com.infinera.metro.dnam.acceptance.test.node.mib.type.ModuleType;
+import com.infinera.metro.dnam.acceptance.test.node.mib.type.PeerType;
 import com.infinera.metro.dnam.acceptance.test.node.mib.util.MibPathUtil;
 import lombok.Builder;
 import lombok.NonNull;
@@ -10,7 +14,7 @@ import lombok.Value;
 public class PeerEntry implements MibEntry {
     @NonNull private final ModuleType moduleType = ModuleType.TOPO;
     @NonNull private final GroupOrTableType groupOrTableType = GroupOrTableType.PEER;
-    @NonNull private final Peer peer = Peer.PEER;
+    @NonNull private final PeerType peerType = PeerType.PEER;
     @NonNull private final LinePortEntry localLinePortEntry;
     @NonNull private final LinePortEntry remoteLinePortEntry;
     @NonNull private final String nodeIpAddress;
@@ -33,7 +37,7 @@ public class PeerEntry implements MibEntry {
 
     @Override
     public String getMibEntryString() {
-        return MibPathUtil.MIB_PATH_UTIL.getMibEntryString (peer.getName(), localLinePortEntry.getSubrack(),
+        return MibPathUtil.MIB_PATH_UTIL.getMibEntryString (peerType.getName(), localLinePortEntry.getSubrack(),
                 localLinePortEntry.getSlot(), getLocalPort(), localMpoIdentifier);
     }
 

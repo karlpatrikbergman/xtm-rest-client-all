@@ -1,4 +1,4 @@
-package com.infinera.metro.dnam.acceptance.test.node.mib;
+package com.infinera.metro.dnam.acceptance.test.node.mib.type;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 
@@ -8,17 +8,15 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public enum ModuleType {
-    EQ("eq"),
-    WDM("wdm"),
-    CLIENT("client"),
-    TOPO("topo"),
-    ROADM("roadm"),
-    OA("oa");
+public enum GroupOrTableType {
+    BOARD("board"),
+    IF("if"),
+    PEER("peer"),
+    ADD_DROP_IF("addDropIf");
 
     private final String value;
 
-    ModuleType(String value) {
+    GroupOrTableType(String value) {
         this.value = value;
     }
 
@@ -27,13 +25,13 @@ public enum ModuleType {
     }
 
     @JsonCreator
-    public static ModuleType fromString(String string) {
+    public static GroupOrTableType fromString(String string) {
         return Optional
-                .ofNullable(MODULE_TYPE_MAP.get(string))
+                .ofNullable(GROUP_OR_TABLE_TYPE_MAP.get(string))
                 .orElseThrow(() -> new IllegalArgumentException(string));
     }
 
-    private static final Map<String, ModuleType> MODULE_TYPE_MAP = Stream
-            .of(ModuleType.values())
+    private static final Map<String, GroupOrTableType> GROUP_OR_TABLE_TYPE_MAP = Stream
+            .of(GroupOrTableType.values())
             .collect(Collectors.toMap(s -> s.value, Function.identity()));
 }

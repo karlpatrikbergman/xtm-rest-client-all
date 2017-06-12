@@ -1,5 +1,10 @@
 package com.infinera.metro.dnam.acceptance.test.node.mib;
 
+import com.infinera.metro.dnam.acceptance.test.node.mib.entry.LinePortEntry;
+import com.infinera.metro.dnam.acceptance.test.node.mib.entry.PeerEntry;
+import com.infinera.metro.dnam.acceptance.test.node.mib.type.GroupOrTableType;
+import com.infinera.metro.dnam.acceptance.test.node.mib.type.LinePortType;
+import com.infinera.metro.dnam.acceptance.test.node.mib.type.ModuleType;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 
@@ -20,7 +25,7 @@ import static org.junit.Assert.assertEquals;
  */
 
 @Slf4j
-public class CreatePeerEntryTest {
+public class CreatePeerTypeEntryTest {
     /**
      * At some point during test setup this line port entry is created in Node A: 172.17.0.2
      * XTM version < 27 therefore MPO identifier not is used.

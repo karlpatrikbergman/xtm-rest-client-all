@@ -2,9 +2,9 @@ package com.infinera.metro.dnam.acceptance.test.node.configuration;
 
 import com.google.common.base.Preconditions;
 import com.infinera.metro.dnam.acceptance.test.node.Node;
-import com.infinera.metro.dnam.acceptance.test.node.mib.ClientPortEntry;
+import com.infinera.metro.dnam.acceptance.test.node.mib.entry.ClientPortEntry;
 import com.infinera.metro.dnam.acceptance.test.node.mib.ConfigurationList;
-import com.infinera.metro.dnam.acceptance.test.node.mib.MibEntry;
+import com.infinera.metro.dnam.acceptance.test.node.mib.entry.MibEntry;
 import lombok.Value;
 
 @Value

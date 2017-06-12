@@ -1,6 +1,6 @@
 package com.infinera.metro.dnam.acceptance.test.node.configuration;
 
-import com.infinera.metro.dnam.acceptance.test.node.mib.BoardEntry;
+import com.infinera.metro.dnam.acceptance.test.node.mib.entry.BoardEntry;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;

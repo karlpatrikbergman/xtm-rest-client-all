@@ -1,6 +1,10 @@
 package com.infinera.metro.dnam.acceptance.test.node;
 
 import com.infinera.metro.dnam.acceptance.test.node.mib.*;
+import com.infinera.metro.dnam.acceptance.test.node.mib.entry.BoardEntry;
+import com.infinera.metro.dnam.acceptance.test.node.mib.entry.ClientPortEntry;
+import com.infinera.metro.dnam.acceptance.test.node.mib.entry.LinePortEntry;
+import com.infinera.metro.dnam.acceptance.test.node.mib.entry.PeerEntry;
 
 public class NodeImpl implements Node {
     private final NodeRestClient nodeRestClient;
@@ -24,41 +28,41 @@ public class NodeImpl implements Node {
     /** BoardEntry **/
 
     public AnswerObjects createBoard(BoardEntry boardEntry) throws RuntimeException {
-        return nodeRestClient.performRestAction(boardEntry, Command.CREATE_JSON);
+        return nodeRestClient.performRestAction(boardEntry, CommandType.CREATE_JSON);
     }
 
     public AnswerObjects getBoard(BoardEntry boardEntry) throws RuntimeException {
-        return nodeRestClient.performRestAction(boardEntry, Command.GET_JSON);
+        return nodeRestClient.performRestAction(boardEntry, CommandType.GET_JSON);
     }
 
     public AnswerObjects deleteBoard(BoardEntry boardEntry) throws RuntimeException {
-        return nodeRestClient.performRestAction(boardEntry, Command.DELETE_JSON);
+        return nodeRestClient.performRestAction(boardEntry, CommandType.DELETE_JSON);
    }
 
     /** LinePortEntry **/
 
     public AnswerObjects setLinePortAttributes(LinePortEntry linePortEntry, ConfigurationList configurationList) throws RuntimeException {
-        return nodeRestClient.performRestAction(linePortEntry, Command.SET_JSON, configurationList);
+        return nodeRestClient.performRestAction(linePortEntry, CommandType.SET_JSON, configurationList);
     }
 
     /** ClientPortEntry **/
 
     public AnswerObjects setClientPortAttributes(ClientPortEntry clientPortEntry, ConfigurationList configurationList)  throws RuntimeException {
-        return nodeRestClient.performRestAction(clientPortEntry, Command.SET_JSON, configurationList);
+        return nodeRestClient.performRestAction(clientPortEntry, CommandType.SET_JSON, configurationList);
     }
 
     public AnswerObjects configureClientPortAttributes(ClientPortEntry clientPortEntry, ConfigurationList configurationList) throws RuntimeException {
-        return nodeRestClient.performRestAction(clientPortEntry, Command.CONFIGURE_JSON, configurationList);
+        return nodeRestClient.performRestAction(clientPortEntry, CommandType.CONFIGURE_JSON, configurationList);
     }
 
     /** PeerEntry **/
 
     public AnswerObjects createLocalPeer(PeerEntry peerEntry) throws RuntimeException {
-        return nodeRestClient.performRestAction(peerEntry, Command.CREATE_JSON);
+        return nodeRestClient.performRestAction(peerEntry, CommandType.CREATE_JSON);
     }
 
     public AnswerObjects setLocalPeerConfiguration(PeerEntry peerEntry, ConfigurationList configurationList) throws RuntimeException {
-        return nodeRestClient.performRestAction(peerEntry, Command.SET_JSON, configurationList);
+        return nodeRestClient.performRestAction(peerEntry, CommandType.SET_JSON, configurationList);
     }
 
 }

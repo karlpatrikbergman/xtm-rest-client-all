@@ -1,4 +1,4 @@
-package com.infinera.metro.dnam.acceptance.test.node.mib;
+package com.infinera.metro.dnam.acceptance.test.node.mib.type;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 
@@ -8,15 +8,12 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public enum GroupOrTableType {
-    BOARD("board"),
-    IF("if"),
-    PEER("peer"),
-    ADD_DROP_IF("addDropIf");
+public enum LinePortType {
+    WDM("wdm");
 
     private final String value;
 
-    GroupOrTableType(String value) {
+    LinePortType(String value) {
         this.value = value;
     }
 
@@ -25,13 +22,14 @@ public enum GroupOrTableType {
     }
 
     @JsonCreator
-    public static GroupOrTableType fromString(String string) {
+    public static LinePortType fromString(String string) {
         return Optional
-                .ofNullable(GROUP_OR_TABLE_TYPE_MAP.get(string))
+                .ofNullable(LINE_PORT_MAP.get(string))
                 .orElseThrow(() -> new IllegalArgumentException(string));
     }
 
-    private static final Map<String, GroupOrTableType> GROUP_OR_TABLE_TYPE_MAP = Stream
-            .of(GroupOrTableType.values())
+    private static final Map<String, LinePortType> LINE_PORT_MAP = Stream
+            .of(LinePortType.values())
             .collect(Collectors.toMap(s -> s.value, Function.identity()));
 }
+

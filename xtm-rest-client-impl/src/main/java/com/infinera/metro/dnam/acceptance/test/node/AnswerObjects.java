@@ -1,8 +1,7 @@
 package com.infinera.metro.dnam.acceptance.test.node;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.infinera.metro.dnam.acceptance.test.node.mib.MibEntry;
-import com.infinera.metro.dnam.acceptance.test.node.mib.OperationType;
+import com.infinera.metro.dnam.acceptance.test.node.mib.entry.MibEntry;
 import com.infinera.metro.dnam.acceptance.test.node.mib.OperationType;
 
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.infinera.metro.dnam.acceptance.test.node.mib;
+package com.infinera.metro.dnam.acceptance.test.node.mib.type;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 
@@ -12,7 +12,8 @@ public enum BoardType {
     TPD10GBE("tpd10gbe"),
     TPMR2500("tpmr2500"),
     ROADM1X2G50("roadm1x2G50"),
-    OA2X17DBM("oa2x17dBm");
+    OA2X17DBM("oa2x17dBm"),
+    OCM2P("ocm2p");
 //    TP10G("tp10g"),
 //    OCM2P("oa2x17dBm"),
 //    AD4EVEN50("ad4Even50"),

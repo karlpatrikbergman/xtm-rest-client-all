@@ -1,5 +1,8 @@
-package com.infinera.metro.dnam.acceptance.test.node.mib;
+package com.infinera.metro.dnam.acceptance.test.node.mib.entry;
 
+import com.infinera.metro.dnam.acceptance.test.node.mib.type.BoardType;
+import com.infinera.metro.dnam.acceptance.test.node.mib.type.GroupOrTableType;
+import com.infinera.metro.dnam.acceptance.test.node.mib.type.ModuleType;
 import com.infinera.metro.dnam.acceptance.test.node.mib.util.MibPathUtil;
 import lombok.Builder;
 import lombok.NonNull;

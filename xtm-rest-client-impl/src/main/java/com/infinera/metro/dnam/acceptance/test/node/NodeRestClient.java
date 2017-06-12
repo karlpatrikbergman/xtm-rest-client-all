@@ -2,8 +2,8 @@ package com.infinera.metro.dnam.acceptance.test.node;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectReader;
-import com.infinera.metro.dnam.acceptance.test.node.mib.Command;
-import com.infinera.metro.dnam.acceptance.test.node.mib.MibEntry;
+import com.infinera.metro.dnam.acceptance.test.node.mib.CommandType;
+import com.infinera.metro.dnam.acceptance.test.node.mib.entry.MibEntry;
 import com.infinera.metro.dnam.acceptance.test.node.mib.ConfigurationList;
 import com.infinera.metro.dnam.acceptance.test.node.mib.util.MibPathUtil;
 import com.infinera.metro.dnam.acceptance.test.util.ThreadSleepWrapper;
@@ -26,12 +26,12 @@ class NodeRestClient {
         this.mibPathUtil = MibPathUtil.MIB_PATH_UTIL;
     }
 
-    AnswerObjects performRestAction(MibEntry mibEntry, Command command) throws RuntimeException {
-        return performRestAction(mibEntry, command, null);
+    AnswerObjects performRestAction(MibEntry mibEntry, CommandType commandType) throws RuntimeException {
+        return performRestAction(mibEntry, commandType, null);
     }
 
-    AnswerObjects performRestAction(MibEntry mibEntry, Command command, ConfigurationList configurationList) throws RuntimeException {
-        final String mibPathAndCommand = mibPathUtil.getMibPathAndCommand(mibEntry, command);
+    AnswerObjects performRestAction(MibEntry mibEntry, CommandType commandType, ConfigurationList configurationList) throws RuntimeException {
+        final String mibPathAndCommand = mibPathUtil.getMibPathAndCommand(mibEntry, commandType);
         final String flags ="_RFLAGS_=RAISEMGNOQPCYVULTBJK&_AFLAGS_=AVNDHPUIMJOSE";
         final String parameters = (configurationList == null) ? "" : configurationList.toString();
         final String all = mibPathAndCommand + "?" + flags + "&" + parameters;
@@ -46,7 +46,7 @@ class NodeRestClient {
                 checkHttpStatusCode(responseEntity);
                 List<AnswerObject> answerObjectList = readValueAsList(responseEntity);
                 AnswerObjects answerObjects = new AnswerObjects(answerObjectList);
-                answerObjects.checkResponse(command.getOperation(), mibEntry);
+                answerObjects.checkResponse(commandType.getOperation(), mibEntry);
                 return answerObjects;
 
             } catch (RuntimeException | IOException e) {
@@ -54,7 +54,7 @@ class NodeRestClient {
                 ThreadSleepWrapper.sleep(10);
             }
         }
-        throw new RuntimeException("Tried performRestAction three times and failed. Command was: " + all);
+        throw new RuntimeException("Tried performRestAction three times and failed. CommandType was: " + all);
     }
 
     String getNodeIpAddress() {

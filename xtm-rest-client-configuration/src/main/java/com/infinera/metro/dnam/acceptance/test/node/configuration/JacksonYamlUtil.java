@@ -4,10 +4,10 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
-import com.infinera.metro.dnam.acceptance.test.node.mib.BoardType;
-import com.infinera.metro.dnam.acceptance.test.node.mib.ClientPortType;
-import com.infinera.metro.dnam.acceptance.test.node.mib.GroupOrTableType;
-import com.infinera.metro.dnam.acceptance.test.node.mib.LinePortType;
+import com.infinera.metro.dnam.acceptance.test.node.mib.type.BoardType;
+import com.infinera.metro.dnam.acceptance.test.node.mib.type.ClientPortType;
+import com.infinera.metro.dnam.acceptance.test.node.mib.type.GroupOrTableType;
+import com.infinera.metro.dnam.acceptance.test.node.mib.type.LinePortType;
 
 public enum JacksonYamlUtil {
     INSTANCE;

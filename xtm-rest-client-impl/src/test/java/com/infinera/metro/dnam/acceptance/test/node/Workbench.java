@@ -3,6 +3,10 @@ package com.infinera.metro.dnam.acceptance.test.node;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectReader;
 import com.infinera.metro.dnam.acceptance.test.node.mib.*;
+import com.infinera.metro.dnam.acceptance.test.node.mib.entry.*;
+import com.infinera.metro.dnam.acceptance.test.node.mib.type.BoardType;
+import com.infinera.metro.dnam.acceptance.test.node.mib.type.ClientPortType;
+import com.infinera.metro.dnam.acceptance.test.node.mib.type.LinePortType;
 import com.infinera.metro.dnam.acceptance.test.node.mib.util.MibPathUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
@@ -70,11 +74,11 @@ public class Workbench {
     }
 
     private void createBoard(NodeConnection nodeConnection ,BoardEntry boardEntry) throws IOException {
-        configureNode(nodeConnection, boardEntry, Command.CREATE_JSON, null);
+        configureNode(nodeConnection, boardEntry, CommandType.CREATE_JSON, null);
     }
 
     private void getBoard(NodeConnection nodeConnection, BoardEntry boardEntry) throws IOException {
-        configureNode(nodeConnection, boardEntry, Command.GET_JSON, null);
+        configureNode(nodeConnection, boardEntry, CommandType.GET_JSON, null);
     }
 
     private void deleteBoard(NodeConnection nodeConnection) throws IOException {
@@ -83,7 +87,7 @@ public class Workbench {
                 .subrack(1)
                 .slot(2)
                 .build();
-        configureNode(nodeConnection, mibEntry, Command.DELETE_JSON, null);
+        configureNode(nodeConnection, mibEntry, CommandType.DELETE_JSON, null);
     }
 
     /**
@@ -103,7 +107,7 @@ public class Workbench {
                 .key("expectedFrequency")
                 .value("ch926")
                 .build();
-        configureNode(nodeConnection, mibEntry, Command.SET_JSON, ConfigurationList.of(configuration));
+        configureNode(nodeConnection, mibEntry, CommandType.SET_JSON, ConfigurationList.of(configuration));
     }
 
     /**
@@ -123,22 +127,22 @@ public class Workbench {
                 .key("configure")
                 .value("lan10GbE yes")
                 .build();
-        configureNode(nodeConnection, mibEntry, Command.CONFIGURE_JSON, ConfigurationList.of(configuration));
+        configureNode(nodeConnection, mibEntry, CommandType.CONFIGURE_JSON, ConfigurationList.of(configuration));
     }
 
     private void createPeer(NodeConnection nodeConnection, PeerEntry peerEntry) throws IOException {
-        configureNode(nodeConnection, peerEntry, Command.CREATE_JSON, null);
+        configureNode(nodeConnection, peerEntry, CommandType.CREATE_JSON, null);
     }
 
     private void configurePeer(NodeConnection nodeConnection, PeerEntry peerEntry, ConfigurationList configurationList) throws IOException {
-        configureNode(nodeConnection, peerEntry, Command.SET_JSON, configurationList);
+        configureNode(nodeConnection, peerEntry, CommandType.SET_JSON, configurationList);
     }
 
     /**
      * Placed in NodeRestClient
      */
-    private void configureNode(NodeConnection nodeConnection, MibEntry mibEntry, Command command, ConfigurationList configurationList) throws IOException, RuntimeException {
-        String mibPathAndCommand = mibPathUtil.getMibPathAndCommand(mibEntry, command);
+    private void configureNode(NodeConnection nodeConnection, MibEntry mibEntry, CommandType commandType, ConfigurationList configurationList) throws IOException, RuntimeException {
+        String mibPathAndCommand = mibPathUtil.getMibPathAndCommand(mibEntry, commandType);
         String flags ="_RFLAGS_=RAISEMGNOQPCYVULTBJK&_AFLAGS_=AVNDHPUIMJOSE";
         String parameters = (configurationList == null) ? "" : configurationList.toString();
         String all = mibPathAndCommand + "?" + flags + "&" + parameters;
@@ -149,7 +153,7 @@ public class Workbench {
         AnswerObjects answerObjects = new AnswerObjects(objectReader.readValue(responseEntity.getBody()));
         log.info(responseEntity.getBody());
 
-        answerObjects.checkResponse(command.getOperation(), mibEntry);
+        answerObjects.checkResponse(commandType.getOperation(), mibEntry);
     }
 
     private ConfigurationList buildConfigurePeerParameterList(PeerEntry peerEntry) {

@@ -23,7 +23,7 @@ public class KinellSetupTest {
     private final String RESOURCES_PATH = "dockercompose/kinell/";
     private final String NODE_EQUIPMENT_PATH = RESOURCES_PATH + "node_liljeholmen.yml";
     private final String DOCKER_COMPOSE_PATH = RESOURCES_PATH + "docker-compose.yml";
-//    private final Roadm1x2G50 roadm1x2G50;
+    private final String NODE_ACCESS_DATA_PATH = RESOURCES_PATH + "node_access_data.yaml";
 
     public KinellSetupTest() {
         final DockerCompose dockerCompose = objectFromFileUtil.getObject(DOCKER_COMPOSE_PATH, DockerCompose.class);
@@ -36,7 +36,7 @@ public class KinellSetupTest {
         Board boardSlot2 = nodeEquipmentNodeA.getBoard(Slot.slot2);
         assertNotNull(boardSlot2);
 
-        nodeAccessDataNodeA = objectFromFileUtil.getObject("dockercompose/test-case-x-node-config/node_a_access_data.yaml", NodeAccessData.class)
+        nodeAccessDataNodeA = objectFromFileUtil.getObject(NODE_ACCESS_DATA_PATH, NodeAccessData.class)
                 .copyObjectAndChangeIpAddress(dockerComposeIpAddressNodeA);
 
     }

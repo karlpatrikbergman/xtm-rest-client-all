@@ -1,8 +1,8 @@
 package com.infinera.metro.dnam.acceptance.test.node.configuration.board;
 
 import com.infinera.metro.dnam.acceptance.test.node.Node;
-import com.infinera.metro.dnam.acceptance.test.node.mib.BoardEntry;
-import com.infinera.metro.dnam.acceptance.test.node.mib.BoardType;
+import com.infinera.metro.dnam.acceptance.test.node.mib.entry.BoardEntry;
+import com.infinera.metro.dnam.acceptance.test.node.mib.type.BoardType;
 import lombok.Builder;
 import lombok.Value;
 import lombok.extern.slf4j.Slf4j;

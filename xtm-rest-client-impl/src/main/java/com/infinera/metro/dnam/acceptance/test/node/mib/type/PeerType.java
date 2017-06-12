@@ -1,11 +1,11 @@
-package com.infinera.metro.dnam.acceptance.test.node.mib;
+package com.infinera.metro.dnam.acceptance.test.node.mib.type;
 
-public enum Peer {
+public enum PeerType {
     PEER("peer");
 
     private final String name;
 
-    Peer(String name) {
+    PeerType(String name) {
         this.name = name;
     }
 

@@ -3,7 +3,7 @@ package com.infinera.metro.dnam.acceptance.test.node.configuration;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.infinera.metro.dnam.acceptance.test.node.Node;
-import com.infinera.metro.dnam.acceptance.test.node.mib.MibEntry;
+import com.infinera.metro.dnam.acceptance.test.node.mib.entry.MibEntry;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "@class")
 @JsonSubTypes({

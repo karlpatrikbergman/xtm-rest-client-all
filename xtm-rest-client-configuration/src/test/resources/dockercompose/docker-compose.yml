@@ -31,7 +31,7 @@ services:
     image: artifactory.transmode.se/tm3k/trunk-hostenv
     container_name: node1
     environment:
-      DEMO: true
+      DEMO: "true"
       NOSIM: 1
     ports:
       - 8001:80
@@ -42,7 +42,7 @@ services:
     image: artifactory.transmode.se/tm3k/trunk-hostenv
     container_name: node2
     environment:
-      DEMO: true
+      DEMO: "true"
       NOSIM: 1
     ports:
       - 8002:80 #<port-on-host>:<port-on-container>

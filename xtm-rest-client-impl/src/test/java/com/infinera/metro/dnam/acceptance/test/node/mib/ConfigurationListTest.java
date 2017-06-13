@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 
 import java.util.Arrays;
+import java.util.Collections;
 
 import static org.junit.Assert.assertEquals;
 
@@ -42,8 +43,14 @@ public class ConfigurationListTest {
     @Test
     public void parameterListToString() {
         final String expectedParameterString = "topoPeerLocalLabel=1:2:3&topoPeerRemoteIpAddress=172.17.0.2&topoPeerRemoteSubrack=1&topoPeerRemoteSlot=2&topoPeerRemotePort=4&topoPeerRemoteLabel=1:2:0:4";
-        final String acctualParameterString = configurationList.toString();
-        assertEquals(expectedParameterString, acctualParameterString);
+        final String actualParameterString = configurationList.toString();
+        assertEquals(expectedParameterString, actualParameterString);
+        log.info(configurationList.toString());
+    }
+
+    @Test
+    public void emtpyParameterListToString() {
+        ConfigurationList configurationList = ConfigurationList.of(Collections.emptyList());
         log.info(configurationList.toString());
     }
 

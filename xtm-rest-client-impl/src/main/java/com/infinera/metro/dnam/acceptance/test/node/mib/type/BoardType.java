@@ -13,7 +13,12 @@ public enum BoardType {
     TPMR2500("tpmr2500"),
     ROADM1X2G50("roadm1x2G50"),
     OA2X17DBM("oa2x17dBm"),
-    OCM2P("ocm2p");
+    OCM2P("ocm2p"),
+    TPHEX10GOTN("tphex10gotn"),
+    TP100GOTN("Tp100gotn"),
+    GBE10EMXP10GII("Gbe10Emxp10Gii"),
+    MDU40EVENL("mdu40EvenL"),
+    OIUC50100("Oiuc50100");
 //    TP10G("tp10g"),
 //    OCM2P("oa2x17dBm"),
 //    AD4EVEN50("ad4Even50"),

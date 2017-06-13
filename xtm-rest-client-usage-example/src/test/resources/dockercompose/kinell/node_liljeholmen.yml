@@ -1,5 +1,10 @@
 --- !<.NodeEquipment>
 boards:
+  slot2: !<com.infinera.metro.dnam.acceptance.test.node.configuration.board.Roadm1x2G50>
+    subrack: 1
+    slot: "slot2"
+    addDropPorts: []
+    linePorts: []
   slot3: !<com.infinera.metro.dnam.acceptance.test.node.configuration.board.Oa2x17>
     subrack: 1
     slot: "slot3"
@@ -9,8 +14,18 @@ boards:
     slot: "slot4"
     addDropPorts: []
     linePorts: []
-  slot2: !<com.infinera.metro.dnam.acceptance.test.node.configuration.board.Roadm1x2G50>
+  slot5: !<com.infinera.metro.dnam.acceptance.test.node.configuration.board.Ocm2p>
     subrack: 1
-    slot: "slot2"
-    addDropPorts: []
-    linePorts: []
+    slot: "slot5"
+  slot6: !<com.infinera.metro.dnam.acceptance.test.node.configuration.board.Tphex10gotn>
+    subrack: 1
+    slot: "slot6"
+  slot7: !<com.infinera.metro.dnam.acceptance.test.node.configuration.board.Tp100gotn>
+    subrack: 1
+    slot: "slot7"
+  slot14: !<com.infinera.metro.dnam.acceptance.test.node.configuration.board.Gbe10Emxp10Gii>
+    subrack: 1
+    slot: "slot14"
+  slot15: !<com.infinera.metro.dnam.acceptance.test.node.configuration.board.Mdu40EvenL>
+    subrack: 1
+    slot: "slot15"

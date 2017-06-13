@@ -33,8 +33,9 @@ class NodeRestClient {
     AnswerObjects performRestAction(MibEntry mibEntry, CommandType commandType, ConfigurationList configurationList) throws RuntimeException {
         final String mibPathAndCommand = mibPathUtil.getMibPathAndCommand(mibEntry, commandType);
         final String flags ="_RFLAGS_=RAISEMGNOQPCYVULTBJK&_AFLAGS_=AVNDHPUIMJOSE";
-        final String parameters = (configurationList == null) ? "" : configurationList.toString();
-        final String all = mibPathAndCommand + "?" + flags + "&" + parameters;
+        final String parameters = (configurationList == null || configurationList.getParameterList().isEmpty()) ? "" : configurationList.toString();
+        final String colon = (parameters.isEmpty()) ? "" : "&";
+        final String all = mibPathAndCommand + "?" + flags + colon + parameters;
 
         int attempts = 0;
         while(attempts++ < 4) {

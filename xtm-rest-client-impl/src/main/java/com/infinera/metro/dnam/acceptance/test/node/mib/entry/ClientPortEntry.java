@@ -11,7 +11,7 @@ import lombok.Value;
 
 //TODO: Check which constructors that are acctually needed
 //TODO: Check which json annotations that are actually needed
-//TODO: ClientPortEntry, LinePortEntry and AddDropEntry are almost exactly the same. Refactor to remedy code duplication
+//TODO: ClientPortEntry, LinePortEntry and AddDropPortEntry are almost exactly the same. Refactor to remedy code duplication
 
 //@AllArgsConstructor(access = AccessLevel.PUBLIC) //Needed by Orika
 //@NoArgsConstructor(access = AccessLevel.PRIVATE, force = true) //Needed by Hibernate and Jackson

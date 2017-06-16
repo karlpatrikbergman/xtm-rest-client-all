@@ -3,29 +3,211 @@ boards:
   slot2: !<com.infinera.metro.dnam.acceptance.test.node.configuration.board.Roadm1x2G50>
     subrack: 1
     slot: "slot2"
-    addDropPorts: []
+    boardEntryAttributes:
+    - !<com.infinera.metro.dnam.acceptance.test.node.configuration.BoardSetAttributes>
+      configurations:
+        configurationList:
+        - key: "adminStatus"
+          value: "up"
+    addDropPorts:
+    - transmitPort: 1
+      receivePort: 2
+      portEntryAttributes:
+      - !<com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.AddDropPortConfigAttributes>
+        configurations:
+          configurationList:
+          - key: "addChannel"
+            value: "ch932"
+          - key: "addChannel"
+            value: "ch937"
+    - transmitPort: 3
+      receivePort: 4
+      portEntryAttributes:
+      - !<com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.AddDropPortConfigAttributes>
+        configurations:
+          configurationList:
+          - key: "addChannel"
+            value: "ch9185"
+          - key: "addChannel"
+            value: "ch919"
+          - key: "addChannel"
+            value: "ch9195"
+          - key: "addChannel"
+            value: "ch920"
+          - key: "addChannel"
+            value: "ch9205"
+          - key: "addChannel"
+            value: "ch921"
+          - key: "addChannel"
+            value: "ch9215"
+          - key: "addChannel"
+            value: "ch922"
+          - key: "addChannel"
+            value: "ch9225"
+          - key: "addChannel"
+            value: "ch923"
+          - key: "addChannel"
+            value: "ch9235"
+          - key: "addChannel"
+            value: "ch924"
+          - key: "addChannel"
+            value: "ch9245"
+          - key: "addChannel"
+            value: "ch925"
+          - key: "addChannel"
+            value: "ch9255"
+          - key: "addChannel"
+            value: "ch926"
+          - key: "addChannel"
+            value: "ch9265"
+          - key: "addChannel"
+            value: "ch927"
+          - key: "addChannel"
+            value: "ch9275"
+          - key: "addChannel"
+            value: "ch928"
+          - key: "addChannel"
+            value: "ch9285"
+          - key: "addChannel"
+            value: "ch929"
+          - key: "addChannel"
+            value: "ch9295"
+          - key: "addChannel"
+            value: "ch930"
+          - key: "addChannel"
+            value: "ch9305"
+          - key: "addChannel"
+            value: "ch931"
+          - key: "addChannel"
+            value: "ch9315"
+          - key: "addChannel"
+            value: "ch9325"
+          - key: "addChannel"
+            value: "ch9335"
+          - key: "addChannel"
+            value: "ch934"
+          - key: "addChannel"
+            value: "ch9345"
+          - key: "addChannel"
+            value: "ch935"
+          - key: "addChannel"
+            value: "ch9355"
+          - key: "addChannel"
+            value: "ch936"
+          - key: "addChannel"
+            value: "ch9365"
+          - key: "addChannel"
+            value: "ch9375"
+          - key: "addChannel"
+            value: "ch938"
+          - key: "addChannel"
+            value: "ch9385"
+          - key: "addChannel"
+            value: "ch939"
+          - key: "addChannel"
+            value: "ch9395"
+          - key: "addChannel"
+            value: "ch940"
+          - key: "addChannel"
+            value: "ch9405"
+          - key: "addChannel"
+            value: "ch941"
+          - key: "addChannel"
+            value: "ch9415"
+          - key: "addChannel"
+            value: "ch942"
+          - key: "addChannel"
+            value: "ch9425"
+          - key: "addChannel"
+            value: "ch943"
+          - key: "addChannel"
+            value: "ch9435"
+          - key: "addChannel"
+            value: "ch944"
+          - key: "addChannel"
+            value: "ch9445"
+          - key: "addChannel"
+            value: "ch945"
+          - key: "addChannel"
+            value: "ch9455"
+          - key: "addChannel"
+            value: "ch946"
+          - key: "addChannel"
+            value: "ch9465"
+          - key: "addChannel"
+            value: "ch947"
+          - key: "addChannel"
+            value: "ch9475"
+          - key: "addChannel"
+            value: "ch948"
+          - key: "addChannel"
+            value: "ch9485"
+          - key: "addChannel"
+            value: "ch949"
+          - key: "addChannel"
+            value: "ch9495"
+          - key: "addChannel"
+            value: "ch950"
+          - key: "addChannel"
+            value: "ch9505"
+          - key: "addChannel"
+            value: "ch951"
+          - key: "addChannel"
+            value: "ch9515"
+          - key: "addChannel"
+            value: "ch952"
+          - key: "addChannel"
+            value: "ch9525"
+          - key: "addChannel"
+            value: "ch953"
+          - key: "addChannel"
+            value: "ch9535"
+          - key: "addChannel"
+            value: "ch954"
+          - key: "addChannel"
+            value: "ch9545"
+          - key: "addChannel"
+            value: "ch955"
+          - key: "addChannel"
+            value: "ch9555"
+          - key: "addChannel"
+            value: "ch956"
+          - key: "addChannel"
+            value: "ch9565"
+          - key: "addChannel"
+            value: "ch957"
+          - key: "addChannel"
+            value: "ch9575"
+          - key: "addChannel"
+            value: "ch958"
     linePorts: []
   slot3: !<com.infinera.metro.dnam.acceptance.test.node.configuration.board.Oa2x17>
     subrack: 1
     slot: "slot3"
+    boardEntryAttributes:
+    - !<com.infinera.metro.dnam.acceptance.test.node.configuration.BoardSetAttributes>
+      configurations:
+        configurationList:
+        - key: "adminStatus"
+          value: "up"
     ports: []
   slot4: !<com.infinera.metro.dnam.acceptance.test.node.configuration.board.Roadm1x2G50>
     subrack: 1
     slot: "slot4"
+    boardEntryAttributes:
+    - !<com.infinera.metro.dnam.acceptance.test.node.configuration.BoardSetAttributes>
+      configurations:
+        configurationList:
+        - key: "adminStatus"
+          value: "up"
     addDropPorts: []
     linePorts: []
   slot5: !<com.infinera.metro.dnam.acceptance.test.node.configuration.board.Ocm2p>
     subrack: 1
     slot: "slot5"
-  slot6: !<com.infinera.metro.dnam.acceptance.test.node.configuration.board.Tphex10gotn>
-    subrack: 1
-    slot: "slot6"
-  slot7: !<com.infinera.metro.dnam.acceptance.test.node.configuration.board.Tp100gotn>
-    subrack: 1
-    slot: "slot7"
-  slot14: !<com.infinera.metro.dnam.acceptance.test.node.configuration.board.Gbe10Emxp10Gii>
-    subrack: 1
-    slot: "slot14"
-  slot15: !<com.infinera.metro.dnam.acceptance.test.node.configuration.board.Mdu40EvenL>
-    subrack: 1
-    slot: "slot15"
+    boardEntryAttributes:
+    - !<com.infinera.metro.dnam.acceptance.test.node.configuration.BoardSetAttributes>
+      configurations:
+        configurationList:
+        - key: "adminStatus"
+          value: "up"

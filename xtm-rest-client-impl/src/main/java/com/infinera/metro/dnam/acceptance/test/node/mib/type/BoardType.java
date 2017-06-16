@@ -11,8 +11,8 @@ import java.util.stream.Stream;
 public enum BoardType {
     TPD10GBE("tpd10gbe"),
     TPMR2500("tpmr2500"),
-    ROADM1X2G50("roadm1x2G50"),
-    OA2X17DBM("oa2x17dBm"),
+    ROADM1X2G50("roadm1x2g50"),
+    OA2X17DBM("oa2x17dbm"), // //Works for create but not for set.json oa2x17dBm
     OCM2P("ocm2p"),
     TPHEX10GOTN("tphex10gotn"),
     TP100GOTN("Tp100gotn"),

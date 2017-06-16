@@ -1,17 +1,19 @@
-//package com.infinera.metro.dnam.acceptance.test.dockercompose;
+//package com.infinera.metro.dnam.acceptance.test.dockercompose.testcasex;
 //
 //import com.infinera.metro.dnam.acceptance.test.node.IntegrationTest;
 //import com.infinera.metro.dnam.acceptance.test.node.Node;
 //import com.infinera.metro.dnam.acceptance.test.node.NodeAccessData;
 //import com.infinera.metro.dnam.acceptance.test.node.NodeImpl;
-//import com.infinera.metro.dnam.acceptance.test.node.configuration.*;
+//import com.infinera.metro.dnam.acceptance.test.node.configuration.NodeConfiguration;
+//import com.infinera.metro.dnam.acceptance.test.node.configuration.NodeEquipment;
+//import com.infinera.metro.dnam.acceptance.test.node.configuration.ObjectFromFileUtil;
+//import com.infinera.metro.dnam.acceptance.test.node.configuration.ObjectFromFileUtilFactory;
 //import com.infinera.metro.dnam.acceptance.test.node.dockercompose.DockerCompose;
 //import com.infinera.metro.dnam.acceptance.test.node.dockercompose.Service;
-//import com.infinera.metro.dnam.acceptance.test.node.mib.BoardEntry;
 //import com.palantir.docker.compose.DockerComposeRule;
 //import com.palantir.docker.compose.connection.waiting.HealthChecks;
-//import com.spotify.docker.CLIENT.exceptions.DockerCertificateException;
-//import com.spotify.docker.CLIENT.exceptions.DockerException;
+//import com.spotify.docker.client.exceptions.DockerCertificateException;
+//import com.spotify.docker.client.exceptions.DockerException;
 //import lombok.extern.slf4j.Slf4j;
 //import org.junit.ClassRule;
 //import org.junit.Test;

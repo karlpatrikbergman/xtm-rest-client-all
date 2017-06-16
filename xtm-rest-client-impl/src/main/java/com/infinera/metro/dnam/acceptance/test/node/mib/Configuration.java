@@ -7,7 +7,6 @@ import lombok.Value;
 @Builder
 @Value
 public class Configuration {
-//    @NonNull private final OperationType operationType;
     @NonNull private final String key;
     private final String value;
 

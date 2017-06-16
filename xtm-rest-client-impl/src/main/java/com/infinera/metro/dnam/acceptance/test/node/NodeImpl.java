@@ -1,10 +1,7 @@
 package com.infinera.metro.dnam.acceptance.test.node;
 
 import com.infinera.metro.dnam.acceptance.test.node.mib.*;
-import com.infinera.metro.dnam.acceptance.test.node.mib.entry.BoardEntry;
-import com.infinera.metro.dnam.acceptance.test.node.mib.entry.ClientPortEntry;
-import com.infinera.metro.dnam.acceptance.test.node.mib.entry.LinePortEntry;
-import com.infinera.metro.dnam.acceptance.test.node.mib.entry.PeerEntry;
+import com.infinera.metro.dnam.acceptance.test.node.mib.entry.*;
 
 public class NodeImpl implements Node {
     private final NodeRestClient nodeRestClient;
@@ -15,54 +12,86 @@ public class NodeImpl implements Node {
 
     public static NodeImpl create(NodeAccessData nodeAccessData) {
         return new NodeImpl(
-                new NodeRestClient(
-                    new NodeConnection(nodeAccessData, RestTemplateFactory.REST_TEMPLATE_FACTORY.createRestTemplate())
-                )
+            new NodeRestClient(
+                new NodeConnection(nodeAccessData, RestTemplateFactory.REST_TEMPLATE_FACTORY.createRestTemplate())
+            )
         );
     }
 
+    @Override
     public String getIpAddress() {
         return nodeRestClient.getNodeIpAddress();
     }
 
-    /** BoardEntry **/
+    /**
+     * BoardEntry
+     **/
 
+    @Override
     public AnswerObjects createBoard(BoardEntry boardEntry) throws RuntimeException {
         return nodeRestClient.performRestAction(boardEntry, CommandType.CREATE_JSON);
     }
 
+    @Override
     public AnswerObjects getBoard(BoardEntry boardEntry) throws RuntimeException {
         return nodeRestClient.performRestAction(boardEntry, CommandType.GET_JSON);
     }
 
+
+    @Override
     public AnswerObjects deleteBoard(BoardEntry boardEntry) throws RuntimeException {
         return nodeRestClient.performRestAction(boardEntry, CommandType.DELETE_JSON);
-   }
-
-    /** LinePortEntry **/
-
-    public AnswerObjects setLinePortAttributes(LinePortEntry linePortEntry, ConfigurationList configurationList) throws RuntimeException {
-        return nodeRestClient.performRestAction(linePortEntry, CommandType.SET_JSON, configurationList);
     }
 
-    /** ClientPortEntry **/
-
-    public AnswerObjects setClientPortAttributes(ClientPortEntry clientPortEntry, ConfigurationList configurationList)  throws RuntimeException {
-        return nodeRestClient.performRestAction(clientPortEntry, CommandType.SET_JSON, configurationList);
+    @Override
+    public AnswerObjects setBoardAttributes(BoardEntry boardEntry, Configurations configurations) {
+        return nodeRestClient.performRestAction(boardEntry, CommandType.SET_JSON, configurations);
     }
 
-    public AnswerObjects configureClientPortAttributes(ClientPortEntry clientPortEntry, ConfigurationList configurationList) throws RuntimeException {
-        return nodeRestClient.performRestAction(clientPortEntry, CommandType.CONFIGURE_JSON, configurationList);
+
+    /**
+     * LinePortEntry
+     **/
+
+    @Override
+    public AnswerObjects setLinePortAttributes(LinePortEntry linePortEntry, Configurations configurations) throws RuntimeException {
+        return nodeRestClient.performRestAction(linePortEntry, CommandType.SET_JSON, configurations);
     }
 
-    /** PeerEntry **/
+    /**
+     * ClientPortEntry
+     **/
 
+    @Override
+    public AnswerObjects setClientPortAttributes(ClientPortEntry clientPortEntry, Configurations configurations) throws RuntimeException {
+        return nodeRestClient.performRestAction(clientPortEntry, CommandType.SET_JSON, configurations);
+    }
+
+    @Override
+    public AnswerObjects configureClientPortAttributes(ClientPortEntry clientPortEntry, Configurations configurations) throws RuntimeException {
+        return nodeRestClient.performRestAction(clientPortEntry, CommandType.CONFIGURE_JSON, configurations);
+    }
+
+    /**
+     * AddDropPortEntry
+     **/
+
+    @Override
+    public AnswerObjects configureAddDropPortAttributes(AddDropPortEntry addDropPortEntry, Configurations configurations) throws RuntimeException {
+        return nodeRestClient.performRestAction(addDropPortEntry, CommandType.CONFIGURE_JSON, configurations);
+    }
+
+    /**
+     * PeerEntry
+     **/
+
+    @Override
     public AnswerObjects createLocalPeer(PeerEntry peerEntry) throws RuntimeException {
         return nodeRestClient.performRestAction(peerEntry, CommandType.CREATE_JSON);
     }
 
-    public AnswerObjects setLocalPeerConfiguration(PeerEntry peerEntry, ConfigurationList configurationList) throws RuntimeException {
-        return nodeRestClient.performRestAction(peerEntry, CommandType.SET_JSON, configurationList);
+    @Override
+    public AnswerObjects setLocalPeerConfiguration(PeerEntry peerEntry, Configurations configurations) throws RuntimeException {
+        return nodeRestClient.performRestAction(peerEntry, CommandType.SET_JSON, configurations);
     }
-
 }

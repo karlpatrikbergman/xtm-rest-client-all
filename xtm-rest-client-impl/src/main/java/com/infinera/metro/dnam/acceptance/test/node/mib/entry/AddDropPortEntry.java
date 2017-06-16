@@ -8,9 +8,9 @@ import lombok.Builder;
 import lombok.NonNull;
 import lombok.Value;
 
-@Value //Needs jackson > 2.8
+@Value
 @Builder
-public class AddDropEntry implements MibEntry {
+public class AddDropPortEntry implements MibEntry {
     @NonNull private final ModuleType moduleType;
     @NonNull private final GroupOrTableType groupOrTableType;
     @NonNull private final ClientPortType clientPortType;

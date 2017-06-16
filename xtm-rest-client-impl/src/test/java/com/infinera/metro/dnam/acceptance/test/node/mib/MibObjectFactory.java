@@ -14,9 +14,9 @@ public enum MibObjectFactory {
     private static final String DEFAULT_NODE_A_IP_ADDRESS = "172.17.0.2";
     private static final String DEFAULT_NODE_Z_IP_ADDRESS = "172.17.0.3";
 
-    public static ConfigurationList buildConfigurePeerParameterList(PeerEntry peerEntry) {
-        return ConfigurationList.builder()
-                .parameterList(Arrays.asList(
+    public static Configurations buildConfigurePeerParameterList(PeerEntry peerEntry) {
+        return Configurations.builder()
+                .configurationList(Arrays.asList(
                         Configuration.builder()
                                 .key("topoPeerLocalLabel")
                                 .value(peerEntry.getPeerLocalLabel())

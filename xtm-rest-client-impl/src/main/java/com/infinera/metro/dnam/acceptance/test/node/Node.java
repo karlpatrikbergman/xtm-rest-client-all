@@ -1,10 +1,7 @@
 package com.infinera.metro.dnam.acceptance.test.node;
 
 import com.infinera.metro.dnam.acceptance.test.node.mib.*;
-import com.infinera.metro.dnam.acceptance.test.node.mib.entry.BoardEntry;
-import com.infinera.metro.dnam.acceptance.test.node.mib.entry.ClientPortEntry;
-import com.infinera.metro.dnam.acceptance.test.node.mib.entry.LinePortEntry;
-import com.infinera.metro.dnam.acceptance.test.node.mib.entry.PeerEntry;
+import com.infinera.metro.dnam.acceptance.test.node.mib.entry.*;
 
 /**
  * TODO: Change method signature for configuration to match configure.json and set.json
@@ -25,12 +22,15 @@ public interface Node {
     AnswerObjects createBoard(BoardEntry boardEntry) throws RuntimeException;
     AnswerObjects getBoard(BoardEntry boardEntry) throws RuntimeException;
     AnswerObjects deleteBoard(BoardEntry boardEntry) throws RuntimeException;
+    AnswerObjects setBoardAttributes(BoardEntry boardEntry, Configurations configurations);
 
-    AnswerObjects setLinePortAttributes(LinePortEntry linePortEntry, ConfigurationList configurationList) throws RuntimeException;
+    AnswerObjects setLinePortAttributes(LinePortEntry linePortEntry, Configurations configurations) throws RuntimeException;
 
-    AnswerObjects setClientPortAttributes(ClientPortEntry clientPortEntry, ConfigurationList configurationList) throws RuntimeException;
-    AnswerObjects configureClientPortAttributes(ClientPortEntry clientPortEntry, ConfigurationList configurationList) throws RuntimeException;
+    AnswerObjects setClientPortAttributes(ClientPortEntry clientPortEntry, Configurations configurations) throws RuntimeException;
+    AnswerObjects configureClientPortAttributes(ClientPortEntry clientPortEntry, Configurations configurations) throws RuntimeException;
+
+    AnswerObjects configureAddDropPortAttributes(AddDropPortEntry addDropPortEntry, Configurations configurations) throws RuntimeException;
 
     AnswerObjects createLocalPeer(PeerEntry peerEntry) throws RuntimeException;
-    AnswerObjects setLocalPeerConfiguration(PeerEntry peerEntry, ConfigurationList configurationList) throws RuntimeException;
+    AnswerObjects setLocalPeerConfiguration(PeerEntry peerEntry, Configurations configurations) throws RuntimeException;
 }

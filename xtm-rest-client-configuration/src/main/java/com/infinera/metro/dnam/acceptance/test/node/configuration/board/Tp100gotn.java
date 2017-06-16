@@ -15,7 +15,7 @@ public class Tp100gotn extends AbstractBoard implements Board {
     @Builder
     @java.beans.ConstructorProperties({"subrack", "slot"})
     private Tp100gotn(Integer subrack, Slot slot) {
-        super(BoardType.TP100GOTN, subrack, slot);
+        super(BoardType.TP100GOTN, subrack, slot, null);
     }
 
     @Override

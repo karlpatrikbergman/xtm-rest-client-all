@@ -15,7 +15,7 @@ public class Tphex10gotn  extends AbstractBoard implements Board {
     @Builder
     @java.beans.ConstructorProperties({"subrack", "slot"})
     private Tphex10gotn(Integer subrack, Slot slot) {
-        super(BoardType.TPHEX10GOTN, subrack, slot);
+        super(BoardType.TPHEX10GOTN, subrack, slot, null);
     }
 
     @Override

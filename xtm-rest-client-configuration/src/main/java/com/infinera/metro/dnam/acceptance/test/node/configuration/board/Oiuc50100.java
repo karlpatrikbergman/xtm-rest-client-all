@@ -15,7 +15,7 @@ public class Oiuc50100 extends AbstractBoard implements Board {
     @Builder
     @java.beans.ConstructorProperties({"subrack", "slot"})
     private Oiuc50100(Integer subrack, Slot slot) {
-        super(BoardType.OIUC50100, subrack, slot);
+        super(BoardType.OIUC50100, subrack, slot, null);
     }
 
     @Override

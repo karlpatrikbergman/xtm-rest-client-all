@@ -1,33 +1,27 @@
 package com.infinera.metro.dnam.acceptance.test.node.configuration.board;
 
 import com.infinera.metro.dnam.acceptance.test.node.Node;
-import com.infinera.metro.dnam.acceptance.test.node.mib.entry.BoardEntry;
+import com.infinera.metro.dnam.acceptance.test.node.configuration.Slot;
 import com.infinera.metro.dnam.acceptance.test.node.mib.type.BoardType;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
 
+@EqualsAndHashCode(callSuper = true)
 @Slf4j
 @Value
-@Builder
-public class Tpmr2500 implements Board {
-    private final BoardType boardType = BoardType.TPMR2500;
-    private String client;
-    private String groupOrTable;
-    private String module;
-    private String tpmr2500SpecificField;
+public class Tpmr2500 extends AbstractBoard implements Board {
 
-    public void tpmr2500SpecificMethod() {
-        log.info("Executing tpmr2500 specific method");
-    }
 
-    @Override
-    public BoardEntry getBoardEntry() {
-        return null;
+    @Builder
+    @java.beans.ConstructorProperties({"subrack", "slot"})
+    private Tpmr2500(Integer subrack, Slot slot) {
+        super(BoardType.TPMR2500, subrack, slot, null);
     }
 
     @Override
     public void applyTo(Node node) {
-
+        super.createBoard(node);
     }
 }

@@ -2,10 +2,10 @@ package com.infinera.metro.dnam.acceptance.test.node.configuration.board;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.infinera.metro.dnam.acceptance.test.node.Node;
+import com.infinera.metro.dnam.acceptance.test.node.configuration.MibEntryAttributes;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.Port;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.Slot;
-import com.infinera.metro.dnam.acceptance.test.node.mib.entry.AddDropEntry;
-import com.infinera.metro.dnam.acceptance.test.node.mib.entry.BoardEntry;
+import com.infinera.metro.dnam.acceptance.test.node.mib.entry.AddDropPortEntry;
 import com.infinera.metro.dnam.acceptance.test.node.mib.entry.LinePortEntry;
 import com.infinera.metro.dnam.acceptance.test.node.mib.type.*;
 import lombok.*;
@@ -13,59 +13,51 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 
-//TODO: Can we refactor board classes to take advantage of code reuse and maintain readability?
-
+@EqualsAndHashCode(callSuper = true)
 @Slf4j
 @Value
-public class Roadm1x2G50 implements Board  {
-    @Getter(AccessLevel.NONE) private final ModuleType moduleType = ModuleType.EQ;
-    @Getter(AccessLevel.NONE) private final GroupOrTableType groupOrTableType = GroupOrTableType.BOARD;
-    @JsonIgnore private final BoardType boardType = BoardType.ROADM1X2G50;
-    @JsonIgnore @NonNull private final BoardEntry boardEntry;
-    @NonNull private final Integer subrack; //These values could be taken from (not yet existing) objects "Subrack" and "Slot"?
-    @NonNull private final Slot slot;
-    @NonNull private final List<Port> addDropPorts;
-    @NonNull private final List<Port> linePorts;
-    @JsonIgnore @NonNull private final AddDropEntry.AddDropEntryBuilder addDropEntryBuilder;
+public class Roadm1x2G50 extends AbstractBoard implements Board  {
+    private final List<Port> addDropPorts;
+    private final List<Port> linePorts;
+    @JsonIgnore private final AddDropPortEntry.AddDropPortEntryBuilder addDropPortEntryBuilder;
     @JsonIgnore private final LinePortEntry.LinePortEntryBuilder linePortEntryBuilder;
 
     @Builder
-    @java.beans.ConstructorProperties({"subrack", "slot", "addDropPorts", "linePorts"})
-    private Roadm1x2G50(Integer subrack, Slot slot, List<Port> addDropPorts, List<Port> linePorts) {
-        this.subrack = subrack;
-        this.slot = slot;
+    @java.beans.ConstructorProperties({"subrack", "slot", "boardEntryAttributes", "addDropPorts", "linePorts"})
+    private Roadm1x2G50(Integer subrack, Slot slot, @Singular List<MibEntryAttributes> boardEntryAttributes, @Singular List<Port> addDropPorts, @Singular List<Port> linePorts) {
+        super(BoardType.ROADM1X2G50, subrack, slot, boardEntryAttributes);
         this.addDropPorts = addDropPorts;
         this.linePorts = linePorts;
-        this.boardEntry = getBoardEntry();
-        this.addDropEntryBuilder = getAddDropEntryBuilder();
+        this.addDropPortEntryBuilder = getAddDropPortEntryBuilder();
         this.linePortEntryBuilder = getLinePortEntryBuilder();
     }
 
     @Override
     public void applyTo(Node node) {
-        createBoard(node);
+        super.createBoard(node);
+        super.configureBoardAttributes(node);
+        configureAddDropPorts(node);
     }
 
-    private void createBoard(Node node) {
-        node.createBoard(getBoardEntry());
+    private void configureAddDropPorts(Node node) {
+        addDropPorts.forEach(addDropPort -> configureAddDropPort(node, addDropPort));
     }
 
-    @Override
-    public BoardEntry getBoardEntry() {
-        return BoardEntry.builder()
-                .subrack(subrack)
-                .slot(slot.getValue())
-                .boardType(boardType)
-                .build();
+    private void configureAddDropPort(Node node, Port addDropPort) {
+        final AddDropPortEntry addDropPortEntry = addDropPortEntryBuilder
+            .transmitPort(addDropPort.getTransmitPort())
+            .receivePort(addDropPort.getReceivePort())
+            .build();
+        addDropPort.getPortEntryAttributes().forEach(portAttribute -> portAttribute.applyTo(node, addDropPortEntry));
     }
 
-    public AddDropEntry.AddDropEntryBuilder getAddDropEntryBuilder() {
-        return AddDropEntry.builder()
+    public AddDropPortEntry.AddDropPortEntryBuilder getAddDropPortEntryBuilder() {
+        return AddDropPortEntry.builder()
                 .moduleType(ModuleType.ROADM)
                 .groupOrTableType(GroupOrTableType.ADD_DROP_IF)
                 .clientPortType(ClientPortType.ADD_DROP)
-                .subrack(this.subrack)
-                .slot(this.slot.getValue());
+                .subrack(getSubrack())
+                .slot(getSlot().getValue());
     }
 
     public LinePortEntry.LinePortEntryBuilder getLinePortEntryBuilder() {
@@ -73,7 +65,7 @@ public class Roadm1x2G50 implements Board  {
                 .moduleType(ModuleType.WDM)
                 .groupOrTableType(GroupOrTableType.IF)
                 .linePortType(LinePortType.WDM)
-                .subrack(this.subrack)
-                .slot(this.slot.getValue());
+                .subrack(getSubrack())
+                .slot(getSlot().getValue());
     }
 }

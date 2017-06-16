@@ -9,9 +9,9 @@ import java.util.Collections;
 import static org.junit.Assert.assertEquals;
 
 @Slf4j
-public class ConfigurationListTest {
-    private final ConfigurationList configurationList = ConfigurationList.builder()
-            .parameterList(Arrays.asList(
+public class ConfigurationsTest {
+    private final Configurations configurations = Configurations.builder()
+            .configurationList(Arrays.asList(
                 Configuration.builder()
                         .key("topoPeerLocalLabel")
                         .value("1:2:3")
@@ -43,15 +43,15 @@ public class ConfigurationListTest {
     @Test
     public void parameterListToString() {
         final String expectedParameterString = "topoPeerLocalLabel=1:2:3&topoPeerRemoteIpAddress=172.17.0.2&topoPeerRemoteSubrack=1&topoPeerRemoteSlot=2&topoPeerRemotePort=4&topoPeerRemoteLabel=1:2:0:4";
-        final String actualParameterString = configurationList.toString();
+        final String actualParameterString = configurations.toString();
         assertEquals(expectedParameterString, actualParameterString);
-        log.info(configurationList.toString());
+        log.info(configurations.toString());
     }
 
     @Test
     public void emtpyParameterListToString() {
-        ConfigurationList configurationList = ConfigurationList.of(Collections.emptyList());
-        log.info(configurationList.toString());
+        Configurations configurations = Configurations.of(Collections.emptyList());
+        log.info(configurations.toString());
     }
 
 }

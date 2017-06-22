@@ -37,6 +37,7 @@ public class KinellSetupTest {
 
         liljeholmenNodeAccessData = objectFromFileUtil.getObject(NODE_ACCESS_DATA_PATH, NodeAccessData.class)
                 .copyObjectAndChangeIpAddress(liljeholmenIpAddress);
+//                .copyObjectAndChangeIpAddress("172.16.15.230");
     }
 
     @Test

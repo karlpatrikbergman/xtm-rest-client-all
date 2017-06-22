@@ -122,7 +122,7 @@ public class KinellEquipmentSerializationTest {
             .build();
 
         //To apply directly
-        //nodeEquipment.applyTo(node);
+        nodeEquipment.applyTo(node);
 
         //Get yaml string from node equipment object
         final ObjectMapper mapper = ObjectFromFileUtilJackson.INSTANCE.getMapper();

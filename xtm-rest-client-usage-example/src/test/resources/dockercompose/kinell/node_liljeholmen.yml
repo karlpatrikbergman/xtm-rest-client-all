@@ -211,3 +211,7 @@ boards:
         configurationList:
         - key: "adminStatus"
           value: "up"
+  slot15: !<com.infinera.metro.dnam.acceptance.test.node.configuration.board.Mdu40EvenL>
+    subrack: 1
+    slot: "slot15"
+    boardEntryAttributes: []

@@ -8,7 +8,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public enum GroupOrTableType {
+public enum GroupOrTableType implements MibType {
     BOARD("board"),
     IF("if"),
     PEER("peer"),

@@ -159,7 +159,7 @@ public class Workbench {
 
     private Configurations buildConfigurePeerParameterList(PeerEntry peerEntry) {
         return Configurations.builder()
-                .configurationList(Arrays.asList(
+                .configurations(Arrays.asList(
                         Configuration.builder()
                                 .key("topoPeerLocalLabel")
                                 .value(peerEntry.getPeerLocalLabel())

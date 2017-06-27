@@ -28,19 +28,19 @@
 //        final String ipAddressNodeA = xtmDockerRunner.runDockerContainer("latest", "nodeA");
 //
 //
-//        nodeAccessDataNodeA = objectFromFileUtil.getObject("includenodestart/test-case-x-node-config/node_a_access_data.yaml", NodeAccessData.class)
+//        nodeAccessDataNodeA = objectFromFileUtil.getObject("includenodestart/test-case-x-node-config-docker-compose-rule/node_a_access_data.yaml", NodeAccessData.class)
 //                .copyObjectAndChangeIpAddress(ipAddressNodeA);
-//        nodeEquipmentNodeA = objectFromFileUtil.getObject("includenodestart/test-case-x-node-config/node_a_equipment.yaml_old", NodeEquipment.class);
+//        nodeEquipmentNodeA = objectFromFileUtil.getObject("includenodestart/test-case-x-node-config-docker-compose-rule/node_a_equipment.yaml_old", NodeEquipment.class);
 //
 //        final String ipAddressNodeZ = xtmDockerRunner.runDockerContainer("latest", "nodeZ");
-//        nodeAccessDataNodeZ = objectFromFileUtil.getObject("includenodestart/test-case-x-node-config/node_z_access_data.yaml", NodeAccessData.class)
+//        nodeAccessDataNodeZ = objectFromFileUtil.getObject("includenodestart/test-case-x-node-config-docker-compose-rule/node_z_access_data.yaml", NodeAccessData.class)
 //                .copyObjectAndChangeIpAddress(ipAddressNodeZ);
-//        nodeEquipmentNodeZ = objectFromFileUtil.getObject("includenodestart/test-case-x-node-config/node_z_equipment.yaml", NodeEquipment.class);
+//        nodeEquipmentNodeZ = objectFromFileUtil.getObject("includenodestart/test-case-x-node-config-docker-compose-rule/node_z_equipment.yaml", NodeEquipment.class);
 //
 //        final String ipAddressNodeX = xtmDockerRunner.runDockerContainer("latest", "nodeX");
-//        nodeAccessDataNodeX = objectFromFileUtil.getObject("includenodestart/test-case-x-node-config/node_x_access_data.yaml", NodeAccessData.class)
+//        nodeAccessDataNodeX = objectFromFileUtil.getObject("includenodestart/test-case-x-node-config-docker-compose-rule/node_x_access_data.yaml", NodeAccessData.class)
 //                .copyObjectAndChangeIpAddress(ipAddressNodeX);
-//        nodeEquipmentNodeX = objectFromFileUtil.getObject("includenodestart/test-case-x-node-config/node_x_equipment.yaml", NodeEquipment.class);
+//        nodeEquipmentNodeX = objectFromFileUtil.getObject("includenodestart/test-case-x-node-config-docker-compose-rule/node_x_equipment.yaml", NodeEquipment.class);
 //    }
 //
 //    //TODO: Can we make configuration a transaction (=atomic)?

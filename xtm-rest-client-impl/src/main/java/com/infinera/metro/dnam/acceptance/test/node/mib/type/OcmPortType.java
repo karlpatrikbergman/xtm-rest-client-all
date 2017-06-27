@@ -8,12 +8,12 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public enum OaPortType implements MibType {
-    OA("oa");
+public enum OcmPortType implements MibType {
+    OCM("ocm");
 
     private final String value;
 
-    OaPortType(String value) {
+    OcmPortType(String value) {
         this.value = value;
     }
 
@@ -23,13 +23,13 @@ public enum OaPortType implements MibType {
     }
 
     @JsonCreator
-    public static OaPortType fromString(String string) {
+    public static OcmPortType fromString(String string) {
         return Optional
             .ofNullable(PORT_TYPE_MAP.get(string))
             .orElseThrow(() -> new IllegalArgumentException(string));
     }
 
-    private static final Map<String, OaPortType> PORT_TYPE_MAP = Stream
-        .of(OaPortType.values())
+    private static final Map<String, OcmPortType> PORT_TYPE_MAP = Stream
+        .of(OcmPortType.values())
         .collect(Collectors.toMap(s -> s.value, Function.identity()));
 }

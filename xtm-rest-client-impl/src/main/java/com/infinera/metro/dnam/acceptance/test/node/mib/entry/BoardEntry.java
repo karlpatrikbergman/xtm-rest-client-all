@@ -1,30 +1,23 @@
 package com.infinera.metro.dnam.acceptance.test.node.mib.entry;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.infinera.metro.dnam.acceptance.test.node.mib.type.BoardType;
 import com.infinera.metro.dnam.acceptance.test.node.mib.type.GroupOrTableType;
 import com.infinera.metro.dnam.acceptance.test.node.mib.type.ModuleType;
-import com.infinera.metro.dnam.acceptance.test.node.mib.util.MibPathUtil;
 import lombok.Builder;
-import lombok.NonNull;
+import lombok.EqualsAndHashCode;
 import lombok.Value;
 
-@Value //Needs jackson > 2.8
-@Builder
-public class BoardEntry implements MibEntry {
-    private final ModuleType moduleType = ModuleType.EQ; //The same for all boards?
-    private final GroupOrTableType groupOrTableType = GroupOrTableType.BOARD; //The same for all boards?
-    @NonNull private final BoardType boardType;
-    @NonNull private final Integer subrack;
-    @NonNull private final Integer slot;
+@EqualsAndHashCode(callSuper = true)
+@Value
+public class BoardEntry extends AbstractMibEntry implements MibEntry {
 
-    @Override
-    public String getMibEntryString() {
-        assert boardType != null;
-        return MibPathUtil.MIB_PATH_UTIL.getMibEntryString (boardType.getValue(), getSubrack(), getSlot());
-    }
-
-    @Override
-    public String getMibEntryPath() {
-        return MibPathUtil.MIB_PATH_UTIL.getMibEntryPath(moduleType, groupOrTableType, this);
+    @JsonCreator
+    @Builder
+    private BoardEntry(@JsonProperty("boardType") BoardType boardType,
+                          @JsonProperty("subrack") Integer subrack,
+                          @JsonProperty("slot") Integer slot) {
+        super(ModuleType.EQ, GroupOrTableType.BOARD, boardType, subrack, slot);
     }
 }

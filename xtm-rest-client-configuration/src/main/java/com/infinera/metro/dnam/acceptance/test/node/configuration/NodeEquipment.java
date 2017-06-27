@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Value;
 
 import java.util.Map;
+//TODO: Add lombok @Singular
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.MINIMAL_CLASS, include = JsonTypeInfo.As.PROPERTY, property = "@class")
 @Value

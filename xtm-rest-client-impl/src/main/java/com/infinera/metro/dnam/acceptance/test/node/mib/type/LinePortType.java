@@ -8,7 +8,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public enum LinePortType {
+public enum LinePortType implements MibType {
     WDM("wdm");
 
     private final String value;

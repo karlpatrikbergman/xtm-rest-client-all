@@ -8,7 +8,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public enum BoardType {
+public enum BoardType implements MibType {
     TPD10GBE("tpd10gbe"),
     TPMR2500("tpmr2500"),
     ROADM1X2G50("roadm1x2g50"),

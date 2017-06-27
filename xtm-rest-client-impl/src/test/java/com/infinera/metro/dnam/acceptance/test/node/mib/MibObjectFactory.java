@@ -16,7 +16,7 @@ public enum MibObjectFactory {
 
     public static Configurations buildConfigurePeerParameterList(PeerEntry peerEntry) {
         return Configurations.builder()
-                .configurationList(Arrays.asList(
+                .configurations(Arrays.asList(
                         Configuration.builder()
                                 .key("topoPeerLocalLabel")
                                 .value(peerEntry.getPeerLocalLabel())

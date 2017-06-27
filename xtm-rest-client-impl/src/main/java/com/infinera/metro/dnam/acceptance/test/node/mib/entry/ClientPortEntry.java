@@ -1,40 +1,29 @@
 package com.infinera.metro.dnam.acceptance.test.node.mib.entry;
 
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.infinera.metro.dnam.acceptance.test.node.mib.type.ClientPortType;
 import com.infinera.metro.dnam.acceptance.test.node.mib.type.GroupOrTableType;
 import com.infinera.metro.dnam.acceptance.test.node.mib.type.ModuleType;
-import com.infinera.metro.dnam.acceptance.test.node.mib.util.MibPathUtil;
 import lombok.Builder;
-import lombok.NonNull;
+import lombok.EqualsAndHashCode;
 import lombok.Value;
 
-//TODO: Check which constructors that are acctually needed
-//TODO: Check which json annotations that are actually needed
-//TODO: ClientPortEntry, LinePortEntry and AddDropPortEntry are almost exactly the same. Refactor to remedy code duplication
+@EqualsAndHashCode(callSuper = true)
+@Value
+public class ClientPortEntry extends AbstractPortEntry implements MibEntry {
 
-//@AllArgsConstructor(access = AccessLevel.PUBLIC) //Needed by Orika
-//@NoArgsConstructor(access = AccessLevel.PRIVATE, force = true) //Needed by Hibernate and Jackson
-//@JsonIgnoreProperties(ignoreUnknown = true)
-//@JsonInclude(JsonInclude.Include.NON_NULL)
-@Value //Needs jackson > 2.8
-@Builder
-public class ClientPortEntry implements MibEntry {
-    @NonNull private final ModuleType moduleType;
-    @NonNull private final GroupOrTableType groupOrTableType;
-    @NonNull private final ClientPortType clientPortType;
-    @NonNull private final Integer subrack;
-    @NonNull private final Integer slot;
-    @NonNull private final Integer transmitPort;
-    @NonNull private final Integer receivePort;
-
-    public String getMibEntryString() {
-        assert clientPortType != null;
-        return MibPathUtil.MIB_PATH_UTIL.getMibEntryString (clientPortType.getValue(), getSubrack() ,getSlot(), this.getTransmitPort(), this.getReceivePort());
-    }
-
-    public String getMibEntryPath() {
-        return MibPathUtil.MIB_PATH_UTIL.getMibEntryPath(moduleType, groupOrTableType, this);
+    @JsonCreator
+    @Builder
+    private ClientPortEntry(@JsonProperty("moduleType") ModuleType moduleType,
+                          @JsonProperty("groupOrTableType") GroupOrTableType groupOrTableType,
+                          @JsonProperty("clientPortType") ClientPortType clientPortType,
+                          @JsonProperty("subrack") Integer subrack,
+                          @JsonProperty("slot") Integer slot,
+                          @JsonProperty("transmitPort") Integer transmitPort,
+                          @JsonProperty("receivePort") Integer receivePort) {
+        super(moduleType, groupOrTableType, clientPortType, subrack, slot, transmitPort, receivePort);
     }
 }
 

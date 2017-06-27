@@ -1,6 +1,8 @@
 package com.infinera.metro.dnam.acceptance.test.node.mib;
 
 import lombok.Builder;
+import lombok.NonNull;
+import lombok.Singular;
 import lombok.Value;
 
 import java.util.ArrayList;
@@ -17,30 +19,32 @@ import java.util.stream.Stream;
 @Value
 @Builder
 public class Configurations {
-    private final List<Configuration> configurationList;
+    @NonNull
+    @Singular
+    private final List<Configuration> configurations;
 
     @Override
     public String toString() {
-        return configurationList.stream()
+        return configurations.stream()
                 .map(Configuration::asParameters)
                 .collect(Collectors.joining("&"));
     }
 
     public static Configurations of(Configuration configuration) {
         return Configurations.builder()
-                .configurationList(Arrays.asList(configuration))
+                .configuration(configuration)
                 .build();
     }
 
     public static Configurations of(List<Configuration> configurationList) {
         return Configurations.builder()
-                .configurationList(configurationList)
+                .configurations(configurationList)
                 .build();
     }
 
     public static Configurations of(Configuration... configuration) {
         return Configurations.builder()
-            .configurationList(Arrays.asList(configuration))
+            .configurations(Arrays.asList(configuration))
             .build();
     }
 

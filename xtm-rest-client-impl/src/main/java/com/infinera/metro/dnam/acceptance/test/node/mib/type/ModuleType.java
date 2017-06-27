@@ -8,7 +8,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public enum ModuleType {
+public enum ModuleType implements MibType {
     EQ("eq"),
     WDM("wdm"),
     CLIENT("client"),

@@ -2,7 +2,7 @@ version: "2"
 
 services:
   nodeA:
-    image: se-artif-prd.infinera.com/tm3k/trunk-hostenv:28.1
+    image: se-artif-prd.infinera.com/tm3k/trunk-hostenv:29.0
     container_name: node1
     privileged: true
     networks:
@@ -12,7 +12,7 @@ services:
       - 80
     hostname: nodeA
   nodeZ:
-      image: se-artif-prd.infinera.com/tm3k/trunk-hostenv:28.1
+      image: se-artif-prd.infinera.com/tm3k/trunk-hostenv:29.0
       container_name: node2
       privileged: true
       networks:

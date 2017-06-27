@@ -106,7 +106,7 @@ public class NodeImplTest {
                 .build();
 
         Configurations configurations = Configurations.builder()
-                .configurationList(Arrays.asList(
+                .configurations(Arrays.asList(
                         Configuration.builder()
                                 .key("topoPeerLocalLabel")
                                 .value(peerEntry.getPeerLocalLabel())

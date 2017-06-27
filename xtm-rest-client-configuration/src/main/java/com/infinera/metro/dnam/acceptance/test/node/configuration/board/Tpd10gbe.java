@@ -29,7 +29,6 @@ public class Tpd10gbe extends AbstractBoard implements Board {
     @java.beans.ConstructorProperties({"subrack", "slot", "clientPorts", "linePorts", "boardEntryAttributes"})
     private Tpd10gbe(Integer subrack, Slot slot, List<Port> clientPorts, List<Port> linePorts, List<MibEntryAttributes> boardEntryAttributes) {
         super(BoardType.TPD10GBE, subrack, slot, boardEntryAttributes);
-
         this.clientPorts = clientPorts;
         this.linePorts = linePorts;
         this.clientPortEntryBuilder = getClientPortEntryBuilder();

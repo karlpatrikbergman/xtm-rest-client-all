@@ -1,21 +1,24 @@
 package com.infinera.metro.dnam.acceptance.test.node.mib.entry;
 
 import com.infinera.metro.dnam.acceptance.test.node.mib.type.GroupOrTableType;
+import com.infinera.metro.dnam.acceptance.test.node.mib.type.MibType;
 import com.infinera.metro.dnam.acceptance.test.node.mib.type.ModuleType;
-import com.infinera.metro.dnam.acceptance.test.node.mib.type.PortType;
-import lombok.AllArgsConstructor;
+import com.infinera.metro.dnam.acceptance.test.node.mib.util.MibPathUtil;
 import lombok.Getter;
 import lombok.NonNull;
 
-//TODO: If this works out with OaPortEntry, use on other port entry types as well
-
-@AllArgsConstructor
-class AbstractPortEntry {
-    @Getter @NonNull private final ModuleType moduleType;
-    @Getter @NonNull private final GroupOrTableType groupOrTableType;
-    @Getter @NonNull private final PortType portType;
-    @Getter @NonNull private final Integer subrack;
-    @Getter @NonNull private final Integer slot;
+class AbstractPortEntry extends AbstractMibEntry implements MibEntry {
     @Getter @NonNull private final Integer transmitPort;
     @Getter @NonNull private final Integer receivePort;
+
+    AbstractPortEntry(ModuleType moduleType, GroupOrTableType groupOrTableType, MibType mibType, Integer subrack, Integer slot, Integer transmitPort, Integer receivePort) {
+        super(moduleType, groupOrTableType, mibType, subrack, slot);
+        this.transmitPort = transmitPort;
+        this.receivePort = receivePort;
+    }
+
+    @Override
+    public String getMibEntryString() {
+        return MibPathUtil.MIB_PATH_UTIL.getMibEntryString (getMibType().getValue(), getSubrack() ,getSlot(), this.getTransmitPort(), this.getReceivePort());
+    }
 }

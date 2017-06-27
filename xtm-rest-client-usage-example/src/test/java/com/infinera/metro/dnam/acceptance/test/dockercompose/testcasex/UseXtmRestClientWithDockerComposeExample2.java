@@ -28,13 +28,13 @@ public class UseXtmRestClientWithDockerComposeExample2 {
     private final ObjectFromFileUtil objectFromFileUtil = ObjectFromFileUtilFactory.getObjectFromFileUtil();
 
     public UseXtmRestClientWithDockerComposeExample2() throws IOException {
-        final DockerCompose dockerCompose = objectFromFileUtil.getObject("dockercompose/test-case-x-node-config/docker-compose.yml", DockerCompose.class);
+        final DockerCompose dockerCompose = objectFromFileUtil.getObject("dockercompose/test-case-x-node-config-docker-compose-rule/docker-compose.yml", DockerCompose.class);
         final Service serviceNodeA = dockerCompose.getServices().get("nodeA");
         final String dockerComposeIpAddressNodeA = serviceNodeA.getNetworks().get("xtm_rest_client_network").get("ipv4_address");
 
-        nodeAccessDataNodeA = objectFromFileUtil.getObject("dockercompose/test-case-x-node-config/node_a_access_data.yaml", NodeAccessData.class)
+        nodeAccessDataNodeA = objectFromFileUtil.getObject("dockercompose/test-case-x-node-config-docker-compose-rule/node_a_access_data.yaml", NodeAccessData.class)
                 .copyObjectAndChangeIpAddress(dockerComposeIpAddressNodeA);
-        nodeEquipmentNodeA = objectFromFileUtil.getObject("dockercompose/test-case-x-node-config/node_a_equipment.yaml", NodeEquipment.class);
+        nodeEquipmentNodeA = objectFromFileUtil.getObject("dockercompose/test-case-x-node-config-docker-compose-rule/node_a_equipment.yaml", NodeEquipment.class);
     }
 
     //TODO: Can we make configuration a transaction (=atomic)?

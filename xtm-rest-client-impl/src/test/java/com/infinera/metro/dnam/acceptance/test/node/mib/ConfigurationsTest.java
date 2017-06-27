@@ -11,7 +11,7 @@ import static org.junit.Assert.assertEquals;
 @Slf4j
 public class ConfigurationsTest {
     private final Configurations configurations = Configurations.builder()
-            .configurationList(Arrays.asList(
+            .configurations(Arrays.asList(
                 Configuration.builder()
                         .key("topoPeerLocalLabel")
                         .value("1:2:3")

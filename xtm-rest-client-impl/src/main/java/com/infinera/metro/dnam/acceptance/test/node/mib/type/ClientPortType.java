@@ -8,10 +8,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-//TODO: Can we delegate common behaviour to get code reuse?
-//TODO: Implement PortType
-
-public enum ClientPortType {
+public enum ClientPortType implements MibType {
     CLIENT("client"),
     MRT("mrt"),
     ADD_DROP("addDrop");

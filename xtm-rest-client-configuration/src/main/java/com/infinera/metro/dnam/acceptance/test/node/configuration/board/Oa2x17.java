@@ -41,7 +41,7 @@ public class Oa2x17 extends AbstractBoard implements Board {
         return OaPortEntry.builder()
             .moduleType(ModuleType.OA)
             .groupOrTableType(GroupOrTableType.IF)
-            .portType(OaPortType.OA)
+            .oaPortType(OaPortType.OA)
             .subrack(getSubrack())
             .slot(getSlot().getValue());
     }

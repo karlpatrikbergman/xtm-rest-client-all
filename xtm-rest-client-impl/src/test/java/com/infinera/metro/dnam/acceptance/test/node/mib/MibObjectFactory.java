@@ -1,12 +1,8 @@
 package com.infinera.metro.dnam.acceptance.test.node.mib;
 
-import com.infinera.metro.dnam.acceptance.test.node.mib.entry.BoardEntry;
 import com.infinera.metro.dnam.acceptance.test.node.mib.entry.LinePortEntry;
 import com.infinera.metro.dnam.acceptance.test.node.mib.entry.PeerEntry;
-import com.infinera.metro.dnam.acceptance.test.node.mib.type.BoardType;
 import com.infinera.metro.dnam.acceptance.test.node.mib.type.LinePortType;
-
-import java.util.Arrays;
 
 public enum MibObjectFactory {
     MIB_OBJECT_FACTORY;
@@ -15,31 +11,25 @@ public enum MibObjectFactory {
     private static final String DEFAULT_NODE_Z_IP_ADDRESS = "172.17.0.3";
 
     public static Configurations buildConfigurePeerParameterList(PeerEntry peerEntry) {
-        return Configurations.builder()
-                .configurations(Arrays.asList(
-                        Configuration.builder()
-                                .key("topoPeerLocalLabel")
-                                .value(peerEntry.getPeerLocalLabel())
-                                .build(),
-                        Configuration.builder()
-                                .key("topoPeerRemoteIpAddress")
-                                .value(peerEntry.getPeerRemoteIpAddress())
-                                .build(),
-                        Configuration.builder()
-                                .key("topoPeerRemoteLabel")
-                                .value(peerEntry.getPeerRemoteLabel())
-                                .build()
-                ))
-                .build();
+        return null;
+//        return Configurations.builder()
+//                .configurations(Arrays.asList(
+//                        Configuration.builder()
+//                                .key("topoPeerLocalLabel")
+//                                .value(peerEntry.getPeerLocalLabel())
+//                                .build(),
+//                        Configuration.builder()
+//                                .key("topoPeerRemoteIpAddress")
+//                                .value(peerEntry.getPeerRemoteIpAddress())
+//                                .build(),
+//                        Configuration.builder()
+//                                .key("topoPeerRemoteLabel")
+//                                .value(peerEntry.getPeerRemoteLabel())
+//                                .build()
+//                ))
+//                .build();
     }
 
-    public static BoardEntry createBoardEntry(BoardType boardType) {
-        return BoardEntry.builder()
-                .boardType(boardType)
-                .subrack(1)
-                .slot(2)
-                .build();
-    }
 
     /**
      * The PeerEntry created here will be used to create a transmit peer entry on Node A (172.17.0.2)
@@ -52,14 +42,15 @@ public enum MibObjectFactory {
     }
 
     private static PeerEntry createDefaultTransmitPeerEntryNodeA(String remoteNodeIpAddress) {
-        return PeerEntry.builder()
-                .localLinePortEntry(createLinePortEntryNodeA())
-                .remoteLinePortEntry(createLinePortEntryNodeZ())
-                .remoteNodeIpAddress(remoteNodeIpAddress)
-                .localMpoIdentifier(MpoIdentifier.createMpoIdentifierModuleNotPresent())
-                .remoteMpoIdentifier(MpoIdentifier.createMpoIdentifierModuleNotPresent())
-                .isTransmitSide(true)
-                .build();
+        return null;
+//        return PeerEntry.builder()
+//                .localLinePortEntry(createLinePortEntryNodeA())
+//                .remoteLinePortEntry(createLinePortEntryNodeZ())
+//                .remoteNodeIpAddress(remoteNodeIpAddress)
+//                .localMpoIdentifier(MpoIdentifier.NotPresent())
+//                .remoteMpoIdentifier(MpoIdentifier.NotPresent())
+//                .isTransmitSide(true)
+//                .build();
     }
 
     /**
@@ -73,14 +64,15 @@ public enum MibObjectFactory {
     }
 
     private static PeerEntry createDefaultReceivePeerEntryNodeZ(String remoteNodeIpAddress) {
-        return PeerEntry.builder()
-                .localLinePortEntry(createLinePortEntryNodeZ())
-                .remoteLinePortEntry(createLinePortEntryNodeA())
-                .remoteNodeIpAddress(remoteNodeIpAddress)
-                .localMpoIdentifier(MpoIdentifier.createMpoIdentifierModuleNotPresent())
-                .remoteMpoIdentifier(MpoIdentifier.createMpoIdentifierModuleNotPresent())
-                .isTransmitSide(false)
-                .build();
+        return null;
+//        return PeerEntry.builder()
+//                .localLinePortEntry(createLinePortEntryNodeZ())
+//                .remoteLinePortEntry(createLinePortEntryNodeA())
+//                .remoteNodeIpAddress(remoteNodeIpAddress)
+//                .localMpoIdentifier(MpoIdentifier.NotPresent())
+//                .remoteMpoIdentifier(MpoIdentifier.NotPresent())
+//                .isTransmitSide(false)
+//                .build();
     }
 
     /**

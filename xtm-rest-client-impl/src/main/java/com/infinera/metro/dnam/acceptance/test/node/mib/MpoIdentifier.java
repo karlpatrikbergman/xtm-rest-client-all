@@ -27,11 +27,11 @@ public class MpoIdentifier {
         return xtmVersionEqualOrHigherThan27;
     }
 
-    public static MpoIdentifier createBelowXtmVersion27() {
+    public static MpoIdentifier belowXtmVersion27() {
         return new MpoIdentifier();
     }
 
-    public static MpoIdentifier createMpoIdentifierModuleNotPresent() {
+    public static MpoIdentifier NotPresent() {
         return new MpoIdentifier(0);
     }
 

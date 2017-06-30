@@ -6,6 +6,8 @@ import com.infinera.metro.dnam.acceptance.test.node.mib.type.ModuleType;
 public interface MibEntry {
     ModuleType getModuleType();
     GroupOrTableType getGroupOrTableType();
+    Integer getSubrack();
+    Integer getSlot();
     String getMibEntryString();
     String getMibEntryPath();
 }

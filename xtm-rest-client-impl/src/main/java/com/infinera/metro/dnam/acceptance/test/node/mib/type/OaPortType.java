@@ -25,11 +25,11 @@ public enum OaPortType implements MibType {
     @JsonCreator
     public static OaPortType fromString(String string) {
         return Optional
-            .ofNullable(PORT_TYPE_MAP.get(string))
+            .ofNullable(OA_PORT_TYPE_MAP.get(string))
             .orElseThrow(() -> new IllegalArgumentException(string));
     }
 
-    private static final Map<String, OaPortType> PORT_TYPE_MAP = Stream
+    private static final Map<String, OaPortType> OA_PORT_TYPE_MAP = Stream
         .of(OaPortType.values())
         .collect(Collectors.toMap(s -> s.value, Function.identity()));
 }

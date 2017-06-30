@@ -86,7 +86,7 @@ public class NodeImpl implements Node {
      **/
 
     @Override
-    public AnswerObjects createLocalPeer(PeerEntry peerEntry) throws RuntimeException {
+    public AnswerObjects createPeer(PeerEntry peerEntry) throws RuntimeException {
         return nodeRestClient.performRestAction(peerEntry, CommandType.CREATE_JSON);
     }
 

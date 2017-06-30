@@ -1,68 +1,51 @@
 package com.infinera.metro.dnam.acceptance.test.node.mib.entry;
 
-import com.infinera.metro.dnam.acceptance.test.node.mib.*;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.infinera.metro.dnam.acceptance.test.node.mib.MpoIdentifier;
 import com.infinera.metro.dnam.acceptance.test.node.mib.type.GroupOrTableType;
 import com.infinera.metro.dnam.acceptance.test.node.mib.type.ModuleType;
 import com.infinera.metro.dnam.acceptance.test.node.mib.type.PeerType;
 import com.infinera.metro.dnam.acceptance.test.node.mib.util.MibPathUtil;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.NonNull;
 import lombok.Value;
 
+@EqualsAndHashCode(callSuper = true)
 @Value
-@Builder
-public class PeerEntry implements MibEntry {
-    @NonNull private final ModuleType moduleType = ModuleType.TOPO;
-    @NonNull private final GroupOrTableType groupOrTableType = GroupOrTableType.PEER;
-    @NonNull private final PeerType peerType = PeerType.PEER;
-    @NonNull private final LinePortEntry localLinePortEntry;
-    @NonNull private final LinePortEntry remoteLinePortEntry;
-    @NonNull private final String nodeIpAddress;
-    @NonNull private final String remoteNodeIpAddress;
-    @NonNull private final MpoIdentifier localMpoIdentifier;
-    @NonNull private final MpoIdentifier remoteMpoIdentifier;
-    @NonNull private final Boolean isTransmitSide;
+public class PeerEntry extends AbstractMibEntry implements MibEntry {
 
-    public String getPeerLocalLabel() {
-        return MibPathUtil.MIB_PATH_UTIL.getPeerLabel(localLinePortEntry.getSubrack(), localLinePortEntry.getSlot(), getLocalPort(), localMpoIdentifier);
+    private final Integer port;
+    private final MpoIdentifier mpoIdentifier;
+
+    @JsonCreator
+    @Builder
+    private PeerEntry(@JsonProperty("subrack") Integer subrack,
+                      @JsonProperty("slot") Integer slot,
+                      @NonNull @JsonProperty("port") Integer port,
+                      @NonNull @JsonProperty("mpoIdentifier") MpoIdentifier mpoIdentifier) {
+        super(ModuleType.TOPO, GroupOrTableType.PEER, PeerType.PEER, subrack, slot);
+        this.port = port;
+        this.mpoIdentifier = mpoIdentifier;
     }
 
-    public String getPeerRemoteIpAddress() {
-        return remoteNodeIpAddress;
+    @JsonIgnore
+    public String getLocalLabel() {
+        return getSubrack() + ":" + getSlot() + ":" + getPort();
     }
 
-    public String getPeerRemoteLabel() {
-        return MibPathUtil.MIB_PATH_UTIL.getPeerLabel(remoteLinePortEntry.getSubrack(), remoteLinePortEntry.getSlot(), getPeerRemotePort(), remoteMpoIdentifier);
-    }
-
+    @JsonIgnore
     @Override
     public String getMibEntryString() {
-        return MibPathUtil.MIB_PATH_UTIL.getMibEntryString (peerType.getName(), localLinePortEntry.getSubrack(),
-                localLinePortEntry.getSlot(), getLocalPort(), localMpoIdentifier);
+        return MibPathUtil.MIB_PATH_UTIL.getMibEntryString(getMibType(), getSubrack(), getSlot(), getPort(), getMpoIdentifier());
     }
 
+    @JsonIgnore
     @Override
     public String getMibEntryPath() {
-        return MibPathUtil.MIB_PATH_UTIL.getMibEntryPath(moduleType, groupOrTableType, this);
+        return MibPathUtil.MIB_PATH_UTIL.getMibEntryPath(getModuleType(), getGroupOrTableType(), this);
     }
 
-    private int getLocalPort() {
-        return (isTransmitSide) ? localLinePortEntry.getTransmitPort() : localLinePortEntry.getReceivePort();
-    }
-
-    private int getPeerRemotePort() {
-        return (isTransmitSide) ? remoteLinePortEntry.getReceivePort() : remoteLinePortEntry.getTransmitPort();
-    }
-
-    public PeerEntry invert() {
-        return PeerEntry.builder()
-                .localLinePortEntry(remoteLinePortEntry)
-                .remoteLinePortEntry(localLinePortEntry)
-                .nodeIpAddress(remoteNodeIpAddress)
-                .remoteNodeIpAddress(nodeIpAddress)
-                .localMpoIdentifier(remoteMpoIdentifier)
-                .remoteMpoIdentifier(localMpoIdentifier)
-                .isTransmitSide(!isTransmitSide)
-                .build();
-    }
 }

@@ -3,16 +3,16 @@ package com.infinera.metro.dnam.acceptance.test.node.mib.util;
 import com.infinera.metro.dnam.acceptance.test.node.mib.*;
 import com.infinera.metro.dnam.acceptance.test.node.mib.entry.MibEntry;
 import com.infinera.metro.dnam.acceptance.test.node.mib.type.GroupOrTableType;
+import com.infinera.metro.dnam.acceptance.test.node.mib.type.MibType;
 import com.infinera.metro.dnam.acceptance.test.node.mib.type.ModuleType;
 import org.stringtemplate.v4.ST;
 
-//TODO: This class does not belong in api. Should be in shared module. It us used by api and impl modules.
-//xtm-rest-CLIENT-api
 public enum MibPathUtil {
     MIB_PATH_UTIL;
 
-    public String getPeerLabel(int subrack, int slot, int port, MpoIdentifier mpoIdentifier) {
-        ST result = new ST("<subrack>:<slot><mtoIdentifier>:<port>");
+    public String getMibEntryString(MibType entry, int subrack, int slot, int port, MpoIdentifier mpoIdentifier) {
+        ST result = new ST("<entry>:<subrack>:<slot><mtoIdentifier>:<port>");
+        result.add("entry", entry.getValue());
         result.add("subrack", subrack);
         result.add("slot", slot);
         result.add("port", port);
@@ -42,7 +42,7 @@ public enum MibPathUtil {
         return result.render();
     }
 
-    //TODO: Change type of entry to MibType, and use MibType.getValue()
+    //TODO: Change type of entry to MibType and use MibType.getValue()
     public String getMibEntryString(String entry, int subrack, int slot) {
         ST result = new ST("<entry>:<subrack>:<slot>");
         result.add("entry", entry);
@@ -55,6 +55,7 @@ public enum MibPathUtil {
         ST url = new ST("/mib/<module>/<group>/<entry>");
         url.add("module", moduleType.getValue());
         url.add("group", group.getValue());
+
         url.add("entry", entry.getMibEntryString());
         return url.render();
     }

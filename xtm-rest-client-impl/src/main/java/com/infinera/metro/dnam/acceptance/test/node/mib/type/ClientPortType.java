@@ -26,11 +26,11 @@ public enum ClientPortType implements MibType {
     @JsonCreator
     public static ClientPortType fromString(String string) {
         return Optional
-                .ofNullable(CLIENT_PORT_MAP.get(string))
+                .ofNullable(CLIENT_PORT_TYPE_MAP.get(string))
                 .orElseThrow(() -> new IllegalArgumentException(string));
     }
 
-    private static final Map<String, ClientPortType> CLIENT_PORT_MAP = Stream
+    private static final Map<String, ClientPortType> CLIENT_PORT_TYPE_MAP = Stream
             .of(ClientPortType.values())
             .collect(Collectors.toMap(s -> s.value, Function.identity()));
 }

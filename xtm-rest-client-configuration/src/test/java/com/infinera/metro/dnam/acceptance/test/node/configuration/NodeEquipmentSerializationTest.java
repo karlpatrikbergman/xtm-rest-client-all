@@ -16,183 +16,98 @@ import java.util.Map;
 @Slf4j
 public class NodeEquipmentSerializationTest {
 
-//    public void foo() {
-//        List<Port> clientPorts = Arrays.asList(
-//            Port.builder()
-//                .transmitPort(1)
-//                .receivePort(2)
-//                .mibEntryAttributes(
-//                    Arrays.asList(
-//                        ClientPortConfigAttributes.of(
-//                            ConfigurationList.of(Configuration.builder()
-//                                .key("clientIfConfigurationCommand")
-//                                .value("wan10GbE yes")
-//                                .build()
-//                            )
-//                        ),
-//                        ClientPortSetAttributes.of(
-//                            ConfigurationList.of(Configuration.builder()
-//                                .key("expectedFrequency")
-//                                .value("w1530")
-//                                .build()
-//                            )
-//                        )
-//                    )
-//                )
-//                .build(),
-//            Port.builder()
-//                .transmitPort(5)
-//                .receivePort(6)
-//                .mibEntryAttributes(
-//                    Arrays.asList(
-//                        ClientPortConfigAttributes.of(
-//                            ConfigurationList.of(Configuration.builder()
-//                                .key("clientIfConfigurationCommand")
-//                                .value("wan10GbE yes")
-//                                .build()
-//                            )
-//                        ),
-//                        ClientPortSetAttributes.of(
-//                            ConfigurationList.of(Configuration.builder()
-//                                .key("expectedFrequency")
-//                                .value("w1530")
-//                                .build()
-//                            )
-//                        )
-//                    )
-//                )
-//                .build()
-//        );
-//    }
-//
-//    public void bar() {
-//        List<Port> linePorts = Arrays.asList(
-//            Port.builder()
-//                .transmitPort(3)
-//                .receivePort(4)
-//                .mibEntryAttributes(
-//                    Arrays.asList(
-//                        LinePortSetAttributes.of(ConfigurationList.of(
-//                            Configuration.builder()
-//                                .key("expectedFrequency")
-//                                .value("ch926")
-//                                .build()
-//                            )
-//                        )
-//                    )
-//                )
-//                .build(),
-//            Port.builder()
-//                .transmitPort(7)
-//                .receivePort(8)
-//                .mibEntryAttributes(
-//                    Arrays.asList(
-//                        LinePortSetAttributes.of(ConfigurationList.of(
-//                            Configuration.builder()
-//                                .key("expectedFrequency")
-//                                .value("ch927")
-//                                .build()
-//                            )
-//                        )
-//                    )
-//                )
-//                .build()
-//        );
-//    }
-
     @Test
     public void test() throws IOException {
+
         Tpd10gbe tpd10gbe = Tpd10gbe.builder()
             .subrack(1)
             .slot(Slot.slot2)
-            .boardEntryAttributes(Arrays.asList(
-                BoardSetAttributes.of(
-                    Configurations.of(Configuration.builder()
-                        .key("adminStatus")
-                        .value("up")
-                        .build()))
-            ))
-            .clientPorts(
-                Arrays.asList(
-                    Port.builder()
-                        .transmitPort(1)
-                        .receivePort(2)
-                        .portEntryAttributes(
-                            Arrays.asList(
-                                ClientPortConfigAttributes.of(
-                                    Configurations.of(Configuration.builder()
-                                        .key("clientIfConfigurationCommand")
-                                        .value("wan10GbE yes")
-                                        .build()
-                                    )
-                                ),
-                                ClientPortSetAttributes.of(
-                                    Configurations.of(Configuration.builder()
-                                        .key("expectedFrequency")
-                                        .value("w1530")
-                                        .build()
-                                    )
-                                )
-                            )
-                        )
-                        .build(),
-                    Port.builder()
-                        .transmitPort(5)
-                        .receivePort(6)
-                        .portEntryAttributes(
-                            Arrays.asList(
-                                ClientPortConfigAttributes.of(
-                                    Configurations.of(Configuration.builder()
-                                        .key("clientIfConfigurationCommand")
-                                        .value("wan10GbE yes")
-                                        .build()
-                                    )
-                                ),
-                                ClientPortSetAttributes.of(
-                                    Configurations.of(Configuration.builder()
-                                        .key("expectedFrequency")
-                                        .value("w1530")
-                                        .build()
-                                    )
-                                )
-                            )
-                        )
-                        .build()
-                )
+            .boardEntryAttribute(
+                BoardSetAttributes.of(Configuration.builder()
+                    .key("adminStatus")
+                    .value("up")
+                    .build())
             )
-            .linePorts(
-                Arrays.asList(
-                    Port.builder()
-                        .transmitPort(3)
-                        .receivePort(4)
-                        .portEntryAttributes(
-                            Arrays.asList(
-                                LinePortSetAttributes.of(Configurations.of(
-                                    Configuration.builder()
-                                        .key("expectedFrequency")
-                                        .value("ch926")
-                                        .build()
-                                    )
+            .clientPort(
+                Port.builder()
+                    .transmitPort(1)
+                    .receivePort(2)
+                    .portEntryAttribute(
+                        ClientPortConfigAttributes.of(
+                            Configurations.of(Configuration.builder()
+                                .key("clientIfConfigurationCommand")
+                                .value("wan10GbE yes")
+                                .build()
+                            )
+                        )
+                    )
+                    .portEntryAttribute(
+                        ClientPortSetAttributes.of(
+                            Configurations.of(Configuration.builder()
+                                .key("expectedFrequency")
+                                .value("w1530")
+                                .build()
+                            )
+                        )
+                    )
+                    .build())
+            .clientPort(
+                Port.builder()
+                    .transmitPort(5)
+                    .receivePort(6)
+                    .portEntryAttribute(
+                        ClientPortConfigAttributes.of(
+                            Configurations.of(Configuration.builder()
+                                .key("clientIfConfigurationCommand")
+                                .value("wan10GbE yes")
+                                .build()
+                            )
+                        )
+                    )
+                    .portEntryAttribute(
+                        ClientPortSetAttributes.of(
+                            Configurations.of(Configuration.builder()
+                                .key("expectedFrequency")
+                                .value("w1530")
+                                .build()
+                            )
+                        )
+                    )
+                    .build()
+            )
+            .linePort(
+                Port.builder()
+                    .transmitPort(3)
+                    .receivePort(4)
+                    .portEntryAttributes(
+                        Arrays.asList(
+                            LinePortSetAttributes.of(Configurations.of(
+                                Configuration.builder()
+                                    .key("expectedFrequency")
+                                    .value("ch926")
+                                    .build()
                                 )
                             )
                         )
-                        .build(),
-                    Port.builder()
-                        .transmitPort(7)
-                        .receivePort(8)
-                        .portEntryAttributes(
-                            Arrays.asList(
-                                LinePortSetAttributes.of(Configurations.of(
-                                    Configuration.builder()
-                                        .key("expectedFrequency")
-                                        .value("ch927")
-                                        .build()
-                                    )
+                    )
+                    .build()
+            )
+            .linePort(
+                Port.builder()
+                    .transmitPort(7)
+                    .receivePort(8)
+                    .portEntryAttributes(
+                        Arrays.asList(
+                            LinePortSetAttributes.of(Configurations.of(
+                                Configuration.builder()
+                                    .key("expectedFrequency")
+                                    .value("ch927")
+                                    .build()
                                 )
                             )
                         )
-                        .build()
-                )
+                    )
+                    .build()
             )
             .build();
         Map<Slot, Board> boards = new HashMap<>();

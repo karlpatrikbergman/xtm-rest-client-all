@@ -14,7 +14,7 @@ public class MpoIdentifierTest {
 
     @Test
     public void createMtoIdentifierXtmVersionEqualLowerThan27() {
-        MpoIdentifier mpoIdentifier = MpoIdentifier.createBelowXtmVersion27();
+        MpoIdentifier mpoIdentifier = MpoIdentifier.belowXtmVersion27();
         assertEquals("", mpoIdentifier.getMtoIdentifier());
     }
 }

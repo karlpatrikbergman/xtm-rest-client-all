@@ -11,7 +11,7 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 @Slf4j
-public class LinePortTypeEntryTest {
+public class LinePortEntryTest {
 
     private final MibEntry mibEntry = LinePortEntry.builder()
             .moduleType(ModuleType.WDM)
@@ -22,15 +22,6 @@ public class LinePortTypeEntryTest {
             .transmitPort(3)
             .receivePort(4)
             .build();
-
-    @Test(expected=NullPointerException.class)
-    public void testLinePortEntryBuilder() {
-        LinePortEntry linePortEntry = LinePortEntry.builder()
-                .linePortType(LinePortType.WDM)
-                .subrack(1)
-                .slot(2)
-                .build();
-    }
 
     @Test
     public void testMibEntryPath() {
@@ -46,5 +37,14 @@ public class LinePortTypeEntryTest {
         final String actualMibEntryString = mibEntry.getMibEntryString();
         assertEquals(expectedMibEntryString, actualMibEntryString);
         log.info(actualMibEntryString);
+    }
+
+    @Test(expected=NullPointerException.class)
+    public void testLinePortEntryBuilder() {
+        LinePortEntry.builder()
+            .linePortType(LinePortType.WDM)
+            .subrack(1)
+            .slot(2)
+            .build();
     }
 }

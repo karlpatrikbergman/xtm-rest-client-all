@@ -37,11 +37,11 @@ public enum BoardType implements MibType {
     @JsonCreator
     public static BoardType fromString(String string) {
         return Optional
-                .ofNullable(BOARD_MAP.get(string))
+                .ofNullable(BOARD_TYPE_MAP.get(string))
                 .orElseThrow(() -> new IllegalArgumentException(string));
     }
 
-    private static final Map<String, BoardType> BOARD_MAP = Stream
+    private static final Map<String, BoardType> BOARD_TYPE_MAP = Stream
             .of(BoardType.values())
             .collect(Collectors.toMap(s -> s.value, Function.identity()));
 }

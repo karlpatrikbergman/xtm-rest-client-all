@@ -1,3 +1,4 @@
+--- !<com.infinera.metro.dnam.acceptance.test.node.mib.entry.LinePortEntry>
 moduleType: wdm
 groupOrTableType: if
 lineporttype: wdm

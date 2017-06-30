@@ -11,7 +11,7 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 @Slf4j
-public class ClientPortTypeEntryTest {
+public class ClientPortEntryTest {
 
     private final MibEntry mibEntry = ClientPortEntry.builder()
             .moduleType(ModuleType.CLIENT)
@@ -22,15 +22,6 @@ public class ClientPortTypeEntryTest {
             .transmitPort(1)
             .receivePort(2)
             .build();
-
-    @Test(expected=NullPointerException.class)
-    public void testClientPortEntryBuilder() {
-        ClientPortEntry clientPortEntry = ClientPortEntry.builder()
-                .clientPortType(ClientPortType.CLIENT)
-                .subrack(1)
-                .slot(2)
-                .build();
-    }
 
     @Test
     public void testMibEntryPath() {
@@ -46,5 +37,14 @@ public class ClientPortTypeEntryTest {
         final String actualMibEntryString = mibEntry.getMibEntryString();
         assertEquals(expectedMibEntryString, actualMibEntryString);
         log.info(actualMibEntryString);
+    }
+
+    @Test(expected=NullPointerException.class)
+    public void testClientPortEntryBuilder() {
+        ClientPortEntry clientPortEntry = ClientPortEntry.builder()
+            .clientPortType(ClientPortType.CLIENT)
+            .subrack(1)
+            .slot(2)
+            .build();
     }
 }

@@ -17,6 +17,7 @@ public enum LinePortType implements MibType {
         this.value = value;
     }
 
+    @Override
     public String getValue() {
         return value;
     }
@@ -24,11 +25,11 @@ public enum LinePortType implements MibType {
     @JsonCreator
     public static LinePortType fromString(String string) {
         return Optional
-                .ofNullable(LINE_PORT_MAP.get(string))
+                .ofNullable(LINE_PORT_TYPE_MAP.get(string))
                 .orElseThrow(() -> new IllegalArgumentException(string));
     }
 
-    private static final Map<String, LinePortType> LINE_PORT_MAP = Stream
+    private static final Map<String, LinePortType> LINE_PORT_TYPE_MAP = Stream
             .of(LinePortType.values())
             .collect(Collectors.toMap(s -> s.value, Function.identity()));
 }

@@ -10,6 +10,8 @@ import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Value;
 
+//TODO: Make sure we still need @JsonProperty. I don't remember why it is there
+
 @EqualsAndHashCode(callSuper = true)
 @Value
 public class LinePortEntry extends AbstractPortEntry implements MibEntry {

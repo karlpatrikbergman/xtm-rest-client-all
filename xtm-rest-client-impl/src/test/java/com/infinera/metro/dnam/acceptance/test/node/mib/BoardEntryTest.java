@@ -8,7 +8,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 @Slf4j
-public class BoardTypeEntryTest {
+public class BoardEntryTest {
 
     private final MibEntry mibEntry = BoardEntry.builder()
             .boardType(BoardType.TPD10GBE)

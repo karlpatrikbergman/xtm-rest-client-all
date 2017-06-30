@@ -14,7 +14,6 @@ import org.junit.experimental.categories.Category;
 import org.springframework.http.ResponseEntity;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
 
 import static com.infinera.metro.dnam.acceptance.test.node.RestTemplateFactory.REST_TEMPLATE_FACTORY;
@@ -26,55 +25,68 @@ import static com.infinera.metro.dnam.acceptance.test.node.RestTemplateFactory.R
 @Category(DontLetGradleRun.class)
 @Slf4j
 public class Workbench {
-    private final ObjectReader objectReader = JacksonUtil.INSTANCE.getReader().forType(new TypeReference<List<AnswerObject>>(){});
+    private final ObjectReader objectReader = JacksonUtil.INSTANCE.getReader().forType(new TypeReference<List<AnswerObject>>() {
+    });
     private final MibPathUtil mibPathUtil = MibPathUtil.MIB_PATH_UTIL;
     private final MibObjectFactory mibObjectFactory = MibObjectFactory.MIB_OBJECT_FACTORY;
+    private final String NODE_A_IP_ADDRESS = "172.17.0.2";
+    private final String NODE_Z_IP_ADDRESS = "172.17.0.3";
 
-    private final String ipAddressNodeA = "172.17.0.2";
-
-    private final String ipAddressNodeZ = "172.17.0.3";
-
-    private final NodeConnection nodeConnectionA = new NodeConnection(
-            NodeAccessData.builder()
-                    .ipAddress(ipAddressNodeA)
-                    .port(80)
-                    .userName("root")
-                    .password("root")
-                    .build(),
-            REST_TEMPLATE_FACTORY.createRestTemplate()
+    private final NodeConnection NODECONNECTION_A = new NodeConnection(
+        NodeAccessData.builder()
+            .ipAddress(NODE_A_IP_ADDRESS)
+            .port(80)
+            .userName("root")
+            .password("root")
+            .build(),
+        REST_TEMPLATE_FACTORY.createRestTemplate()
     );
 
-    private final NodeConnection nodeConnectionZ = new NodeConnection(
-            NodeAccessData.builder()
-                    .ipAddress(ipAddressNodeZ)
-                    .port(80)
-                    .userName("root")
-                    .password("root")
-                    .build(),
-            REST_TEMPLATE_FACTORY.createRestTemplate()
+    private final NodeConnection NODECONNECTION_Z = new NodeConnection(
+        NodeAccessData.builder()
+            .ipAddress(NODE_Z_IP_ADDRESS)
+            .port(80)
+            .userName("root")
+            .password("root")
+            .build(),
+        REST_TEMPLATE_FACTORY.createRestTemplate()
     );
+
+    private final BoardEntry TPD10GBE_BOARD_ENTRY = BoardEntry.builder()
+        .boardType(BoardType.TPD10GBE)
+        .subrack(1)
+        .slot(2)
+        .build();
 
     @Test
     public void runMe() throws IOException {
-        configureNodeA();
-//        configureNodeZ();
+        configurePeerConnection();
     }
 
-    private void configureNodeA() throws IOException {
-        createBoard(nodeConnectionA, MibObjectFactory.createBoardEntry(BoardType.TPD10GBE));
-        PeerEntry peerEntryTransmitSide = MibObjectFactory.createDefaultTransmitPeerEntryNodeA();
-        createPeer(nodeConnectionA, peerEntryTransmitSide);
-        configurePeer(nodeConnectionA, peerEntryTransmitSide, buildConfigurePeerParameterList(peerEntryTransmitSide));
+    private void configurePeerConnection() throws IOException {
+        createBoard(NODECONNECTION_A, TPD10GBE_BOARD_ENTRY);
+        PeerEntry peerEntryNodeA = PeerEntry.builder()
+            .subrack(1)
+            .slot(2)
+            .port(3)
+            .mpoIdentifier(MpoIdentifier.NotPresent())
+            .build();
+        createPeer(NODECONNECTION_A, peerEntryNodeA);
+
+        createBoard(NODECONNECTION_Z, TPD10GBE_BOARD_ENTRY);
+        PeerEntry peerEntryNodeZ = PeerEntry.builder()
+            .subrack(1)
+            .slot(2)
+            .port(4)
+            .mpoIdentifier(MpoIdentifier.NotPresent())
+            .build();
+        createPeer(NODECONNECTION_Z, peerEntryNodeZ);
+
+        configurePeer(NODECONNECTION_A, peerEntryNodeA, buildConfigurePeerParameterList(peerEntryNodeA, peerEntryNodeZ, NODE_Z_IP_ADDRESS ));
+        configurePeer(NODECONNECTION_Z, peerEntryNodeZ, buildConfigurePeerParameterList(peerEntryNodeZ, peerEntryNodeA, NODE_A_IP_ADDRESS));
     }
 
-    private void configureNodeZ() throws IOException {
-        createBoard(nodeConnectionZ, MibObjectFactory.createBoardEntry(BoardType.TPD10GBE));
-        PeerEntry peerEntryReceiveSide = MibObjectFactory.createDefaultReceivePeerEntryNodeZ();
-        createPeer(nodeConnectionZ, peerEntryReceiveSide);
-        configurePeer(nodeConnectionZ, peerEntryReceiveSide, buildConfigurePeerParameterList(peerEntryReceiveSide));
-    }
-
-    private void createBoard(NodeConnection nodeConnection ,BoardEntry boardEntry) throws IOException {
+    private void createBoard(NodeConnection nodeConnection, BoardEntry boardEntry) throws IOException {
         configureNode(nodeConnection, boardEntry, CommandType.CREATE_JSON, null);
     }
 
@@ -84,10 +96,10 @@ public class Workbench {
 
     private void deleteBoard(NodeConnection nodeConnection) throws IOException {
         MibEntry mibEntry = BoardEntry.builder()
-                .boardType(BoardType.TPD10GBE)
-                .subrack(1)
-                .slot(2)
-                .build();
+            .boardType(BoardType.TPD10GBE)
+            .subrack(1)
+            .slot(2)
+            .build();
         configureNode(nodeConnection, mibEntry, CommandType.DELETE_JSON, null);
     }
 
@@ -98,16 +110,16 @@ public class Workbench {
      */
     private void configureLinePortExpectedFrequency(NodeConnection nodeConnection) throws IOException {
         MibEntry mibEntry = LinePortEntry.builder()
-                .linePortType(LinePortType.WDM)
-                .subrack(1)
-                .slot(2)
-                .transmitPort(3)
-                .receivePort(4)
-                .build();
+            .linePortType(LinePortType.WDM)
+            .subrack(1)
+            .slot(2)
+            .transmitPort(3)
+            .receivePort(4)
+            .build();
         Configuration configuration = Configuration.builder()
-                .key("expectedFrequency")
-                .value("ch926")
-                .build();
+            .key("expectedFrequency")
+            .value("ch926")
+            .build();
         configureNode(nodeConnection, mibEntry, CommandType.SET_JSON, Configurations.of(configuration));
     }
 
@@ -118,22 +130,23 @@ public class Workbench {
      */
     private void configureClientPort(NodeConnection nodeConnection) throws IOException {
         MibEntry mibEntry = ClientPortEntry.builder()
-                .clientPortType(ClientPortType.CLIENT)
-                .subrack(1)
-                .slot(2)
-                .transmitPort(1)
-                .receivePort(2)
-                .build();
+            .clientPortType(ClientPortType.CLIENT)
+            .subrack(1)
+            .slot(2)
+            .transmitPort(1)
+            .receivePort(2)
+            .build();
         Configuration configuration = Configuration.builder()
-                .key("configure")
-                .value("lan10GbE yes")
-                .build();
+            .key("configure")
+            .value("lan10GbE yes")
+            .build();
         configureNode(nodeConnection, mibEntry, CommandType.CONFIGURE_JSON, Configurations.of(configuration));
     }
 
     private void createPeer(NodeConnection nodeConnection, PeerEntry peerEntry) throws IOException {
         configureNode(nodeConnection, peerEntry, CommandType.CREATE_JSON, null);
     }
+
 
     private void configurePeer(NodeConnection nodeConnection, PeerEntry peerEntry, Configurations configurations) throws IOException {
         configureNode(nodeConnection, peerEntry, CommandType.SET_JSON, configurations);
@@ -144,7 +157,7 @@ public class Workbench {
      */
     private void configureNode(NodeConnection nodeConnection, MibEntry mibEntry, CommandType commandType, Configurations configurations) throws IOException, RuntimeException {
         String mibPathAndCommand = mibPathUtil.getMibPathAndCommand(mibEntry, commandType);
-        String flags ="_RFLAGS_=RAISEMGNOQPCYVULTBJK&_AFLAGS_=AVNDHPUIMJOSE";
+        String flags = "_RFLAGS_=RAISEMGNOQPCYVULTBJK&_AFLAGS_=AVNDHPUIMJOSE";
         String parameters = (configurations == null) ? "" : configurations.toString();
         String all = mibPathAndCommand + "?" + flags + "&" + parameters;
 
@@ -157,22 +170,26 @@ public class Workbench {
         answerObjects.checkResponse(commandType.getOperation(), mibEntry);
     }
 
-    private Configurations buildConfigurePeerParameterList(PeerEntry peerEntry) {
+    private Configurations buildConfigurePeerParameterList(PeerEntry localPeerEntry, PeerEntry remotePeerEntry, String remoteNodeIpAddress) {
         return Configurations.builder()
-                .configurations(Arrays.asList(
-                        Configuration.builder()
-                                .key("topoPeerLocalLabel")
-                                .value(peerEntry.getPeerLocalLabel())
-                                .build(),
-                        Configuration.builder()
-                                .key("topoPeerRemoteIpAddress")
-                                .value(peerEntry.getPeerRemoteIpAddress())
-                                .build(),
-                        Configuration.builder()
-                                .key("topoPeerRemoteLabel")
-                                .value(peerEntry.getPeerRemoteLabel())
-                                .build()
-                ))
-                .build();
+            .configuration(
+                Configuration.builder()
+                    .key("topoPeerLocalLabel")
+                    .value(localPeerEntry.getLocalLabel())
+                    .build()
+            )
+            .configuration(
+                Configuration.builder()
+                    .key("topoPeerRemoteIpAddress")
+                    .value(remoteNodeIpAddress)
+                    .build()
+            )
+            .configuration(
+                Configuration.builder()
+                    .key("topoPeerRemoteLabel")
+                    .value(remotePeerEntry.getLocalLabel())
+                    .build()
+            )
+            .build();
     }
 }

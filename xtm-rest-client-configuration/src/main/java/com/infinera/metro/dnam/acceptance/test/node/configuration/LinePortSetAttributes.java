@@ -2,7 +2,7 @@ package com.infinera.metro.dnam.acceptance.test.node.configuration;
 
 import com.google.common.base.Preconditions;
 import com.infinera.metro.dnam.acceptance.test.node.Node;
-import com.infinera.metro.dnam.acceptance.test.node.mib.Configurations;
+import com.infinera.metro.dnam.acceptance.test.node.mib.Configuration;
 import com.infinera.metro.dnam.acceptance.test.node.mib.Configurations;
 import com.infinera.metro.dnam.acceptance.test.node.mib.entry.LinePortEntry;
 import com.infinera.metro.dnam.acceptance.test.node.mib.entry.MibEntry;
@@ -19,7 +19,11 @@ public class LinePortSetAttributes implements MibEntryAttributes {
         node.setLinePortAttributes((LinePortEntry) linePortEntry, configurations);
     }
 
-    public static LinePortConfigAttributes of(Configurations configurations) {
-        return new LinePortConfigAttributes(configurations);
+    public static LinePortSetAttributes of(Configurations configurations) {
+        return new LinePortSetAttributes(configurations);
+    }
+
+    public static LinePortSetAttributes of(Configuration configuration) {
+        return LinePortSetAttributes.of(Configurations.of(configuration));
     }
 }

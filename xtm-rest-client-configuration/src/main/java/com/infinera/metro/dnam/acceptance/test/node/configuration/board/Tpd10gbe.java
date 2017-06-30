@@ -8,13 +8,22 @@ import com.infinera.metro.dnam.acceptance.test.node.configuration.Slot;
 import com.infinera.metro.dnam.acceptance.test.node.mib.entry.ClientPortEntry;
 import com.infinera.metro.dnam.acceptance.test.node.mib.entry.LinePortEntry;
 import com.infinera.metro.dnam.acceptance.test.node.mib.type.*;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.NonNull;
-import lombok.Value;
+import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
+
+// TODO:
+// Reuse code for client ports and line ports on boards that uses the same mib tables as Tpd10gbe
+// i.e for line ports:
+//      ModuleType.WDM
+//      GroupOrTableType.IF
+//      LinePortType.WDM
+
+// and for client ports
+//      ModuleType.CLIENT
+//      GroupOrTableType.IF
+//      ClientPortType.CLIENT
 
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
@@ -27,7 +36,7 @@ public class Tpd10gbe extends AbstractBoard implements Board {
 
     @Builder
     @java.beans.ConstructorProperties({"subrack", "slot", "clientPorts", "linePorts", "boardEntryAttributes"})
-    private Tpd10gbe(Integer subrack, Slot slot, List<Port> clientPorts, List<Port> linePorts, List<MibEntryAttributes> boardEntryAttributes) {
+    private Tpd10gbe(Integer subrack, Slot slot, @Singular  List<Port> clientPorts, @Singular List<Port> linePorts, @Singular List<MibEntryAttributes> boardEntryAttributes) {
         super(BoardType.TPD10GBE, subrack, slot, boardEntryAttributes);
         this.clientPorts = clientPorts;
         this.linePorts = linePorts;
@@ -43,6 +52,14 @@ public class Tpd10gbe extends AbstractBoard implements Board {
         configureLinePorts(node);
     }
 
+    //Used when creating PeerConnection
+    public LinePortEntry getLinePortEntry(Port port) {
+        return linePortEntryBuilder
+            .transmitPort(port.getTransmitPort())
+            .receivePort(port.getReceivePort())
+            .build();
+    }
+
     private void configureClientPorts(Node node) {
         clientPorts.forEach(clientPort -> configureClientPort(node, clientPort));
     }
@@ -55,15 +72,14 @@ public class Tpd10gbe extends AbstractBoard implements Board {
         clientPort.getPortEntryAttributes().forEach(portAttribute -> portAttribute.applyTo(node, clientPortEntry));
     }
 
+
+
     private void configureLinePorts(Node node) {
         linePorts.forEach(port -> configureLinePort(node, port));
     }
 
     private void configureLinePort(Node node, Port linePort) {
-        final LinePortEntry linePortEntry = linePortEntryBuilder
-                .transmitPort(linePort.getTransmitPort())
-                .receivePort(linePort.getReceivePort())
-                .build();
+        final LinePortEntry linePortEntry = getLinePortEntry(linePort);
         linePort.getPortEntryAttributes().forEach(portAttribute -> portAttribute.applyTo(node, linePortEntry));
     }
 
@@ -76,7 +92,7 @@ public class Tpd10gbe extends AbstractBoard implements Board {
                 .slot(super.getSlot().getValue());
     }
 
-    private LinePortEntry.LinePortEntryBuilder getLinePortEntryBuilder() {
+    public LinePortEntry.LinePortEntryBuilder getLinePortEntryBuilder() {
         return LinePortEntry.builder()
                 .moduleType(ModuleType.WDM)
                 .groupOrTableType(GroupOrTableType.IF)

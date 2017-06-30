@@ -1,6 +1,6 @@
 package com.infinera.metro.dnam.acceptance.test.node;
 
-import com.infinera.metro.dnam.acceptance.test.node.mib.*;
+import com.infinera.metro.dnam.acceptance.test.node.mib.Configurations;
 import com.infinera.metro.dnam.acceptance.test.node.mib.entry.*;
 
 /**
@@ -31,6 +31,14 @@ public interface Node {
 
     AnswerObjects configureAddDropPortAttributes(AddDropPortEntry addDropPortEntry, Configurations configurations) throws RuntimeException;
 
-    AnswerObjects createLocalPeer(PeerEntry peerEntry) throws RuntimeException;
+    AnswerObjects createPeer(PeerEntry peerEntry) throws RuntimeException;
     AnswerObjects setLocalPeerConfiguration(PeerEntry peerEntry, Configurations configurations) throws RuntimeException;
+
+    static Node defaultImplementation(NodeAccessData nodeAccessData) {
+        return new NodeImpl(
+            new NodeRestClient(
+                new NodeConnection(nodeAccessData, RestTemplateFactory.REST_TEMPLATE_FACTORY.createRestTemplate())
+            )
+        );
+    }
 }

@@ -21,16 +21,4 @@ public class Ad4Even50 extends AbstractBoard implements Board {
     private Ad4Even50(Integer subrack, Slot slot, @Singular List<MibEntryAttributes> boardEntryAttributes) {
         super(BoardType.AD4EVEN50, subrack, slot, boardEntryAttributes);
     }
-
-//    @Override
-//    public void applyTo(Node node) {
-//        super.createBoard(node);
-//        super.configureBoardAttributes(node);
-//    }
-//
-//    @Override
-//    public void deleteFrom(Node node) {
-//        super.deleteBoard(node);
-//    }
-
 }

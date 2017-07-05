@@ -6,6 +6,8 @@ import com.infinera.metro.dnam.acceptance.test.node.Node;
 import com.infinera.metro.dnam.acceptance.test.node.mib.entry.BoardEntry;
 import com.infinera.metro.dnam.acceptance.test.node.mib.type.BoardType;
 
+//TODO: Do we need @JsonSubTypes? Test to remove
+
 @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "@class")
 @JsonSubTypes({
         @JsonSubTypes.Type(value = Tpd10gbe.class, name = "tpd10gbe"),
@@ -16,7 +18,6 @@ import com.infinera.metro.dnam.acceptance.test.node.mib.type.BoardType;
 public interface Board {
     BoardType getBoardType();
     BoardEntry getBoardEntry();
-
     void applyTo(Node node);
     void deleteFrom(Node node);
 }

@@ -21,15 +21,4 @@ public class Oiuc50100 extends AbstractBoard implements Board {
     private Oiuc50100(Integer subrack, Slot slot, @Singular List<MibEntryAttributes> boardEntryAttributes) {
         super(BoardType.OIUC50100, subrack, slot, boardEntryAttributes);
     }
-//
-//    @Override
-//    public void applyTo(Node node) {
-//        createBoard(node);
-//    }
-//
-//    @Override
-//    public void deleteFrom(Node node) {
-//        super.deleteBoard(node);
-//    }
-
 }

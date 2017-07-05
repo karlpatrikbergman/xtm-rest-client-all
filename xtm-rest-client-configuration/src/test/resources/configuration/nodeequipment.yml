@@ -3,6 +3,12 @@ boards:
   slot2: !<com.infinera.metro.dnam.acceptance.test.node.configuration.board.Tpd10gbe>
     subrack: 1
     slot: "slot2"
+    boardEntryAttributes:
+    - !<com.infinera.metro.dnam.acceptance.test.node.configuration.BoardSetAttributes>
+      configurations:
+        configurations:
+        - key: "adminStatus"
+          value: "up"
     clientPorts:
     - transmitPort: 1
       receivePort: 2
@@ -34,7 +40,7 @@ boards:
     - transmitPort: 3
       receivePort: 4
       portEntryAttributes:
-      - !<com.infinera.metro.dnam.acceptance.test.node.configuration.LinePortConfigAttributes>
+      - !<com.infinera.metro.dnam.acceptance.test.node.configuration.LinePortSetAttributes>
         configurations:
           configurations:
           - key: "expectedFrequency"
@@ -42,14 +48,8 @@ boards:
     - transmitPort: 7
       receivePort: 8
       portEntryAttributes:
-      - !<com.infinera.metro.dnam.acceptance.test.node.configuration.LinePortConfigAttributes>
+      - !<com.infinera.metro.dnam.acceptance.test.node.configuration.LinePortSetAttributes>
         configurations:
           configurations:
           - key: "expectedFrequency"
             value: "ch927"
-    boardEntryAttributes:
-    - !<com.infinera.metro.dnam.acceptance.test.node.configuration.BoardSetAttributes>
-      configurations:
-        configurations:
-        - key: "adminStatus"
-          value: "up"

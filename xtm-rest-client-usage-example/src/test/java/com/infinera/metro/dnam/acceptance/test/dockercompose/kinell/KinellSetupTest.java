@@ -11,6 +11,7 @@ import com.infinera.metro.dnam.acceptance.test.node.configuration.ObjectFromFile
 import com.infinera.metro.dnam.acceptance.test.node.dockercompose.DockerCompose;
 import com.infinera.metro.dnam.acceptance.test.node.dockercompose.Service;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
@@ -50,6 +51,7 @@ public class KinellSetupTest {
         nodeConfigurationNodeA.apply();
     }
 
+    @Ignore
     @Test
     public void deleteBoards() {
         liljeholmenNodeEquipment.deleteBoards(liljeholmen);

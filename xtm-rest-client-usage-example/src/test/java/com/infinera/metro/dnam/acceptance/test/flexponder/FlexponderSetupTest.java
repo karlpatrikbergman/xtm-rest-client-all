@@ -24,22 +24,9 @@ import java.util.Map;
 public class FlexponderSetupTest {
     private final String ipAddressNodeA = "172.17.0.2";
     private final String ipAddressNodeZ = "172.17.0.3";
-    private final Node nodeA = Node.defaultImplementation(
-        NodeAccessData.builder()
-            .ipAddress(ipAddressNodeA)
-            .port(80)
-            .userName("root")
-            .password("root")
-            .build()
-    );
-    private final Node nodeZ = Node.defaultImplementation(
-        NodeAccessData.builder()
-            .ipAddress(ipAddressNodeZ)
-            .port(80)
-            .userName("root")
-            .password("root")
-            .build()
-    );
+    private final Node nodeA = Node.defaultImplementation(NodeAccessData.createDefault(ipAddressNodeA));
+
+    private final Node nodeZ = Node.defaultImplementation(NodeAccessData.createDefault(ipAddressNodeZ));
     private final Port linePort = Port.builder()
         .transmitPort(3)
         .receivePort(4)

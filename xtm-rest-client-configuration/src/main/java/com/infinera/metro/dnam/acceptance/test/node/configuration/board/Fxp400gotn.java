@@ -13,22 +13,10 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 
-// TODO:
-// Reuse code for client ports and line ports on boards that uses the same mib tables as Tpd10gbe
-// i.e for line ports:
-//      ModuleType.WDM
-//      GroupOrTableType.IF
-//      LinePortType.WDM
-
-// and for client ports
-//      ModuleType.CLIENT
-//      GroupOrTableType.IF
-//      ClientPortType.CLIENT
-
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
 @Value
-public class Tpd10gbe extends AbstractBoard implements Board {
+public class Fxp400gotn extends AbstractBoard implements Board {
     @NonNull private final List<Port> clientPorts;
     @NonNull private final List<Port> linePorts;
     @JsonIgnore @NonNull private final ClientPortEntry.ClientPortEntryBuilder clientPortEntryBuilder;
@@ -36,8 +24,8 @@ public class Tpd10gbe extends AbstractBoard implements Board {
 
     @Builder
     @java.beans.ConstructorProperties({"subrack", "slot", "clientPorts", "linePorts", "boardEntryAttributes"})
-    private Tpd10gbe(Integer subrack, Slot slot, @Singular  List<Port> clientPorts, @Singular List<Port> linePorts, @Singular List<MibEntryAttributes> boardEntryAttributes) {
-        super(BoardType.TPD10GBE, subrack, slot, boardEntryAttributes);
+    private Fxp400gotn(Integer subrack, Slot slot, @Singular List<Port> clientPorts, @Singular List<Port> linePorts, @Singular List<MibEntryAttributes> boardEntryAttributes) {
+        super(BoardType.FXP400GOTN, subrack, slot, boardEntryAttributes);
         this.clientPorts = clientPorts;
         this.linePorts = linePorts;
         this.clientPortEntryBuilder = getClientPortEntryBuilder();
@@ -51,26 +39,21 @@ public class Tpd10gbe extends AbstractBoard implements Board {
         configureLinePorts(node);
     }
 
-    //Used when creating PeerConnection
-    public LinePortEntry getLinePortEntry(Port port) {
-        return linePortEntryBuilder
-            .transmitPort(port.getTransmitPort())
-            .receivePort(port.getReceivePort())
-            .build();
-    }
-
+    /*** Could these be set in common class? ***/
     private void configureClientPorts(Node node) {
         clientPorts.forEach(clientPort -> configureClientPort(node, clientPort));
     }
 
     private void configureClientPort(Node node, Port clientPort) {
         final ClientPortEntry clientPortEntry = clientPortEntryBuilder
-                .transmitPort(clientPort.getTransmitPort())
-                .receivePort(clientPort.getReceivePort())
-                .build();
+            .transmitPort(clientPort.getTransmitPort())
+            .receivePort(clientPort.getReceivePort())
+            .build();
         clientPort.getPortEntryAttributes().forEach(portAttribute -> portAttribute.applyTo(node, clientPortEntry));
     }
+    /***/
 
+    /*** Could these be set in common class? ***/
     private void configureLinePorts(Node node) {
         linePorts.forEach(port -> configureLinePort(node, port));
     }
@@ -80,21 +63,33 @@ public class Tpd10gbe extends AbstractBoard implements Board {
         linePort.getPortEntryAttributes().forEach(portAttribute -> portAttribute.applyTo(node, linePortEntry));
     }
 
+    //Can't be reused?
+    //Used when creating PeerConnection
+    public LinePortEntry getLinePortEntry(Port port) {
+        return linePortEntryBuilder
+            .transmitPort(port.getTransmitPort())
+            .receivePort(port.getReceivePort())
+            .build();
+    }
+    /***/
+
+    /*** These methods depends on board implementation  and must be set in this class ***/
     private ClientPortEntry.ClientPortEntryBuilder getClientPortEntryBuilder() {
         return ClientPortEntry.builder()
-                .moduleType(ModuleType.CLIENT)
-                .groupOrTableType(GroupOrTableType.IF)
-                .clientPortType(ClientPortType.CLIENT)
-                .subrack(super.getSubrack())
-                .slot(super.getSlot().getValue());
+            .moduleType(ModuleType.CLIENT)
+            .groupOrTableType(GroupOrTableType.IF)
+            .clientPortType(ClientPortType.CLIENT)
+            .subrack(super.getSubrack())
+            .slot(super.getSlot().getValue());
     }
 
     public LinePortEntry.LinePortEntryBuilder getLinePortEntryBuilder() {
         return LinePortEntry.builder()
-                .moduleType(ModuleType.WDM)
-                .groupOrTableType(GroupOrTableType.IF)
-                .linePortType(LinePortType.WDM)
-                .subrack(super.getSubrack())
-                .slot(super.getSlot().getValue());
+            .moduleType(ModuleType.WDM)
+            .groupOrTableType(GroupOrTableType.IF)
+            .linePortType(LinePortType.WDM)
+            .subrack(super.getSubrack())
+            .slot(super.getSlot().getValue());
     }
+    /***/
 }

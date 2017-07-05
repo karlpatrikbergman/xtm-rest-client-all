@@ -34,8 +34,7 @@ public class Roadm1x2G50 extends AbstractBoard implements Board  {
 
     @Override
     public void applyTo(Node node) {
-        super.createBoard(node);
-        super.configureBoardAttributes(node);
+        super.applyTo(node);
         configureAddDropPorts(node);
     }
 

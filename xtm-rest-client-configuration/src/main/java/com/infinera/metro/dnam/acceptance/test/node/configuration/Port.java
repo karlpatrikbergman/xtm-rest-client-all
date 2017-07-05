@@ -18,6 +18,6 @@ import java.util.List;
 public class Port {
     @NonNull private final Integer transmitPort;
     @NonNull private final Integer receivePort;
-    @NonNull @Singular private final List<MibEntryAttributes> portEntryAttributes;
+    @Singular private final List<MibEntryAttributes> portEntryAttributes;
 
 }

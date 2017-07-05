@@ -8,7 +8,10 @@ import com.infinera.metro.dnam.acceptance.test.node.mib.entry.BoardEntry;
 import com.infinera.metro.dnam.acceptance.test.node.mib.type.BoardType;
 import com.infinera.metro.dnam.acceptance.test.node.mib.type.GroupOrTableType;
 import com.infinera.metro.dnam.acceptance.test.node.mib.type.ModuleType;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
@@ -20,7 +23,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @Getter(AccessLevel.PUBLIC)
-abstract class AbstractBoard {
+abstract class AbstractBoard implements  Board {
     @JsonIgnore private final ModuleType moduleType = ModuleType.EQ;
     @JsonIgnore private final GroupOrTableType groupOrTableType = GroupOrTableType.BOARD;
     @NonNull @JsonIgnore private final BoardType boardType;
@@ -37,11 +40,14 @@ abstract class AbstractBoard {
             .build();
     }
 
-    protected void createBoard(Node node) {
+    @Override
+    public void applyTo(Node node) throws RuntimeException {
         node.createBoard(getBoardEntry());
+        boardEntryAttributes.forEach(boardSetAttribute -> boardSetAttribute.applyTo(node, getBoardEntry()));
     }
 
-    protected void configureBoardAttributes(Node node) {
-        boardEntryAttributes.forEach(boardSetAttribute -> boardSetAttribute.applyTo(node, getBoardEntry()));
+    @Override
+    public void deleteFrom(Node node) {
+        node.deleteBoard(getBoardEntry());
     }
 }

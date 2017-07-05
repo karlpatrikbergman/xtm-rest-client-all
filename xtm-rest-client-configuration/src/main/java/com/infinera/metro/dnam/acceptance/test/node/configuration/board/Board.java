@@ -18,4 +18,5 @@ public interface Board {
     BoardEntry getBoardEntry();
 
     void applyTo(Node node);
+    void deleteFrom(Node node);
 }

@@ -15,13 +15,15 @@ public enum BoardType implements MibType {
     OA2X17DBM("oa2x17dbm"), // //Works for create but not for set.json oa2x17dBm
     OCM2P("ocm2p"),
     TPHEX10GOTN("tphex10gotn"),
-    TP100GOTN("Tp100gotn"),
-    GBE10EMXP10GII("Gbe10Emxp10Gii"),
+    TP100GOTN("tp100gotn"),
+    GBE10EMXP10GII("gbe10emxp10gii"),
     MDU40EVENL("mdu40EvenL"),
-    OIUC50100("Oiuc50100");
+    OIUC50100("oiuc50100"),
+    FXP400GOTN("fxp400gotn"),
+    AD4EVEN50("ad4even50"),
+    OCU2("ocu2");
 //    TP10G("tp10g"),
 //    OCM2P("oa2x17dBm"),
-//    AD4EVEN50("ad4Even50"),
 //    OIUC50100("oiuc50100");
 
     private final String value;

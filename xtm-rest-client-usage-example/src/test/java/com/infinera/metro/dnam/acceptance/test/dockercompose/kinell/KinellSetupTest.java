@@ -1,6 +1,7 @@
 package com.infinera.metro.dnam.acceptance.test.dockercompose.kinell;
 
 import com.infinera.metro.dnam.acceptance.test.node.DontLetGradleRun;
+import com.infinera.metro.dnam.acceptance.test.node.Node;
 import com.infinera.metro.dnam.acceptance.test.node.NodeAccessData;
 import com.infinera.metro.dnam.acceptance.test.node.NodeImpl;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.NodeConfiguration;
@@ -21,7 +22,7 @@ public class KinellSetupTest {
 
     final ObjectFromFileUtil objectFromFileUtil = ObjectFromFileUtilJackson.INSTANCE;
     private final NodeEquipment liljeholmenNodeEquipment;
-    private final NodeAccessData liljeholmenNodeAccessData;
+    private final Node  liljeholmen;
     private final String RESOURCES_PATH = "dockercompose/kinell/";
     private final String NODE_EQUIPMENT_PATH = RESOURCES_PATH + "node_liljeholmen.yml";
     private final String DOCKER_COMPOSE_PATH = RESOURCES_PATH + "docker-compose.yml";
@@ -35,17 +36,22 @@ public class KinellSetupTest {
         liljeholmenNodeEquipment = objectFromFileUtil.getObject(NODE_EQUIPMENT_PATH, NodeEquipment.class);
         assertNotNull(liljeholmenNodeEquipment);
 
-        liljeholmenNodeAccessData = objectFromFileUtil.getObject(NODE_ACCESS_DATA_PATH, NodeAccessData.class)
+        final NodeAccessData liljeholmenNodeAccessData = objectFromFileUtil.getObject(NODE_ACCESS_DATA_PATH, NodeAccessData.class)
                 .copyObjectAndChangeIpAddress(liljeholmenIpAddress);
-//                .copyObjectAndChangeIpAddress("172.16.15.230");
+        liljeholmen = NodeImpl.create(liljeholmenNodeAccessData);
     }
 
     @Test
-    public void test() {
+    public void applyEquipmentToNode() {
         final NodeConfiguration nodeConfigurationNodeA = NodeConfiguration.builder()
-                .node(NodeImpl.create(liljeholmenNodeAccessData))
+                .node(liljeholmen)
                 .nodeEquipment(liljeholmenNodeEquipment)
                 .build();
         nodeConfigurationNodeA.apply();
+    }
+
+    @Test
+    public void deleteBoards() {
+        liljeholmenNodeEquipment.deleteBoards(liljeholmen);
     }
 }

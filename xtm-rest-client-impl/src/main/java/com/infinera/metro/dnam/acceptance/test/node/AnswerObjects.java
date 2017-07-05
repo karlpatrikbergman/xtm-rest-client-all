@@ -30,7 +30,6 @@ public class AnswerObjects {
      *                              for this specific operation
      */
     public void checkResponse(OperationType operationType, MibEntry mibEntry) throws RuntimeException {
-
         Optional<AnswerObject> answerObjectOptional = findSuccessAnswerObject(operationType, mibEntry);
         if (!answerObjectOptional.isPresent()) {
             throw new RuntimeException(getErrorMessage(operationType, mibEntry));

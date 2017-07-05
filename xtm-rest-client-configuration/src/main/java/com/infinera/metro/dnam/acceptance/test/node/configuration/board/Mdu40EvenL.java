@@ -1,6 +1,5 @@
 package com.infinera.metro.dnam.acceptance.test.node.configuration.board;
 
-import com.infinera.metro.dnam.acceptance.test.node.Node;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.MibEntryAttributes;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.Slot;
 import com.infinera.metro.dnam.acceptance.test.node.mib.type.BoardType;
@@ -22,9 +21,4 @@ public class Mdu40EvenL extends AbstractBoard implements Board {
         super(BoardType.MDU40EVENL, subrack, slot, boardEntryAttributes);
     }
 
-    @Override
-    public void applyTo(Node node) {
-        super.createBoard(node);
-        super.configureBoardAttributes(node);
-    }
 }

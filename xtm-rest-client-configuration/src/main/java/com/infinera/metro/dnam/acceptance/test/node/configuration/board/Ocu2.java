@@ -12,16 +12,14 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 
-//TODO: Figure out how ports for this device work, and what can be set
-
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
 @Value
-public class Ocm2p extends AbstractBoard implements Board {
+public class Ocu2 extends AbstractBoard implements Board {
 
     @Builder
     @java.beans.ConstructorProperties({"subrack", "slot", "boardEntryAttributes"})
-    private Ocm2p(Integer subrack, Slot slot, @Singular List<MibEntryAttributes> boardEntryAttributes) {
-        super(BoardType.OCM2P, subrack, slot, boardEntryAttributes);
+    private Ocu2(Integer subrack, Slot slot, @Singular List<MibEntryAttributes> boardEntryAttributes) {
+        super(BoardType.OCU2, subrack, slot, boardEntryAttributes);
     }
 }

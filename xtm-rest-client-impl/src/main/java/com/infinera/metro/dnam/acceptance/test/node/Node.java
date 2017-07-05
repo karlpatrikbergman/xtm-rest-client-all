@@ -32,6 +32,8 @@ public interface Node {
     AnswerObjects configureAddDropPortAttributes(AddDropPortEntry addDropPortEntry, Configurations configurations) throws RuntimeException;
 
     AnswerObjects createPeer(PeerEntry peerEntry) throws RuntimeException;
+
+    //TODO: Rename to setPeerAttributes
     AnswerObjects setLocalPeerConfiguration(PeerEntry peerEntry, Configurations configurations) throws RuntimeException;
 
     static Node defaultImplementation(NodeAccessData nodeAccessData) {

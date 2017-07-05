@@ -9,7 +9,8 @@ import org.springframework.web.client.RestTemplate;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
-class NodeConnection {
+class
+NodeConnection {
     private final RestTemplate restTemplate;
     private final NodeAccessData nodeAccessData;
     private final XtmRestBaseUtil xtmRestBaseUtil;

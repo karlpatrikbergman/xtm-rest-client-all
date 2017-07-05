@@ -1,6 +1,5 @@
 package com.infinera.metro.dnam.acceptance.test.node.configuration.board;
 
-import com.infinera.metro.dnam.acceptance.test.node.Node;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.Slot;
 import com.infinera.metro.dnam.acceptance.test.node.mib.type.BoardType;
 import lombok.Builder;
@@ -16,10 +15,5 @@ public class Gbe10Emxp10Gii extends AbstractBoard implements Board {
     @java.beans.ConstructorProperties({"subrack", "slot"})
     private Gbe10Emxp10Gii(Integer subrack, Slot slot) {
         super(BoardType.GBE10EMXP10GII, subrack, slot, null);
-    }
-
-    @Override
-    public void applyTo(Node node) {
-        createBoard(node);
     }
 }

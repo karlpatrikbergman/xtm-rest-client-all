@@ -211,7 +211,33 @@ boards:
         configurations:
         - key: "adminStatus"
           value: "up"
-  slot15: !<com.infinera.metro.dnam.acceptance.test.node.configuration.board.Mdu40EvenL>
+  slot15: !<com.infinera.metro.dnam.acceptance.test.node.configuration.board.Ad4Even50>
     subrack: 1
     slot: "slot15"
+    boardEntryAttributes:
+    - !<com.infinera.metro.dnam.acceptance.test.node.configuration.BoardSetAttributes>
+      configurations:
+        configurations:
+        - key: "adminStatus"
+          value: "up"
+  slot16: !<com.infinera.metro.dnam.acceptance.test.node.configuration.board.Oiuc50100>
+    subrack: 1
+    slot: "slot16"
     boardEntryAttributes: []
+  slot18: !<com.infinera.metro.dnam.acceptance.test.node.configuration.board.Ocu2>
+    subrack: 1
+    slot: "slot18"
+    boardEntryAttributes: []
+  slot19: !<com.infinera.metro.dnam.acceptance.test.node.configuration.board.Oiuc50100>
+    subrack: 1
+    slot: "slot19"
+    boardEntryAttributes: []
+  slot20: !<com.infinera.metro.dnam.acceptance.test.node.configuration.board.Ad4Even50>
+    subrack: 1
+    slot: "slot20"
+    boardEntryAttributes:
+    - !<com.infinera.metro.dnam.acceptance.test.node.configuration.BoardSetAttributes>
+      configurations:
+        configurations:
+        - key: "adminStatus"
+          value: "up"

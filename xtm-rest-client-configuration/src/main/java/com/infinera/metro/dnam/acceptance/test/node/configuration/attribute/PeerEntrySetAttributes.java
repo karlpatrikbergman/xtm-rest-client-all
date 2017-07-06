@@ -14,7 +14,7 @@ public class PeerEntrySetAttributes implements MibEntryAttributes {
 
     public void applyTo(Node node, MibEntry peerEntry) {
         Preconditions.checkArgument(peerEntry instanceof PeerEntry, "Expected argument of type PeerEntry");
-        node.setLocalPeerConfiguration((PeerEntry) peerEntry, configurations);
+        node.setPeerAttributes((PeerEntry) peerEntry, configurations);
     }
 
     public static PeerEntrySetAttributes of(Configurations configurations) {

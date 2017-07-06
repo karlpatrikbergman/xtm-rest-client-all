@@ -26,7 +26,7 @@ import static org.junit.Assert.assertEquals;
  * }
  */
 
-//TODO: Fix tests.
+//TODO: Look at tests that are commented out, and fix the ones that seems necessary/important
 
 @Slf4j
 public class PeerConnectionTest {

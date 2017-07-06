@@ -7,6 +7,11 @@ import com.infinera.metro.dnam.acceptance.test.node.mib.type.MibType;
 import com.infinera.metro.dnam.acceptance.test.node.mib.type.ModuleType;
 import org.stringtemplate.v4.ST;
 
+/**
+ * TODO: This class is a mess, not very readably and maybe not filling a purpose.
+ * - Methods that are only used by one class should reside in that class and not here
+ */
+
 public enum MibPathUtil {
     MIB_PATH_UTIL;
 

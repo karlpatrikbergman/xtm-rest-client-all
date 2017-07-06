@@ -7,7 +7,7 @@ import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Value;
 
-//TODO: This class is equal to ClientPortEntry. Use only ClientPortEntry instead?
+//TODO: This class is equal to ClientPortEntry. Code reuse some how?
 
 @EqualsAndHashCode(callSuper = true)
 @Value

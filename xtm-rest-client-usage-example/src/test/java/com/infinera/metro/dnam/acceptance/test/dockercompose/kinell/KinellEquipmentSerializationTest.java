@@ -7,6 +7,7 @@ import com.infinera.metro.dnam.acceptance.test.node.configuration.board.*;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.util.AddDropChannelUtil;
 import com.infinera.metro.dnam.acceptance.test.node.mib.Configuration;
 import com.infinera.metro.dnam.acceptance.test.node.mib.Configurations;
+import com.infinera.metro.dnam.acceptance.test.node.mib.MpoIdentifier;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 
@@ -15,7 +16,9 @@ import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 @Slf4j
 public class KinellEquipmentSerializationTest {
@@ -169,6 +172,34 @@ public class KinellEquipmentSerializationTest {
         //TODO: Create file util class?
         Path newFilePath = Paths.get("src/test/resources/dockercompose/kinell/node_liljeholmen.yml");
         Files.write(newFilePath, yamlString.getBytes());
+
+        Roadm1x2G50 roadmFrom = (Roadm1x2G50) nodeEquipment.getBoard(Slot.slot2);
+        Roadm1x2G50 roadmTo = (Roadm1x2G50) nodeEquipment.getBoard(Slot.slot4);
+
+
+        InternalConnection internalConnection = InternalConnection.builder()
+            .fromPort(
+                roadmFrom.getAddDropPortEntry(
+                    Port.builder()
+                        .transmitPort(3)
+                        .receivePort(4)
+                        .build()
+                )
+            )
+            .fromMpoIdentifier(MpoIdentifier.NotPresent())
+            .toPort(
+                roadmTo.getAddDropPortEntry(
+                    Port.builder()
+                        .transmitPort(3)
+                        .receivePort(4)
+                        .build()
+                )
+            )
+            .toMpoIdentifier(MpoIdentifier.NotPresent())
+            .build();
+
+        final String internalConnectionString = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(internalConnection);
+        log.info(internalConnectionString);
 
     }
 }

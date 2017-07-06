@@ -13,7 +13,8 @@ public enum GroupOrTableType implements MibType {
     IF("if"),
     PEER("peer"),
     ADD_DROP_IF("addDropIf"),
-    LINEIF("lineIf");
+    LINEIF("lineIf"),
+    INTERNAL("internal");
 
     private final String value;
 

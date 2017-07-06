@@ -13,6 +13,8 @@ import lombok.Builder;
 import lombok.NonNull;
 import lombok.Value;
 
+//TODO: Make serialization work the same as deserialization does. It must work the same both ways
+
 @JsonTypeInfo(use = JsonTypeInfo.Id.MINIMAL_CLASS, include = JsonTypeInfo.As.PROPERTY, property = "@class")
 @Value
 public class PeerConnection {
@@ -85,8 +87,8 @@ public class PeerConnection {
 
     public void applyTo(Node nodeA, Node nodeZ) {
         nodeA.createPeer(localPeerEntry);
-        nodeA.setLocalPeerConfiguration(localPeerEntry, localPeerConfiguration);
+        nodeA.setPeerAttributes(localPeerEntry, localPeerConfiguration);
         nodeZ.createPeer(remotePeerEntry);
-        nodeZ.setLocalPeerConfiguration(remotePeerEntry, remotePeerConfiguration);
+        nodeZ.setPeerAttributes(remotePeerEntry, remotePeerConfiguration);
     }
 }

@@ -15,7 +15,8 @@ import lombok.NonNull;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "@class")
 @JsonSubTypes({
-    @JsonSubTypes.Type(value = LinePortEntry.class, name = "linePortEntry")
+    @JsonSubTypes.Type(value = LinePortEntry.class, name = "linePortEntry"),
+    @JsonSubTypes.Type(value = ClientPortEntry.class, name = "clientPortEntry")
 })
 public class AbstractPortEntry extends AbstractMibEntry implements MibEntry {
     @Getter @NonNull private final Integer transmitPort;

@@ -1,4 +1,4 @@
-package com.infinera.metro.dnam.acceptance.test.node.configuration.board;
+package com.infinera.metro.dnam.acceptance.test.node.configuration.board.notfinished;
 
 //@EqualsAndHashCode(callSuper = true)
 //@Slf4j

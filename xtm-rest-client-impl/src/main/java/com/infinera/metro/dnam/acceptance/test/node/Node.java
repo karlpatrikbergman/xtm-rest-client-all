@@ -33,14 +33,12 @@ public interface Node {
 
     AnswerObjects createPeer(PeerEntry peerEntry) throws RuntimeException;
 
-    //TODO: Rename to setPeerAttributes
-    AnswerObjects setLocalPeerConfiguration(PeerEntry peerEntry, Configurations configurations) throws RuntimeException;
+    AnswerObjects setPeerAttributes(PeerEntry peerEntry, Configurations configurations) throws RuntimeException;
+
+
+    AnswerObjects createInternalConnection(InternalConnectionEntry internalConnectionEntry) throws RuntimeException;
 
     static Node defaultImplementation(NodeAccessData nodeAccessData) {
-        return new NodeImpl(
-            new NodeRestClient(
-                new NodeConnection(nodeAccessData, RestTemplateFactory.REST_TEMPLATE_FACTORY.createRestTemplate())
-            )
-        );
+        return NodeImpl.create(nodeAccessData);
     }
 }

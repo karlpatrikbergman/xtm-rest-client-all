@@ -91,7 +91,14 @@ public class NodeImpl implements Node {
     }
 
     @Override
-    public AnswerObjects setLocalPeerConfiguration(PeerEntry peerEntry, Configurations configurations) throws RuntimeException {
+    public AnswerObjects setPeerAttributes(PeerEntry peerEntry, Configurations configurations) throws RuntimeException {
         return nodeRestClient.performRestAction(peerEntry, CommandType.SET_JSON, configurations);
     }
+
+    @Override
+    public AnswerObjects createInternalConnection(InternalConnectionEntry internalConnectionEntry) throws RuntimeException {
+        return nodeRestClient.performRestAction(internalConnectionEntry, CommandType.CREATE_JSON);
+    }
+
+
 }

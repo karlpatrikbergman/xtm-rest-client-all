@@ -55,7 +55,7 @@ class NodeRestClient {
                 ThreadSleepWrapper.sleep(10);
             }
         }
-        throw new RuntimeException("Tried performRestAction three times and failed. CommandType was: " + all);
+        throw new RuntimeException("Tried performRestAction three times and failed. Request was: " + all);
     }
 
     String getNodeIpAddress() {

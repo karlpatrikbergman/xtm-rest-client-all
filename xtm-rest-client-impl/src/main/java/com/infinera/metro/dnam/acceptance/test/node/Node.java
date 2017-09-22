@@ -35,7 +35,6 @@ public interface Node {
 
     AnswerObjects setPeerAttributes(PeerEntry peerEntry, Configurations configurations) throws RuntimeException;
 
-
     AnswerObjects createInternalConnection(InternalConnectionEntry internalConnectionEntry) throws RuntimeException;
 
     static Node defaultImplementation(NodeAccessData nodeAccessData) {

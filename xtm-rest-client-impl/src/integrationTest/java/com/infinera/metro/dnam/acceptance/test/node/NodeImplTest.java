@@ -13,14 +13,12 @@ import com.palantir.docker.compose.connection.waiting.HealthChecks;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.ClassRule;
 import org.junit.Test;
-import org.junit.experimental.categories.Category;
 
 import java.io.IOException;
 
 import static com.infinera.metro.dnam.acceptance.test.node.RestTemplateFactory.REST_TEMPLATE_FACTORY;
 import static org.junit.Assert.assertNotNull;
 
-@Category(IntegrationTest.class)
 @Slf4j
 public class NodeImplTest {
 

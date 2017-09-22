@@ -1,0 +1,6 @@
+# Details of a node access data
+---
+ipAddress: 172.17.0.3
+port: 80
+userName: root
+password: root

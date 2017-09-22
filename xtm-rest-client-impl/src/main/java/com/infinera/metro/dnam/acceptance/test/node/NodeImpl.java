@@ -3,6 +3,10 @@ package com.infinera.metro.dnam.acceptance.test.node;
 import com.infinera.metro.dnam.acceptance.test.node.mib.*;
 import com.infinera.metro.dnam.acceptance.test.node.mib.entry.*;
 
+/**
+ * TODO: Make package private. All classes except interface Node could be package private.
+ */
+
 public class NodeImpl implements Node {
     private final NodeRestClient nodeRestClient;
 

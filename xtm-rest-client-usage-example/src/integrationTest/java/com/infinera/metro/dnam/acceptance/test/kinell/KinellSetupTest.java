@@ -1,4 +1,4 @@
-package com.infinera.metro.dnam.acceptance.test.dockercompose.kinell;
+package com.infinera.metro.dnam.acceptance.test.kinell;
 
 import com.infinera.metro.dnam.acceptance.test.node.DontLetGradleRun;
 import com.infinera.metro.dnam.acceptance.test.node.Node;

@@ -41,7 +41,7 @@ public class ClientPortEntryTest {
 
     @Test(expected=NullPointerException.class)
     public void testClientPortEntryBuilder() {
-        ClientPortEntry clientPortEntry = ClientPortEntry.builder()
+       ClientPortEntry.builder()
             .clientPortType(ClientPortType.CLIENT)
             .subrack(1)
             .slot(2)

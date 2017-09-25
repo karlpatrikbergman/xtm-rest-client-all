@@ -24,7 +24,7 @@ public class NodeImplTest {
 
     @ClassRule
     public static DockerComposeRule docker = DockerComposeRule.builder()
-            .file("src/test/resources/docker-compose.yml")
+            .file("src/integrationTest/resources/docker-compose.yml")
             .waitingForService("node1", HealthChecks.toHaveAllPortsOpen())
             .build();
 

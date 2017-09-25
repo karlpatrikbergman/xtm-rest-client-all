@@ -23,8 +23,19 @@ import java.util.Map;
 @Slf4j
 public class CodeOnlyPeerConnectionTest {
 
+//    @ClassRule
+//    public static DockerComposeRule docker = DockerComposeRule.builder()
+//            .file("src/test/resources/dockercompose/three-nodes-example-docker-compose-rule/docker-compose.yml")
+//            .waitingForService("nodeA", HealthChecks.toHaveAllPortsOpen())
+//            .waitingForService("nodeZ", HealthChecks.toHaveAllPortsOpen())
+//            .build();
+
     private final String ipAddressNodeA = "172.17.0.2";
     private final String ipAddressNodeZ = "172.17.0.3";
+
+//    private final String ipAddressNodeA = "172.45.0.101";
+//    private final String ipAddressNodeZ = "172.45.0.101";
+
     private final Node nodeA = Node.defaultImplementation(
         NodeAccessData.builder()
             .ipAddress(ipAddressNodeA)
@@ -58,6 +69,11 @@ public class CodeOnlyPeerConnectionTest {
 
     @Test
     public void test() throws IOException {
+//        String foo = System.getProperty("foo");
+//        log.info("foo {}", foo.toString());
+//        String bar = System.getProperty("bar");
+//        log.info("bar {}", bar.toString());
+
         Tpd10gbe tpd10gbe = Tpd10gbe.builder()
             .subrack(1)
             .slot(Slot.slot2)

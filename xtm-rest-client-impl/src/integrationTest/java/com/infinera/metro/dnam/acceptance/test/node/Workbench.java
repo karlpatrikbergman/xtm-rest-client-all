@@ -28,7 +28,6 @@ public class Workbench {
     private final ObjectReader objectReader = JacksonUtil.INSTANCE.getReader().forType(new TypeReference<List<AnswerObject>>() {
     });
     private final MibPathUtil mibPathUtil = MibPathUtil.MIB_PATH_UTIL;
-    private final MibObjectFactory mibObjectFactory = MibObjectFactory.MIB_OBJECT_FACTORY;
     private final String NODE_A_IP_ADDRESS = "172.17.0.2";
     private final String NODE_Z_IP_ADDRESS = "172.17.0.3";
 

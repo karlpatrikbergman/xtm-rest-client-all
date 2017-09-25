@@ -14,13 +14,14 @@ import static org.junit.Assert.assertNotNull;
 @Slf4j
 public class AttributeObjectDeserializeTest {
 
+    private static final ObjectReader READER = JacksonUtil.INSTANCE.getReader().forType(AttributeObject.class);
+
     @Test
     public void deserializeAttributeObject() throws IOException {
-        String attributeObjectJsonString = new ResourceString("deserializing/attribute-object.json").toString();
+        final String attributeObjectJsonString = new ResourceString("deserializing/attribute-object.json").toString();
         assertNotNull(attributeObjectJsonString);
 
-        ObjectReader reader = JacksonUtil.INSTANCE.getReader().forType(AttributeObject.class);
-        AttributeObject attributeObject = reader.readValue(attributeObjectJsonString);
+        final AttributeObject attributeObject = READER.readValue(attributeObjectJsonString);
         assertNotNull(attributeObject);
 
         log.info("{}", attributeObject);
@@ -28,11 +29,10 @@ public class AttributeObjectDeserializeTest {
 
     @Test
     public void deserializeAttributeObjectLackingNameField() throws IOException {
-        String attributeObjectJsonString = new ResourceString("deserializing/attribute-object-lacking-name-field.json").toString();
+        final String attributeObjectJsonString = new ResourceString("deserializing/attribute-object-lacking-name-field.json").toString();
         assertNotNull(attributeObjectJsonString);
 
-        ObjectReader reader = JacksonUtil.INSTANCE.getReader().forType(AttributeObject.class);
-        AttributeObject attributeObject = reader.readValue(attributeObjectJsonString);
+        AttributeObject attributeObject = READER.readValue(attributeObjectJsonString);
         assertNotNull(attributeObject);
 
         log.info("{}", attributeObject);
@@ -40,10 +40,10 @@ public class AttributeObjectDeserializeTest {
 
     @Test
     public void deserializeAttributeArray() throws IOException {
-        String attributeArrayJsonString = new ResourceString("deserializing/attribute-array.json").toString();
+        final String attributeArrayJsonString = new ResourceString("deserializing/attribute-array.json").toString();
         assertNotNull(attributeArrayJsonString);
 
-        ObjectReader reader = JacksonUtil.INSTANCE.getReader().forType(new TypeReference<List<AttributeObject>>(){});
+        final ObjectReader reader = JacksonUtil.INSTANCE.getReader().forType(new TypeReference<List<AttributeObject>>(){});
         List<AttributeObject> attributeArray = reader.readValue(attributeArrayJsonString);
         assertNotNull(attributeArray);
 

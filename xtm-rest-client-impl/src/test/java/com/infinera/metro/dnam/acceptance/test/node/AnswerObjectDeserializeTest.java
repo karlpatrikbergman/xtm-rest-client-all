@@ -24,13 +24,14 @@ public class AnswerObjectDeserializeTest {
      * instances are relatively light-weight.
      */
 
+    private final ObjectReader reader = JacksonUtil.INSTANCE.getReader().forType(AnswerObject.class);
+
     @Test //From JSON to Java pojo == Deserialize
     public void deserializeAnswerObject() throws IOException {
-        String answerObjectJsonString = new ResourceString("deserializing/answer-object.json").toString();
+        final String answerObjectJsonString = new ResourceString("deserializing/answer-object.json").toString();
         assertNotNull(answerObjectJsonString);
 
-        ObjectReader reader = JacksonUtil.INSTANCE.getReader().forType(AnswerObject.class);
-        AnswerObject answerObject = reader.readValue(answerObjectJsonString);
+        final AnswerObject answerObject = reader.readValue(answerObjectJsonString);
         assertNotNull(answerObject);
         assertTrue(answerObject.isSuccess());
         assertTrue(answerObject.getError().equals(""));
@@ -43,11 +44,10 @@ public class AnswerObjectDeserializeTest {
 
     @Test //From JSON to Java pojo == Deserialize
     public void deserializeAnswerObjectLackingRflagsField() throws IOException {
-        String answerObjectJsonString = new ResourceString("deserializing/answer-object-lacking-rflags-field.json").toString();
+        final String answerObjectJsonString = new ResourceString("deserializing/answer-object-lacking-rflags-field.json").toString();
         assertNotNull(answerObjectJsonString);
 
-        ObjectReader reader = JacksonUtil.INSTANCE.getReader().forType(AnswerObject.class);
-        AnswerObject answerObject = reader.readValue(answerObjectJsonString);
+        final AnswerObject answerObject = reader.readValue(answerObjectJsonString);
         assertNotNull(answerObject);
 
         log.info("{}", answerObject);
@@ -55,11 +55,10 @@ public class AnswerObjectDeserializeTest {
 
     @Test
     public void deserializeAnswerObjectWhenEntryNotFound() throws IOException {
-        String answerObjectJsonString = new ResourceString("deserializing/entry-not-found-response.json").toString();
+        final String answerObjectJsonString = new ResourceString("deserializing/entry-not-found-response.json").toString();
         assertNotNull(answerObjectJsonString);
 
-        ObjectReader reader = JacksonUtil.INSTANCE.getReader().forType(AnswerObject.class);
-        AnswerObject answerObject = reader.readValue(answerObjectJsonString);
+        final AnswerObject answerObject = reader.readValue(answerObjectJsonString);
         assertNotNull(answerObject);
 
         log.info("{}", answerObject);
@@ -68,11 +67,11 @@ public class AnswerObjectDeserializeTest {
 
     @Test //From JSON to Java pojo == Deserialize
     public void deserializeAnswerObjectArray() throws IOException {
-        String answerObjectJsonString = new ResourceString("deserializing/answer-object-array.json").toString();
+        final String answerObjectJsonString = new ResourceString("deserializing/answer-object-array.json").toString();
         assertNotNull(answerObjectJsonString);
 
-        ObjectReader reader = JacksonUtil.INSTANCE.getReader().forType(new TypeReference<List<AnswerObject>>(){});
-        List<AnswerObject> answerObjects = reader.readValue(answerObjectJsonString);
+        final ObjectReader reader = JacksonUtil.INSTANCE.getReader().forType(new TypeReference<List<AnswerObject>>(){});
+        final List<AnswerObject> answerObjects = reader.readValue(answerObjectJsonString);
         assertNotNull(answerObjects);
 
         answerObjects.forEach(answerObject -> log.info("{}\n", answerObject));

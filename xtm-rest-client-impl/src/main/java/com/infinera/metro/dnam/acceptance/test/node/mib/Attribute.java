@@ -6,7 +6,7 @@ import lombok.Value;
 
 @Builder
 @Value
-public class Configuration {
+public class Attribute {
     @NonNull private final String key;
     private final String value;
 

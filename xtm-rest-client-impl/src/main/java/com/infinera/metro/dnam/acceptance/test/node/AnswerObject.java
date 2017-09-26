@@ -96,11 +96,18 @@ public class AnswerObject implements Serializable {
     private String queryString;     //Q
     private List<AttributeObject> attributeObjectList; //T
 
-    private Optional<AttributeObject> getAttributeObject(String name) {
+    public Optional<AttributeObject> getAttributeObject(String name) {
         assert attributeObjectList != null;
         return attributeObjectList.stream()
                 .filter(attributeObject -> attributeObject.getName().equals(name))
                 .findFirst();
+    }
+
+    public Optional<AttributeObject> getAttributeObjectByAlias(String alias) {
+        assert attributeObjectList != null;
+        return attributeObjectList.stream()
+            .filter(attributeObject -> attributeObject.getAlias().equals(alias))
+            .findFirst();
     }
 
     /**

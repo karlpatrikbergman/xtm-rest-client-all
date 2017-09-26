@@ -6,7 +6,7 @@ import com.infinera.metro.dnam.acceptance.test.node.NodeAccessData;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.*;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.board.Board;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.board.Tpd10gbe;
-import com.infinera.metro.dnam.acceptance.test.node.mib.Configuration;
+import com.infinera.metro.dnam.acceptance.test.node.mib.Attribute;
 import com.infinera.metro.dnam.acceptance.test.node.mib.MpoIdentifier;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
@@ -23,18 +23,8 @@ import java.util.Map;
 @Slf4j
 public class CodeOnlyPeerConnectionTest {
 
-//    @ClassRule
-//    public static DockerComposeRule docker = DockerComposeRule.builder()
-//            .file("src/test/resources/dockercompose/three-nodes-example-docker-compose-rule/docker-compose.yml")
-//            .waitingForService("nodeA", HealthChecks.toHaveAllPortsOpen())
-//            .waitingForService("nodeZ", HealthChecks.toHaveAllPortsOpen())
-//            .build();
-
     private final String ipAddressNodeA = "172.17.0.2";
     private final String ipAddressNodeZ = "172.17.0.3";
-
-//    private final String ipAddressNodeA = "172.45.0.101";
-//    private final String ipAddressNodeZ = "172.45.0.101";
 
     private final Node nodeA = Node.defaultImplementation(
         NodeAccessData.builder()
@@ -54,31 +44,27 @@ public class CodeOnlyPeerConnectionTest {
             .build()
     );
 
-    private final Port linePort = Port.builder()
-        .transmitPort(3)
-        .receivePort(4)
-        .portEntryAttribute( //Remember that a port entry can have both setAttributes and configureAttributes
-            LinePortSetAttributes.of(
-                Configuration.builder()
-                    .key("expectedFrequency")
-                    .value("ch926")
-                    .build()
-            )
-        )
-        .build();
-
     @Test
     public void test() throws IOException {
-//        String foo = System.getProperty("foo");
-//        log.info("foo {}", foo.toString());
-//        String bar = System.getProperty("bar");
-//        log.info("bar {}", bar.toString());
+
+        final Port linePort = Port.builder()
+            .transmitPort(3)
+            .receivePort(4)
+            .portEntryAttribute( //Remember that a port entry can have both setAttributes and configureAttributes
+                LinePortSetAttributes.of(
+                    Attribute.builder()
+                        .key("expectedFrequency")
+                        .value("ch926")
+                        .build()
+                )
+            )
+            .build();
 
         Tpd10gbe tpd10gbe = Tpd10gbe.builder()
             .subrack(1)
             .slot(Slot.slot2)
             .boardEntryAttribute(
-                BoardSetAttributes.of(Configuration.builder()
+                BoardSetAttributes.of(Attribute.builder()
                     .key("adminStatus")
                     .value("up")
                     .build())

@@ -6,7 +6,7 @@ import com.infinera.metro.dnam.acceptance.test.node.NodeAccessData;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.*;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.board.Board;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.board.Fxp400gotn;
-import com.infinera.metro.dnam.acceptance.test.node.mib.Configuration;
+import com.infinera.metro.dnam.acceptance.test.node.mib.Attribute;
 import com.infinera.metro.dnam.acceptance.test.node.mib.MpoIdentifier;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
@@ -38,7 +38,7 @@ public class FlexponderSetupTest {
             .subrack(1)
             .slot(Slot.slot2)
             .boardEntryAttribute(
-                BoardSetAttributes.of(Configuration.builder()
+                BoardSetAttributes.of(Attribute.builder()
                     .key("adminStatus")
                     .value("up")
                     .build())

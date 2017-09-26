@@ -1,6 +1,6 @@
 package com.infinera.metro.dnam.acceptance.test.node.configuration;
 
-import com.infinera.metro.dnam.acceptance.test.node.mib.Configurations;
+import com.infinera.metro.dnam.acceptance.test.node.mib.Attributes;
 import com.infinera.metro.dnam.acceptance.test.node.mib.MpoIdentifier;
 import com.infinera.metro.dnam.acceptance.test.node.mib.entry.LinePortEntry;
 import com.infinera.metro.dnam.acceptance.test.node.mib.entry.PeerEntry;
@@ -76,9 +76,9 @@ public class PeerConnectionTest {
         .build();
 
     private final PeerEntry localPeerEntry = peerConnectionAtoZ.getLocalPeerEntry();
-    private final Configurations localPeerConfiguration = peerConnectionAtoZ.getLocalPeerConfiguration();
+    private final Attributes localPeerConfiguration = peerConnectionAtoZ.getLocalPeerConfiguration();
     private final PeerEntry remotePeerEntry = peerConnectionAtoZ.getRemotePeerEntry();
-    private final Configurations remotePeerConfiguration = peerConnectionAtoZ.getRemotePeerConfiguration();
+    private final Attributes remotePeerConfiguration = peerConnectionAtoZ.getRemotePeerConfiguration();
 
     @Test
     public void test() {
@@ -102,7 +102,7 @@ public class PeerConnectionTest {
 
     @Test
     public void transmitPeerEntryRemoteNodeIpAddress() {
-//        assertEquals("172.17.0.3", localPeerConfiguration.getConfigurations().stream().filter());
+//        assertEquals("172.17.0.3", localPeerConfiguration.getAttributes().stream().filter());
     }
 
     @Test

@@ -3,8 +3,8 @@ package com.infinera.metro.dnam.acceptance.test.node.configuration;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.board.Board;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.board.Tpd10gbe;
-import com.infinera.metro.dnam.acceptance.test.node.mib.Configuration;
-import com.infinera.metro.dnam.acceptance.test.node.mib.Configurations;
+import com.infinera.metro.dnam.acceptance.test.node.mib.Attribute;
+import com.infinera.metro.dnam.acceptance.test.node.mib.Attributes;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 
@@ -23,7 +23,7 @@ public class NodeEquipmentSerializationTest {
             .subrack(1)
             .slot(Slot.slot2)
             .boardEntryAttribute(
-                BoardSetAttributes.of(Configuration.builder()
+                BoardSetAttributes.of(Attribute.builder()
                     .key("adminStatus")
                     .value("up")
                     .build())
@@ -34,7 +34,7 @@ public class NodeEquipmentSerializationTest {
                     .receivePort(2)
                     .portEntryAttribute(
                         ClientPortConfigAttributes.of(
-                            Configurations.of(Configuration.builder()
+                            Attributes.of(Attribute.builder()
                                 .key("clientIfConfigurationCommand")
                                 .value("wan10GbE yes")
                                 .build()
@@ -43,7 +43,7 @@ public class NodeEquipmentSerializationTest {
                     )
                     .portEntryAttribute(
                         ClientPortSetAttributes.of(
-                            Configurations.of(Configuration.builder()
+                            Attributes.of(Attribute.builder()
                                 .key("expectedFrequency")
                                 .value("w1530")
                                 .build()
@@ -57,7 +57,7 @@ public class NodeEquipmentSerializationTest {
                     .receivePort(6)
                     .portEntryAttribute(
                         ClientPortConfigAttributes.of(
-                            Configurations.of(Configuration.builder()
+                            Attributes.of(Attribute.builder()
                                 .key("clientIfConfigurationCommand")
                                 .value("wan10GbE yes")
                                 .build()
@@ -66,7 +66,7 @@ public class NodeEquipmentSerializationTest {
                     )
                     .portEntryAttribute(
                         ClientPortSetAttributes.of(
-                            Configurations.of(Configuration.builder()
+                            Attributes.of(Attribute.builder()
                                 .key("expectedFrequency")
                                 .value("w1530")
                                 .build()
@@ -81,8 +81,8 @@ public class NodeEquipmentSerializationTest {
                     .receivePort(4)
                     .portEntryAttributes(
                         Arrays.asList(
-                            LinePortSetAttributes.of(Configurations.of(
-                                Configuration.builder()
+                            LinePortSetAttributes.of(Attributes.of(
+                                Attribute.builder()
                                     .key("expectedFrequency")
                                     .value("ch926")
                                     .build()
@@ -98,8 +98,8 @@ public class NodeEquipmentSerializationTest {
                     .receivePort(8)
                     .portEntryAttributes(
                         Arrays.asList(
-                            LinePortSetAttributes.of(Configurations.of(
-                                Configuration.builder()
+                            LinePortSetAttributes.of(Attributes.of(
+                                Attribute.builder()
                                     .key("expectedFrequency")
                                     .value("ch927")
                                     .build()

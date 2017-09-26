@@ -37,8 +37,8 @@ public class NodeImpl implements Node {
     }
 
     @Override
-    public AnswerObjects getBoard(BoardEntry boardEntry) throws RuntimeException {
-        return nodeRestClient.performRestAction(boardEntry, CommandType.GET_JSON);
+    public AnswerObjects getBoard(BoardEntry boardEntry, Attributes attributes) throws RuntimeException {
+        return nodeRestClient.performRestAction(boardEntry, CommandType.GET_JSON, attributes);
     }
 
 
@@ -48,8 +48,8 @@ public class NodeImpl implements Node {
     }
 
     @Override
-    public AnswerObjects setBoardAttributes(BoardEntry boardEntry, Configurations configurations) {
-        return nodeRestClient.performRestAction(boardEntry, CommandType.SET_JSON, configurations);
+    public AnswerObjects setBoardAttributes(BoardEntry boardEntry, Attributes attributes) {
+        return nodeRestClient.performRestAction(boardEntry, CommandType.SET_JSON, attributes);
     }
 
 
@@ -58,8 +58,13 @@ public class NodeImpl implements Node {
      **/
 
     @Override
-    public AnswerObjects setLinePortAttributes(LinePortEntry linePortEntry, Configurations configurations) throws RuntimeException {
-        return nodeRestClient.performRestAction(linePortEntry, CommandType.SET_JSON, configurations);
+    public AnswerObjects setLinePortAttributes(LinePortEntry linePortEntry, Attributes attributes) throws RuntimeException {
+        return nodeRestClient.performRestAction(linePortEntry, CommandType.SET_JSON, attributes);
+    }
+
+    @Override
+    public AnswerObjects getLinePortAttributes(LinePortEntry linePortEntry, Attributes attributes) throws RuntimeException {
+        return nodeRestClient.performRestAction(linePortEntry, CommandType.GET_JSON, attributes);
     }
 
     /**
@@ -67,13 +72,18 @@ public class NodeImpl implements Node {
      **/
 
     @Override
-    public AnswerObjects setClientPortAttributes(ClientPortEntry clientPortEntry, Configurations configurations) throws RuntimeException {
-        return nodeRestClient.performRestAction(clientPortEntry, CommandType.SET_JSON, configurations);
+    public AnswerObjects setClientPortAttributes(ClientPortEntry clientPortEntry, Attributes attributes) throws RuntimeException {
+        return nodeRestClient.performRestAction(clientPortEntry, CommandType.SET_JSON, attributes);
     }
 
     @Override
-    public AnswerObjects configureClientPortAttributes(ClientPortEntry clientPortEntry, Configurations configurations) throws RuntimeException {
-        return nodeRestClient.performRestAction(clientPortEntry, CommandType.CONFIGURE_JSON, configurations);
+    public AnswerObjects configureClientPortAttributes(ClientPortEntry clientPortEntry, Attributes attributes) throws RuntimeException {
+        return nodeRestClient.performRestAction(clientPortEntry, CommandType.CONFIGURE_JSON, attributes);
+    }
+
+    @Override
+    public AnswerObjects getClientPortAttributes(ClientPortEntry clientPortEntry, Attributes attributes) {
+        return nodeRestClient.performRestAction(clientPortEntry, CommandType.GET_JSON, attributes);
     }
 
     /**
@@ -81,8 +91,8 @@ public class NodeImpl implements Node {
      **/
 
     @Override
-    public AnswerObjects configureAddDropPortAttributes(AddDropPortEntry addDropPortEntry, Configurations configurations) throws RuntimeException {
-        return nodeRestClient.performRestAction(addDropPortEntry, CommandType.CONFIGURE_JSON, configurations);
+    public AnswerObjects configureAddDropPortAttributes(AddDropPortEntry addDropPortEntry, Attributes attributes) throws RuntimeException {
+        return nodeRestClient.performRestAction(addDropPortEntry, CommandType.CONFIGURE_JSON, attributes);
     }
 
     /**
@@ -95,8 +105,13 @@ public class NodeImpl implements Node {
     }
 
     @Override
-    public AnswerObjects setPeerAttributes(PeerEntry peerEntry, Configurations configurations) throws RuntimeException {
-        return nodeRestClient.performRestAction(peerEntry, CommandType.SET_JSON, configurations);
+    public AnswerObjects setPeerAttributes(PeerEntry peerEntry, Attributes attributes) throws RuntimeException {
+        return nodeRestClient.performRestAction(peerEntry, CommandType.SET_JSON, attributes);
+    }
+
+    @Override
+    public AnswerObjects getPeer(PeerEntry peerEntry) throws RuntimeException {
+        return nodeRestClient.performRestAction(peerEntry, CommandType.GET_JSON);
     }
 
     @Override
@@ -104,5 +119,8 @@ public class NodeImpl implements Node {
         return nodeRestClient.performRestAction(internalConnectionEntry, CommandType.CREATE_JSON);
     }
 
-
+    @Override
+    public AnswerObjects getInternalConnection(InternalConnectionEntry internalConnectionEntry, Attributes attributes) throws RuntimeException {
+        return nodeRestClient.performRestAction(internalConnectionEntry, CommandType.GET_JSON, attributes);
+    }
 }

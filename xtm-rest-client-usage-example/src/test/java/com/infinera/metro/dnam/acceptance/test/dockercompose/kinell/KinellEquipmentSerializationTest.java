@@ -5,8 +5,8 @@ import com.infinera.metro.dnam.acceptance.test.node.configuration.*;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.AddDropPortConfigAttributes;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.board.*;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.util.AddDropChannelUtil;
-import com.infinera.metro.dnam.acceptance.test.node.mib.Configuration;
-import com.infinera.metro.dnam.acceptance.test.node.mib.Configurations;
+import com.infinera.metro.dnam.acceptance.test.node.mib.Attribute;
+import com.infinera.metro.dnam.acceptance.test.node.mib.Attributes;
 import com.infinera.metro.dnam.acceptance.test.node.mib.MpoIdentifier;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
@@ -38,7 +38,7 @@ public class KinellEquipmentSerializationTest {
                     .slot(Slot.slot2)
                     .boardEntryAttribute(
                         BoardSetAttributes.of(
-                            Configurations.of(Configuration.builder()
+                            Attributes.of(Attribute.builder()
                                 .key("adminStatus")
                                 .value("up")
                                 .build())
@@ -50,7 +50,7 @@ public class KinellEquipmentSerializationTest {
                             .receivePort(2)
                             .portEntryAttribute(
                                 AddDropPortConfigAttributes.of(
-                                    Configurations.of("addChannel", port1_2_addDropChannels)
+                                    Attributes.of("addChannel", port1_2_addDropChannels)
                                 )
                             )
                             .build()
@@ -60,9 +60,9 @@ public class KinellEquipmentSerializationTest {
                             .transmitPort(3)
                             .receivePort(4)
                             .portEntryAttributes(
-                                Arrays.asList(
+                                Arrays.asList( //TODO: Use lombok @Singular
                                     AddDropPortConfigAttributes.of(
-                                        Configurations.of("addChannel", port_3_4_addDropChannels)
+                                        Attributes.of("addChannel", port_3_4_addDropChannels)
                                     )
                                 )
                             )
@@ -76,7 +76,7 @@ public class KinellEquipmentSerializationTest {
                     .slot(Slot.slot3)
                     .boardEntryAttribute(
                         BoardSetAttributes.of(
-                            Configurations.of(Configuration.builder()
+                            Attributes.of(Attribute.builder()
                                 .key("adminStatus")
                                 .value("up")
                                 .build())
@@ -91,7 +91,7 @@ public class KinellEquipmentSerializationTest {
                     .slot(Slot.slot4)
                     .boardEntryAttribute(
                         BoardSetAttributes.of(
-                            Configurations.of(Configuration.builder()
+                            Attributes.of(Attribute.builder()
                                 .key("adminStatus")
                                 .value("up")
                                 .build())
@@ -105,7 +105,7 @@ public class KinellEquipmentSerializationTest {
                     .slot(Slot.slot5)
                     .boardEntryAttribute(
                         BoardSetAttributes.of(
-                            Configurations.of(Configuration.builder()
+                            Attributes.of(Attribute.builder()
                                 .key("adminStatus")
                                 .value("up")
                                 .build())
@@ -119,7 +119,7 @@ public class KinellEquipmentSerializationTest {
                     .slot(Slot.slot15)
                     .boardEntryAttribute(
                         BoardSetAttributes.of(
-                            Configurations.of(Configuration.builder()
+                            Attributes.of(Attribute.builder()
                                 .key("adminStatus")
                                 .value("up")
                                 .build())
@@ -150,7 +150,7 @@ public class KinellEquipmentSerializationTest {
                     .slot(Slot.slot20)
                     .boardEntryAttribute(
                         BoardSetAttributes.of(
-                            Configurations.of(Configuration.builder()
+                            Attributes.of(Attribute.builder()
                                 .key("adminStatus")
                                 .value("up")
                                 .build())

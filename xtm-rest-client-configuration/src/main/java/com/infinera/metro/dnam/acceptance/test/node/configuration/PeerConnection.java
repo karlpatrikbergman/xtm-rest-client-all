@@ -4,8 +4,8 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.infinera.metro.dnam.acceptance.test.node.Node;
-import com.infinera.metro.dnam.acceptance.test.node.mib.Configuration;
-import com.infinera.metro.dnam.acceptance.test.node.mib.Configurations;
+import com.infinera.metro.dnam.acceptance.test.node.mib.Attribute;
+import com.infinera.metro.dnam.acceptance.test.node.mib.Attributes;
 import com.infinera.metro.dnam.acceptance.test.node.mib.MpoIdentifier;
 import com.infinera.metro.dnam.acceptance.test.node.mib.entry.AbstractPortEntry;
 import com.infinera.metro.dnam.acceptance.test.node.mib.entry.PeerEntry;
@@ -20,8 +20,8 @@ import lombok.Value;
 public class PeerConnection {
     @NonNull private final PeerEntry localPeerEntry;
     @NonNull private final PeerEntry remotePeerEntry;
-    private final Configurations localPeerConfiguration;
-    private final Configurations remotePeerConfiguration;
+    private final Attributes localPeerConfiguration;
+    private final Attributes remotePeerConfiguration;
 
     @JsonCreator
     @Builder
@@ -43,41 +43,41 @@ public class PeerConnection {
             .port(remotePortEntry.getReceivePort())
             .mpoIdentifier(remoteMpoIdentifier)
             .build();
-        this.localPeerConfiguration = Configurations.builder()
-            .configuration(
-                Configuration.builder()
+        this.localPeerConfiguration = Attributes.builder()
+            .attribute(
+                Attribute.builder()
                     .key("topoPeerLocalLabel")
                     .value(localPeerEntry.getLocalLabel())
                     .build()
             )
-            .configuration(
-                Configuration.builder()
+            .attribute(
+                Attribute.builder()
                     .key("topoPeerRemoteIpAddress")
                     .value(remoteNodeIpAddress) //This node is not expected to be running in this test
                     .build()
             )
-            .configuration(
-                Configuration.builder()
+            .attribute(
+                Attribute.builder()
                     .key("topoPeerRemoteLabel")
                     .value(remotePeerEntry.getLocalLabel())
                     .build()
             )
             .build();
-        this.remotePeerConfiguration = Configurations.builder()
-            .configuration(
-                Configuration.builder()
+        this.remotePeerConfiguration = Attributes.builder()
+            .attribute(
+                Attribute.builder()
                     .key("topoPeerLocalLabel")
                     .value(remotePeerEntry.getLocalLabel())
                     .build()
             )
-            .configuration(
-                Configuration.builder()
+            .attribute(
+                Attribute.builder()
                     .key("topoPeerRemoteIpAddress")
                     .value(localNodeIpAddress)
                     .build()
             )
-            .configuration(
-                Configuration.builder()
+            .attribute(
+                Attribute.builder()
                     .key("topoPeerRemoteLabel")
                     .value(localPeerEntry.getLocalLabel())
                     .build()

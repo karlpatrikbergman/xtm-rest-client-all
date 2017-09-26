@@ -44,7 +44,7 @@ public class AnswerObjects {
      * @param mibEntry              The mibEntry upon with the operation was performed
      * @return                      Optional AnswerObject
      */
-    private Optional<AnswerObject> findSuccessAnswerObject(OperationType operationType, MibEntry mibEntry) {
+    Optional<AnswerObject> findSuccessAnswerObject(OperationType operationType, MibEntry mibEntry) {
         return answerObjects.stream()
                 .filter(answerObject -> answerObject.isSuccessAnswerObject(operationType, mibEntry))
                 .findFirst();

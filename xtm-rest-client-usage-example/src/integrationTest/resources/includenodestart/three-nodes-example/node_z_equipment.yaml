@@ -8,26 +8,26 @@ boards:
       receivePort: 2
       portEntryAttributes:
       - !<com.infinera.metro.dnam.acceptance.test.node.configuration.ClientPortConfigAttributes>
-        configurations:
-          configurations:
+        attributes:
+          attributes:
           - key: "clientIfConfigurationCommand"
             value: "wan10GbE yes"
       - !<com.infinera.metro.dnam.acceptance.test.node.configuration.ClientPortSetAttributes>
-        configurations:
-          configurations:
+        attributes:
+          attributes:
           - key: "expectedFrequency"
             value: "w1530"
     - transmitPort: 5
       receivePort: 6
       portEntryAttributes:
       - !<com.infinera.metro.dnam.acceptance.test.node.configuration.ClientPortConfigAttributes>
-        configurations:
-          configurations:
+        attributes:
+          attributes:
           - key: "clientIfConfigurationCommand"
             value: "wan10GbE yes"
       - !<com.infinera.metro.dnam.acceptance.test.node.configuration.ClientPortSetAttributes>
-        configurations:
-          configurations:
+        attributes:
+          attributes:
           - key: "expectedFrequency"
             value: "w1530"
     linePorts:
@@ -35,21 +35,21 @@ boards:
       receivePort: 4
       portEntryAttributes:
       - !<com.infinera.metro.dnam.acceptance.test.node.configuration.LinePortConfigAttributes>
-        configurations:
-          configurations:
+        attributes:
+          attributes:
           - key: "expectedFrequency"
             value: "ch926"
     - transmitPort: 7
       receivePort: 8
       portEntryAttributes:
       - !<com.infinera.metro.dnam.acceptance.test.node.configuration.LinePortConfigAttributes>
-        configurations:
-          configurations:
+        attributes:
+          attributes:
           - key: "expectedFrequency"
             value: "ch927"
     boardEntryAttributes:
     - !<com.infinera.metro.dnam.acceptance.test.node.configuration.BoardSetAttributes>
-      configurations:
-        configurations:
+      attributes:
+        attributes:
         - key: "adminStatus"
           value: "up"

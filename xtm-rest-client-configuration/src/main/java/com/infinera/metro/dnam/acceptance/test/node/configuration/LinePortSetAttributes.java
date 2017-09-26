@@ -2,8 +2,8 @@ package com.infinera.metro.dnam.acceptance.test.node.configuration;
 
 import com.google.common.base.Preconditions;
 import com.infinera.metro.dnam.acceptance.test.node.Node;
-import com.infinera.metro.dnam.acceptance.test.node.mib.Configuration;
-import com.infinera.metro.dnam.acceptance.test.node.mib.Configurations;
+import com.infinera.metro.dnam.acceptance.test.node.mib.Attribute;
+import com.infinera.metro.dnam.acceptance.test.node.mib.Attributes;
 import com.infinera.metro.dnam.acceptance.test.node.mib.entry.LinePortEntry;
 import com.infinera.metro.dnam.acceptance.test.node.mib.entry.MibEntry;
 import lombok.Value;
@@ -12,18 +12,18 @@ import lombok.Value;
 //as for client port configuration
 @Value
 public class LinePortSetAttributes implements MibEntryAttributes {
-    private Configurations configurations;
+    private Attributes attributes;
 
     public void applyTo(Node node, MibEntry linePortEntry) {
         Preconditions.checkArgument(linePortEntry instanceof LinePortEntry, "Expected argument of type LinePortEntry");
-        node.setLinePortAttributes((LinePortEntry) linePortEntry, configurations);
+        node.setLinePortAttributes((LinePortEntry) linePortEntry, attributes);
     }
 
-    public static LinePortSetAttributes of(Configurations configurations) {
-        return new LinePortSetAttributes(configurations);
+    public static LinePortSetAttributes of(Attributes attributes) {
+        return new LinePortSetAttributes(attributes);
     }
 
-    public static LinePortSetAttributes of(Configuration configuration) {
-        return LinePortSetAttributes.of(Configurations.of(configuration));
+    public static LinePortSetAttributes of(Attribute configuration) {
+        return LinePortSetAttributes.of(Attributes.of(configuration));
     }
 }

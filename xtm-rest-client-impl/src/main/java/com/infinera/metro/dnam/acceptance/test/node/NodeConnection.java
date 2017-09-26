@@ -22,10 +22,6 @@ NodeConnection {
         this.xtmRestBaseUtil = XtmRestBaseUtil.INSTANCE;
     }
 
-    static NodeConnection create(NodeAccessData nodeAccessData) {
-        return new NodeConnection(nodeAccessData, RestTemplateFactory.REST_TEMPLATE_FACTORY.createRestTemplate());
-    }
-
     ResponseEntity<String> performRestAction(String mibPath) throws RuntimeException {
         if(sessionId == 0) {
             loginAndSetSessionId();
@@ -83,7 +79,7 @@ NodeConnection {
         RestClientException lastAttemptException = null;
         while(attempts++ < maxAttempts) {
             try {
-                log.info("Performing http GET with url {}", url);
+                log.info("Performing http GET with url {}, sessionId {}", url, sessionId);
                 return restTemplate.exchange(
                         url,
                         HttpMethod.GET,

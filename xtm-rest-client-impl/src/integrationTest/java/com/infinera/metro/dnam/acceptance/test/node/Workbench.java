@@ -115,11 +115,11 @@ public class Workbench {
             .transmitPort(3)
             .receivePort(4)
             .build();
-        Configuration configuration = Configuration.builder()
+        Attribute attribute = Attribute.builder()
             .key("expectedFrequency")
             .value("ch926")
             .build();
-        configureNode(nodeConnection, mibEntry, CommandType.SET_JSON, Configurations.of(configuration));
+        configureNode(nodeConnection, mibEntry, CommandType.SET_JSON, Attributes.of(attribute));
     }
 
     /**
@@ -135,11 +135,11 @@ public class Workbench {
             .transmitPort(1)
             .receivePort(2)
             .build();
-        Configuration configuration = Configuration.builder()
+        Attribute attribute = Attribute.builder()
             .key("configure")
             .value("lan10GbE yes")
             .build();
-        configureNode(nodeConnection, mibEntry, CommandType.CONFIGURE_JSON, Configurations.of(configuration));
+        configureNode(nodeConnection, mibEntry, CommandType.CONFIGURE_JSON, Attributes.of(attribute));
     }
 
     private void createPeer(NodeConnection nodeConnection, PeerEntry peerEntry) throws IOException {
@@ -147,17 +147,17 @@ public class Workbench {
     }
 
 
-    private void configurePeer(NodeConnection nodeConnection, PeerEntry peerEntry, Configurations configurations) throws IOException {
-        configureNode(nodeConnection, peerEntry, CommandType.SET_JSON, configurations);
+    private void configurePeer(NodeConnection nodeConnection, PeerEntry peerEntry, Attributes attributes) throws IOException {
+        configureNode(nodeConnection, peerEntry, CommandType.SET_JSON, attributes);
     }
 
     /**
      * Placed in NodeRestClient
      */
-    private void configureNode(NodeConnection nodeConnection, MibEntry mibEntry, CommandType commandType, Configurations configurations) throws IOException, RuntimeException {
+    private void configureNode(NodeConnection nodeConnection, MibEntry mibEntry, CommandType commandType, Attributes attributes) throws IOException, RuntimeException {
         String mibPathAndCommand = mibPathUtil.getMibPathAndCommand(mibEntry, commandType);
         String flags = "_RFLAGS_=RAISEMGNOQPCYVULTBJK&_AFLAGS_=AVNDHPUIMJOSE";
-        String parameters = (configurations == null) ? "" : configurations.toString();
+        String parameters = (attributes == null) ? "" : attributes.toString();
         String all = mibPathAndCommand + "?" + flags + "&" + parameters;
 
         nodeConnection.loginAndSetSessionId();
@@ -169,22 +169,22 @@ public class Workbench {
         answerObjects.checkResponse(commandType.getOperation(), mibEntry);
     }
 
-    private Configurations buildConfigurePeerParameterList(PeerEntry localPeerEntry, PeerEntry remotePeerEntry, String remoteNodeIpAddress) {
-        return Configurations.builder()
-            .configuration(
-                Configuration.builder()
+    private Attributes buildConfigurePeerParameterList(PeerEntry localPeerEntry, PeerEntry remotePeerEntry, String remoteNodeIpAddress) {
+        return Attributes.builder()
+            .attribute(
+                Attribute.builder()
                     .key("topoPeerLocalLabel")
                     .value(localPeerEntry.getLocalLabel())
                     .build()
             )
-            .configuration(
-                Configuration.builder()
+            .attribute(
+                Attribute.builder()
                     .key("topoPeerRemoteIpAddress")
                     .value(remoteNodeIpAddress)
                     .build()
             )
-            .configuration(
-                Configuration.builder()
+            .attribute(
+                Attribute.builder()
                     .key("topoPeerRemoteLabel")
                     .value(remotePeerEntry.getLocalLabel())
                     .build()

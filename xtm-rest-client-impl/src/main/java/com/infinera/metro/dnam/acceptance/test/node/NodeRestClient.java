@@ -3,7 +3,7 @@ package com.infinera.metro.dnam.acceptance.test.node;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectReader;
 import com.infinera.metro.dnam.acceptance.test.node.mib.CommandType;
-import com.infinera.metro.dnam.acceptance.test.node.mib.Configurations;
+import com.infinera.metro.dnam.acceptance.test.node.mib.Attributes;
 import com.infinera.metro.dnam.acceptance.test.node.mib.entry.MibEntry;
 import com.infinera.metro.dnam.acceptance.test.node.mib.util.MibPathUtil;
 import com.infinera.metro.dnam.acceptance.test.util.ThreadSleepWrapper;
@@ -30,10 +30,11 @@ class NodeRestClient {
         return performRestAction(mibEntry, commandType, null);
     }
 
-    AnswerObjects performRestAction(MibEntry mibEntry, CommandType commandType, Configurations configurations) throws RuntimeException {
+    AnswerObjects performRestAction(MibEntry mibEntry, CommandType commandType, Attributes attributes) throws RuntimeException {
         final String mibPathAndCommand = mibPathUtil.getMibPathAndCommand(mibEntry, commandType);
-        final String flags ="_RFLAGS_=RAISEMGNOQPCYVULTBJK&_AFLAGS_=AVNDHPUIMJOSE";
-        final String parameters = (configurations == null || configurations.getConfigurations().isEmpty()) ? "" : configurations.toString();
+//        final String flags ="_RFLAGS_=RAISEMGNOQPCYVULTBJK&_AFLAGS_=AVNDHPUIMJOSE";
+        final String flags ="_RFLAGS_=SEMGNOTJ&_AFLAGS_=AVN";
+        final String parameters = (attributes == null || attributes.getAttributes().isEmpty()) ? "" : attributes.toString();
         final String colon = (parameters.isEmpty()) ? "" : "&";
         final String all = mibPathAndCommand + "?" + flags + colon + parameters;
 

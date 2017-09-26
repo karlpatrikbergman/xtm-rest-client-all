@@ -5,8 +5,8 @@ boards:
     slot: "slot2"
     boardEntryAttributes:
     - !<com.infinera.metro.dnam.acceptance.test.node.configuration.BoardSetAttributes>
-      configurations:
-        configurations:
+      attributes:
+        attributes:
         - key: "adminStatus"
           value: "up"
     addDropPorts:
@@ -14,8 +14,8 @@ boards:
       receivePort: 2
       portEntryAttributes:
       - !<com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.AddDropPortConfigAttributes>
-        configurations:
-          configurations:
+        attributes:
+          attributes:
           - key: "addChannel"
             value: "ch932"
           - key: "addChannel"
@@ -24,8 +24,8 @@ boards:
       receivePort: 4
       portEntryAttributes:
       - !<com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.AddDropPortConfigAttributes>
-        configurations:
-          configurations:
+        attributes:
+          attributes:
           - key: "addChannel"
             value: "ch9185"
           - key: "addChannel"
@@ -186,8 +186,8 @@ boards:
     slot: "slot3"
     boardEntryAttributes:
     - !<com.infinera.metro.dnam.acceptance.test.node.configuration.BoardSetAttributes>
-      configurations:
-        configurations:
+      attributes:
+        attributes:
         - key: "adminStatus"
           value: "up"
     ports: []
@@ -196,8 +196,8 @@ boards:
     slot: "slot4"
     boardEntryAttributes:
     - !<com.infinera.metro.dnam.acceptance.test.node.configuration.BoardSetAttributes>
-      configurations:
-        configurations:
+      attributes:
+        attributes:
         - key: "adminStatus"
           value: "up"
     addDropPorts: []
@@ -207,8 +207,8 @@ boards:
     slot: "slot5"
     boardEntryAttributes:
     - !<com.infinera.metro.dnam.acceptance.test.node.configuration.BoardSetAttributes>
-      configurations:
-        configurations:
+      attributes:
+        attributes:
         - key: "adminStatus"
           value: "up"
   slot15: !<com.infinera.metro.dnam.acceptance.test.node.configuration.board.Ad4Even50>
@@ -216,8 +216,8 @@ boards:
     slot: "slot15"
     boardEntryAttributes:
     - !<com.infinera.metro.dnam.acceptance.test.node.configuration.BoardSetAttributes>
-      configurations:
-        configurations:
+      attributes:
+        attributes:
         - key: "adminStatus"
           value: "up"
   slot16: !<com.infinera.metro.dnam.acceptance.test.node.configuration.board.Oiuc50100>
@@ -237,7 +237,7 @@ boards:
     slot: "slot20"
     boardEntryAttributes:
     - !<com.infinera.metro.dnam.acceptance.test.node.configuration.BoardSetAttributes>
-      configurations:
-        configurations:
+      attributes:
+        attributes:
         - key: "adminStatus"
           value: "up"

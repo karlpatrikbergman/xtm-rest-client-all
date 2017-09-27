@@ -10,6 +10,10 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
+/**
+ * Unit test of utility class "AddDropUtil"
+ */
+
 @Slf4j
 public class AddDropChannelUtilTest {
 

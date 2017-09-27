@@ -7,9 +7,6 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
-/**
- * topo/internal/int:1:2:0:1:1:19:0:3/create.json
- */
 @Slf4j
 public class InternalConnectionEntryTest {
     private final MibEntry mibEntry = InternalConnectionEntry.builder()
@@ -20,12 +17,12 @@ public class InternalConnectionEntryTest {
         .toSubrack(1)
         .toSlot(19)
         .toMpoIdentifier(MpoIdentifier.NotPresent())
-        .toPort(3)
+        .toPort(4)
         .build();
 
     @Test
     public void testMibEntryString() {
-        final String expectedMibEntryString = "int:1:2:0:1:1:19:0:3";
+        final String expectedMibEntryString = "int:1:2:0:1:1:19:0:4";
         final String actualMibEntryString = mibEntry.getMibEntryString();
         assertEquals(expectedMibEntryString, actualMibEntryString);
         log.info(actualMibEntryString);
@@ -33,9 +30,18 @@ public class InternalConnectionEntryTest {
 
     @Test
     public void testMibEntryPath() {
-        final String expectedMibEntryPath = "/mib/topo/internal/int:1:2:0:1:1:19:0:3";
+        final String expectedMibEntryPath = "/mib/topo/internal/int:1:2:0:1:1:19:0:4";
         final String actualMibEntryPath = mibEntry.getMibEntryPath();
         assertEquals(expectedMibEntryPath, actualMibEntryPath);
         log.info(actualMibEntryPath);
+    }
+
+    @Test
+    public void testInternalConnectionEntryReverse() {
+        InternalConnectionEntry mibEntryReversed = ((InternalConnectionEntry) mibEntry).reverse();
+        final String expectedMibEntryString = "int:1:19:0:3:1:2:0:2";
+        final String actualMibEntryString = mibEntryReversed.getMibEntryString();
+        assertEquals(expectedMibEntryString, actualMibEntryString);
+        log.info(actualMibEntryString);
     }
 }

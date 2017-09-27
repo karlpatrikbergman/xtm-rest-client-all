@@ -17,7 +17,7 @@ public enum BoardType implements MibType {
     TPHEX10GOTN("tphex10gotn"),
     TP100GOTN("tp100gotn"),
     GBE10EMXP10GII("gbe10emxp10gii"),
-    MDU40EVENL("mdu40EvenL"),
+    MDU40EVENL("mdu40evenl"),
     OIUC50100("oiuc50100"),
     FXP400GOTN("fxp400gotn"),
     AD4EVEN50("ad4even50"),

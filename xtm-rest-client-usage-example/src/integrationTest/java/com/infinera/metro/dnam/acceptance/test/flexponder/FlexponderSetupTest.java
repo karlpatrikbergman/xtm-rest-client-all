@@ -2,7 +2,7 @@ package com.infinera.metro.dnam.acceptance.test.flexponder;
 
 import com.infinera.metro.dnam.acceptance.test.node.DontLetGradleRun;
 import com.infinera.metro.dnam.acceptance.test.node.Node;
-import com.infinera.metro.dnam.acceptance.test.node.NodeAccessData;
+import com.infinera.metro.dnam.acceptance.test.node.NodeImpl;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.*;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.board.Board;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.board.Fxp400gotn;
@@ -24,9 +24,8 @@ import java.util.Map;
 public class FlexponderSetupTest {
     private final String ipAddressNodeA = "172.17.0.2";
     private final String ipAddressNodeZ = "172.17.0.3";
-    private final Node nodeA = Node.defaultImplementation(NodeAccessData.createDefault(ipAddressNodeA));
-
-    private final Node nodeZ = Node.defaultImplementation(NodeAccessData.createDefault(ipAddressNodeZ));
+    private final Node nodeA = NodeImpl.createDefault(ipAddressNodeA);
+    private final Node nodeZ = NodeImpl.createDefault(ipAddressNodeZ);
     private final Port linePort = Port.builder()
         .transmitPort(3)
         .receivePort(4)

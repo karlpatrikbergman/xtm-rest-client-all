@@ -11,6 +11,8 @@ import java.util.List;
  * NOTE:
  * Field portEntryAttributes could be two lists instead of one, one for attributes that uses "set.json" and one that
  * uses "configure.json".
+ *
+ * Is Port a correct name?
  */
 
 @Value

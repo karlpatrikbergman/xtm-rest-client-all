@@ -3,20 +3,6 @@ package com.infinera.metro.dnam.acceptance.test.node;
 import com.infinera.metro.dnam.acceptance.test.node.mib.Attributes;
 import com.infinera.metro.dnam.acceptance.test.node.mib.entry.*;
 
-/**
- * TODO: Change method signature for configuration to match configure.json and set.json
- *
- * Client signal format
- * /client/if/client:1:2:1-2/configure.json?clientIfConfigurationCommand=wan10GbE yes
- *  configureLinePort()
- *
- * Client expected frequency
- * /client/if/client:1:2:1-2/set.json?expectedFrequency=w1530
- *  setLinePortConfig()?
- *
- * Line settings
- * /wdm/if/wdm:1:2:3-4/set.json&expectedFrequency=w1530"
- */
 public interface Node {
     String getIpAddress();
     AnswerObjects createBoard(BoardEntry boardEntry) throws RuntimeException;
@@ -39,11 +25,4 @@ public interface Node {
 
     AnswerObjects createInternalConnection(InternalConnectionEntry internalConnectionEntry) throws RuntimeException;
     AnswerObjects getInternalConnection(InternalConnectionEntry internalConnectionEntry, Attributes attributes) throws RuntimeException;
-
-    static Node defaultImplementation(NodeAccessData nodeAccessData) {
-        return NodeImpl.create(nodeAccessData);
-    }
-
-
-
 }

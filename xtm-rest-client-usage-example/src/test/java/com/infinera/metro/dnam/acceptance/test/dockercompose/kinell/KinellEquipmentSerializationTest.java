@@ -159,7 +159,6 @@ public class KinellEquipmentSerializationTest {
                     .build())
             .build();
 
-
         //To apply directly
 //        nodeEquipment.applyTo(node);
 

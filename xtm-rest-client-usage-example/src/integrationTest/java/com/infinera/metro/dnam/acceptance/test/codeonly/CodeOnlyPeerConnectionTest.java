@@ -2,7 +2,7 @@ package com.infinera.metro.dnam.acceptance.test.codeonly;
 
 import com.infinera.metro.dnam.acceptance.test.node.DontLetGradleRun;
 import com.infinera.metro.dnam.acceptance.test.node.Node;
-import com.infinera.metro.dnam.acceptance.test.node.NodeAccessData;
+import com.infinera.metro.dnam.acceptance.test.node.NodeImpl;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.*;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.board.Board;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.board.Tpd10gbe;
@@ -25,24 +25,8 @@ public class CodeOnlyPeerConnectionTest {
 
     private final String ipAddressNodeA = "172.17.0.2";
     private final String ipAddressNodeZ = "172.17.0.3";
-
-    private final Node nodeA = Node.defaultImplementation(
-        NodeAccessData.builder()
-            .ipAddress(ipAddressNodeA)
-            .port(80)
-            .userName("root")
-            .password("root")
-            .build()
-    );
-
-    private final Node nodeZ = Node.defaultImplementation(
-        NodeAccessData.builder()
-            .ipAddress(ipAddressNodeZ)
-            .port(80)
-            .userName("root")
-            .password("root")
-            .build()
-    );
+    private final Node nodeA = NodeImpl.createDefault(ipAddressNodeA);
+    private final Node nodeZ = NodeImpl.createDefault(ipAddressNodeZ);
 
     @Test
     public void test() throws IOException {

@@ -14,6 +14,8 @@ import lombok.NonNull;
 import lombok.Value;
 import org.stringtemplate.v4.ST;
 
+import static com.infinera.metro.dnam.acceptance.test.node.mib.util.PortUtil.PORT_UTIL;
+
 /**
  * This class is not equal in structure to other classes implementing MibEntry. One difference is that is
  * does not only have one value for subrack/slot/, as for example PeerEntry. Instead it has values
@@ -83,4 +85,19 @@ public class InternalConnectionEntry extends AbstractMibEntry implements MibEntr
     public String getMibEntryPath() {
         return MibPathUtil.MIB_PATH_UTIL.getMibEntryPath(getModuleType(), getGroupOrTableType(), this);
     }
+
+    public InternalConnectionEntry reverse() {
+        return InternalConnectionEntry.builder()
+            .fromSubrack(toSubrack)
+            .fromSlot(toSlot)
+            .fromMpoIdentifier(toMpoIdentifier)
+            .fromPort(PORT_UTIL.reversePort(toPort))
+            .toSubrack(getSubrack())
+            .toSlot(getSlot())
+            .toMpoIdentifier(mpoIdentifier)
+            .toPort(PORT_UTIL.reversePort(getPort()))
+            .build();
+    }
+
+
 }

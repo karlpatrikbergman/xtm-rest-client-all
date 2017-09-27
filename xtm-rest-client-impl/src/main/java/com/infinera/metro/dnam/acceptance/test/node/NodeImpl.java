@@ -14,12 +14,16 @@ public class NodeImpl implements Node {
         this.nodeRestClient = nodeRestClient;
     }
 
-    public static NodeImpl create(NodeAccessData nodeAccessData) {
+    public static Node create(NodeAccessData nodeAccessData) {
         return new NodeImpl(
             new NodeRestClient(
                 new NodeConnection(nodeAccessData, RestTemplateFactory.REST_TEMPLATE_FACTORY.createRestTemplate())
             )
         );
+    }
+
+    public static Node createDefault(String ipAddress) {
+        return create(NodeAccessData.createDefault(ipAddress));
     }
 
     @Override

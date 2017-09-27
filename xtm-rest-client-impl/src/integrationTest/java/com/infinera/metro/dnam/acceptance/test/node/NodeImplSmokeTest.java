@@ -15,9 +15,11 @@ import org.junit.experimental.categories.Category;
 
 import java.util.Optional;
 
-import static com.infinera.metro.dnam.acceptance.test.node.RestTemplateFactory.REST_TEMPLATE_FACTORY;
 import static org.junit.Assert.*;
 
+/**
+ * Deliberately quite verbose and not much code reuse to both test and show the workings of NodeImpl.
+ */
 @Category(IntegrationTest.class)
 @Slf4j
 public class NodeImplSmokeTest {
@@ -25,35 +27,34 @@ public class NodeImplSmokeTest {
     @ClassRule
     public static DockerComposeRule docker = DockerComposeRule.builder()
         .file("src/integrationTest/resources/docker-compose.yml")
-        .waitingForService("node1", HealthChecks.toHaveAllPortsOpen())
+        .waitingForService("nodeA", HealthChecks.toHaveAllPortsOpen())
+        .waitingForService("nodeZ", HealthChecks.toHaveAllPortsOpen())
         .build();
-
-    private final Node nodeA = new NodeImpl(
-        new NodeRestClient(
-            new NodeConnection(
-                    NodeAccessData.builder()
-                            .ipAddress("172.45.0.101")
-                            .port(80)
-                            .userName("root")
-                            .password("root")
-                            .build(),
-                    REST_TEMPLATE_FACTORY.createRestTemplate()
-            )
-        )
-    );
-
 
     @Test
     public void nodeImplSmokeTest() {
-        addTpd10gbeBoardInSlotTwo();
-        setLineAttributesForTpd10gbeBoardInSlotTwo();
-        setClientPortAttributesForTpd10gbeBoardInSlotTwo();
-        createLocalPeerForTpd10gbeBoardInSlotTwo_to_some_remote_node();
-        addTpd10gbeBoardInSlotThree();
-        createInternalConnectionBetweenTpd10gbeBoards();
+        final String ipAddressNodeA = "172.45.0.101";
+//        final String ipAddressNodeA = "172.17.0.2";
+        final Node nodeA = NodeImpl.createDefault(ipAddressNodeA);
+
+        String ipAddressNodeZ = "172.45.0.102";
+//        final String ipAddressNodeZ = "172.17.0.3";
+        final Node nodeZ = NodeImpl.createDefault(ipAddressNodeZ);
+        setupNode(nodeA, ipAddressNodeZ);
+        setupNode(nodeZ, ipAddressNodeA);
+        createSymmetricalPeerConnectionBetweenNodes(nodeA, nodeZ);
     }
 
-    private void addTpd10gbeBoardInSlotTwo() {
+    private void setupNode(Node node, String ipAddressRemoteNode) {
+        addTpd10gbeBoardInSlotTwo(node);
+        setExpectedFrequencyForTpd10gbeClientPort(node);
+        configureSignalFormatForTpd10gbeClientPort(node);
+        setExpectedFrequencyForTpd10gbeLinePort(node);
+        addMdu40EvenLBoardInSlotThree(node);
+        createSymmetricInternalConnectionBetweenTpd10gbeAndMdu40EvenL(node);
+    }
+
+    private void addTpd10gbeBoardInSlotTwo(Node node) {
         //Given
         final BoardEntry boardEntry = BoardEntry.builder()
             .boardType(BoardType.TPD10GBE)
@@ -62,7 +63,7 @@ public class NodeImplSmokeTest {
             .build();
 
         //When
-        AnswerObjects createBoardAnswerObjects = nodeA.createBoard(boardEntry);
+        AnswerObjects createBoardAnswerObjects = node.createBoard(boardEntry);
         assertNotNull(createBoardAnswerObjects);
 
         //Then
@@ -72,7 +73,7 @@ public class NodeImplSmokeTest {
             .build()
         );
 
-        AnswerObjects getBoardAnswerObjects = nodeA.getBoard(boardEntry, getBoardAttributes);
+        AnswerObjects getBoardAnswerObjects = node.getBoard(boardEntry, getBoardAttributes);
         assertNotNull(getBoardAnswerObjects);
 
         Optional<AnswerObject> answerObjectOptional = getBoardAnswerObjects.findSuccessAnswerObject(OperationType.GET, boardEntry);
@@ -83,42 +84,42 @@ public class NodeImplSmokeTest {
         assertEquals(boardEntry.getMibEntryString(), attributeObjectOptional.get().getValue());
     }
 
-    private void setLineAttributesForTpd10gbeBoardInSlotTwo() {
+    private void setExpectedFrequencyForTpd10gbeClientPort(Node node) {
         //Given
-        final LinePortEntry linePortEntry = LinePortEntry.builder()
-            .moduleType(ModuleType.WDM)
+        final ClientPortEntry clientPortEntry = ClientPortEntry.builder()
+            .moduleType(ModuleType.CLIENT)
             .groupOrTableType(GroupOrTableType.IF)
-            .linePortType(LinePortType.WDM)
+            .clientPortType(ClientPortType.CLIENT)
             .subrack(1)
             .slot(2)
-            .transmitPort(3)
-            .receivePort(4)
+            .transmitPort(1)
+            .receivePort(2)
             .build();
 
-        final Attributes linePortAttributes = Attributes.of(
+        final Attributes clientPortAttributes = Attributes.of(
             Attribute.builder()
-                .key("expectedFrequency")
-                .value("ch926")
+                .key("clientIfExpectedTxFrequency")
+                .value("w1530")
                 .build()
         );
 
         //When
-        AnswerObjects setLinePortAttributesAnswerObjects = nodeA.setLinePortAttributes(linePortEntry, linePortAttributes);
-        assertNotNull(setLinePortAttributesAnswerObjects);
+        AnswerObjects setClientPortAttributesAnswerObjects = node.setClientPortAttributes(clientPortEntry, clientPortAttributes);
+        assertNotNull(setClientPortAttributesAnswerObjects);
 
         //Then
-        AnswerObjects getLinePortEntryAttributes = nodeA.getLinePortAttributes(linePortEntry, linePortAttributes.onlyKeys());
-        assertNotNull(getLinePortEntryAttributes);
+        AnswerObjects getClientPortEntryAttributesAnswerObjects = node.getClientPortAttributes(clientPortEntry, clientPortAttributes.onlyKeys());
+        assertNotNull(getClientPortEntryAttributesAnswerObjects);
 
-        Optional<AnswerObject> answerObjectOptional = getLinePortEntryAttributes.findSuccessAnswerObject(OperationType.GET, linePortEntry);
+        Optional<AnswerObject> answerObjectOptional = getClientPortEntryAttributesAnswerObjects.findSuccessAnswerObject(OperationType.GET, clientPortEntry);
         assertTrue(answerObjectOptional.isPresent());
 
-        Optional<AttributeObject> attributeObjectOptional = answerObjectOptional.get().getAttributeObjectByAlias("expectedFrequency");
+        Optional<AttributeObject> attributeObjectOptional = answerObjectOptional.get().getAttributeObject("clientIfExpectedTxFrequency");
         assertTrue(attributeObjectOptional.isPresent());
-        assertEquals("ch926", attributeObjectOptional.get().getValue());
+        assertEquals("w1530", attributeObjectOptional.get().getValue());
     }
 
-    private void setClientPortAttributesForTpd10gbeBoardInSlotTwo() {
+    private void configureSignalFormatForTpd10gbeClientPort(Node node) {
         //Given
         final ClientPortEntry clientPortEntry = ClientPortEntry.builder()
             .moduleType(ModuleType.CLIENT)
@@ -133,26 +134,26 @@ public class NodeImplSmokeTest {
         final Attributes clientPortAttributes = Attributes.of(
             Attribute.builder()
                 .key("clientIfConfigurationCommand")
-                .value("lan10GbE yes")
+                .value("wan10GbE yes")
                 .build()
         );
 
         // Of course an exception to what I hoped was a rule. When reading "config"-attributes we can't reuse the
         // config attributes used when setting, since they are not the same. When configuring (as opposed to set)
         // the attribute key is for example  "configure" or "clientIfConfigurationCommand" but when getting the same
-        // value we must use attribute name, which is "clientIfFormat"
+        // value we must use attribute name, which is in this case is "clientIfFormat"
         final Attributes clientPortAttributesOnlyKeys = Attributes.of(
             Attribute.builder()
-            .key("clientIfFormat")
-            .build()
+                .key("clientIfFormat")
+                .build()
         );
 
         //When
-        AnswerObjects setClientPortAttributesAnswerObjects = nodeA.configureClientPortAttributes(clientPortEntry, clientPortAttributes);
+        AnswerObjects setClientPortAttributesAnswerObjects = node.configureClientPortAttributes(clientPortEntry, clientPortAttributes);
         assertNotNull(setClientPortAttributesAnswerObjects);
 
         //Then
-        AnswerObjects getClientPortEntryAttributesAnswerObjects = nodeA.getClientPortAttributes(clientPortEntry, clientPortAttributesOnlyKeys);
+        AnswerObjects getClientPortEntryAttributesAnswerObjects = node.getClientPortAttributes(clientPortEntry, clientPortAttributesOnlyKeys);
         assertNotNull(getClientPortEntryAttributesAnswerObjects);
 
         Optional<AnswerObject> answerObjectOptional = getClientPortEntryAttributesAnswerObjects.findSuccessAnswerObject(OperationType.GET, clientPortEntry);
@@ -160,74 +161,54 @@ public class NodeImplSmokeTest {
 
         Optional<AttributeObject> attributeObjectOptional = answerObjectOptional.get().getAttributeObject("clientIfFormat");
         assertTrue(attributeObjectOptional.isPresent());
-        assertEquals("lan10GbE", attributeObjectOptional.get().getValue());
-
+        assertEquals("wan10GbE", attributeObjectOptional.get().getValue());
     }
 
-    private void createLocalPeerForTpd10gbeBoardInSlotTwo_to_some_remote_node() {
+    private void setExpectedFrequencyForTpd10gbeLinePort(Node node) {
         //Given
-        final PeerEntry localPeerEntry = PeerEntry.builder()
+        final LinePortEntry linePortEntry = LinePortEntry.builder()
+            .moduleType(ModuleType.WDM)
+            .groupOrTableType(GroupOrTableType.IF)
+            .linePortType(LinePortType.WDM)
             .subrack(1)
             .slot(2)
-            .port(3)
-            .mpoIdentifier(MpoIdentifier.NotPresent())
+            .transmitPort(3)
+            .receivePort(4)
             .build();
 
-        final PeerEntry remotePeerEntry = PeerEntry.builder()
-            .subrack(1)
-            .slot(2)
-            .port(4)
-            .mpoIdentifier(MpoIdentifier.NotPresent())
-            .build();
+        final Attributes linePortAttributes = Attributes.of(
+            Attribute.builder()
+                .key("expectedFrequency")
+                .value("ch939")
+                .build()
+        );
 
-        final Attributes peerConfig = Attributes.builder()
-            .attribute(
-                Attribute.builder()
-                    .key("topoPeerLocalLabel")
-                    .value(localPeerEntry.getLocalLabel())
-                    .build()
-            )
-            .attribute(
-                Attribute.builder()
-                    .key("topoPeerRemoteIpAddress")
-                    .value("172.17.0.3") //This node is not expected to be running in this test
-                    .build()
-            )
-            .attribute(
-                Attribute.builder()
-                    .key("topoPeerRemoteLabel")
-                    .value(remotePeerEntry.getLocalLabel())
-                    .build()
-            )
-            .build();
         //When
-        AnswerObjects createPeerAnswerObjects = nodeA.createPeer(localPeerEntry);
-        assertNotNull(createPeerAnswerObjects);
-        AnswerObjects setPeerConfigAnswerObjects = nodeA.setPeerAttributes(localPeerEntry, peerConfig);
-        assertNotNull(setPeerConfigAnswerObjects);
+        AnswerObjects setLinePortAttributesAnswerObjects = node.setLinePortAttributes(linePortEntry, linePortAttributes);
+        assertNotNull(setLinePortAttributesAnswerObjects);
 
         //Then
-        AnswerObjects getPeerAnswerObjects = nodeA.getPeer(localPeerEntry);
-        assertNotNull(getPeerAnswerObjects);
+        AnswerObjects getLinePortEntryAttributes = node.getLinePortAttributes(linePortEntry, linePortAttributes.onlyKeys());
+        assertNotNull(getLinePortEntryAttributes);
 
-        Optional<AnswerObject> answerObjectOptional = getPeerAnswerObjects.findSuccessAnswerObject(OperationType.GET, localPeerEntry);
+        Optional<AnswerObject> answerObjectOptional = getLinePortEntryAttributes.findSuccessAnswerObject(OperationType.GET, linePortEntry);
         assertTrue(answerObjectOptional.isPresent());
 
-        Optional<AttributeObject> attributeObjectOptional = answerObjectOptional.get().getAttributeObject("topoPeerName");
+        Optional<AttributeObject> attributeObjectOptional = answerObjectOptional.get().getAttributeObjectByAlias("expectedFrequency");
         assertTrue(attributeObjectOptional.isPresent());
-        assertEquals("peer:1:2:0:3", attributeObjectOptional.get().getValue());
+        assertEquals("ch939", attributeObjectOptional.get().getValue());
     }
 
-    private void addTpd10gbeBoardInSlotThree() {
+    private void addMdu40EvenLBoardInSlotThree(Node node) {
         //Given
         final BoardEntry boardEntry = BoardEntry.builder()
-            .boardType(BoardType.TPD10GBE)
+            .boardType(BoardType.MDU40EVENL)
             .subrack(1)
             .slot(3)
             .build();
 
         //When
-        AnswerObjects createBoardAnswerObjects = nodeA.createBoard(boardEntry);
+        AnswerObjects createBoardAnswerObjects = node.createBoard(boardEntry);
         assertNotNull(createBoardAnswerObjects);
 
         //Then
@@ -237,7 +218,7 @@ public class NodeImplSmokeTest {
                 .build()
         );
 
-        AnswerObjects getBoardAnswerObjects = nodeA.getBoard(boardEntry, getBoardAttributes);
+        AnswerObjects getBoardAnswerObjects = node.getBoard(boardEntry, getBoardAttributes);
         assertNotNull(getBoardAnswerObjects);
 
         Optional<AnswerObject> answerObjectOptional = getBoardAnswerObjects.findSuccessAnswerObject(OperationType.GET, boardEntry);
@@ -248,21 +229,31 @@ public class NodeImplSmokeTest {
         assertEquals(boardEntry.getMibEntryString(), attributeObjectOptional.get().getValue());
     }
 
-    private void createInternalConnectionBetweenTpd10gbeBoards() {
+    /**
+     * From:    wdm:1:2:3-4
+     * To:      client:1:3:41-42:939
+     * @param node
+     */
+    private void createSymmetricInternalConnectionBetweenTpd10gbeAndMdu40EvenL(Node node) {
         //Given
         final InternalConnectionEntry internalConnectionEntry = InternalConnectionEntry.builder()
             .fromSubrack(1)
             .fromSlot(2)
             .fromMpoIdentifier(MpoIdentifier.NotPresent())
-            .fromPort(7)
+            .fromPort(3)
             .toSubrack(1)
             .toSlot(3)
             .toMpoIdentifier(MpoIdentifier.NotPresent())
-            .toPort(8)
+            .toPort(42)
             .build();
 
+        createOneWayInternalConnectionBetweenTpd10gbeAndMdu40EvenL(node, internalConnectionEntry);
+        createOneWayInternalConnectionBetweenTpd10gbeAndMdu40EvenL(node, internalConnectionEntry.reverse());
+    }
+
+    private void createOneWayInternalConnectionBetweenTpd10gbeAndMdu40EvenL(Node node, InternalConnectionEntry internalConnectionEntry) {
         //When
-        AnswerObjects createInternalConnectionAnswerObjects = nodeA.createInternalConnection(internalConnectionEntry);
+        AnswerObjects createInternalConnectionAnswerObjects = node.createInternalConnection(internalConnectionEntry);
         assertNotNull(createInternalConnectionAnswerObjects);
 
         //Then
@@ -271,7 +262,7 @@ public class NodeImplSmokeTest {
                 .key("topoIntName")
                 .build()
         );
-        AnswerObjects getInternalConnectionAnswerObjects = nodeA.getInternalConnection(internalConnectionEntry, getInternalConnectionAttributes);
+        AnswerObjects getInternalConnectionAnswerObjects = node.getInternalConnection(internalConnectionEntry, getInternalConnectionAttributes);
         assertNotNull(getInternalConnectionAnswerObjects);
 
         Optional<AnswerObject> answerObjectOptional = getInternalConnectionAnswerObjects.findSuccessAnswerObject(OperationType.GET, internalConnectionEntry);
@@ -280,5 +271,93 @@ public class NodeImplSmokeTest {
         Optional<AttributeObject> attributeObjectOptional = answerObjectOptional.get().getAttributeObject("topoIntName");
         assertTrue(attributeObjectOptional.isPresent());
         assertEquals(internalConnectionEntry.getMibEntryString(), attributeObjectOptional.get().getValue());
+    }
+
+    private void createSymmetricalPeerConnectionBetweenNodes(Node nodeA, Node nodeZ) {
+        createlPeerEntryForMdu40EvenL(nodeA, nodeZ);
+        createlPeerEntryForMdu40EvenL(nodeZ, nodeA);
+    }
+
+    private void createlPeerEntryForMdu40EvenL(Node transmitNode, Node recieveNode) {
+        //Given
+        final PeerEntry transmitPeerEntry = PeerEntry.builder()
+            .subrack(1)
+            .slot(3)
+            .port(81)
+            .mpoIdentifier(MpoIdentifier.NotPresent())
+            .build();
+
+        final PeerEntry receivePeerEntry = PeerEntry.builder()
+            .subrack(1)
+            .slot(3)
+            .port(82)
+            .mpoIdentifier(MpoIdentifier.NotPresent())
+            .build();
+
+        final Attributes transmitPeerConfig = Attributes.builder()
+            .attribute(
+                Attribute.builder()
+                    .key("topoPeerLocalLabel")
+                    .value(transmitPeerEntry.getLocalLabel())
+                    .build()
+            )
+            .attribute(
+                Attribute.builder()
+                    .key("topoPeerRemoteIpAddress")
+                    .value(recieveNode.getIpAddress())
+                    .build()
+            )
+            .attribute(
+                Attribute.builder()
+                    .key("topoPeerRemoteLabel")
+                    .value(receivePeerEntry.getLocalLabel())
+                    .build()
+            )
+            .build();
+
+        final Attributes receivePeerConfig = Attributes.builder()
+            .attribute(
+                Attribute.builder()
+                    .key("topoPeerLocalLabel")
+                    .value(receivePeerEntry.getLocalLabel())
+                    .build()
+            )
+            .attribute(
+                Attribute.builder()
+                    .key("topoPeerRemoteIpAddress")
+                    .value(transmitNode.getIpAddress())
+                    .build()
+            )
+            .attribute(
+                Attribute.builder()
+                    .key("topoPeerRemoteLabel")
+                    .value(transmitPeerEntry.getLocalLabel())
+                    .build()
+            )
+            .build();
+
+        //When
+        createPeerEntry(transmitNode, transmitPeerEntry, transmitPeerConfig);
+        createPeerEntry(recieveNode, receivePeerEntry, receivePeerConfig);
+    }
+
+    private void createPeerEntry(Node node, PeerEntry peerEntry, Attributes peerConfig) {
+        //when continued
+        AnswerObjects createPeerAnswerObjects = node.createPeer(peerEntry);
+        assertNotNull(createPeerAnswerObjects);
+
+        AnswerObjects setPeerConfigAnswerObjects = node.setPeerAttributes(peerEntry, peerConfig);
+        assertNotNull(setPeerConfigAnswerObjects);
+
+        //Then
+        AnswerObjects getPeerAnswerObjects = node.getPeer(peerEntry);
+        assertNotNull(getPeerAnswerObjects);
+
+        Optional<AnswerObject> answerObjectOptional = getPeerAnswerObjects.findSuccessAnswerObject(OperationType.GET, peerEntry);
+        assertTrue(answerObjectOptional.isPresent());
+
+        Optional<AttributeObject> attributeObjectOptional = answerObjectOptional.get().getAttributeObject("topoPeerName");
+        assertTrue(attributeObjectOptional.isPresent());
+        assertEquals(peerEntry.getMibEntryString(), attributeObjectOptional.get().getValue());
     }
 }

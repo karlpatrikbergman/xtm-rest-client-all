@@ -15,7 +15,7 @@ public class NodeConnectionTest {
     @ClassRule
     public static DockerComposeRule docker = DockerComposeRule.builder()
             .file("src/integrationTest/resources/docker-compose.yml")
-            .waitingForService("node1", HealthChecks.toHaveAllPortsOpen())
+            .waitingForService("nodeA", HealthChecks.toHaveAllPortsOpen())
             .build();
         private final String nodeIpAddress = "172.45.0.101";
 

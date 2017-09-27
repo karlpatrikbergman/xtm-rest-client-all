@@ -1,26 +1,26 @@
 version: "3"
 
 services:
-  node1:
+  nodeA:
     image: se-artif-prd.infinera.com/tm3k/trunk-hostenv:29.0
-    container_name: node1
+    container_name: nodeA
     privileged: true
     networks:
       xtm_rest_client_network:
         ipv4_address: 172.45.0.101
     ports:
       - 80
-    hostname: node1
-  node2:
+    hostname: nodeA
+  nodeZ:
     image: se-artif-prd.infinera.com/tm3k/trunk-hostenv:29.0
-    container_name: node2
+    container_name: nodeZ
     privileged: true
     networks:
       xtm_rest_client_network:
         ipv4_address: 172.45.0.102
     ports:
       - 80
-    hostname: node1
+    hostname: nodeZ
 networks:
   xtm_rest_client_network:
     driver: bridge

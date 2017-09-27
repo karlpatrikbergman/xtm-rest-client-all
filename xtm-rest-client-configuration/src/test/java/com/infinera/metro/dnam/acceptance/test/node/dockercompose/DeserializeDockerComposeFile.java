@@ -11,16 +11,10 @@ import java.util.Map;
 
 import static org.junit.Assert.*;
 
-public class DockerComposeYamlTest {
-
-    private final ObjectMapper mapper = new ObjectMapper();
+public class DeserializeDockerComposeFile {
 
     @Test
     public void test() throws IOException {
-//        ObjectReader reader = JacksonYamlUtil.INSTANCE.getReader().forType(DockerCompose.class);
-//        InputStream in = new ResourceInputStream("dockercompose/docker-compose.yml");
-//        DockerCompose dockerCompose = reader.readValue(in);
-
         ObjectFromFileUtil objectFromFileUtil = ObjectFromFileUtilFactory.getObjectFromFileUtil();
         DockerCompose dockerCompose = objectFromFileUtil.getObject("dockercompose/docker-compose.yml", DockerCompose.class);
 
@@ -51,7 +45,7 @@ public class DockerComposeYamlTest {
         assertNotNull(config);
         assertEquals("172.25.0.0/24", config.get(0).get("subnet"));
 
+        final ObjectMapper mapper = new ObjectMapper();
         System.out.println(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(dockerCompose));
-
     }
 }

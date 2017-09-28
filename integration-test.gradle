@@ -19,7 +19,7 @@ task integrationTest(type: Test) {
         events 'started', 'passed'
     }
 
-    systemProperties project.properties.subMap(["foo", "bar"])
+    systemProperties project.properties.subMap(["shutdownStrategy", "dockerMachineHost"])
 
     useJUnit {
         excludeCategories 'com.infinera.metro.dnam.acceptance.test.node.DontLetGradleRun'

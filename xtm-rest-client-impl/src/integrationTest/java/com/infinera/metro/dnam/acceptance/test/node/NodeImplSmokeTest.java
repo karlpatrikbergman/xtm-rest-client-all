@@ -7,38 +7,107 @@ import com.infinera.metro.dnam.acceptance.test.node.mib.OperationType;
 import com.infinera.metro.dnam.acceptance.test.node.mib.entry.*;
 import com.infinera.metro.dnam.acceptance.test.node.mib.type.*;
 import com.palantir.docker.compose.DockerComposeRule;
+import com.palantir.docker.compose.configuration.ShutdownStrategy;
+import com.palantir.docker.compose.connection.DockerMachine;
 import com.palantir.docker.compose.connection.waiting.HealthChecks;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.IOUtils;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.Optional;
 
 import static org.junit.Assert.*;
 
 /**
  * Deliberately quite verbose and not much code reuse to both test and show the workings of NodeImpl.
+ *
+ * To run this test from command line:
+ * ./gradlew clean xtm-rest-client-impl:integrationTest -DintegrationTest.single=NodeImplSmokeTest
+ *
+ * To run this test and keep containers running:
+ * ./gradlew clean xtm-rest-client-impl:integrationTest -DintegrationTest.single=NodeImplSmokeTest -PshutdownStrategy=SKIP
+ *
+ * Visit XTM node ad ip addresses "172.45.0.101" and "172.45.0.102".
+ * IP addresses defined here:
+ * src/integrationTest/resources/docker-compose.yml
+ *
+ * To run test using remote docker-machine
+ * ./gradlew clean xtm-rest-client-impl:integrationTest -DintegrationTest.single=NodeImplSmokeTest -PdockerMachineHost=tcp://172.16.15.230:2376
+ *
  */
 @Category(IntegrationTest.class)
 @Slf4j
 public class NodeImplSmokeTest {
+    private static final ShutdownStrategy shutdownStrategy;
+    private static final DockerMachine dockerMachine;
+
+    static {
+        String shutdownStrategyFromCommandLine = (System.getProperty("shutdownStrategy") != null) ? System.getProperty("shutdownStrategy") : "";
+        switch (shutdownStrategyFromCommandLine) {
+            case "SKIP":
+                shutdownStrategy = ShutdownStrategy.SKIP;
+                break;
+            case "GRACEFUL":
+                shutdownStrategy = ShutdownStrategy.GRACEFUL;
+                break;
+            case "KILL_DOWN":
+                shutdownStrategy = ShutdownStrategy.GRACEFUL;
+                break;
+            default:
+                shutdownStrategy = ShutdownStrategy.GRACEFUL;
+        }
+
+        if(System.getProperty("dockerMachineHost") == null) {
+            dockerMachine = DockerMachine.localMachine().build();
+        } else {
+            log.info("dockerMachineHost {}", System.getProperty("dockerMachineHost"));
+            dockerMachine = DockerMachine.remoteMachine()
+                .host(System.getProperty("dockerMachineHost"))
+                .withTLS("/home/qpabe/.docker/machine/machines/pabe-test-machine")
+                .build();
+        }
+    }
+
+    private String ipAddressNodeA;
+    private String ipAddressNodeZ;
 
     @ClassRule
     public static DockerComposeRule docker = DockerComposeRule.builder()
-        .file("src/integrationTest/resources/docker-compose.yml")
+        .machine(dockerMachine)
+        .file("src/integrationTest/resources/docker-compose-macvlan.yml")
         .waitingForService("nodeA", HealthChecks.toHaveAllPortsOpen())
         .waitingForService("nodeZ", HealthChecks.toHaveAllPortsOpen())
+        .shutdownStrategy(shutdownStrategy)
         .build();
+
+    @Before
+    public void setup() throws IOException {
+        ipAddressNodeA = getContainerIpAddress("nodeA");
+        ipAddressNodeZ = getContainerIpAddress("nodeZ");
+    }
+
+    //TODO: Put in utility class
+    private String getContainerIpAddress(String nodeName) throws IOException {
+        InputStream inputStream = docker.dockerExecutable().execute("inspect", "-f", "'{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}'", nodeName).getInputStream();
+        String ipAddress = IOUtils.toString(inputStream, StandardCharsets.UTF_8.name())
+            .replaceAll("\n","")
+            .replaceAll("\'","");
+        log.info("IPAddress for {}: {}", nodeName, ipAddress);
+        return ipAddress;
+    }
 
     @Test
     public void nodeImplSmokeTest() {
-        final String ipAddressNodeA = "172.45.0.101";
-//        final String ipAddressNodeA = "172.17.0.2";
+//        final String ipAddressNodeA = "172.45.0.101";
         final Node nodeA = NodeImpl.createDefault(ipAddressNodeA);
 
-        String ipAddressNodeZ = "172.45.0.102";
-//        final String ipAddressNodeZ = "172.17.0.3";
+//        String ipAddressNodeZ = "172.45.0.102";
         final Node nodeZ = NodeImpl.createDefault(ipAddressNodeZ);
         setupNode(nodeA, ipAddressNodeZ);
         setupNode(nodeZ, ipAddressNodeA);

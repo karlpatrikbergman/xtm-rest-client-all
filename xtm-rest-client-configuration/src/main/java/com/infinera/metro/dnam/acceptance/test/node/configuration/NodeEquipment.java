@@ -26,7 +26,7 @@ public class NodeEquipment {
     public void applyTo(Node node) {
         assert node != null;
         boards.entrySet().stream()
-        .map(map -> map.getValue())
+        .map(Map.Entry::getValue)
                 .forEach(board -> board.applyTo(node));
     }
 

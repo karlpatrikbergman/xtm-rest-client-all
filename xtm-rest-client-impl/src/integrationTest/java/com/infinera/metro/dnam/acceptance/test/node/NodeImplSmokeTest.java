@@ -1,5 +1,6 @@
 package com.infinera.metro.dnam.acceptance.test.node;
 
+import com.google.common.collect.ImmutableList;
 import com.infinera.metro.dnam.acceptance.test.node.mib.Attribute;
 import com.infinera.metro.dnam.acceptance.test.node.mib.Attributes;
 import com.infinera.metro.dnam.acceptance.test.node.mib.MpoIdentifier;
@@ -7,6 +8,7 @@ import com.infinera.metro.dnam.acceptance.test.node.mib.OperationType;
 import com.infinera.metro.dnam.acceptance.test.node.mib.entry.*;
 import com.infinera.metro.dnam.acceptance.test.node.mib.type.*;
 import com.palantir.docker.compose.DockerComposeRule;
+import com.palantir.docker.compose.configuration.DockerComposeFiles;
 import com.palantir.docker.compose.configuration.ShutdownStrategy;
 import com.palantir.docker.compose.connection.DockerMachine;
 import com.palantir.docker.compose.connection.waiting.HealthChecks;
@@ -25,29 +27,22 @@ import java.util.Optional;
 import static org.junit.Assert.*;
 
 /**
- * Deliberately quite verbose and not much code reuse to both test and show the workings of NodeImpl.
- *
  * To run this test from command line:
  * ./gradlew clean xtm-rest-client-impl:integrationTest -DintegrationTest.single=NodeImplSmokeTest
  *
  * To run this test and keep containers running:
  * ./gradlew clean xtm-rest-client-impl:integrationTest -DintegrationTest.single=NodeImplSmokeTest -PshutdownStrategy=SKIP
- *
- * Visit XTM node ad ip addresses "172.45.0.101" and "172.45.0.102".
- * IP addresses defined here:
- * src/integrationTest/resources/docker-compose.yml
- *
- * To run test using remote docker-machine
- * ./gradlew clean xtm-rest-client-impl:integrationTest -DintegrationTest.single=NodeImplSmokeTest -PdockerMachineHost=tcp://172.16.15.230:2376
- *
  */
 @Category(IntegrationTest.class)
 @Slf4j
 public class NodeImplSmokeTest {
     private static final ShutdownStrategy shutdownStrategy;
     private static final DockerMachine dockerMachine;
+    private static final ImmutableList.Builder<String> dockerComposeFilesBuilder = new ImmutableList.Builder<>();
 
     static {
+        dockerComposeFilesBuilder.add("src/integrationTest/resources/node-impl-smoke-test/docker-compose.yml");
+
         String shutdownStrategyFromCommandLine = (System.getProperty("shutdownStrategy") != null) ? System.getProperty("shutdownStrategy") : "";
         switch (shutdownStrategyFromCommandLine) {
             case "SKIP":
@@ -63,15 +58,21 @@ public class NodeImplSmokeTest {
                 shutdownStrategy = ShutdownStrategy.GRACEFUL;
         }
 
-        if(System.getProperty("dockerMachineHost") == null) {
+        if(System.getProperty("dockerMachineHost") == null || System.getProperty("dockerMachineSshDirectory") == null) {
             dockerMachine = DockerMachine.localMachine().build();
         } else {
             log.info("dockerMachineHost {}", System.getProperty("dockerMachineHost"));
+            log.info("dockerMachineSshDirectory {}", System.getProperty("dockerMachineSshDirectory"));
+
+            dockerComposeFilesBuilder.add("src/integrationTest/resources/node-impl-smoke-test/docker-compose-macvlan.yml");
+
             dockerMachine = DockerMachine.remoteMachine()
                 .host(System.getProperty("dockerMachineHost"))
-                .withTLS("/home/qpabe/.docker/machine/machines/pabe-test-machine")
+                .withTLS(System.getProperty("dockerMachineSshDirectory"))
                 .build();
         }
+
+        log.info("Docker compose files {}", DockerComposeFiles.from(String.join(",", dockerComposeFilesBuilder.build().asList())));
     }
 
     private String ipAddressNodeA;
@@ -80,7 +81,7 @@ public class NodeImplSmokeTest {
     @ClassRule
     public static DockerComposeRule docker = DockerComposeRule.builder()
         .machine(dockerMachine)
-        .file("src/integrationTest/resources/docker-compose-macvlan.yml")
+        .files(DockerComposeFiles.from(String.join(",", dockerComposeFilesBuilder.build().asList())))
         .waitingForService("nodeA", HealthChecks.toHaveAllPortsOpen())
         .waitingForService("nodeZ", HealthChecks.toHaveAllPortsOpen())
         .shutdownStrategy(shutdownStrategy)
@@ -104,10 +105,7 @@ public class NodeImplSmokeTest {
 
     @Test
     public void nodeImplSmokeTest() {
-//        final String ipAddressNodeA = "172.45.0.101";
         final Node nodeA = NodeImpl.createDefault(ipAddressNodeA);
-
-//        String ipAddressNodeZ = "172.45.0.102";
         final Node nodeZ = NodeImpl.createDefault(ipAddressNodeZ);
         setupNode(nodeA, ipAddressNodeZ);
         setupNode(nodeZ, ipAddressNodeA);
@@ -301,7 +299,7 @@ public class NodeImplSmokeTest {
     /**
      * From:    wdm:1:2:3-4
      * To:      client:1:3:41-42:939
-     * @param node
+     * @param node  An instance of Node
      */
     private void createSymmetricInternalConnectionBetweenTpd10gbeAndMdu40EvenL(Node node) {
         //Given

@@ -1,0 +1,20 @@
+version: "2"
+
+services:
+
+  nodeA:
+    networks:
+      - nodeimpl_smoke_test
+  nodeZ:
+    networks:
+      - nodeimpl_smoke_test
+
+networks:
+  nodeimpl_smoke_test:
+    driver: macvlan
+    driver_opts:
+      parent: eth0
+    ipam:
+      config:
+        - subnet: 172.16.12.0/22
+          gateway: 172.16.12.1

@@ -17,3 +17,5 @@ Run single integration test
 ```shell
 $ ./gradlew clean xtm-rest-client-impl:integrationTest -DintegrationTest.single=<integration-test-class-name>
 ```
+#### NodeImplSmokeTest
+Creates two XTM-nodes with the following setup:

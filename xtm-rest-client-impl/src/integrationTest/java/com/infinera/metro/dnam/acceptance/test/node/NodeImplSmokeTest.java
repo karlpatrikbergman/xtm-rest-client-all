@@ -1,21 +1,14 @@
 package com.infinera.metro.dnam.acceptance.test.node;
 
-import com.google.common.collect.ImmutableList;
 import com.infinera.metro.dnam.acceptance.test.node.mib.Attribute;
 import com.infinera.metro.dnam.acceptance.test.node.mib.Attributes;
 import com.infinera.metro.dnam.acceptance.test.node.mib.MpoIdentifier;
 import com.infinera.metro.dnam.acceptance.test.node.mib.OperationType;
 import com.infinera.metro.dnam.acceptance.test.node.mib.entry.*;
 import com.infinera.metro.dnam.acceptance.test.node.mib.type.*;
-import com.palantir.docker.compose.DockerComposeRule;
-import com.palantir.docker.compose.configuration.DockerComposeFiles;
-import com.palantir.docker.compose.configuration.ShutdownStrategy;
-import com.palantir.docker.compose.connection.DockerMachine;
-import com.palantir.docker.compose.connection.waiting.HealthChecks;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
 import org.junit.Before;
-import org.junit.ClassRule;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
@@ -35,57 +28,9 @@ import static org.junit.Assert.*;
  */
 @Category(IntegrationTest.class)
 @Slf4j
-public class NodeImplSmokeTest {
-    private static final ShutdownStrategy shutdownStrategy;
-    private static final DockerMachine dockerMachine;
-    private static final ImmutableList.Builder<String> dockerComposeFilesBuilder = new ImmutableList.Builder<>();
-
-    static {
-        dockerComposeFilesBuilder.add("src/integrationTest/resources/node-impl-smoke-test/docker-compose.yml");
-
-        String shutdownStrategyFromCommandLine = (System.getProperty("shutdownStrategy") != null) ? System.getProperty("shutdownStrategy") : "";
-        switch (shutdownStrategyFromCommandLine) {
-            case "SKIP":
-                shutdownStrategy = ShutdownStrategy.SKIP;
-                break;
-            case "GRACEFUL":
-                shutdownStrategy = ShutdownStrategy.GRACEFUL;
-                break;
-            case "KILL_DOWN":
-                shutdownStrategy = ShutdownStrategy.GRACEFUL;
-                break;
-            default:
-                shutdownStrategy = ShutdownStrategy.GRACEFUL;
-        }
-
-        if(System.getProperty("dockerMachineHost") == null || System.getProperty("dockerMachineSshDirectory") == null) {
-            dockerMachine = DockerMachine.localMachine().build();
-        } else {
-            log.info("dockerMachineHost {}", System.getProperty("dockerMachineHost"));
-            log.info("dockerMachineSshDirectory {}", System.getProperty("dockerMachineSshDirectory"));
-
-            dockerComposeFilesBuilder.add("src/integrationTest/resources/node-impl-smoke-test/docker-compose-macvlan.yml");
-
-            dockerMachine = DockerMachine.remoteMachine()
-                .host(System.getProperty("dockerMachineHost"))
-                .withTLS(System.getProperty("dockerMachineSshDirectory"))
-                .build();
-        }
-
-        log.info("Docker compose files {}", DockerComposeFiles.from(String.join(",", dockerComposeFilesBuilder.build().asList())));
-    }
-
+public class NodeImplSmokeTest extends DockerComposeRuleTest {
     private String ipAddressNodeA;
     private String ipAddressNodeZ;
-
-    @ClassRule
-    public static DockerComposeRule docker = DockerComposeRule.builder()
-        .machine(dockerMachine)
-        .files(DockerComposeFiles.from(String.join(",", dockerComposeFilesBuilder.build().asList())))
-        .waitingForService("nodeA", HealthChecks.toHaveAllPortsOpen())
-        .waitingForService("nodeZ", HealthChecks.toHaveAllPortsOpen())
-        .shutdownStrategy(shutdownStrategy)
-        .build();
 
     @Before
     public void setup() throws IOException {

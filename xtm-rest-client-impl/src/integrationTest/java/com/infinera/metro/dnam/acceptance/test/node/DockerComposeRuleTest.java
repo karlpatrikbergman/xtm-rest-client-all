@@ -6,10 +6,13 @@ import com.palantir.docker.compose.configuration.DockerComposeFiles;
 import com.palantir.docker.compose.configuration.ShutdownStrategy;
 import com.palantir.docker.compose.connection.DockerMachine;
 import com.palantir.docker.compose.connection.waiting.HealthChecks;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.ClassRule;
 
+import java.util.Arrays;
 import java.util.List;
 
+@Slf4j
 public abstract class DockerComposeRuleTest {
     private static final ShutdownStrategy shutdownStrategy;
     private static final DockerMachine dockerMachine;
@@ -19,8 +22,12 @@ public abstract class DockerComposeRuleTest {
 
     static {
         dockerComposeFilesBuilder.add("src/integrationTest/resources/node-impl-smoke-test/docker-compose.yml");
+        final String shutdownStrategyFromCommandLine = (System.getProperty("shutdownStrategy") != null) ? System.getProperty("shutdownStrategy") : "";
 
-        String shutdownStrategyFromCommandLine = (System.getProperty("shutdownStrategy") != null) ? System.getProperty("shutdownStrategy") : "";
+        log.info("System.getProperty(\"shutdownStrategy\"): {}", System.getProperty("shutdownStrategy"));
+        log.info("System.getProperty(\"dockerMachineHost\"): {}", System.getProperty("dockerMachineHost"));
+        log.info("System.getProperty(\"dockerMachineSshDirectory\"): {}", System.getProperty("dockerMachineSshDirectory"));
+
         switch (shutdownStrategyFromCommandLine) {
             case "SKIP":
                 shutdownStrategy = ShutdownStrategy.SKIP;
@@ -38,7 +45,7 @@ public abstract class DockerComposeRuleTest {
         if(System.getProperty("dockerMachineHost") == null || System.getProperty("dockerMachineSshDirectory") == null) {
             dockerMachine = DockerMachine.localMachine().build();
         } else {
-            dockerComposeFilesBuilder.add("src/integrationTest/resources/node-impl-smoke-test/docker-compose-macvlan.yml");
+            dockerComposeFilesBuilder.add("src/integrationTest/resources/node-impl-smoke-test/dockerComposeRule-compose-macvlan.yml");
             dockerMachine = DockerMachine.remoteMachine()
                 .host(System.getProperty("dockerMachineHost"))
                 .withTLS(System.getProperty("dockerMachineSshDirectory"))
@@ -47,13 +54,14 @@ public abstract class DockerComposeRuleTest {
 
         List<String> dockerComposeFiles = dockerComposeFilesBuilder.build().asList();
         dockerComposeFilesArray = dockerComposeFiles.toArray(new String[dockerComposeFiles.size()]);
+
+        Arrays.stream(dockerComposeFilesArray).forEach(file -> log.info("dockerComposeRule-compose file: {}", file));
     }
 
     @ClassRule
-    public static DockerComposeRule docker = DockerComposeRule.builder()
+    public static DockerComposeRule dockerComposeRule = DockerComposeRule.builder()
         .machine(dockerMachine)
         .files(DockerComposeFiles.from(dockerComposeFilesArray))
-//        .files(DockerComposeFiles.from("src/integrationTest/resources/node-impl-smoke-test/docker-compose.yml", "src/integrationTest/resources/node-impl-smoke-test/docker-compose-macvlan.yml"))
         .waitingForService("nodeA", HealthChecks.toHaveAllPortsOpen())
         .waitingForService("nodeZ", HealthChecks.toHaveAllPortsOpen())
         .shutdownStrategy(shutdownStrategy)

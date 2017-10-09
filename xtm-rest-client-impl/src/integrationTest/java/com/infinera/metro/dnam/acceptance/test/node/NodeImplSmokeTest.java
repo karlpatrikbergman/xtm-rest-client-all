@@ -7,14 +7,11 @@ import com.infinera.metro.dnam.acceptance.test.node.mib.OperationType;
 import com.infinera.metro.dnam.acceptance.test.node.mib.entry.*;
 import com.infinera.metro.dnam.acceptance.test.node.mib.type.*;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.io.IOUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
 import java.util.Optional;
 
 import static org.junit.Assert.*;
@@ -25,6 +22,9 @@ import static org.junit.Assert.*;
  *
  * To run this test and keep containers running:
  * ./gradlew clean xtm-rest-client-impl:integrationTest -DintegrationTest.single=NodeImplSmokeTest -PshutdownStrategy=SKIP
+ *
+ * To run this test against dockerized remote host and keep containers running:
+ * ./gradlew clean xtm-rest-client-impl:integrationTest -DintegrationTest.single=NodeImplSmokeTest -PdockerMachineHost=tcp://172.16.15.232:2376 -PdockerMachineSshDirectory=${HOME}/.dockerComposeRule/machine/machines/centos-dockerComposeRule-machine-1 -PshutdownStrategy=SKIP
  */
 @Category(IntegrationTest.class)
 @Slf4j
@@ -34,30 +34,20 @@ public class NodeImplSmokeTest extends DockerComposeRuleTest {
 
     @Before
     public void setup() throws IOException {
-        ipAddressNodeA = getContainerIpAddress("nodeA");
-        ipAddressNodeZ = getContainerIpAddress("nodeZ");
+        ipAddressNodeA = DockerUtil.DOCKER_UTIL.getContainerIpAddress(dockerComposeRule, "nodeA");
+        ipAddressNodeZ = DockerUtil.DOCKER_UTIL.getContainerIpAddress(dockerComposeRule, "nodeZ");
     }
-
-    //TODO: Put in utility class
-    private String getContainerIpAddress(String nodeName) throws IOException {
-        InputStream inputStream = docker.dockerExecutable().execute("inspect", "-f", "'{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}'", nodeName).getInputStream();
-        String ipAddress = IOUtils.toString(inputStream, StandardCharsets.UTF_8.name())
-            .replaceAll("\n","")
-            .replaceAll("\'","");
-        log.info("IPAddress for {}: {}", nodeName, ipAddress);
-        return ipAddress;
-    }
-
+    
     @Test
     public void nodeImplSmokeTest() {
         final Node nodeA = NodeImpl.createDefault(ipAddressNodeA);
         final Node nodeZ = NodeImpl.createDefault(ipAddressNodeZ);
-        setupNode(nodeA, ipAddressNodeZ);
-        setupNode(nodeZ, ipAddressNodeA);
+        setupNode(nodeA);
+        setupNode(nodeZ);
         createSymmetricalPeerConnectionBetweenNodes(nodeA, nodeZ);
     }
 
-    private void setupNode(Node node, String ipAddressRemoteNode) {
+    private void setupNode(Node node) {
         addTpd10gbeBoardInSlotTwo(node);
         setExpectedFrequencyForTpd10gbeClientPort(node);
         configureSignalFormatForTpd10gbeClientPort(node);

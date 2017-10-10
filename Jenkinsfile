@@ -20,8 +20,9 @@ node {
     stage('Publish') {
 //        echo 'Publishing to Artifactory...'
 //        sh './gradlew artifactoryPublish'
-        sh 'GIT_COMMIT=$(git rev-parse HEAD)'
-        sh "echo \"GIT_COMMIT: ${GIT_COMMIT}\""
-        sh "echo ${GIT_COMMIT} | cut -c1-7"
+        bash('GIT_COMMIT=$(git rev-parse HEAD)')
+        bash('echo "GIT_COMMIT: ${GIT_COMMIT}"')
+        bash('GIT_COMMIT_FIRST_7=${GIT_COMMIT:0:7}')
+        bash('echo "GIT_COMMIT_FIRST_7: ${GIT_COMMIT_FIRST_7}"')
     }
 }

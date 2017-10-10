@@ -9,14 +9,14 @@ node {
         echo 'Building....'
         sh './gradlew clean build -xtest'
     }
-    stage('Test') {
-        echo 'Running unit tests....'
-        sh './gradlew test'
-    }
-    stage('Integration Test') {
-        echo 'Running integration tests....'
-        sh './gradlew IntegrationTest'
-    }
+//    stage('Test') {
+//        echo 'Running unit tests....'
+//        sh './gradlew test'
+//    }
+//    stage('Integration Test') {
+//        echo 'Running integration tests....'
+//        sh './gradlew IntegrationTest'
+//    }
     stage('Publish') {
         echo 'Publishing to Artifactory...'
         sh './gradlew artifactoryPublish'

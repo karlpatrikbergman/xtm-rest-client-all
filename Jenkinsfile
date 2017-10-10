@@ -20,6 +20,7 @@ node {
     stage('Publish') {
 //        echo 'Publishing to Artifactory...'
 //        sh './gradlew artifactoryPublish'
+        sh('git rev-parse HEAD > GIT_COMMIT')
         sh 'echo "GIT_COMMIT: $GIT_COMMIT"'
     }
 }

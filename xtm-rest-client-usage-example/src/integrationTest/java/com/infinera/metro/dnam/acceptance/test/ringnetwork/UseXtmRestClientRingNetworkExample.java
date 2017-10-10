@@ -1,7 +1,7 @@
 //package com.infinera.metro.dnam.acceptance.test.ringnetwork;
 //
 //import com.google.common.base.Preconditions;
-//import com.infinera.metro.dnam.acceptance.test.XtmDockerRunner2;
+//import com.infinera.metro.dnam.acceptance.test.XtmDockerRunner;
 //import com.infinera.metro.dnam.acceptance.test.node.DontLetGradleRun;
 //import com.infinera.metro.dnam.acceptance.test.node.configuration.*;
 //import com.spotify.docker.CLIENT.exceptions.DockerCertificateException;
@@ -33,7 +33,7 @@
 //    }
 //
 //    private NodeConfigurator createNodeConfigurator(String containerName) {
-//        final XtmDockerRunner2 xtmDockerRunner = XtmDockerRunner2.INSTANCE;
+//        final XtmDockerRunner xtmDockerRunner = XtmDockerRunner.INSTANCE;
 //        final NodeEquipment nodeEquipment = objectFromFileUtil.getObject("ringnetwork/node_equipment.yaml", NodeEquipment.class);
 //        final NodeConfiguration.NodeConfigurationBuilder nodeConfigurationBuilder = NodeConfiguration.builder()
 //                .nodeEquipment(nodeEquipment);

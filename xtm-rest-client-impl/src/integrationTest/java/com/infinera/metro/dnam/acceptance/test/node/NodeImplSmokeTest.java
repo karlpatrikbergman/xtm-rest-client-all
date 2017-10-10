@@ -7,7 +7,6 @@ import com.infinera.metro.dnam.acceptance.test.node.mib.OperationType;
 import com.infinera.metro.dnam.acceptance.test.node.mib.entry.*;
 import com.infinera.metro.dnam.acceptance.test.node.mib.type.*;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
@@ -24,20 +23,20 @@ import static org.junit.Assert.*;
  * ./gradlew clean xtm-rest-client-impl:integrationTest -DintegrationTest.single=NodeImplSmokeTest -PshutdownStrategy=SKIP
  *
  * To run this test against dockerized remote host and keep containers running:
- * ./gradlew clean xtm-rest-client-impl:integrationTest -DintegrationTest.single=NodeImplSmokeTest -PdockerMachineHost=tcp://172.16.15.232:2376 -PdockerMachineSshDirectory=${HOME}/.dockerComposeRule/machine/machines/centos-dockerComposeRule-machine-1 -PshutdownStrategy=SKIP
+ * ./gradlew clean xtm-rest-client-impl:integrationTest -DintegrationTest.single=NodeImplSmokeTest -PdockerMachineHost=tcp://172.16.15.232:2376 -PdockerMachineSshDirectory=${HOME}/.docker/machine/machines/centos-docker-machine-1 -PshutdownStrategy=SKIP
  */
 @Category(IntegrationTest.class)
 @Slf4j
-public class NodeImplSmokeTest extends DockerComposeRuleTest {
-    private String ipAddressNodeA;
-    private String ipAddressNodeZ;
+public class NodeImplSmokeTest extends DefaultXtmNodesSetupUtilizer {
+    private final DockerUtil dockerUtil = DockerUtil.DOCKER_UTIL;
+    private final String ipAddressNodeA;
+    private final String ipAddressNodeZ;
 
-    @Before
-    public void setup() throws IOException {
-        ipAddressNodeA = DockerUtil.DOCKER_UTIL.getContainerIpAddress(dockerComposeRule, "nodeA");
-        ipAddressNodeZ = DockerUtil.DOCKER_UTIL.getContainerIpAddress(dockerComposeRule, "nodeZ");
+    public NodeImplSmokeTest() throws IOException {
+        ipAddressNodeA = dockerUtil.getContainerIpAddress(dockerComposeRule, "nodeA");
+        ipAddressNodeZ = dockerUtil.getContainerIpAddress(dockerComposeRule, "nodeZ");
     }
-    
+
     @Test
     public void nodeImplSmokeTest() {
         final Node nodeA = NodeImpl.createDefault(ipAddressNodeA);

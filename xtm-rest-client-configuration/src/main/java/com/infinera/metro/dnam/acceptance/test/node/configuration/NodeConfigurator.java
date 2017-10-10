@@ -1,6 +1,6 @@
 //package com.infinera.metro.dnam.acceptance.test.node.configuration;
 //
-//import com.infinera.metro.dnam.acceptance.test.XtmDockerRunner2;
+//import com.infinera.metro.dnam.acceptance.test.XtmDockerRunner;
 //import com.infinera.metro.dnam.acceptance.test.node.NodeAccessData;
 //import com.infinera.metro.dnam.acceptance.test.node.NodeImpl;
 //import com.infinera.metro.dnam.acceptance.test.util.ThreadSleepWrapper;
@@ -14,7 +14,7 @@
 //@Builder
 //@Value
 //public class NodeConfigurator {
-//    @NonNull XtmDockerRunner2 xtmDockerRunner;
+//    @NonNull XtmDockerRunner xtmDockerRunner;
 //    @NonNull String xtmVersion;
 //    @NonNull String containerName;
 //    @NonNull NodeConfiguration.NodeConfigurationBuilder nodeConfigurationBuilder;

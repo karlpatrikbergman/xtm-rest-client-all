@@ -1,6 +1,6 @@
 package com.infinera.metro.dnam.acceptance.test.includenodestart;
 
-import com.infinera.metro.dnam.acceptance.test.XtmDockerRunner2;
+import com.infinera.metro.dnam.acceptance.test.XtmDockerRunner;
 import com.infinera.metro.dnam.acceptance.test.node.DontLetGradleRun;
 import com.infinera.metro.dnam.acceptance.test.node.NodeAccessData;
 import com.infinera.metro.dnam.acceptance.test.node.NodeImpl;
@@ -21,7 +21,7 @@ public class UseXtmRestClientIncludeNodeStartExample {
     private final ObjectFromFileUtil objectFromFileUtil = ObjectFromFileUtilFactory.getObjectFromFileUtil();
 
     public UseXtmRestClientIncludeNodeStartExample() throws IOException, InterruptedException, DockerException, DockerCertificateException {
-        final XtmDockerRunner2 xtmDockerRunner = XtmDockerRunner2.INSTANCE;
+        final XtmDockerRunner xtmDockerRunner = XtmDockerRunner.INSTANCE;
 
         final String ipAddressNodeA = xtmDockerRunner.runDockerContainer("latest", "nodeA");
         nodeAccessDataNodeA = objectFromFileUtil.getObject("includenodestart/three-nodes-example/node_a_access_data.yaml", NodeAccessData.class)

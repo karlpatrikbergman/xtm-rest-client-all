@@ -10,7 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.concurrent.ConcurrentSkipListSet;
 
 @Slf4j
-public enum XtmDockerRunner2 {
+public enum XtmDockerRunner {
     INSTANCE;
     private final String xtmDockerImage = "se-artif-prd.infinera.com/tm3k/trunk-hostenv";
     private final DockerClient dockerClient = DockerClientInstance.INSTANCE.getDockerClient();

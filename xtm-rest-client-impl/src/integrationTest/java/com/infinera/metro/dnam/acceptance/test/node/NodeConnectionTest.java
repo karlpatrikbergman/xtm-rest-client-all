@@ -11,23 +11,22 @@ import static org.junit.Assert.assertNotEquals;
 
 @Slf4j
 public class NodeConnectionTest {
+    private final String nodeIpAddress = "172.45.0.101";
+    private final NodeConnection nodeConnection = new NodeConnection(
+        NodeAccessData.builder()
+            .ipAddress(nodeIpAddress)
+            .port(80)
+            .userName("root")
+            .password("root")
+            .build(),
+        REST_TEMPLATE_FACTORY.createRestTemplate()
+    );
 
     @ClassRule
     public static DockerComposeRule docker = DockerComposeRule.builder()
-            .file("src/integrationTest/resources/docker-compose.yml")
-            .waitingForService("nodeA", HealthChecks.toHaveAllPortsOpen())
-            .build();
-        private final String nodeIpAddress = "172.45.0.101";
-
-    private final NodeConnection nodeConnection = new NodeConnection(
-            NodeAccessData.builder()
-                .ipAddress(nodeIpAddress)
-                .port(80)
-                .userName("root")
-                .password("root")
-                .build(),
-            REST_TEMPLATE_FACTORY.createRestTemplate()
-    );
+        .file("src/integrationTest/resources/node-connection-test/docker-compose.yml")
+        .waitingForService("nodeA", HealthChecks.toHaveAllPortsOpen())
+        .build();
 
     @Test
     public void loginAndSetSessionId() {

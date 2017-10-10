@@ -10,8 +10,8 @@ public class Sketchboard {
     @Test
     public void test() {
         ImmutableList.Builder<String> dockerComposeFilesBuilder = new ImmutableList.Builder<>();
-        dockerComposeFilesBuilder.add("\"src/integrationTest/resources/node-impl-smoke-test/docker-compose.yml\"");
-        dockerComposeFilesBuilder.add("\"src/integrationTest/resources/node-impl-smoke-test/dockerComposeRule-compose-macvlan.yml\"");
+        dockerComposeFilesBuilder.add("\"src/integrationTest/resources/default-xtm-nodes-setup/docker-compose.yml\"");
+        dockerComposeFilesBuilder.add("\"src/integrationTest/resources/default-xtm-nodes-setup/dockerComposeRule-compose-macvlan.yml\"");
         String dockerComposeFiles = String.join(",", dockerComposeFilesBuilder.build().asList());
 
         log.info("dockerComposeFiles {}", dockerComposeFiles);

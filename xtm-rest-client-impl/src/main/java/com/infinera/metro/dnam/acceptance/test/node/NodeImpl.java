@@ -56,6 +56,11 @@ public class NodeImpl implements Node {
         return nodeRestClient.performRestAction(boardEntry, CommandType.SET_JSON, attributes);
     }
 
+    @Override
+    public AnswerObjects setBoardAttribute(BoardEntry boardEntry, Attribute attribute) {
+        return nodeRestClient.performRestAction(boardEntry, CommandType.SET_JSON, Attributes.of(attribute));
+    }
+
 
     /**
      * LinePortEntry
@@ -64,6 +69,11 @@ public class NodeImpl implements Node {
     @Override
     public AnswerObjects setLinePortAttributes(LinePortEntry linePortEntry, Attributes attributes) throws RuntimeException {
         return nodeRestClient.performRestAction(linePortEntry, CommandType.SET_JSON, attributes);
+    }
+
+    @Override
+    public AnswerObjects setLinePortAttribute(LinePortEntry linePortEntry, Attribute attribute) throws RuntimeException {
+        return nodeRestClient.performRestAction(linePortEntry, CommandType.SET_JSON, Attributes.of(attribute));
     }
 
     @Override
@@ -81,8 +91,18 @@ public class NodeImpl implements Node {
     }
 
     @Override
+    public AnswerObjects setClientPortAttribute(ClientPortEntry clientPortEntry, Attribute attribute) throws RuntimeException {
+        return nodeRestClient.performRestAction(clientPortEntry, CommandType.SET_JSON, Attributes.of(attribute));
+    }
+
+    @Override
     public AnswerObjects configureClientPortAttributes(ClientPortEntry clientPortEntry, Attributes attributes) throws RuntimeException {
         return nodeRestClient.performRestAction(clientPortEntry, CommandType.CONFIGURE_JSON, attributes);
+    }
+
+    @Override
+    public AnswerObjects configureClientPortAttribute(ClientPortEntry clientPortEntry, Attribute attribute) throws RuntimeException {
+        return nodeRestClient.performRestAction(clientPortEntry, CommandType.CONFIGURE_JSON, Attributes.of(attribute));
     }
 
     @Override
@@ -111,6 +131,11 @@ public class NodeImpl implements Node {
     @Override
     public AnswerObjects setPeerAttributes(PeerEntry peerEntry, Attributes attributes) throws RuntimeException {
         return nodeRestClient.performRestAction(peerEntry, CommandType.SET_JSON, attributes);
+    }
+
+    @Override
+    public AnswerObjects setPeerAttribute(PeerEntry peerEntry, Attribute attribute) throws RuntimeException {
+        return nodeRestClient.performRestAction(peerEntry, CommandType.SET_JSON, Attributes.of(attribute));
     }
 
     @Override

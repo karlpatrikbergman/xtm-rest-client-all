@@ -18,8 +18,8 @@ node {
 //        sh './gradlew IntegrationTest'
 //    }
     stage('Publish') {
-        echo 'Publishing to Artifactory...'
-        sh './gradlew artifactoryPublish'
+//        echo 'Publishing to Artifactory...'
+//        sh './gradlew artifactoryPublish'
         sh 'echo "GIT_COMMIT: $GIT_COMMIT"'
     }
 }

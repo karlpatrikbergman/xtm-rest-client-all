@@ -23,6 +23,6 @@ node {
         sh('git rev-parse HEAD > GIT_COMMIT')
         git_commit=readFile('GIT_COMMIT')
         short_commit=git_commit.take(7)
-        sh "println ${short_commit}"
+        sh "echo ${short_commit}"
     }
 }

@@ -22,6 +22,6 @@ node {
 //        sh './gradlew artifactoryPublish'
         sh('GIT_COMMIT=$(git rev-parse HEAD)')
         sh('echo "GIT_COMMIT: ${GIT_COMMIT}"')
-        sh('echo "GIT_COMMIT_FIRST_7: ${GIT_COMMIT:0:7}"')
+        sh('echo ${GIT_COMMIT} | cut -c1-5')
     }
 }

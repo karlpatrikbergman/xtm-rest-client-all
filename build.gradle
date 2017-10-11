@@ -25,7 +25,7 @@ buildscript {
 
 subprojects {
     group "com.infinera.metro.dnam.test.acceptance"
-    version "1.0-SNAPSHOT"
+    version "1.0"
 
     apply plugin: 'idea'
     apply plugin: 'maven-publish'
@@ -41,13 +41,15 @@ subprojects {
     apply plugin: "com.jfrog.artifactory"
 
     /** Artifactory settings **/
-    String repo = version.endsWith('SNAPSHOT') ? 'libs-snapshot-local' : 'libs-release-local'
+    if (project.hasProperty('partOfLatestCommitHash')) {
+        project.version = project.version + project.partOfLatestCommitHash
+    }
     artifactory {
         contextUrl = "${artifactory_contextUrl}"
         //The base Artifactory URL if not overridden by the publisher/resolver
         publish {
             repository {
-                repoKey = repo
+                repoKey = "libs-local"
                 username = "${artifactory_user}"
                 password = "${artifactory_password}"
                 maven = true
@@ -68,17 +70,17 @@ subprojects {
         }
     }
 
-    test {
-        testLogging {
-            events 'started', 'passed'
-        }
-    }
-
     publishing {
         publications {
             mavenJava(MavenPublication) {
                 from components.java
             }
+        }
+    }
+
+    test {
+        testLogging {
+            events 'started', 'passed'
         }
     }
 

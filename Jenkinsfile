@@ -1,6 +1,10 @@
 #!groovy
 
 node {
+    timestamps()
+    buildDiscarder(logRotator(numToKeepStr: '4'))
+    ansiColor('xterm')
+
     stage('Clone') {
         echo 'Cloning from bitbucket'
         git credentialsId: '64c67773-022f-4330-97bc-70201486dd8f', url: 'ssh://bitbucket.transmode.se:7999/nm/xtm-rest-client-all.git'

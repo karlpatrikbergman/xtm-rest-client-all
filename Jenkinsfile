@@ -1,9 +1,13 @@
 #!groovy
 
 node {
-    timestamps()
-    buildDiscarder(logRotator(numToKeepStr: '4'))
-    ansiColor('xterm')
+    options {
+        timestamps()
+        disableConcurrentBuilds()
+        buildDiscarder(logRotator(numToKeepStr: '4'))
+        ansiColor('xterm')
+        timeout(time: 8, unit: 'HOURS')
+    }
 
     stage('Clone') {
         echo 'Cloning from bitbucket'

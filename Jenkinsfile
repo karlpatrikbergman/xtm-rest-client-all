@@ -16,10 +16,12 @@ node {
     stage('Test') {
         echo 'Running unit tests....'
         sh './gradlew test'
+        junit allowEmptyResults: true, testResults: '**/target/*.xml'
     }
     stage('Integration Test') {
         echo 'Running integration tests....'
         sh './gradlew IntegrationTest'
+        junit allowEmptyResults: true, testResults: '**/target/*.xml'
     }
     stage('Publish') {
         sh('git rev-parse HEAD > GIT_COMMIT')

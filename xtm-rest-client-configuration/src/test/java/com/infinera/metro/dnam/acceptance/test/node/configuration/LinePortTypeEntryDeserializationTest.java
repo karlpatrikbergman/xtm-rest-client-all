@@ -9,15 +9,11 @@ import org.junit.Test;
 import java.io.IOException;
 
 @Slf4j
-public class LinePortTypeEntryDeserializationTest {
-
-    public static final String PATH = "configuration/line_port_entry.yaml";
+public class LinePortTypeEntryDeserializationTest extends YamlDeserializationTest {
 
     @Test
     public void test() throws IOException {
-        final ObjectFromFileUtil objectFromFileUtil = ObjectFromFileUtilFactory.getObjectFromFileUtil();
-        final LinePortEntry linePortEntry = objectFromFileUtil.getObject(PATH, LinePortEntry.class);
-
+        final LinePortEntry linePortEntry = objectFromFileUtil.getObject("configuration/line_port_entry.yaml", LinePortEntry.class);
         log.info(ReflectionToStringBuilder.toString(linePortEntry, ToStringStyle.MULTI_LINE_STYLE));
     }
 }

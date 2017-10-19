@@ -42,7 +42,7 @@ subprojects {
 
     /** Artifactory settings **/
     if (project.hasProperty('partOfLatestCommitHash')) {
-        project.version = project.version + project.partOfLatestCommitHash
+        project.version = project.version + "." + project.partOfLatestCommitHash
     }
     artifactory {
         contextUrl = "${artifactory_contextUrl}"
@@ -80,6 +80,7 @@ subprojects {
 
     test {
         testLogging {
+            showStandardStreams = true
             events 'started', 'passed'
         }
     }
@@ -110,12 +111,12 @@ subprojects {
 }
 
 project(':xtm-rest-client-configuration') {
-    test {
-        testLogging {
-            showStandardStreams = true
-            events 'started', 'passed'
-        }
-    }
+//    test {
+//        testLogging {
+//            showStandardStreams = true
+//            events 'started', 'passed'
+//        }
+//    }
     dependencies {
         compile project(':xtm-rest-client-common')
         compile project(':xtm-rest-client-impl')

@@ -9,14 +9,11 @@ import org.junit.Test;
 import java.io.IOException;
 
 @Slf4j
-public class MpoIdentifierDeserializationTest {
-
-    public static final String PATH = "configuration/mpo_identifier.yaml";
+public class MpoIdentifierDeserializationTest extends YamlDeserializationTest {
 
     @Test
     public void test() throws IOException {
-        final ObjectFromFileUtil objectFromFileUtil = ObjectFromFileUtilFactory.getObjectFromFileUtil();
-        final MpoIdentifier mpoIdentifier = objectFromFileUtil.getObject(PATH, MpoIdentifier.class);
+        final MpoIdentifier mpoIdentifier = objectFromFileUtil.getObject("configuration/mpo_identifier.yaml", MpoIdentifier.class);
         log.info(ReflectionToStringBuilder.toString(mpoIdentifier, ToStringStyle.MULTI_LINE_STYLE));
     }
 

@@ -9,13 +9,11 @@ import org.junit.Test;
 import java.io.IOException;
 
 @Slf4j
-public class ClientPortTypeEntryDeserializationTest {
-    private final String PATH = "configuration/client_port_entry.yaml";
-    private final ObjectFromFileUtil objectFromFileUtil = ObjectFromFileUtilFactory.getObjectFromFileUtil();
+public class ClientPortTypeEntryDeserializationTest extends YamlDeserializationTest {
 
     @Test
     public void test() throws IOException {
-        ClientPortEntry clientPortEntry = objectFromFileUtil.getObject(PATH, ClientPortEntry.class);
+        ClientPortEntry clientPortEntry = objectFromFileUtil.getObject("configuration/client_port_entry.yaml", ClientPortEntry.class);
         log.info(ReflectionToStringBuilder.toString(clientPortEntry, ToStringStyle.MULTI_LINE_STYLE));
     }
 }

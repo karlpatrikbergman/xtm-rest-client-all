@@ -11,6 +11,9 @@ import org.junit.Test;
 
 import java.io.IOException;
 
+/**
+ * Doesn't actually test anything
+ */
 @Slf4j
 public class PeerConnectionSerializationTest {
 

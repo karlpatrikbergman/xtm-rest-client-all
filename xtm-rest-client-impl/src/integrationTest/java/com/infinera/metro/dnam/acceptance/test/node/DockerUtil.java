@@ -12,9 +12,8 @@ enum DockerUtil {
 
     String getContainerIpAddress(DockerComposeRule dockerComposeRule, String nodeName) throws IOException {
         final InputStream inputStream = dockerComposeRule.dockerExecutable().execute("inspect", "-f", "'{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}'", nodeName).getInputStream();
-        final String ipAddress = IOUtils.toString(inputStream, StandardCharsets.UTF_8.name())
+        return IOUtils.toString(inputStream, StandardCharsets.UTF_8.name())
             .replaceAll("\n","")
             .replaceAll("\'","");
-        return ipAddress;
     }
 }

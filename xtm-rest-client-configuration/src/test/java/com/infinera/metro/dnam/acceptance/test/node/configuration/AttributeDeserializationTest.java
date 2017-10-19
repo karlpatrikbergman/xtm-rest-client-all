@@ -11,11 +11,10 @@ import java.io.IOException;
 import static org.junit.Assert.assertEquals;
 
 @Slf4j
-public class AttributeDeserializationTest {
+public class AttributeDeserializationTest extends YamlDeserializationTest {
 
     @Test
     public void test() throws IOException {
-        ObjectFromFileUtil objectFromFileUtil = ObjectFromFileUtilFactory.getObjectFromFileUtil();
         Attribute attribute = objectFromFileUtil.getObject("configuration/attribute.yaml", Attribute.class);
         assertEquals("clientIfConfigurationCommand", attribute.getKey());
         assertEquals("lan10GbE yes", attribute.getValue());

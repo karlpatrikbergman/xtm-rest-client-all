@@ -13,12 +13,14 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Doesn't actually test anything
+ */
 @Slf4j
 public class NodeEquipmentSerializationTest {
 
     @Test
     public void test() throws IOException {
-
         Tpd10gbe tpd10gbe = Tpd10gbe.builder()
             .subrack(1)
             .slot(Slot.slot2)

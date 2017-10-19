@@ -12,12 +12,11 @@ import static org.junit.Assert.assertNotNull;
 
 @Slf4j
 public class BoardTypeEntryDeserializationTest {
-    private final String PATH = "configuration/board_entry.yaml";
     private final ObjectFromFileUtil objectFromFileUtil = ObjectFromFileUtilFactory.getObjectFromFileUtil();
 
     @Test
     public void test() throws IOException {
-        final BoardEntry boardEntry = objectFromFileUtil.getObject(PATH, BoardEntry.class);
+        final BoardEntry boardEntry = objectFromFileUtil.getObject("configuration/board_entry.yaml", BoardEntry.class);
         assertNotNull(boardEntry);
         log.info(ReflectionToStringBuilder.toString(boardEntry, ToStringStyle.MULTI_LINE_STYLE));
     }

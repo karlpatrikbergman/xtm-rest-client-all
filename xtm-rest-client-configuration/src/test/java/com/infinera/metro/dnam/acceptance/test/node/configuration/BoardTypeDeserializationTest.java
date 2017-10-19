@@ -10,13 +10,11 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 @Slf4j
-public class BoardTypeDeserializationTest {
-    private final String PATH = "configuration/boardtype.yaml";
-    private final ObjectFromFileUtil objectFromFileUtil = ObjectFromFileUtilFactory.getObjectFromFileUtil();
+public class BoardTypeDeserializationTest extends YamlDeserializationTest {
 
     @Test
     public void deserializeBoardType() throws IOException {
-        final BoardType boardType = objectFromFileUtil.getObject(PATH, BoardType.class);
+        final BoardType boardType = objectFromFileUtil.getObject("configuration/boardtype.yaml", BoardType.class);
         assertNotNull(boardType);
         assertEquals(BoardType.TPD10GBE, boardType);
 

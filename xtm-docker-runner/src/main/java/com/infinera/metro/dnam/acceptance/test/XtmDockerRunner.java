@@ -1,5 +1,6 @@
 package com.infinera.metro.dnam.acceptance.test;
 
+import com.google.common.base.Preconditions;
 import com.spotify.docker.client.DockerClient;
 import com.spotify.docker.client.exceptions.DockerException;
 import com.spotify.docker.client.messages.ContainerConfig;
@@ -9,22 +10,25 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.util.concurrent.ConcurrentSkipListSet;
 
+/**
+ * TODO: Make it possible to connect to existing (docker) network
+ */
 @Slf4j
 public enum XtmDockerRunner {
     INSTANCE;
-    private final String xtmDockerImage = "se-artif-prd.infinera.com/tm3k/trunk-hostenv";
     private final DockerClient dockerClient = DockerClientInstance.INSTANCE.getDockerClient();
     private final ConcurrentSkipListSet<String> containers = new ConcurrentSkipListSet<>();
 
     public String runDockerContainer(String xtmVersion, String containerName) {
+        Preconditions.checkNotNull(xtmVersion, "Container name must not be null");
+        Preconditions.checkNotNull(containerName, "Container name must not be null");
         try {
+            final String xtmDockerImage = "se-artif-prd.infinera.com/tm3k/trunk-hostenv";
             final String xtmDockerImageAndVersion = xtmDockerImage.concat(":").concat(xtmVersion);
             dockerClient.pull(xtmDockerImageAndVersion);
-
             final HostConfig hostConfig = HostConfig.builder()
                     .privileged(Boolean.TRUE)
                     .build();
-
             final ContainerConfig containerConfig = ContainerConfig.builder()
                     .hostConfig(hostConfig)
                     .env("DEMO=true", "NOSIM=1")
@@ -33,7 +37,6 @@ public enum XtmDockerRunner {
                     .tty(Boolean.TRUE)
                     .image(xtmDockerImageAndVersion)
                     .build();
-
             final ContainerCreation creation = dockerClient.createContainer(containerConfig, containerName);
             final String id = creation.id();
             dockerClient.startContainer(id);
@@ -55,7 +58,6 @@ public enum XtmDockerRunner {
     }
 
     public void removeContainers() {
-        DockerClient.RemoveContainerParam.removeVolumes();
         containers.forEach(containerId -> {
             try {
                 dockerClient.removeContainer(containerId, DockerClient.RemoveContainerParam.removeVolumes());

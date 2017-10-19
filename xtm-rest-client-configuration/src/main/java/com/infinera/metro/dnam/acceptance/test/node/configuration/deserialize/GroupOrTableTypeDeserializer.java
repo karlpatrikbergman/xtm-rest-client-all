@@ -1,4 +1,4 @@
-package com.infinera.metro.dnam.acceptance.test.node.configuration;
+package com.infinera.metro.dnam.acceptance.test.node.configuration.deserialize;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;

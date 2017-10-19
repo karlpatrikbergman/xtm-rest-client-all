@@ -1,9 +1,10 @@
-package com.infinera.metro.dnam.acceptance.test.node.configuration;
+package com.infinera.metro.dnam.acceptance.test.node.configuration.deserialize;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
+import com.infinera.metro.dnam.acceptance.test.node.configuration.ObjectFromFileUtil;
 import com.infinera.metro.dnam.acceptance.test.node.mib.type.*;
 import com.infinera.metro.dnam.acceptance.test.util.ResourceInputStream;
 import lombok.extern.slf4j.Slf4j;

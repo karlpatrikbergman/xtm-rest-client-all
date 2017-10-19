@@ -7,7 +7,7 @@ import com.infinera.metro.dnam.acceptance.test.node.NodeImpl;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.NodeConfiguration;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.NodeEquipment;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.ObjectFromFileUtil;
-import com.infinera.metro.dnam.acceptance.test.node.configuration.ObjectFromFileUtilJackson;
+import com.infinera.metro.dnam.acceptance.test.node.configuration.deserialize.ObjectFromFileUtilJackson;
 import com.infinera.metro.dnam.acceptance.test.node.dockercompose.DockerCompose;
 import com.infinera.metro.dnam.acceptance.test.node.dockercompose.Service;
 import lombok.extern.slf4j.Slf4j;
@@ -21,7 +21,7 @@ import static org.junit.Assert.assertNotNull;
 @Slf4j
 public class KinellSetupTest {
 
-    final ObjectFromFileUtil objectFromFileUtil = ObjectFromFileUtilJackson.INSTANCE;
+    private final ObjectFromFileUtil objectFromFileUtil = ObjectFromFileUtilJackson.INSTANCE;
     private final NodeEquipment liljeholmenNodeEquipment;
     private final Node  liljeholmen;
     private final String RESOURCES_PATH = "dockercompose/kinell/";

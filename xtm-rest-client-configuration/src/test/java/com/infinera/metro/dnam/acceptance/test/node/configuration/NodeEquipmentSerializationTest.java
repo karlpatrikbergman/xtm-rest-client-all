@@ -3,13 +3,13 @@ package com.infinera.metro.dnam.acceptance.test.node.configuration;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.board.Board;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.board.Tpd10gbe;
+import com.infinera.metro.dnam.acceptance.test.node.configuration.deserialize.ObjectFromFileUtilJackson;
 import com.infinera.metro.dnam.acceptance.test.node.mib.Attribute;
 import com.infinera.metro.dnam.acceptance.test.node.mib.Attributes;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -81,14 +81,12 @@ public class NodeEquipmentSerializationTest {
                 Port.builder()
                     .transmitPort(3)
                     .receivePort(4)
-                    .portEntryAttributes(
-                        Arrays.asList(
-                            LinePortSetAttributes.of(Attributes.of(
-                                Attribute.builder()
-                                    .key("expectedFrequency")
-                                    .value("ch926")
-                                    .build()
-                                )
+                    .portEntryAttribute(
+                        LinePortSetAttributes.of(Attributes.of(
+                            Attribute.builder()
+                                .key("expectedFrequency")
+                                .value("ch926")
+                                .build()
                             )
                         )
                     )
@@ -98,14 +96,12 @@ public class NodeEquipmentSerializationTest {
                 Port.builder()
                     .transmitPort(7)
                     .receivePort(8)
-                    .portEntryAttributes(
-                        Arrays.asList(
-                            LinePortSetAttributes.of(Attributes.of(
-                                Attribute.builder()
-                                    .key("expectedFrequency")
-                                    .value("ch927")
-                                    .build()
-                                )
+                    .portEntryAttribute(
+                        LinePortSetAttributes.of(Attributes.of(
+                            Attribute.builder()
+                                .key("expectedFrequency")
+                                .value("ch927")
+                                .build()
                             )
                         )
                     )

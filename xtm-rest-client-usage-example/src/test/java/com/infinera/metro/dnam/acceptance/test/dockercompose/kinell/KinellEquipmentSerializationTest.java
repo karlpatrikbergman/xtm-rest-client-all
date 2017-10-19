@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.*;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.AddDropPortConfigAttributes;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.board.*;
+import com.infinera.metro.dnam.acceptance.test.node.configuration.deserialize.ObjectFromFileUtilJackson;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.util.AddDropChannelUtil;
 import com.infinera.metro.dnam.acceptance.test.node.mib.Attribute;
 import com.infinera.metro.dnam.acceptance.test.node.mib.Attributes;
@@ -59,11 +60,9 @@ public class KinellEquipmentSerializationTest {
                         Port.builder()
                             .transmitPort(3)
                             .receivePort(4)
-                            .portEntryAttributes(
-                                Arrays.asList( //TODO: Use lombok @Singular
-                                    AddDropPortConfigAttributes.of(
-                                        Attributes.of("addChannel", port_3_4_addDropChannels)
-                                    )
+                            .portEntryAttribute(
+                                AddDropPortConfigAttributes.of(
+                                    Attributes.of("addChannel", port_3_4_addDropChannels)
                                 )
                             )
                             .build()

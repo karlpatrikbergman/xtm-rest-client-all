@@ -6,7 +6,7 @@ import com.infinera.metro.dnam.acceptance.test.node.NodeImpl;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.NodeConfiguration;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.NodeEquipment;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.ObjectFromFileUtil;
-import com.infinera.metro.dnam.acceptance.test.node.configuration.ObjectFromFileUtilFactory;
+import com.infinera.metro.dnam.acceptance.test.node.configuration.deserialize.ObjectFromFileUtilFactory;
 import com.infinera.metro.dnam.acceptance.test.node.dockercompose.DockerCompose;
 import com.infinera.metro.dnam.acceptance.test.node.dockercompose.Service;
 import com.spotify.docker.client.exceptions.DockerCertificateException;
@@ -25,7 +25,7 @@ import java.io.IOException;
 public class UseXtmRestClientWithDockerComposeExample2 {
     private final NodeAccessData nodeAccessDataNodeA;
     private final NodeEquipment nodeEquipmentNodeA;
-    private final ObjectFromFileUtil objectFromFileUtil = ObjectFromFileUtilFactory.getObjectFromFileUtil();
+    private final ObjectFromFileUtil objectFromFileUtil = ObjectFromFileUtilFactory.INSTANCE.getObjectFromFileUtil();
 
     public UseXtmRestClientWithDockerComposeExample2() throws IOException {
         final DockerCompose dockerCompose = objectFromFileUtil.getObject("dockercompose/test-case-x-node-config-docker-compose-rule/docker-compose.yml", DockerCompose.class);

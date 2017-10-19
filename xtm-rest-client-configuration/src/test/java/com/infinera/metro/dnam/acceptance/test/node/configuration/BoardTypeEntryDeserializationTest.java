@@ -11,8 +11,7 @@ import java.io.IOException;
 import static org.junit.Assert.assertNotNull;
 
 @Slf4j
-public class BoardTypeEntryDeserializationTest {
-    private final ObjectFromFileUtil objectFromFileUtil = ObjectFromFileUtilFactory.getObjectFromFileUtil();
+public class BoardTypeEntryDeserializationTest extends YamlDeserializationTest {
 
     @Test
     public void test() throws IOException {

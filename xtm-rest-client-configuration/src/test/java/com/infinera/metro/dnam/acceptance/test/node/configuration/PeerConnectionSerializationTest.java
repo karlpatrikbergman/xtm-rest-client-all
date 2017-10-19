@@ -1,6 +1,7 @@
 package com.infinera.metro.dnam.acceptance.test.node.configuration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.infinera.metro.dnam.acceptance.test.node.configuration.deserialize.ObjectFromFileUtilJackson;
 import com.infinera.metro.dnam.acceptance.test.node.mib.MpoIdentifier;
 import com.infinera.metro.dnam.acceptance.test.node.mib.entry.LinePortEntry;
 import com.infinera.metro.dnam.acceptance.test.node.mib.type.GroupOrTableType;

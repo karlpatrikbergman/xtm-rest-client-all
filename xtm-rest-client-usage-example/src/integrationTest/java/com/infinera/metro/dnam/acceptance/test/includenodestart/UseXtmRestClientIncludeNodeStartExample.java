@@ -5,6 +5,7 @@ import com.infinera.metro.dnam.acceptance.test.node.DontLetGradleRun;
 import com.infinera.metro.dnam.acceptance.test.node.NodeAccessData;
 import com.infinera.metro.dnam.acceptance.test.node.NodeImpl;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.*;
+import com.infinera.metro.dnam.acceptance.test.node.configuration.deserialize.ObjectFromFileUtilFactory;
 import com.spotify.docker.client.exceptions.DockerCertificateException;
 import com.spotify.docker.client.exceptions.DockerException;
 import lombok.extern.slf4j.Slf4j;
@@ -18,7 +19,7 @@ import java.io.IOException;
 public class UseXtmRestClientIncludeNodeStartExample {
     private final NodeAccessData nodeAccessDataNodeA, nodeAccessDataNodeZ, nodeAccessDataNodeX;
     private final NodeEquipment nodeEquipmentNodeA, nodeEquipmentNodeZ, nodeEquipmentNodeX;
-    private final ObjectFromFileUtil objectFromFileUtil = ObjectFromFileUtilFactory.getObjectFromFileUtil();
+    private final ObjectFromFileUtil objectFromFileUtil = ObjectFromFileUtilFactory.INSTANCE.getObjectFromFileUtil();
 
     public UseXtmRestClientIncludeNodeStartExample() throws IOException, InterruptedException, DockerException, DockerCertificateException {
         final XtmDockerRunner xtmDockerRunner = XtmDockerRunner.INSTANCE;

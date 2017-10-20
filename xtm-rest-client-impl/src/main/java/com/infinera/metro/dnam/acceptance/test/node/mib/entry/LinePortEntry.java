@@ -28,4 +28,3 @@ public class LinePortEntry extends AbstractPortEntry implements MibEntry {
         super(moduleType, groupOrTableType, linePortType, subrack, slot, transmitPort, receivePort);
     }
 }
-

@@ -4,8 +4,11 @@ import com.infinera.metro.dnam.acceptance.test.node.DontLetGradleRun;
 import com.infinera.metro.dnam.acceptance.test.node.Node;
 import com.infinera.metro.dnam.acceptance.test.node.NodeImpl;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.*;
+import com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.BoardSetAttributes;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.board.Board;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.board.Fxp400gotn;
+import com.infinera.metro.dnam.acceptance.test.node.configuration.port.Port;
+import com.infinera.metro.dnam.acceptance.test.node.configuration.topology.PeerConnection;
 import com.infinera.metro.dnam.acceptance.test.node.mib.Attribute;
 import com.infinera.metro.dnam.acceptance.test.node.mib.MpoIdentifier;
 import lombok.extern.slf4j.Slf4j;
@@ -36,7 +39,7 @@ public class FlexponderSetupTest {
         Fxp400gotn fxp400gotn = Fxp400gotn.builder()
             .subrack(1)
             .slot(Slot.slot2)
-            .boardEntryAttribute(
+            .boardAttribute(
                 BoardSetAttributes.of(Attribute.builder()
                     .key("adminStatus")
                     .value("up")

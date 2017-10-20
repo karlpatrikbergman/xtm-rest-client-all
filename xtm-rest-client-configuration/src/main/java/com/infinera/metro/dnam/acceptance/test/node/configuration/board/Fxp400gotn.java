@@ -1,8 +1,8 @@
 package com.infinera.metro.dnam.acceptance.test.node.configuration.board;
 
 import com.infinera.metro.dnam.acceptance.test.node.Node;
-import com.infinera.metro.dnam.acceptance.test.node.configuration.MibEntryAttributes;
-import com.infinera.metro.dnam.acceptance.test.node.configuration.Port;
+import com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.MibEntryAttributes;
+import com.infinera.metro.dnam.acceptance.test.node.configuration.port.Port;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.Slot;
 import com.infinera.metro.dnam.acceptance.test.node.mib.type.BoardType;
 import lombok.*;
@@ -18,9 +18,9 @@ public class Fxp400gotn extends AbstractBoard implements Board, WDM_IF_WDM_LineP
     @NonNull private final List<Port> linePorts;
 
     @Builder
-    @java.beans.ConstructorProperties({"subrack", "slot", "boardEntryAttributes", "clientPorts", "linePorts"})
-    private Fxp400gotn(Integer subrack, Slot slot, @Singular List<MibEntryAttributes> boardEntryAttributes, @Singular List<Port> clientPorts, @Singular List<Port> linePorts) {
-        super(BoardType.FXP400GOTN, subrack, slot, boardEntryAttributes);
+    @java.beans.ConstructorProperties({"subrack", "slot", "boardAttributes", "clientPorts", "linePorts"})
+    private Fxp400gotn(Integer subrack, Slot slot, @Singular List<MibEntryAttributes> boardAttributes, @Singular List<Port> clientPorts, @Singular List<Port> linePorts) {
+        super(BoardType.FXP400GOTN, subrack, slot, boardAttributes);
         this.clientPorts = clientPorts;
         this.linePorts = linePorts;
     }

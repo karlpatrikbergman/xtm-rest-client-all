@@ -1,8 +1,8 @@
 package com.infinera.metro.dnam.acceptance.test.node.configuration.board;
 
 import com.infinera.metro.dnam.acceptance.test.node.Node;
-import com.infinera.metro.dnam.acceptance.test.node.configuration.MibEntryAttributes;
-import com.infinera.metro.dnam.acceptance.test.node.configuration.Port;
+import com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.MibEntryAttributes;
+import com.infinera.metro.dnam.acceptance.test.node.configuration.port.Port;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.Slot;
 import com.infinera.metro.dnam.acceptance.test.node.mib.type.BoardType;
 import lombok.Builder;
@@ -21,9 +21,9 @@ public class Roadm1x2G50 extends AbstractBoard implements Board, ROADM_LINEIF_LI
     private final List<Port> linePorts;
 
     @Builder
-    @java.beans.ConstructorProperties({"subrack", "slot", "boardEntryAttributes", "addDropPorts", "linePorts"})
-    private Roadm1x2G50(Integer subrack, Slot slot, @Singular List<MibEntryAttributes> boardEntryAttributes, @Singular List<Port> addDropPorts, @Singular List<Port> linePorts) {
-        super(BoardType.ROADM1X2G50, subrack, slot, boardEntryAttributes);
+    @java.beans.ConstructorProperties({"subrack", "slot", "boardAttributes", "addDropPorts", "linePorts"})
+    private Roadm1x2G50(Integer subrack, Slot slot, @Singular List<MibEntryAttributes> boardAttributes, @Singular List<Port> addDropPorts, @Singular List<Port> linePorts) {
+        super(BoardType.ROADM1X2G50, subrack, slot, boardAttributes);
         this.addDropPorts = addDropPorts;
         this.linePorts = linePorts;
     }

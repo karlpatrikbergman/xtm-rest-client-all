@@ -1,7 +1,8 @@
 package com.infinera.metro.dnam.acceptance.test.node.configuration.board;
 
-import com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.MibEntryAttributes;
+
 import com.infinera.metro.dnam.acceptance.test.node.configuration.Slot;
+import com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.MibEntryAttributes;
 import com.infinera.metro.dnam.acceptance.test.node.mib.type.BoardType;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -14,11 +15,10 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
 @Value
-public class Ad4Even50 extends AbstractBoard implements Board {
-
+public class Mdu40EvenL extends AbstractBoard implements Board {
     @Builder
     @java.beans.ConstructorProperties({"subrack", "slot", "boardAttributes"})
-    private Ad4Even50(Integer subrack, Slot slot, @Singular List<MibEntryAttributes> boardAttributes) {
-        super(BoardType.AD4EVEN50, subrack, slot, boardAttributes);
+    private Mdu40EvenL(Integer subrack, Slot slot, @Singular List<MibEntryAttributes> boardAttributes) {
+        super(BoardType.MDU40EVENL, subrack, slot, boardAttributes);
     }
 }

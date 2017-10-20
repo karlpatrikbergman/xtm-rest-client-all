@@ -111,12 +111,6 @@ subprojects {
 }
 
 project(':xtm-rest-client-configuration') {
-//    test {
-//        testLogging {
-//            showStandardStreams = true
-//            events 'started', 'passed'
-//        }
-//    }
     dependencies {
         compile project(':xtm-rest-client-common')
         compile project(':xtm-rest-client-impl')
@@ -137,8 +131,8 @@ project(':xtm-rest-client-impl') {
         compile "org.antlr:stringtemplate:${stringtemplate_version}"
         compile "com.fasterxml.jackson.core:jackson-annotations:${jackson_version}"
         compile "com.fasterxml.jackson.core:jackson-databind:${jackson_version}"
-        testCompile "com.palantir.docker.compose:docker-compose-rule-junit4:${docker_compose_rule_version}"
-        testCompile "com.spotify:docker-client:${docker_client_version}"
+        compile "com.palantir.docker.compose:docker-compose-rule-junit4:${docker_compose_rule_version}"
+        compile "com.spotify:docker-client:${docker_client_version}"
     }
 }
 

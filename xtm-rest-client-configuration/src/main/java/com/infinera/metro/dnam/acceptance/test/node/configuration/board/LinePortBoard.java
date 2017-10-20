@@ -1,7 +1,7 @@
 package com.infinera.metro.dnam.acceptance.test.node.configuration.board;
 
 import com.infinera.metro.dnam.acceptance.test.node.Node;
-import com.infinera.metro.dnam.acceptance.test.node.configuration.Port;
+import com.infinera.metro.dnam.acceptance.test.node.configuration.port.Port;
 import com.infinera.metro.dnam.acceptance.test.node.mib.entry.LinePortEntry;
 
 import java.util.List;
@@ -14,7 +14,7 @@ public interface LinePortBoard {
     }
     default void configureLinePort(Node node, Port linePort) {
         final LinePortEntry linePortEntry = getLinePortEntry(linePort);
-        linePort.getPortEntryAttributes().forEach(portAttribute -> portAttribute.applyTo(node, linePortEntry));
+        linePort.getPortAttributes().forEach(portAttribute -> portAttribute.applyTo(node, linePortEntry));
     }
     default LinePortEntry getLinePortEntry(Port port) {
         return getLinePortEntryBuilder()

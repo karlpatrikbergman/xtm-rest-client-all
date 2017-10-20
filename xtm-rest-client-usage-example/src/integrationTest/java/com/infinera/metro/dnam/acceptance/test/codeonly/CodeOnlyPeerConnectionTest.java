@@ -4,8 +4,12 @@ import com.infinera.metro.dnam.acceptance.test.node.DontLetGradleRun;
 import com.infinera.metro.dnam.acceptance.test.node.Node;
 import com.infinera.metro.dnam.acceptance.test.node.NodeImpl;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.*;
+import com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.BoardSetAttributes;
+import com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.LinePortSetAttributes;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.board.Board;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.board.Tpd10gbe;
+import com.infinera.metro.dnam.acceptance.test.node.configuration.port.Port;
+import com.infinera.metro.dnam.acceptance.test.node.configuration.topology.PeerConnection;
 import com.infinera.metro.dnam.acceptance.test.node.mib.Attribute;
 import com.infinera.metro.dnam.acceptance.test.node.mib.MpoIdentifier;
 import lombok.extern.slf4j.Slf4j;
@@ -34,7 +38,7 @@ public class CodeOnlyPeerConnectionTest {
         final Port linePort = Port.builder()
             .transmitPort(3)
             .receivePort(4)
-            .portEntryAttribute( //Remember that a port entry can have both setAttributes and configureAttributes
+            .portAttribute( //Remember that a port entry can have both setAttributes and configureAttributes
                 LinePortSetAttributes.of(
                     Attribute.builder()
                         .key("expectedFrequency")
@@ -47,7 +51,7 @@ public class CodeOnlyPeerConnectionTest {
         Tpd10gbe tpd10gbe = Tpd10gbe.builder()
             .subrack(1)
             .slot(Slot.slot2)
-            .boardEntryAttribute(
+            .boardAttribute(
                 BoardSetAttributes.of(Attribute.builder()
                     .key("adminStatus")
                     .value("up")

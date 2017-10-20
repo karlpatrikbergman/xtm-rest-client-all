@@ -2,7 +2,7 @@ package com.infinera.metro.dnam.acceptance.test.node.configuration.board;
 
 
 import com.infinera.metro.dnam.acceptance.test.node.Node;
-import com.infinera.metro.dnam.acceptance.test.node.configuration.Port;
+import com.infinera.metro.dnam.acceptance.test.node.configuration.port.Port;
 import com.infinera.metro.dnam.acceptance.test.node.mib.entry.AddDropPortEntry;
 
 import java.util.List;
@@ -13,7 +13,7 @@ public interface AddDropPortBoard {
     }
     default void configureAddDropPort(Node node, Port addDropPort) {
         final AddDropPortEntry addDropPortEntry = getAddDropPortEntry(addDropPort);
-        addDropPort.getPortEntryAttributes().forEach(portAttribute -> portAttribute.applyTo(node, addDropPortEntry));
+        addDropPort.getPortAttributes().forEach(portAttribute -> portAttribute.applyTo(node, addDropPortEntry));
     }
     default AddDropPortEntry getAddDropPortEntry(Port port) {
         return getAddDropPortEntryBuilder()

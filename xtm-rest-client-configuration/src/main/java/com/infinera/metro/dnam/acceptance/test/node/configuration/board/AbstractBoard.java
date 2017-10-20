@@ -2,7 +2,7 @@ package com.infinera.metro.dnam.acceptance.test.node.configuration.board;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.infinera.metro.dnam.acceptance.test.node.Node;
-import com.infinera.metro.dnam.acceptance.test.node.configuration.MibEntryAttributes;
+import com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.MibEntryAttributes;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.Slot;
 import com.infinera.metro.dnam.acceptance.test.node.mib.entry.BoardEntry;
 import com.infinera.metro.dnam.acceptance.test.node.mib.type.BoardType;
@@ -17,7 +17,7 @@ import java.util.List;
 
 /**
  * NOTE:
- * Field boardEntryAttributes could be two lists, one for attributes that uses "set.json" and one that uses
+ * Field boardAttributes could be two lists, one for attributes that uses "set.json" and one that uses
  * "configure.json".
  */
 
@@ -29,7 +29,7 @@ abstract class AbstractBoard implements  Board {
     @NonNull @JsonIgnore private final BoardType boardType;
     @NonNull private final Integer subrack;
     @NonNull private final Slot slot;
-    @NonNull private final List<MibEntryAttributes> boardEntryAttributes;
+    @NonNull private final List<MibEntryAttributes> boardAttributes;
 
     @JsonIgnore
     public BoardEntry getBoardEntry() {
@@ -43,7 +43,7 @@ abstract class AbstractBoard implements  Board {
     @Override
     public void applyTo(Node node) throws RuntimeException {
         node.createBoard(getBoardEntry());
-        boardEntryAttributes.forEach(boardSetAttribute -> boardSetAttribute.applyTo(node, getBoardEntry()));
+        boardAttributes.forEach(boardSetAttribute -> boardSetAttribute.applyTo(node, getBoardEntry()));
     }
 
     @Override

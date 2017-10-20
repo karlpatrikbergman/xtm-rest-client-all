@@ -1,7 +1,7 @@
 package com.infinera.metro.dnam.acceptance.test.node.configuration.board;
 
 import com.infinera.metro.dnam.acceptance.test.node.Node;
-import com.infinera.metro.dnam.acceptance.test.node.configuration.Port;
+import com.infinera.metro.dnam.acceptance.test.node.configuration.port.Port;
 import com.infinera.metro.dnam.acceptance.test.node.mib.entry.ClientPortEntry;
 
 import java.util.List;
@@ -14,7 +14,7 @@ public interface ClientPortBoard {
     }
     default void configureClientPort(Node node, Port clientPort) {
         final ClientPortEntry clientPortEntry = getClientPortEntry(clientPort);
-        clientPort.getPortEntryAttributes().forEach(portAttribute -> portAttribute.applyTo(node, clientPortEntry));
+        clientPort.getPortAttributes().forEach(portAttribute -> portAttribute.applyTo(node, clientPortEntry));
     }
     default ClientPortEntry getClientPortEntry(Port port) {
         return getClientPortEntryBuilder()

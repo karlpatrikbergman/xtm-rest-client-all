@@ -12,10 +12,12 @@ public interface LinePortBoard {
     default void configureLinePorts(Node node) {
         getLinePorts().forEach(port -> configureLinePort(node, port));
     }
+
     default void configureLinePort(Node node, Port linePort) {
         final LinePortEntry linePortEntry = getLinePortEntry(linePort);
         linePort.getPortAttributes().forEach(portAttribute -> portAttribute.applyTo(node, linePortEntry));
     }
+
     default LinePortEntry getLinePortEntry(Port port) {
         return getLinePortEntryBuilder()
             .transmitPort(port.getTransmitPort())
@@ -23,6 +25,9 @@ public interface LinePortBoard {
             .build();
 
     }
+
     List<Port> getLinePorts();
+
     LinePortEntry.LinePortEntryBuilder getLinePortEntryBuilder();
+
 }

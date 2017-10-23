@@ -3,13 +3,11 @@ package com.infinera.metro.dnam.acceptance.test.node.configuration.topology;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.google.common.base.Preconditions;
 import com.infinera.metro.dnam.acceptance.test.node.Node;
-import com.infinera.metro.dnam.acceptance.test.node.configuration.port.Port;
 import com.infinera.metro.dnam.acceptance.test.node.mib.Attribute;
 import com.infinera.metro.dnam.acceptance.test.node.mib.Attributes;
 import com.infinera.metro.dnam.acceptance.test.node.mib.MpoIdentifier;
-import com.infinera.metro.dnam.acceptance.test.node.mib.entry.BoardEntry;
+import com.infinera.metro.dnam.acceptance.test.node.mib.entry.AbstractPortEntry;
 import com.infinera.metro.dnam.acceptance.test.node.mib.entry.PeerEntry;
 import lombok.Builder;
 import lombok.NonNull;
@@ -19,7 +17,7 @@ import lombok.Value;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.MINIMAL_CLASS, include = JsonTypeInfo.As.PROPERTY, property = "@class")
 @Value
-public class PeerConnection {
+public class PeerConnection_copy {
     @NonNull private final PeerEntry localPeerEntry;
     @NonNull private final PeerEntry remotePeerEntry;
     private final Attributes localPeerConfiguration;
@@ -27,34 +25,22 @@ public class PeerConnection {
 
     @JsonCreator
     @Builder
-    public PeerConnection(@JsonProperty("localNodeIpAddress") String localNodeIpAddress,
-                          @JsonProperty("localBoard") BoardEntry localBoardEntry,
-                          @JsonProperty("localPort") Port localPort,
-                          @JsonProperty("localMpoIdentifier") MpoIdentifier localMpoIdentifier,
-                          @JsonProperty("remoteNodeIpAddress") String remoteNodeIpAddress,
-                          @JsonProperty("remoteBoard") BoardEntry remoteBoardEntry,
-                          @JsonProperty("remotePort") Port remotePort,
-                          @JsonProperty("remoteMpoIdentifier") MpoIdentifier remoteMpoIdentifier) {
-
-        Preconditions.checkNotNull(localNodeIpAddress, "localNodeIpAddress can't be null");
-        Preconditions.checkNotNull(localBoardEntry, "localBoardEntry can't be null");
-        Preconditions.checkNotNull(localPort, "localPort can't be null");
-        Preconditions.checkNotNull(localMpoIdentifier, " can't be null");
-        Preconditions.checkNotNull(remoteNodeIpAddress, "remoteNodeIpAddress can't be null");
-        Preconditions.checkNotNull(remoteBoardEntry, "remoteBoardEntry can't be null");
-        Preconditions.checkNotNull(remotePort, "remotePort can't be null");
-        Preconditions.checkNotNull(remoteMpoIdentifier, "remoteMpoIdentifier can't be null");
-
+    public PeerConnection_copy(@JsonProperty("localNodeIpAddress") String localNodeIpAddress,
+                               @JsonProperty("localPortEntry") AbstractPortEntry localPortEntry,
+                               @JsonProperty("localMpoIdentifier") MpoIdentifier localMpoIdentifier,
+                               @JsonProperty("remoteNodeIpAddress") String remoteNodeIpAddress,
+                               @JsonProperty("remotePortEntry") AbstractPortEntry remotePortEntry,
+                               @JsonProperty("remoteMpoIdentifier") MpoIdentifier remoteMpoIdentifier) {
         this.localPeerEntry = PeerEntry.builder()
-            .subrack(localBoardEntry.getSubrack())
-            .slot(localBoardEntry.getSlot())
-            .port(localPort.getTransmitPort())
+            .subrack(localPortEntry.getSubrack())
+            .slot(localPortEntry.getSlot())
+            .port(localPortEntry.getTransmitPort())
             .mpoIdentifier(localMpoIdentifier)
             .build();
         this.remotePeerEntry = PeerEntry.builder()
-            .subrack(remoteBoardEntry.getSubrack())
-            .slot(remoteBoardEntry.getSlot())
-            .port(remotePort.getReceivePort())
+            .subrack(remotePortEntry.getSubrack())
+            .slot(remotePortEntry.getSlot())
+            .port(remotePortEntry.getReceivePort())
             .mpoIdentifier(remoteMpoIdentifier)
             .build();
         this.localPeerConfiguration = Attributes.builder()

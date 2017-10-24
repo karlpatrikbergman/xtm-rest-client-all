@@ -1,27 +1,18 @@
 package com.infinera.metro.dnam.acceptance.test.node.configuration.port;
 
-import com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.MibEntryAttributes;
-import lombok.Builder;
-import lombok.NonNull;
-import lombok.Singular;
-import lombok.Value;
+import com.google.common.base.Preconditions;
+import lombok.Getter;
 
-import java.util.List;
+class Port {
+    @Getter private final Integer transmitPort;
+    @Getter private final Integer receivePort;
 
-/**
- * NOTE:
- * Field portEntryAttributes could be two lists instead of one, one for attributes that uses "set.json" and one that
- * uses "configure.json".
- *
- * Is Port a correct name?
- */
-
-@Value
-@Builder
-public class Port {
-    @NonNull private final Integer transmitPort;
-    @NonNull private final Integer receivePort;
-    @Singular private final List<MibEntryAttributes> portAttributes;
+    Port(Integer transmitPort, Integer receivePort) {
+        Preconditions.checkArgument(transmitPort instanceof Integer, "transmitPort must be an Integer");
+        Preconditions.checkArgument(receivePort instanceof Integer, "receivePort must be an Integer");
+        this.transmitPort = transmitPort;
+        this.receivePort = receivePort;
+    }
 
 }
 

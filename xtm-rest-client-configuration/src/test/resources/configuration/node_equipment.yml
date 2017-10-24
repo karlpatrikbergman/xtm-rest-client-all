@@ -1,5 +1,4 @@
 --- !<.NodeEquipment>
-
 boards:
 - !<com.infinera.metro.dnam.acceptance.test.node.configuration.board.Tpd10gbe>
   subrack: "subrack1"
@@ -13,7 +12,7 @@ boards:
   clientPorts:
   - transmitPort: 1
     receivePort: 2
-    portAttributes:
+    clientPortAttributes:
     - !<com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.ClientPortConfigAttributes>
       attributes:
         attributes:
@@ -26,7 +25,7 @@ boards:
           value: "w1530"
   - transmitPort: 5
     receivePort: 6
-    portAttributes:
+    clientPortAttributes:
     - !<com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.ClientPortConfigAttributes>
       attributes:
         attributes:
@@ -40,7 +39,7 @@ boards:
   linePorts:
   - transmitPort: 3
     receivePort: 4
-    portAttributes:
+    linePortAttributes:
     - !<com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.LinePortSetAttributes>
       attributes:
         attributes:
@@ -48,7 +47,7 @@ boards:
           value: "ch926"
   - transmitPort: 7
     receivePort: 8
-    portAttributes:
+    linePortAttributes:
     - !<com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.LinePortSetAttributes>
       attributes:
         attributes:
@@ -66,7 +65,7 @@ boards:
   clientPorts:
   - transmitPort: 41
     receivePort: 42
-    portAttributes:
+    clientPortAttributes:
     - !<com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.ClientPortSetAttributes>
       attributes:
         attributes:
@@ -75,7 +74,7 @@ boards:
   linePorts:
   - transmitPort: 81
     receivePort: 82
-    portAttributes:
+    linePortAttributes:
     - !<com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.LinePortSetAttributes>
       attributes:
         attributes:

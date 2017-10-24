@@ -2,9 +2,9 @@ package com.infinera.metro.dnam.acceptance.test.node.configuration.board;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.infinera.metro.dnam.acceptance.test.node.Node;
-import com.infinera.metro.dnam.acceptance.test.node.configuration.Subrack;
-import com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.MibEntryAttributes;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.Slot;
+import com.infinera.metro.dnam.acceptance.test.node.configuration.Subrack;
+import com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.BoardAttributes;
 import com.infinera.metro.dnam.acceptance.test.node.mib.entry.BoardEntry;
 import com.infinera.metro.dnam.acceptance.test.node.mib.type.BoardType;
 import com.infinera.metro.dnam.acceptance.test.node.mib.type.GroupOrTableType;
@@ -31,7 +31,7 @@ public abstract class AbstractBoard implements  Board {
     @NonNull @JsonIgnore private final BoardType boardType;
     @NonNull private final Subrack subrack;
     @NonNull private final Slot slot;
-    @NonNull private final List<MibEntryAttributes> boardAttributes;
+    @NonNull private final List<BoardAttributes> boardAttributes;
 
 
     @JsonIgnore

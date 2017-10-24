@@ -11,7 +11,8 @@ import com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.Line
 import com.infinera.metro.dnam.acceptance.test.node.configuration.board.Mdu40EvenL;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.board.Tpd10gbe;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.deserialize.ObjectFromFileUtilJackson;
-import com.infinera.metro.dnam.acceptance.test.node.configuration.port.Port;
+import com.infinera.metro.dnam.acceptance.test.node.configuration.port.ClientPort;
+import com.infinera.metro.dnam.acceptance.test.node.configuration.port.LinePort;
 import com.infinera.metro.dnam.acceptance.test.node.mib.Attribute;
 import com.infinera.metro.dnam.acceptance.test.node.mib.Attributes;
 import lombok.extern.slf4j.Slf4j;
@@ -27,7 +28,7 @@ public class NodeEquipmentSerializationTest {
 
     @Test
     public void test() throws IOException {
-        Tpd10gbe tpd10gbe = Tpd10gbe.builder()
+        final Tpd10gbe tpd10gbe = Tpd10gbe.builder()
             .subrack(Subrack.subrack1)
             .slot(Slot.slot2)
             .boardAttribute(
@@ -37,10 +38,10 @@ public class NodeEquipmentSerializationTest {
                     .build())
             )
             .clientPort(
-                Port.builder()
+                ClientPort.builder()
                     .transmitPort(1)
                     .receivePort(2)
-                    .portAttribute(
+                    .clientPortAttribute(
                         ClientPortConfigAttributes.of(
                             Attributes.of(Attribute.builder()
                                 .key("clientIfConfigurationCommand")
@@ -49,7 +50,7 @@ public class NodeEquipmentSerializationTest {
                             )
                         )
                     )
-                    .portAttribute(
+                    .clientPortAttribute(
                         ClientPortSetAttributes.of(
                             Attributes.of(Attribute.builder()
                                 .key("expectedFrequency")
@@ -60,10 +61,10 @@ public class NodeEquipmentSerializationTest {
                     )
                     .build())
             .clientPort(
-                Port.builder()
+                ClientPort.builder()
                     .transmitPort(5)
                     .receivePort(6)
-                    .portAttribute(
+                    .clientPortAttribute(
                         ClientPortConfigAttributes.of(
                             Attributes.of(Attribute.builder()
                                 .key("clientIfConfigurationCommand")
@@ -72,7 +73,7 @@ public class NodeEquipmentSerializationTest {
                             )
                         )
                     )
-                    .portAttribute(
+                    .clientPortAttribute(
                         ClientPortSetAttributes.of(
                             Attributes.of(Attribute.builder()
                                 .key("expectedFrequency")
@@ -84,10 +85,10 @@ public class NodeEquipmentSerializationTest {
                     .build()
             )
             .linePort(
-                Port.builder()
+                LinePort.builder()
                     .transmitPort(3)
                     .receivePort(4)
-                    .portAttribute(
+                    .linePortAttribute(
                         LinePortSetAttributes.of(Attributes.of(
                             Attribute.builder()
                                 .key("expectedFrequency")
@@ -99,10 +100,10 @@ public class NodeEquipmentSerializationTest {
                     .build()
             )
             .linePort(
-                Port.builder()
+                LinePort.builder()
                     .transmitPort(7)
                     .receivePort(8)
-                    .portAttribute(
+                    .linePortAttribute(
                         LinePortSetAttributes.of(Attributes.of(
                             Attribute.builder()
                                 .key("expectedFrequency")
@@ -125,10 +126,10 @@ public class NodeEquipmentSerializationTest {
                     .build())
             )
             .clientPort(
-                Port.builder()
+                ClientPort.builder()
                     .transmitPort(41)
                     .receivePort(42)
-                    .portAttribute(
+                    .clientPortAttribute(
                         ClientPortSetAttributes.of(
                             Attributes.of(Attribute.builder()
                                 .key("descr")
@@ -139,10 +140,10 @@ public class NodeEquipmentSerializationTest {
                     )
                     .build())
             .linePort(
-                Port.builder()
+                LinePort.builder()
                     .transmitPort(81)
                     .receivePort(82)
-                    .portAttribute(
+                    .linePortAttribute(
                         LinePortSetAttributes.of(Attributes.of(
                             Attribute.builder()
                                 .key("descr")

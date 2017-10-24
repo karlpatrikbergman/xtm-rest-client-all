@@ -1,10 +1,9 @@
 package com.infinera.metro.dnam.acceptance.test.node.configuration.board;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.infinera.metro.dnam.acceptance.test.node.configuration.Subrack;
-import com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.MibEntryAttributes;
-import com.infinera.metro.dnam.acceptance.test.node.configuration.port.Port;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.Slot;
+import com.infinera.metro.dnam.acceptance.test.node.configuration.Subrack;
+import com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.BoardAttributes;
 import com.infinera.metro.dnam.acceptance.test.node.mib.entry.OaPortEntry;
 import com.infinera.metro.dnam.acceptance.test.node.mib.type.BoardType;
 import com.infinera.metro.dnam.acceptance.test.node.mib.type.GroupOrTableType;
@@ -19,14 +18,12 @@ import java.util.List;
 @Slf4j
 @Value
 public class Oa2x17 extends AbstractBoard implements Board {
-    @NonNull private final List<Port> ports;
     @JsonIgnore @NonNull private final OaPortEntry.OaPortEntryBuilder oaPortEntryBuilder;
 
     @Builder
     @java.beans.ConstructorProperties({"subrack", "slot", "boardAttributes","ports"})
-    private Oa2x17(Subrack subrack, Slot slot, @Singular List<MibEntryAttributes> boardAttributes, List<Port> ports) {
+    private Oa2x17(Subrack subrack, Slot slot, @Singular List<BoardAttributes> boardAttributes) {
         super(BoardType.OA2X17DBM, subrack, slot, boardAttributes);
-        this.ports = ports;
         this.oaPortEntryBuilder = getOatPortEntryBuilder();
     }
 

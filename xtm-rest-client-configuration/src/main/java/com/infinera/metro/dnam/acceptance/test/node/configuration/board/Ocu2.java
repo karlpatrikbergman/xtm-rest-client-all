@@ -1,8 +1,9 @@
 package com.infinera.metro.dnam.acceptance.test.node.configuration.board;
 
 
-import com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.MibEntryAttributes;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.Slot;
+import com.infinera.metro.dnam.acceptance.test.node.configuration.Subrack;
+import com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.MibEntryAttributes;
 import com.infinera.metro.dnam.acceptance.test.node.mib.type.BoardType;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -19,7 +20,7 @@ public class Ocu2 extends AbstractBoard implements Board {
 
     @Builder
     @java.beans.ConstructorProperties({"subrack", "slot", "boardAttributes"})
-    private Ocu2(Integer subrack, Slot slot, @Singular List<MibEntryAttributes> boardAttributes) {
+    private Ocu2(Subrack subrack, Slot slot, @Singular List<MibEntryAttributes> boardAttributes) {
         super(BoardType.OCU2, subrack, slot, boardAttributes);
     }
 }

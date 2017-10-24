@@ -1,6 +1,7 @@
 package com.infinera.metro.dnam.acceptance.test.node.configuration.board;
 
 import com.infinera.metro.dnam.acceptance.test.node.configuration.Slot;
+import com.infinera.metro.dnam.acceptance.test.node.configuration.Subrack;
 import com.infinera.metro.dnam.acceptance.test.node.mib.type.BoardType;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -15,7 +16,7 @@ public class Tpmr2500 extends AbstractBoard implements Board {
 
     @Builder
     @java.beans.ConstructorProperties({"subrack", "slot"})
-    private Tpmr2500(Integer subrack, Slot slot) {
+    private Tpmr2500(Subrack subrack, Slot slot) {
         super(BoardType.TPMR2500, subrack, slot, null);
     }
 }

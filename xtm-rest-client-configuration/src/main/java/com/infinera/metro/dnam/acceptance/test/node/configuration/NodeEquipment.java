@@ -7,30 +7,27 @@ import lombok.Builder;
 import lombok.Singular;
 import lombok.Value;
 
-import java.util.Map;
-//TODO: Add lombok @Singular
+import java.util.List;
+import java.util.Optional;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.MINIMAL_CLASS, include = JsonTypeInfo.As.PROPERTY, property = "@class")
-@Value
 @Builder
+@Value
 public class NodeEquipment {
-    @Singular private final Map<Slot, Board> boards;
+    @Singular  private final List<Board> boards;
 
-    public Board getBoard(Slot slot) {
-        if(!boards.containsKey(slot)) {
-            throw new RuntimeException("No board in slot " + slot);
-        }
-        return boards.get(slot);
+    public Optional<Board>getBoard(Subrack subrack, Slot slot) {
+        return boards.stream()
+            .filter(board -> board.getSubrack().equals(subrack) && board.getSlot().equals(slot))
+            .findFirst();
     }
 
     public void applyTo(Node node) {
         assert node != null;
-        boards.entrySet().stream()
-        .map(Map.Entry::getValue)
-                .forEach(board -> board.applyTo(node));
+        boards.forEach(board -> board.applyTo(node));
     }
 
     public void deleteBoards(Node node) {
-        boards.forEach((slot, board) -> board.deleteFrom(node));
+        boards.forEach(board-> board.deleteFrom(node));
     }
 }

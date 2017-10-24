@@ -9,6 +9,8 @@ import com.infinera.metro.dnam.acceptance.test.node.mib.entry.MibEntry;
  * Interface for mib entry attributes that can be set using REST api.
  * Some may be applied using "set.json" and others may use "config.json"
  * For details see ENM REST api specification.
+ *
+ * TODO: Should be renamed to something from business domain (not contain Entry or Mib)
  */
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "@class")

@@ -3,11 +3,12 @@ package com.infinera.metro.dnam.acceptance.test.node.configuration.serialize;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.NodeEquipment;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.Slot;
+import com.infinera.metro.dnam.acceptance.test.node.configuration.Subrack;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.BoardSetAttributes;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.ClientPortConfigAttributes;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.ClientPortSetAttributes;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.LinePortSetAttributes;
-import com.infinera.metro.dnam.acceptance.test.node.configuration.board.Board;
+import com.infinera.metro.dnam.acceptance.test.node.configuration.board.Mdu40EvenL;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.board.Tpd10gbe;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.deserialize.ObjectFromFileUtilJackson;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.port.Port;
@@ -17,8 +18,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Doesn't actually test anything
@@ -29,7 +28,7 @@ public class NodeEquipmentSerializationTest {
     @Test
     public void test() throws IOException {
         Tpd10gbe tpd10gbe = Tpd10gbe.builder()
-            .subrack(1)
+            .subrack(Subrack.subrack1)
             .slot(Slot.slot2)
             .boardAttribute(
                 BoardSetAttributes.of(Attribute.builder()
@@ -115,14 +114,53 @@ public class NodeEquipmentSerializationTest {
                     .build()
             )
             .build();
-        Map<Slot, Board> boards = new HashMap<>();
-        boards.put(tpd10gbe.getSlot(), tpd10gbe);
 
-        NodeEquipment nodeEquipment = NodeEquipment.builder()
-            .boards(boards)
+        final Mdu40EvenL mdu40EvenL = Mdu40EvenL.builder()
+            .subrack(Subrack.subrack1)
+            .slot(Slot.slot3)
+            .boardAttribute(
+                BoardSetAttributes.of(Attribute.builder()
+                    .key("adminStatus")
+                    .value("up")
+                    .build())
+            )
+            .clientPort(
+                Port.builder()
+                    .transmitPort(41)
+                    .receivePort(42)
+                    .portAttribute(
+                        ClientPortSetAttributes.of(
+                            Attributes.of(Attribute.builder()
+                                .key("descr")
+                                .value("Some relevant description")
+                                .build()
+                            )
+                        )
+                    )
+                    .build())
+            .linePort(
+                Port.builder()
+                    .transmitPort(81)
+                    .receivePort(82)
+                    .portAttribute(
+                        LinePortSetAttributes.of(Attributes.of(
+                            Attribute.builder()
+                                .key("descr")
+                                .value("Some relevant description")
+                                .build()
+                            )
+                        )
+                    )
+                    .build()
+            )
             .build();
-        ObjectMapper mapper = ObjectFromFileUtilJackson.INSTANCE.getMapper();
 
+        final NodeEquipment nodeEquipment = NodeEquipment.builder()
+            .board(tpd10gbe)
+            .board(mdu40EvenL)
+            .build();
+
+        final ObjectMapper mapper = ObjectFromFileUtilJackson.INSTANCE.getMapper();
         log.info(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(nodeEquipment));
     }
 }

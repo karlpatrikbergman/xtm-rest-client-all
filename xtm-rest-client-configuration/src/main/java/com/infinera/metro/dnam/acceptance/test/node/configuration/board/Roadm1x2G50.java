@@ -1,6 +1,7 @@
 package com.infinera.metro.dnam.acceptance.test.node.configuration.board;
 
 import com.infinera.metro.dnam.acceptance.test.node.Node;
+import com.infinera.metro.dnam.acceptance.test.node.configuration.Subrack;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.MibEntryAttributes;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.port.Port;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.Slot;
@@ -22,7 +23,7 @@ public class Roadm1x2G50 extends AbstractBoard implements Board, ROADM_LINEIF_LI
 
     @Builder
     @java.beans.ConstructorProperties({"subrack", "slot", "boardAttributes", "addDropPorts", "linePorts"})
-    private Roadm1x2G50(Integer subrack, Slot slot, @Singular List<MibEntryAttributes> boardAttributes, @Singular List<Port> addDropPorts, @Singular List<Port> linePorts) {
+    private Roadm1x2G50(Subrack subrack, Slot slot, @Singular List<MibEntryAttributes> boardAttributes, @Singular List<Port> addDropPorts, @Singular List<Port> linePorts) {
         super(BoardType.ROADM1X2G50, subrack, slot, boardAttributes);
         this.addDropPorts = addDropPorts;
         this.linePorts = linePorts;

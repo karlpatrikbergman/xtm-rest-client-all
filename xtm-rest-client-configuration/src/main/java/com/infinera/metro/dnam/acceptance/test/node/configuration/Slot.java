@@ -14,4 +14,13 @@ public enum Slot {
     public Integer getValue() {
         return value;
     }
+
+    public static Slot fromString(String slotString) {
+        for (Slot slot : Slot.values()) {
+            if (slot.toString().equalsIgnoreCase(slotString)) {
+                return slot;
+            }
+        }
+        throw new IllegalArgumentException("Failed to create Slot from string" + slotString);
+    }
 }

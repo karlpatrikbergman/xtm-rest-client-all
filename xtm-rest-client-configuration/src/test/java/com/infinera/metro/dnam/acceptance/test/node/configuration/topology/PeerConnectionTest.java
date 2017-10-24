@@ -1,6 +1,7 @@
 package com.infinera.metro.dnam.acceptance.test.node.configuration.topology;
 
 import com.infinera.metro.dnam.acceptance.test.node.configuration.Slot;
+import com.infinera.metro.dnam.acceptance.test.node.configuration.Subrack;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.board.Tpd10gbe;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.port.Port;
 import com.infinera.metro.dnam.acceptance.test.node.mib.MpoIdentifier;
@@ -33,12 +34,12 @@ public class PeerConnectionTest {
     private final String ipAddressNodeZ = "172.17.0.3";
 
     private final Tpd10gbe tpd10gbeOnNodeA = Tpd10gbe.builder()
-        .subrack(1)
+        .subrack(Subrack.subrack1)
         .slot(Slot.slot2)
         .build();
 
     private final Tpd10gbe tpd10gbeOnNodeZ = Tpd10gbe.builder()
-        .subrack(2)
+        .subrack(Subrack.subrack2)
         .slot(Slot.slot3)
         .build();
 

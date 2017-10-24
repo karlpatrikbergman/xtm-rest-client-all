@@ -8,7 +8,7 @@ import java.util.List;
 
 //Example of virtual field pattern
 //https://kerflyn.wordpress.com/2012/07/09/java-8-now-you-have-mixins/
-public interface LinePortBoard {
+public interface LinePortBoard extends SlotSubrackInsertable {
     default void configureLinePorts(Node node) {
         getLinePorts().forEach(port -> configureLinePort(node, port));
     }

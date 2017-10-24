@@ -6,12 +6,12 @@ import com.infinera.metro.dnam.acceptance.test.node.mib.type.ClientPortType;
 import com.infinera.metro.dnam.acceptance.test.node.mib.type.GroupOrTableType;
 import com.infinera.metro.dnam.acceptance.test.node.mib.type.ModuleType;
 
-public interface CLIENT_IF_CLIENT_ClientPortBoard extends ClientPortBoard {
+public interface OA_VOA_LINE_IF_LINE_LinePortBoard extends LinePortBoard {
     @JsonIgnore
     default ClientPortEntry.ClientPortEntryBuilder getClientPortEntryBuilder() {
         return ClientPortEntry.builder()
-            .moduleType(ModuleType.CLIENT)
-            .groupOrTableType(GroupOrTableType.IF)
+            .moduleType(ModuleType.OA)
+            .groupOrTableType(GroupOrTableType.VOA_LINE_IF)
             .clientPortType(ClientPortType.CLIENT)
             .subrack(getSubrack().getValue())
             .slot(getSlot().getValue());

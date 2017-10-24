@@ -1,6 +1,7 @@
 package com.infinera.metro.dnam.acceptance.test.node.configuration.board;
 
 import com.infinera.metro.dnam.acceptance.test.node.Node;
+import com.infinera.metro.dnam.acceptance.test.node.configuration.Subrack;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.MibEntryAttributes;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.port.Port;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.Slot;
@@ -19,7 +20,7 @@ public class Fxp400gotn extends AbstractBoard implements Board, WDM_IF_WDM_LineP
 
     @Builder
     @java.beans.ConstructorProperties({"subrack", "slot", "boardAttributes", "clientPorts", "linePorts"})
-    private Fxp400gotn(Integer subrack, Slot slot, @Singular List<MibEntryAttributes> boardAttributes, @Singular List<Port> clientPorts, @Singular List<Port> linePorts) {
+    private Fxp400gotn(Subrack subrack, Slot slot, @Singular List<MibEntryAttributes> boardAttributes, @Singular List<Port> clientPorts, @Singular List<Port> linePorts) {
         super(BoardType.FXP400GOTN, subrack, slot, boardAttributes);
         this.clientPorts = clientPorts;
         this.linePorts = linePorts;

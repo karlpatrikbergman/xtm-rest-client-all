@@ -12,6 +12,7 @@ import lombok.Getter;
 import lombok.NonNull;
 
 //TODO: Do we need @JsonCreator?
+//TODO: Used enums Subrack and Slot instead of Integer? If so move these enums to xtm-rest-client-impl or xtm-rest-client-common
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "@class")
 @JsonSubTypes({

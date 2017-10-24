@@ -2,6 +2,7 @@ package com.infinera.metro.dnam.acceptance.test.node.configuration.board;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.infinera.metro.dnam.acceptance.test.node.Node;
+import com.infinera.metro.dnam.acceptance.test.node.configuration.Subrack;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.MibEntryAttributes;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.Slot;
 import com.infinera.metro.dnam.acceptance.test.node.mib.entry.BoardEntry;
@@ -19,22 +20,24 @@ import java.util.List;
  * NOTE:
  * Field boardAttributes could be two lists, one for attributes that uses "set.json" and one that uses
  * "configure.json".
+ *
  */
 
 @RequiredArgsConstructor
 @Getter(AccessLevel.PUBLIC)
-abstract class AbstractBoard implements  Board {
-    @JsonIgnore private final ModuleType moduleType = ModuleType.EQ;
-    @JsonIgnore private final GroupOrTableType groupOrTableType = GroupOrTableType.BOARD;
+public abstract class AbstractBoard implements  Board {
+    @JsonIgnore private static final ModuleType MODULE_TYPE = ModuleType.EQ;
+    @JsonIgnore private static final GroupOrTableType groupOrTableType = GroupOrTableType.BOARD;
     @NonNull @JsonIgnore private final BoardType boardType;
-    @NonNull private final Integer subrack;
+    @NonNull private final Subrack subrack;
     @NonNull private final Slot slot;
     @NonNull private final List<MibEntryAttributes> boardAttributes;
+
 
     @JsonIgnore
     public BoardEntry getBoardEntry() {
         return BoardEntry.builder()
-            .subrack(subrack)
+            .subrack(subrack.getValue())
             .slot(slot.getValue())
             .boardType(boardType)
             .build();

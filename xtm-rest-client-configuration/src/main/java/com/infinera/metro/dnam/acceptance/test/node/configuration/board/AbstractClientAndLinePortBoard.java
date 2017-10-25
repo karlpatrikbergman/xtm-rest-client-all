@@ -2,7 +2,7 @@ package com.infinera.metro.dnam.acceptance.test.node.configuration.board;
 
 import com.infinera.metro.dnam.acceptance.test.node.configuration.Slot;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.Subrack;
-import com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.BoardAttributes;
+import com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.board.BoardAttributes;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.port.ClientPort;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.port.LinePort;
 import com.infinera.metro.dnam.acceptance.test.node.mib.type.BoardType;
@@ -14,7 +14,7 @@ import java.util.List;
 //TODO: Cane board List<MibEntryAttributes> be converted to List<BordEntryAttributes>?
 
 @Getter(AccessLevel.PUBLIC)
-class AbstractClientAndLinePortBoard extends AbstractBoard {
+abstract class AbstractClientAndLinePortBoard extends AbstractBoard {
     private final List<ClientPort> clientPorts;
     private final List<LinePort> linePorts;
 

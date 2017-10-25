@@ -1,4 +1,4 @@
-package com.infinera.metro.dnam.acceptance.test.node.configuration.attribute;
+package com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.line;
 
 import com.infinera.metro.dnam.acceptance.test.node.Node;
 import com.infinera.metro.dnam.acceptance.test.node.mib.Attribute;
@@ -6,14 +6,12 @@ import com.infinera.metro.dnam.acceptance.test.node.mib.Attributes;
 import com.infinera.metro.dnam.acceptance.test.node.mib.entry.LinePortEntry;
 import lombok.Value;
 
-//TODO: Can attributes for line ports be set using configure.json? If so add methods to Node interface in the same manner
-//as for client port configuration
 @Value
 public class LinePortSetAttributes implements LinePortAttributes {
-    private Attributes attributes;
+    private Attributes linePortSetAttributes;
 
     public void applyTo(Node node, LinePortEntry linePortEntry) {
-        node.setLinePortAttributes(linePortEntry, attributes);
+        node.setLinePortAttributes(linePortEntry, linePortSetAttributes);
     }
 
     public static LinePortSetAttributes of(Attributes attributes) {
@@ -22,5 +20,13 @@ public class LinePortSetAttributes implements LinePortAttributes {
 
     public static LinePortSetAttributes of(Attribute configuration) {
         return LinePortSetAttributes.of(Attributes.of(configuration));
+    }
+
+    public static LinePortSetAttributes of(String key, String value) {
+        return of(Attribute.builder()
+            .key(key)
+            .value(value)
+            .build()
+        );
     }
 }

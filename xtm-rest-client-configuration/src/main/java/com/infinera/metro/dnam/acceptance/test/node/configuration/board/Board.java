@@ -19,6 +19,7 @@ import com.infinera.metro.dnam.acceptance.test.node.mib.entry.BoardEntry;
 public interface Board {
     Subrack getSubrack();
     Slot getSlot();
+
     BoardEntry getBoardEntry();
     void applyTo(Node node);
     void deleteFrom(Node node);

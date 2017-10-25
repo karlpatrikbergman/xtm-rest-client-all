@@ -3,7 +3,7 @@ package com.infinera.metro.dnam.acceptance.test.node.configuration.board;
 import com.infinera.metro.dnam.acceptance.test.node.Node;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.Slot;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.Subrack;
-import com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.BoardAttributes;
+import com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.board.BoardAttributes;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.port.ClientPort;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.port.LinePort;
 import com.infinera.metro.dnam.acceptance.test.node.mib.type.BoardType;

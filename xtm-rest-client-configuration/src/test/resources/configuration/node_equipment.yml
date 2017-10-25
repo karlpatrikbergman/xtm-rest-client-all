@@ -4,8 +4,8 @@ boards:
   subrack: "subrack1"
   slot: "slot2"
   boardAttributes:
-  - !<com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.BoardSetAttributes>
-    attributes:
+  - !<com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.board.BoardSetAttributes>
+    boardSetAttributes:
       attributes:
       - key: "adminStatus"
         value: "up"
@@ -13,26 +13,26 @@ boards:
   - transmitPort: 1
     receivePort: 2
     clientPortAttributes:
-    - !<com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.ClientPortConfigAttributes>
-      attributes:
-        attributes:
+    - !<com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.client.ClientPortConfigAttributes>
+      ? clientPortConfigAttributes
+      : attributes:
         - key: "clientIfConfigurationCommand"
           value: "wan10GbE yes"
-    - !<com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.ClientPortSetAttributes>
-      attributes:
+    - !<com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.client.ClientPortSetAttributes>
+      clientPortSetAttributes:
         attributes:
         - key: "expectedFrequency"
           value: "w1530"
   - transmitPort: 5
     receivePort: 6
     clientPortAttributes:
-    - !<com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.ClientPortConfigAttributes>
-      attributes:
-        attributes:
+    - !<com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.client.ClientPortConfigAttributes>
+      ? clientPortConfigAttributes
+      : attributes:
         - key: "clientIfConfigurationCommand"
           value: "wan10GbE yes"
-    - !<com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.ClientPortSetAttributes>
-      attributes:
+    - !<com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.client.ClientPortSetAttributes>
+      clientPortSetAttributes:
         attributes:
         - key: "expectedFrequency"
           value: "w1530"
@@ -40,16 +40,16 @@ boards:
   - transmitPort: 3
     receivePort: 4
     linePortAttributes:
-    - !<com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.LinePortSetAttributes>
-      attributes:
+    - !<com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.line.LinePortSetAttributes>
+      linePortSetAttributes:
         attributes:
         - key: "expectedFrequency"
           value: "ch926"
   - transmitPort: 7
     receivePort: 8
     linePortAttributes:
-    - !<com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.LinePortSetAttributes>
-      attributes:
+    - !<com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.line.LinePortSetAttributes>
+      linePortSetAttributes:
         attributes:
         - key: "expectedFrequency"
           value: "ch927"
@@ -57,8 +57,8 @@ boards:
   subrack: "subrack1"
   slot: "slot3"
   boardAttributes:
-  - !<com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.BoardSetAttributes>
-    attributes:
+  - !<com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.board.BoardSetAttributes>
+    boardSetAttributes:
       attributes:
       - key: "adminStatus"
         value: "up"
@@ -66,8 +66,8 @@ boards:
   - transmitPort: 41
     receivePort: 42
     clientPortAttributes:
-    - !<com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.ClientPortSetAttributes>
-      attributes:
+    - !<com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.client.ClientPortSetAttributes>
+      clientPortSetAttributes:
         attributes:
         - key: "descr"
           value: "Some relevant description"
@@ -75,8 +75,8 @@ boards:
   - transmitPort: 81
     receivePort: 82
     linePortAttributes:
-    - !<com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.LinePortSetAttributes>
-      attributes:
+    - !<com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.line.LinePortSetAttributes>
+      linePortSetAttributes:
         attributes:
         - key: "descr"
           value: "Some relevant description"

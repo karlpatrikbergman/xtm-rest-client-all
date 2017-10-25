@@ -1,4 +1,4 @@
-package com.infinera.metro.dnam.acceptance.test.node.configuration.attribute;
+package com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.client;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;

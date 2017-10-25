@@ -9,13 +9,16 @@ import java.util.List;
 //Example of virtual field pattern
 //https://kerflyn.wordpress.com/2012/07/09/java-8-now-you-have-mixins/
 public interface ClientPortBoard extends Board{
+
     default void configureClientPorts(Node node) {
         getClientPorts().forEach(clientPort -> configureClientPort(node, clientPort));
     }
+
     default void configureClientPort(Node node, ClientPort clientPort) {
         final ClientPortEntry clientPortEntry = getClientPortEntry(clientPort);
-        clientPort.getClientPortAttributes().forEach(portAttribute -> portAttribute.applyTo(node, clientPortEntry));
+        clientPort.getClientPortAttributes().forEach(clientPortAttribute -> clientPortAttribute.applyTo(node, clientPortEntry));
     }
+
     default ClientPortEntry getClientPortEntry(ClientPort clientPort) {
         return getClientPortEntryBuilder()
             .transmitPort(clientPort.getTransmitPort())

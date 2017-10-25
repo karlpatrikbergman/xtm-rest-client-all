@@ -1,16 +1,19 @@
 package com.infinera.metro.dnam.acceptance.test.node.configuration.port;
 
-import com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.ClientPortAttributes;
+import com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.client.ClientPortAttributes;
 import lombok.Builder;
-import lombok.Getter;
+import lombok.EqualsAndHashCode;
 import lombok.Singular;
+import lombok.Value;
 
 import java.util.List;
 
 
+@EqualsAndHashCode(callSuper = true)
+@Value
 public class ClientPort extends Port {
 
-    @Getter private final List<ClientPortAttributes> clientPortAttributes;
+    private final List<ClientPortAttributes> clientPortAttributes;
 
     @Builder
     @java.beans.ConstructorProperties({"transmitPort", "receivePort", "attributes"})

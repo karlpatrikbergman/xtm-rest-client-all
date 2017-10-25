@@ -13,6 +13,5 @@ class Port {
         this.transmitPort = transmitPort;
         this.receivePort = receivePort;
     }
-
 }
 

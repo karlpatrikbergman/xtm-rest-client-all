@@ -4,10 +4,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.NodeEquipment;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.Slot;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.Subrack;
-import com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.BoardSetAttributes;
-import com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.ClientPortConfigAttributes;
-import com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.ClientPortSetAttributes;
-import com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.LinePortSetAttributes;
+import com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.board.BoardSetAttributes;
+import com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.client.ClientPortConfigAttributes;
+import com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.client.ClientPortSetAttributes;
+import com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.line.LinePortSetAttributes;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.board.Mdu40EvenL;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.board.Tpd10gbe;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.deserialize.ObjectFromFileUtilJackson;
@@ -42,16 +42,10 @@ public class NodeEquipmentSerializationTest {
                     .transmitPort(1)
                     .receivePort(2)
                     .clientPortAttribute(
-                        ClientPortConfigAttributes.of(
-                            Attributes.of(Attribute.builder()
-                                .key("clientIfConfigurationCommand")
-                                .value("wan10GbE yes")
-                                .build()
-                            )
-                        )
+                        ClientPortConfigAttributes.of("clientIfConfigurationCommand","wan10GbE yes") //One alternative
                     )
                     .clientPortAttribute(
-                        ClientPortSetAttributes.of(
+                        ClientPortSetAttributes.of( //Another, more verbose but a little safer?
                             Attributes.of(Attribute.builder()
                                 .key("expectedFrequency")
                                 .value("w1530")

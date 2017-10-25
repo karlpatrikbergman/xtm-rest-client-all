@@ -71,6 +71,13 @@ public class Attributes {
         );
     }
 
+    public static Attributes of(String key, String value) {
+        return of(Attribute.builder()
+        .key(key)
+        .value(value)
+        .build());
+    }
+
     /**
      * When retrieving attributes we only want the keys. Using this method we can re-use attributes of previous set
      * operation. OBS! Cannot be used when in case of configuring and then retrieving. When configuring attribute key

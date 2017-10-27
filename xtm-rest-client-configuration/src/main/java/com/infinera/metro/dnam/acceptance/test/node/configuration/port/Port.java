@@ -8,8 +8,9 @@ class Port {
     @Getter private final Integer receivePort;
 
     Port(Integer transmitPort, Integer receivePort) {
-        Preconditions.checkArgument(transmitPort instanceof Integer, "transmitPort must be an Integer");
-        Preconditions.checkArgument(receivePort instanceof Integer, "receivePort must be an Integer");
+        Preconditions.checkNotNull(transmitPort, "transmitPort must be an Integer");
+        Preconditions.checkNotNull(receivePort, "receivePort must be an Integer");
+
         this.transmitPort = transmitPort;
         this.receivePort = receivePort;
     }

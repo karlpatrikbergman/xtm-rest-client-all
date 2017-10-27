@@ -7,5 +7,5 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 @JsonSubTypes({
     @JsonSubTypes.Type(value = AddDropPortConfigAttributes.class, name = "addDropPortConfigAttributes"),
 })
-public interface AddDropPortAttributes {
+interface AddDropPortAttributes {
 }

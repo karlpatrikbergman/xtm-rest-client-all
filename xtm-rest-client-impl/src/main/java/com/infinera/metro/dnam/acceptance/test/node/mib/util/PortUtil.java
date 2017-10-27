@@ -9,7 +9,7 @@ public enum  PortUtil {
         return (isTransmitPort(port) ? port + 1 : port - 1);
     }
 
-    public boolean isTransmitPort(Integer port) {
+    private boolean isTransmitPort(Integer port) {
         return (port % 2 != 0);
     }
 }

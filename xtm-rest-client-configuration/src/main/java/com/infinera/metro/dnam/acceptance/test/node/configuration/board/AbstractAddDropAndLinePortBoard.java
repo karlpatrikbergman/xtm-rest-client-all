@@ -17,7 +17,7 @@ class AbstractAddDropAndLinePortBoard extends AbstractBoard {
     @NonNull private final List<AddDropPort> addDropPorts;
     @NonNull private final List<LinePort> linePorts;
 
-    public AbstractAddDropAndLinePortBoard(BoardType boardType, Subrack subrack, Slot slot, List<BoardAttributes> boardAttributes, List<AddDropPort> addDropPorts, List<LinePort> linePorts) {
+    AbstractAddDropAndLinePortBoard(BoardType boardType, Subrack subrack, Slot slot, List<BoardAttributes> boardAttributes, List<AddDropPort> addDropPorts, List<LinePort> linePorts) {
         super(boardType, subrack, slot, boardAttributes);
         this.addDropPorts= addDropPorts;
         this.linePorts = linePorts;

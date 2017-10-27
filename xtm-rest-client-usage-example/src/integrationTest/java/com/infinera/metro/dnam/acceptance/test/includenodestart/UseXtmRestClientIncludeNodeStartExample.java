@@ -20,12 +20,12 @@ import java.io.IOException;
 public class UseXtmRestClientIncludeNodeStartExample {
     private final NodeAccessData nodeAccessDataNodeA, nodeAccessDataNodeZ, nodeAccessDataNodeX;
     private final NodeEquipment nodeEquipmentNodeA, nodeEquipmentNodeZ, nodeEquipmentNodeX;
-    private final ObjectFromFileUtil objectFromFileUtil = ObjectFromFileUtilFactory.INSTANCE.getObjectFromFileUtil();
 
     public UseXtmRestClientIncludeNodeStartExample() throws IOException, InterruptedException, DockerException, DockerCertificateException {
         final XtmDockerRunner xtmDockerRunner = XtmDockerRunner.INSTANCE;
 
         final String ipAddressNodeA = xtmDockerRunner.runDockerContainer("latest", "nodeA");
+        ObjectFromFileUtil objectFromFileUtil = ObjectFromFileUtilFactory.INSTANCE.getObjectFromFileUtil();
         nodeAccessDataNodeA = objectFromFileUtil.getObject("includenodestart/three-nodes-example/node_a_access_data.yaml", NodeAccessData.class)
                 .copyObjectAndChangeIpAddress(ipAddressNodeA);
         nodeEquipmentNodeA = objectFromFileUtil.getObject("includenodestart/three-nodes-example/node_a_equipment.yaml", NodeEquipment.class);

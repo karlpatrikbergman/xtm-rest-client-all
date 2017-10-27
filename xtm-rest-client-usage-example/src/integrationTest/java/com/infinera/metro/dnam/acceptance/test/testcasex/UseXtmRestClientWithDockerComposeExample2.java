@@ -25,9 +25,9 @@ import java.io.IOException;
 public class UseXtmRestClientWithDockerComposeExample2 {
     private final NodeAccessData nodeAccessDataNodeA;
     private final NodeEquipment nodeEquipmentNodeA;
-    private final ObjectFromFileUtil objectFromFileUtil = ObjectFromFileUtilFactory.INSTANCE.getObjectFromFileUtil();
 
     public UseXtmRestClientWithDockerComposeExample2() throws IOException {
+        ObjectFromFileUtil objectFromFileUtil = ObjectFromFileUtilFactory.INSTANCE.getObjectFromFileUtil();
         final DockerCompose dockerCompose = objectFromFileUtil.getObject("dockercompose/test-case-x-node-config-docker-compose-rule/docker-compose.yml", DockerCompose.class);
         final Service serviceNodeA = dockerCompose.getServices().get("nodeA");
         final String dockerComposeIpAddressNodeA = serviceNodeA.getNetworks().get("xtm_rest_client_network").get("ipv4_address");

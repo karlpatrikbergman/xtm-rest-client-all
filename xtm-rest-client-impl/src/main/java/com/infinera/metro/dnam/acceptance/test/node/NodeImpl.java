@@ -10,7 +10,7 @@ import com.infinera.metro.dnam.acceptance.test.node.mib.entry.*;
 public class NodeImpl implements Node {
     private final NodeRestClient nodeRestClient;
 
-    public NodeImpl(NodeRestClient nodeRestClient) {
+    private NodeImpl(NodeRestClient nodeRestClient) {
         this.nodeRestClient = nodeRestClient;
     }
 

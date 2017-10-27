@@ -18,7 +18,7 @@ abstract class AbstractClientAndLinePortBoard extends AbstractBoard {
     private final List<ClientPort> clientPorts;
     private final List<LinePort> linePorts;
 
-    public AbstractClientAndLinePortBoard(BoardType boardType, Subrack subrack, Slot slot, List<BoardAttributes> boardAttributes, List<ClientPort> clientPorts, List<LinePort> linePorts) {
+    AbstractClientAndLinePortBoard(BoardType boardType, Subrack subrack, Slot slot, List<BoardAttributes> boardAttributes, List<ClientPort> clientPorts, List<LinePort> linePorts) {
         super(boardType, subrack, slot, boardAttributes);
         this.clientPorts = clientPorts;
         this.linePorts = linePorts;

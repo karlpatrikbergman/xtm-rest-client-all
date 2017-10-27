@@ -28,11 +28,11 @@ import static org.junit.Assert.*;
 @Category(IntegrationTest.class)
 @Slf4j
 public class NodeImplSmokeTest extends DefaultXtmNodesSetupUtilizer {
-    private final DockerUtil dockerUtil = DockerUtil.DOCKER_UTIL;
     private final String ipAddressNodeA;
     private final String ipAddressNodeZ;
 
     public NodeImplSmokeTest() throws IOException {
+        DockerUtil dockerUtil = DockerUtil.DOCKER_UTIL;
         ipAddressNodeA = dockerUtil.getContainerIpAddress(dockerComposeRule, "nodeA");
         ipAddressNodeZ = dockerUtil.getContainerIpAddress(dockerComposeRule, "nodeZ");
     }

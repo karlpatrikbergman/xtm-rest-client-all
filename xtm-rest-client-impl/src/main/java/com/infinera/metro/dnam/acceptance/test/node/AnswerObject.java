@@ -138,6 +138,7 @@ public class AnswerObject implements Serializable {
      * @param mibEntry      The mibEntry for the performed operation
      * @return
      */
+    @SuppressWarnings("UnnecessaryLocalVariable") //Good to have when debugging
     public boolean isErrorAnswerObject(OperationType operationType, MibEntry mibEntry) {
         final boolean mibEntryFound = mibEntryEqualsAnswerObjectEntryFieldOrAttributeObjectNameField(operationType, mibEntry);
         final boolean result = !isSuccess() && getOperation().equals("error") && getModule().equals(mibEntry.getModuleType().getValue()) &&

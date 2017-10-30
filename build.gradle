@@ -151,19 +151,6 @@ project(':xtm-rest-client-common') {
     }
 }
 
-project(':xtm-rest-client-usage-example') {
-
-    apply from: "${rootDir}/integration-test.gradle"
-
-    artifactoryPublish.skip = true
-    dependencies {
-        compile project(':xtm-rest-client-impl')
-        compile project(':xtm-rest-client-configuration')
-        compile project(':xtm-docker-runner')
-        testCompile "com.palantir.docker.compose:docker-compose-rule-junit4:${docker_compose_rule_version}"
-    }
-}
-
 project(':xtm-docker-runner') {
     dependencies {
         compile "com.spotify:docker-client:${docker_client_version}"

@@ -18,6 +18,12 @@ node {
         sh './gradlew test'
         junit allowEmptyResults: true, testResults: '**/build/test-results/TEST-*.xml'
     }
+    stage('Clean up docker environment') {
+        echo 'Clean up docker environment....'
+        sh('chmod +x scripts/docker_clean_up.sh')
+        sh('scripts/docker_clean_up.sh')
+        junit allowEmptyResults: true, testResults: '**/build/test-results/TEST-*.xml'
+    }
     stage('Integration Test') {
         echo 'Running integration tests....'
         sh './gradlew IntegrationTest'

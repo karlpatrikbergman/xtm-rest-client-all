@@ -1,0 +1,26 @@
+boardtype: tpd10gbe
+boardentry:
+  boardtype: tpd10gbe
+  subrack: 1
+  slot: 2
+lineportentry:
+  lineporttype: wdm
+  subrack: 1
+  slot: 2
+  transmitport: 3
+  receiveport: 4
+lineportconfiguration:
+  key: expectedFrequency
+  value: ch926
+clientportentry:
+  clientporttype: client
+  subrack: 1
+  slot: 2
+  transmitport: 1
+  receiveport: 2
+clientportconfiguration:
+  key: configure
+  value: lan10GbE yes
+mpoidentifier:
+  xtmversionequalorhigherthan27: true
+  mpoport: 0

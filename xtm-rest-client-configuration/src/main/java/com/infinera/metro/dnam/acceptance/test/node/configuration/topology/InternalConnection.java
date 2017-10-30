@@ -1,6 +1,7 @@
 package com.infinera.metro.dnam.acceptance.test.node.configuration.topology;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.infinera.metro.dnam.acceptance.test.node.Node;
@@ -14,7 +15,10 @@ import lombok.Value;
 @Value
 public class InternalConnection {
 
-    private final InternalConnectionEntry internalConnectionEntry;
+    private final AbstractPortEntry fromPort;
+    private final MpoIdentifier fromMpoIdentifier;
+    private final AbstractPortEntry toPort;
+    private final MpoIdentifier toMpoIdentifier;
 
     @JsonCreator
     @Builder
@@ -22,7 +26,19 @@ public class InternalConnection {
                               @JsonProperty("fromMpoIdentifier") MpoIdentifier fromMpoIdentifier,
                               @JsonProperty("toPort") AbstractPortEntry toPort,
                               @JsonProperty("toMpoIdentifier") MpoIdentifier toMpoIdentifier) {
-        this.internalConnectionEntry = InternalConnectionEntry.builder()
+        this.fromPort = fromPort;
+        this.fromMpoIdentifier = fromMpoIdentifier;
+        this.toPort = toPort;
+        this.toMpoIdentifier = toMpoIdentifier;
+    }
+
+    public void applyTo(Node node) {
+        node.createInternalConnection(getInternalConnectionEntry());
+    }
+
+    @JsonIgnore
+    InternalConnectionEntry getInternalConnectionEntry() {
+        return InternalConnectionEntry.builder()
             .fromSubrack(fromPort.getSubrack())
             .fromSlot(fromPort.getSlot())
             .fromMpoIdentifier(fromMpoIdentifier)
@@ -32,9 +48,5 @@ public class InternalConnection {
             .toMpoIdentifier(toMpoIdentifier)
             .toPort(toPort.getReceivePort())
             .build();
-    }
-
-    public void applyTo(Node node) {
-        node.createInternalConnection(internalConnectionEntry);
     }
 }

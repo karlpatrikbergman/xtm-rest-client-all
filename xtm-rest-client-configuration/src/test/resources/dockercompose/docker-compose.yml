@@ -1,4 +1,4 @@
-version: "2"
+version: "3"
 services:
   alarmservice:
     image: com.infinera.metro.service.alarm/alarmservice:1.0-SNAPSHOT

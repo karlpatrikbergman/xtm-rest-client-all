@@ -138,12 +138,6 @@ project(':xtm-rest-client-impl') {
 
 project(':xtm-rest-client-common') {
 
-    task writeXtmRestClientVersionToFile() {
-        println "Writing parameter to file for downstream jenkins parameterized build"
-        def dnamPropertiesFile = new File('xtm-rest-client.properties')
-        dnamPropertiesFile.write "XTM_CLIENT_VERSION=${version}\n"
-    }
-
     dependencies {
         compile "com.fasterxml.jackson.core:jackson-databind:${jackson_version}"
         compile "org.springframework:spring-core:${spring_version}"

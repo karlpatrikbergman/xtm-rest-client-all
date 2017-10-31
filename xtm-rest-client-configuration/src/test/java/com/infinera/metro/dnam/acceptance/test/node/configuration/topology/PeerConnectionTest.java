@@ -1,110 +1,138 @@
-//package com.infinera.metro.dnam.acceptance.test.node.configuration.topology;
-//
-//import com.infinera.metro.dnam.acceptance.test.node.configuration.Slot;
-//import com.infinera.metro.dnam.acceptance.test.node.configuration.Subrack;
-//import com.infinera.metro.dnam.acceptance.test.node.configuration.board.Tpd10gbe;
-//import com.infinera.metro.dnam.acceptance.test.node.configuration.port.Port;
-//import com.infinera.metro.dnam.acceptance.test.node.mib.MpoIdentifier;
-//import com.infinera.metro.dnam.acceptance.test.node.mib.entry.PeerEntry;
-//import lombok.extern.slf4j.Slf4j;
-//import org.junit.Test;
-//
-//import static org.junit.Assert.assertEquals;
-//
-///**
-// * IMPORTANT NOTE:
-// * For XTM with version >=27 an MPO identifier for port is necessary
-// * <p>
-// * From auto-node.setup:
-// * Depending on container version, add a MPO identifier.
-// * if (nodeVersion === "latest" || nodeVersion >= 27) {
-// * const slotPortSepPos = subSlotPort.indexOf(":", 2);
-// * return subSlotPort.slice(0, slotPortSepPos) + ":0" + subSlotPort.slice(slotPortSepPos);
-// * } else {
-// * return subSlotPort;
-// * }
-// */
-//
-////TODO: Look at tests that are commented out, and fix the ones that seems necessary/important
-//
-//@Slf4j
-//public class PeerConnectionTest {
-//
-//    private final String ipAddressNodeA = "172.17.0.2";
-//    private final String ipAddressNodeZ = "172.17.0.3";
-//
-//    private final Tpd10gbe tpd10gbeOnNodeA = Tpd10gbe.builder()
-//        .subrack(Subrack.subrack1)
-//        .slot(Slot.slot2)
-//        .build();
-//
-//    private final Tpd10gbe tpd10gbeOnNodeZ = Tpd10gbe.builder()
-//        .subrack(Subrack.subrack2)
-//        .slot(Slot.slot3)
-//        .build();
-//
-//    private final Port linePortEntryNodeA = Port.builder()
-//        .transmitPort(3)
-//        .receivePort(4)
-//        .build();
-//
-//    private final Port linePortEntryNodeZ = Port.builder()
-//        .transmitPort(7)
-//        .receivePort(8)
-//        .build();
-//
-//    private final PeerConnection peerConnectionAtoZ = PeerConnection.builder()
-//        .localNodeIpAddress(ipAddressNodeA)
-//        .localBoardEntry(tpd10gbeOnNodeA.getBoardEntry())
-//        .localPort(linePortEntryNodeA)
-//        .localMpoIdentifier(MpoIdentifier.NotPresent())
-//        .remoteNodeIpAddress(ipAddressNodeZ)
-//        .remoteBoardEntry(tpd10gbeOnNodeZ.getBoardEntry())
-//        .remotePort(linePortEntryNodeZ)
-//        .remoteMpoIdentifier(MpoIdentifier.NotPresent())
-//        .build();
-//
-//    private final PeerEntry localPeerEntry = peerConnectionAtoZ.getLocalPeerEntry();
-//    private final PeerEntry remotePeerEntry = peerConnectionAtoZ.getRemotePeerEntry();
-//
-//    @Test
-//    public void test() {
-//        log.info(peerConnectionAtoZ.toString());
-//    }
-//
-//    @Test
-//    public void transmitPeerEntryMibString() {
-//        assertEquals("peer:1:2:0:3", localPeerEntry.getMibEntryString());
-//    }
-//
-//    @Test
-//    public void transmitPeerEntryMibPath() {
-//        assertEquals("/mib/topo/peer/peer:1:2:0:3", localPeerEntry.getMibEntryPath());
-//    }
-//
-//    @Test
-//    public void transmitPeerEntryLocalLabel() {
-//        assertEquals("1:2:3", localPeerEntry.getLocalLabel());
-//    }
-//
-//    @Test
-//    public void transmitPeerRemoteLabel() {
-//        assertEquals("2:3:8", remotePeerEntry.getLocalLabel());
-//    }
-//
-//    @Test
-//    public void receivePeerEntryMibString() {
-//        assertEquals("peer:2:3:0:8", remotePeerEntry.getMibEntryString());
-//    }
-//
-//    @Test
-//    public void receivePeerEntryMibPath() {
-//        assertEquals("/mib/topo/peer/peer:2:3:0:8", remotePeerEntry.getMibEntryPath());
-//    }
-//
-//    @Test
-//    public void receivePeerEntryLocalLabel() {
-//        assertEquals("2:3:8", remotePeerEntry.getLocalLabel());
-//    }
-//
-//}
+package com.infinera.metro.dnam.acceptance.test.node.configuration.topology;
+
+import com.infinera.metro.dnam.acceptance.test.node.Node;
+import com.infinera.metro.dnam.acceptance.test.node.NodeImpl;
+import com.infinera.metro.dnam.acceptance.test.node.configuration.Slot;
+import com.infinera.metro.dnam.acceptance.test.node.configuration.Subrack;
+import com.infinera.metro.dnam.acceptance.test.node.configuration.board.Tpd10gbe;
+import com.infinera.metro.dnam.acceptance.test.node.configuration.port.LinePort;
+import com.infinera.metro.dnam.acceptance.test.node.mib.Attribute;
+import com.infinera.metro.dnam.acceptance.test.node.mib.Attributes;
+import com.infinera.metro.dnam.acceptance.test.node.mib.MpoIdentifier;
+import com.infinera.metro.dnam.acceptance.test.node.mib.entry.PeerEntry;
+import lombok.extern.slf4j.Slf4j;
+import org.junit.Test;
+
+import java.util.Optional;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
+@Slf4j
+public class PeerConnectionTest {
+
+    private final Node nodeA = NodeImpl.createDefault("172.17.0.2");
+    private final Node nodeZ = NodeImpl.createDefault("172.17.0.3");
+
+    private final Tpd10gbe tpd10gbeOnNodeA = Tpd10gbe.builder()
+        .subrack(Subrack.subrack1)
+        .slot(Slot.slot2)
+        .build();
+
+    private final Tpd10gbe tpd10gbeOnNodeZ = Tpd10gbe.builder()
+        .subrack(Subrack.subrack2)
+        .slot(Slot.slot3)
+        .build();
+
+    private final LinePort linePortTx3Rx4 = LinePort.builder()
+        .transmitPort(3)
+        .receivePort(4)
+        .build();
+
+    private final LinePort linePortTx7Rx8 = LinePort.builder()
+        .transmitPort(7)
+        .receivePort(8)
+        .build();
+
+    private final PeerConnection peerConnectionNodeAtoNodeZ = PeerConnection.builder()
+        .fromPort(tpd10gbeOnNodeA.getLinePortEntry(linePortTx3Rx4))
+        .fromMpoIdentifier(MpoIdentifier.NotPresent())
+        .toPort(tpd10gbeOnNodeZ.getLinePortEntry(linePortTx7Rx8))
+        .toMpoIdentifier(MpoIdentifier.NotPresent())
+        .build();
+
+    private final PeerEntry localPeerEntry_1_2_0_3_peerConnectionNodeAtoNodeZ = peerConnectionNodeAtoNodeZ.getLocalPeerEntry();
+    private final PeerEntry remotePeerEntry_2_3_0_8_peerConnectionNodeAtoNodeZ = peerConnectionNodeAtoNodeZ.getRemotePeerEntry();
+
+    private final PeerConnection peerConnectionNodeZtoNodeA = peerConnectionNodeAtoNodeZ.invert();
+    private final PeerEntry localPeerEntry_2_3_0_7_peerConnectionNodeZtoNodeA = peerConnectionNodeZtoNodeA.getLocalPeerEntry();
+    private final PeerEntry remotePeerEntry_1_2_0_4_peerConnectionNodeZtoNodeA = peerConnectionNodeZtoNodeA.getRemotePeerEntry();
+
+    @Test
+    public void localPeerEntryMibString() {
+        assertEquals("peer:1:2:0:3", localPeerEntry_1_2_0_3_peerConnectionNodeAtoNodeZ.getMibEntryString());
+        assertEquals("peer:2:3:0:7", localPeerEntry_2_3_0_7_peerConnectionNodeZtoNodeA.getMibEntryString());
+    }
+
+    @Test
+    public void localPeerEntryMibPath() {
+        assertEquals("/mib/topo/peer/peer:1:2:0:3", localPeerEntry_1_2_0_3_peerConnectionNodeAtoNodeZ.getMibEntryPath());
+        assertEquals("/mib/topo/peer/peer:2:3:0:7", localPeerEntry_2_3_0_7_peerConnectionNodeZtoNodeA.getMibEntryPath());
+    }
+
+    @Test
+    public void localPeerEntryLocalLabel() {
+        assertEquals("1:2:3", localPeerEntry_1_2_0_3_peerConnectionNodeAtoNodeZ.getLocalLabel());
+        assertEquals("2:3:7", localPeerEntry_2_3_0_7_peerConnectionNodeZtoNodeA.getLocalLabel());
+    }
+
+    @Test
+    public void remotePeerEntryRemoteLabel() {
+        assertEquals("2:3:8", remotePeerEntry_2_3_0_8_peerConnectionNodeAtoNodeZ.getLocalLabel());
+        assertEquals("1:2:4", remotePeerEntry_1_2_0_4_peerConnectionNodeZtoNodeA.getLocalLabel());
+    }
+
+    @Test
+    public void localPeerEntryAttributes() {
+        final Attributes localPeerEntryAttributes_peerConnectionNodeAtoNodeZ = peerConnectionNodeAtoNodeZ.getPeerConfiguration(localPeerEntry_1_2_0_3_peerConnectionNodeAtoNodeZ, nodeZ, remotePeerEntry_2_3_0_8_peerConnectionNodeAtoNodeZ);
+        verifyAttribute(localPeerEntryAttributes_peerConnectionNodeAtoNodeZ.getAttributeByKey("topoPeerLocalLabel"), "1:2:3");
+        verifyAttribute(localPeerEntryAttributes_peerConnectionNodeAtoNodeZ.getAttributeByKey("topoPeerRemoteIpAddress"), "172.17.0.3");
+        verifyAttribute(localPeerEntryAttributes_peerConnectionNodeAtoNodeZ.getAttributeByKey("topoPeerRemoteLabel"), "2:3:8");
+
+        final Attributes localPeerEntryAttributes_peerConnectionNodeZtoNodeA = peerConnectionNodeZtoNodeA.getPeerConfiguration(localPeerEntry_2_3_0_7_peerConnectionNodeZtoNodeA, nodeA, remotePeerEntry_1_2_0_4_peerConnectionNodeZtoNodeA);
+        verifyAttribute(localPeerEntryAttributes_peerConnectionNodeZtoNodeA.getAttributeByKey("topoPeerLocalLabel"), "2:3:7");
+        verifyAttribute(localPeerEntryAttributes_peerConnectionNodeZtoNodeA.getAttributeByKey("topoPeerRemoteIpAddress"), "172.17.0.2");
+        verifyAttribute(localPeerEntryAttributes_peerConnectionNodeZtoNodeA.getAttributeByKey("topoPeerRemoteLabel"), "1:2:4");
+    }
+
+    /**/
+
+    @Test
+    public void remotePeerEntryMibString() {
+        assertEquals("peer:2:3:0:8", remotePeerEntry_2_3_0_8_peerConnectionNodeAtoNodeZ.getMibEntryString());
+        assertEquals("peer:1:2:0:4", remotePeerEntry_1_2_0_4_peerConnectionNodeZtoNodeA.getMibEntryString());
+    }
+
+    @Test
+    public void remotePeerEntryMibPath() {
+        assertEquals("/mib/topo/peer/peer:2:3:0:8", remotePeerEntry_2_3_0_8_peerConnectionNodeAtoNodeZ.getMibEntryPath());
+        assertEquals("/mib/topo/peer/peer:1:2:0:4", remotePeerEntry_1_2_0_4_peerConnectionNodeZtoNodeA.getMibEntryPath());
+    }
+
+    @Test
+    public void remotePeerEntryLocalLabel() {
+        assertEquals("2:3:8", remotePeerEntry_2_3_0_8_peerConnectionNodeAtoNodeZ.getLocalLabel());
+        assertEquals("1:2:4", remotePeerEntry_1_2_0_4_peerConnectionNodeZtoNodeA.getLocalLabel());
+    }
+
+    @Test
+    public void remotePeerEntryAttributes() {
+        final Attributes remotePeerEntryAttributes_peerConnectionNodeAtoNodeZ = peerConnectionNodeAtoNodeZ.getPeerConfiguration(remotePeerEntry_2_3_0_8_peerConnectionNodeAtoNodeZ, nodeA, localPeerEntry_1_2_0_3_peerConnectionNodeAtoNodeZ);
+        verifyAttribute(remotePeerEntryAttributes_peerConnectionNodeAtoNodeZ.getAttributeByKey("topoPeerLocalLabel"), "2:3:8");
+        verifyAttribute(remotePeerEntryAttributes_peerConnectionNodeAtoNodeZ.getAttributeByKey("topoPeerRemoteIpAddress"), "172.17.0.2");
+        verifyAttribute(remotePeerEntryAttributes_peerConnectionNodeAtoNodeZ.getAttributeByKey("topoPeerRemoteLabel"), "1:2:3");
+
+        final Attributes remotePeerEntryAttributes_peerConnectionNodeZtoNodeA = peerConnectionNodeZtoNodeA.getPeerConfiguration(remotePeerEntry_1_2_0_4_peerConnectionNodeZtoNodeA, nodeZ, localPeerEntry_2_3_0_7_peerConnectionNodeZtoNodeA);
+        verifyAttribute(remotePeerEntryAttributes_peerConnectionNodeZtoNodeA.getAttributeByKey("topoPeerLocalLabel"), "1:2:4");
+        verifyAttribute(remotePeerEntryAttributes_peerConnectionNodeZtoNodeA.getAttributeByKey("topoPeerRemoteIpAddress"), "172.17.0.3");
+        verifyAttribute(remotePeerEntryAttributes_peerConnectionNodeZtoNodeA.getAttributeByKey("topoPeerRemoteLabel"), "2:3:7");
+    }
+
+    /**/
+
+    private void verifyAttribute(Optional<Attribute> attributeOptional, String expectedValue) {
+        assertTrue(attributeOptional.isPresent());
+        assertEquals(expectedValue, attributeOptional.get().getValue());
+    }
+
+}

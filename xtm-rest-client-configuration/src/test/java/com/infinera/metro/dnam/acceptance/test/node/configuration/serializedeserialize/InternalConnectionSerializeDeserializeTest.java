@@ -1,18 +1,21 @@
-package com.infinera.metro.dnam.acceptance.test.node.configuration.topology;
+package com.infinera.metro.dnam.acceptance.test.node.configuration.serializedeserialize;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.Slot;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.Subrack;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.board.Mdu40EvenL;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.board.Tpd10gbe;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.port.ClientPort;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.port.LinePort;
+import com.infinera.metro.dnam.acceptance.test.node.configuration.topology.InternalConnection;
+import com.infinera.metro.dnam.acceptance.test.util.ResourceString;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
 @Slf4j
-public class InternalConnectionTest {
+public class InternalConnectionSerializeDeserializeTest extends AbstractYamlSerializeDeserializeTest {
 
     final LinePort linePortTx3Rx4 = LinePort.builder()
         .transmitPort(3)
@@ -51,18 +54,15 @@ public class InternalConnectionTest {
         .build();
 
     @Test
-    public void testInternalConnectionMibPath() {
-        final String actualInternalConnectionMibPath = internalConnection.getInternalConnectionEntry().getMibEntryPath();
-        assertEquals("/mib/topo/internal/int:1:2:0:3:2:4:0:42", actualInternalConnectionMibPath);
-        log.info(actualInternalConnectionMibPath);
+    public void serializeInternalConnection() throws JsonProcessingException {
+        final String expectedInternalConnectionString = new ResourceString("configuration/internal_connection.yaml").toString();
+        final String serializedInternalConnection = mapper.writeValueAsString(internalConnection).trim();
+        assertEquals(expectedInternalConnectionString, serializedInternalConnection);
     }
 
     @Test
-    public void testInvertedInternalConnectionMibPath() {
-        final String actualInternalConnectionMibPath = internalConnection.invert()
-            .getInternalConnectionEntry()
-            .getMibEntryPath();
-        assertEquals("/mib/topo/internal/int:2:4:0:41:1:2:0:4", actualInternalConnectionMibPath);
-        log.info(actualInternalConnectionMibPath);
+    public void deserializeInternalConnection() {
+        InternalConnection deserializedInternalConnection = objectFromFileUtil.getObject("configuration/internal_connection.yaml", InternalConnection.class);
+        assertEquals(internalConnection, deserializedInternalConnection);
     }
 }

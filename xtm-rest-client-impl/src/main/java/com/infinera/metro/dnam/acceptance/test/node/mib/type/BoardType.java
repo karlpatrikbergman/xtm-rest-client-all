@@ -1,6 +1,7 @@
 package com.infinera.metro.dnam.acceptance.test.node.mib.type;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 
 import java.util.Map;
 import java.util.Optional;
@@ -26,12 +27,14 @@ public enum BoardType implements MibType {
 //    OCM2P("oa2x17dBm"),
 //    OIUC50100("oiuc50100");
 
+
     private final String value;
 
     BoardType(String value) {
         this.value = value;
     }
 
+    @JsonValue
     public String getValue() {
         return value;
     }

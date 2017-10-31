@@ -23,4 +23,13 @@ public enum Slot {
         }
         throw new IllegalArgumentException("Failed to create Slot from string" + slotString);
     }
+
+    public static Slot fromStringInteger(Integer slotInteger) {
+        for (Slot slot : Slot.values()) {
+            if (slot.getValue().equals(slotInteger)) {
+                return slot;
+            }
+        }
+        throw new IllegalArgumentException("Failed to create Slot from Integer" + slotInteger);
+    }
 }

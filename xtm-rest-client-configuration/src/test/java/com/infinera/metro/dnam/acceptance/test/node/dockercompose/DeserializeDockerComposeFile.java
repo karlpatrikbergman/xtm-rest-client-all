@@ -1,8 +1,8 @@
 package com.infinera.metro.dnam.acceptance.test.node.dockercompose;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.infinera.metro.dnam.acceptance.test.node.configuration.deserialize.ObjectFromFileUtil;
-import com.infinera.metro.dnam.acceptance.test.node.configuration.deserialize.ObjectFromFileUtilFactory;
+import com.infinera.metro.dnam.acceptance.test.node.configuration.serializedeserialize.ObjectFromFileUtil;
+import com.infinera.metro.dnam.acceptance.test.node.configuration.serializedeserialize.ObjectFromFileUtilFactory;
 import org.junit.Test;
 
 import java.io.IOException;

@@ -8,8 +8,8 @@ class Port {
     @Getter private final Integer receivePort;
 
     Port(Integer transmitPort, Integer receivePort) {
-        Preconditions.checkNotNull(transmitPort, "transmitPort must be an Integer");
-        Preconditions.checkNotNull(receivePort, "receivePort must be an Integer");
+        Preconditions.checkNotNull(transmitPort, "transmitPort cannot be null");
+        Preconditions.checkNotNull(receivePort, "receivePort cannot be null");
 
         this.transmitPort = transmitPort;
         this.receivePort = receivePort;

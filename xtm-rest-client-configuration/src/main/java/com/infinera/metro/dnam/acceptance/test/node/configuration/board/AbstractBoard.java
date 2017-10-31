@@ -16,16 +16,9 @@ import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
-/**
- * NOTE:
- * Field boardAttributes could be two lists, one for attributes that uses "set.json" and one that uses
- * "configure.json".
- *
- */
-
 @RequiredArgsConstructor
 @Getter(AccessLevel.PUBLIC)
-public abstract class AbstractBoard implements  Board {
+abstract class AbstractBoard implements  Board {
     @JsonIgnore private static final ModuleType MODULE_TYPE = ModuleType.EQ;
     @JsonIgnore private static final GroupOrTableType groupOrTableType = GroupOrTableType.BOARD;
     @NonNull @JsonIgnore private final BoardType boardType;

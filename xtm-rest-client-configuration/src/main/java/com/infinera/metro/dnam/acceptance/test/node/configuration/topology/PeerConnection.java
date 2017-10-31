@@ -2,62 +2,68 @@ package com.infinera.metro.dnam.acceptance.test.node.configuration.topology;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.infinera.metro.dnam.acceptance.test.node.Node;
 import com.infinera.metro.dnam.acceptance.test.node.mib.Attribute;
 import com.infinera.metro.dnam.acceptance.test.node.mib.Attributes;
-import com.infinera.metro.dnam.acceptance.test.node.mib.MpoIdentifier;
-import com.infinera.metro.dnam.acceptance.test.node.mib.entry.AbstractPortEntry;
 import com.infinera.metro.dnam.acceptance.test.node.mib.entry.PeerEntry;
 import lombok.Builder;
-import lombok.NonNull;
 import lombok.Value;
-
-//TODO: Make serialization work the same as deserialization does. It must work the same both ways
-
-@JsonTypeInfo(use = JsonTypeInfo.Id.MINIMAL_CLASS, include = JsonTypeInfo.As.PROPERTY, property = "@class")
+//TODO: Share stuff with InternalConnection?
 @Value
 public class PeerConnection {
-    @NonNull private final PeerEntry localPeerEntry;
-    @NonNull private final PeerEntry remotePeerEntry;
+    private final Peer localPeer;
+    private final Peer remotePeer;
 
     @JsonCreator
     @Builder
-    public PeerConnection(@JsonProperty("localPortEntry") AbstractPortEntry localPortEntry,
-                          @JsonProperty("localMpoIdentifier") MpoIdentifier localMpoIdentifier,
-                          @JsonProperty("remotePortEntry") AbstractPortEntry remotePortEntry,
-                          @JsonProperty("remoteMpoIdentifier") MpoIdentifier remoteMpoIdentifier) {
-        this.localPeerEntry = PeerEntry.builder()
-            .subrack(localPortEntry.getSubrack())
-            .slot(localPortEntry.getSlot())
-            .port(localPortEntry.getTransmitPort())
-            .mpoIdentifier(localMpoIdentifier)
-            .build();
-        this.remotePeerEntry = PeerEntry.builder()
-            .subrack(remotePortEntry.getSubrack())
-            .slot(remotePortEntry.getSlot())
-            .port(remotePortEntry.getReceivePort())
-            .mpoIdentifier(remoteMpoIdentifier)
-            .build();
+    public PeerConnection(@JsonProperty("localPeer") Peer localPeer, @JsonProperty("remotePeer") Peer remotePeer) {
+        this.localPeer = localPeer;
+        this.remotePeer = remotePeer;
     }
 
     public void applyTo(Node nodeA, Node nodeZ) {
-
-        final Attributes localPeerConfiguration = Attributes.builder()
-            .attribute(Attribute.of("topoPeerLocalLabel", localPeerEntry.getLocalLabel()))
-            .attribute(Attribute.of("topoPeerRemoteIpAddress", nodeZ.getIpAddress()))
-            .attribute(Attribute.of("topoPeerRemoteLabel", remotePeerEntry.getLocalLabel()))
-            .build();
-
-        final Attributes  remotePeerConfiguration = Attributes.builder()
-            .attribute(Attribute.of("topoPeerLocalLabel", remotePeerEntry.getLocalLabel()))
-            .attribute(Attribute.of("topoPeerRemoteIpAddress", nodeA.getIpAddress()))
-            .attribute(Attribute.of("topoPeerRemoteLabel", localPeerEntry.getLocalLabel()))
-            .build();
+        final PeerEntry localPeerEntry = getLocalPeerEntry();
+        final PeerEntry remotePeerEntry = getRemotePeerEntry();
+        final Attributes localPeerConfiguration = getPeerConfiguration(localPeerEntry, nodeZ, remotePeerEntry);
+        final Attributes remotePeerConfiguration = getPeerConfiguration(remotePeerEntry, nodeA, localPeerEntry);
 
         nodeA.createPeer(localPeerEntry);
         nodeA.setPeerAttributes(localPeerEntry, localPeerConfiguration);
         nodeZ.createPeer(remotePeerEntry);
         nodeZ.setPeerAttributes(remotePeerEntry, remotePeerConfiguration);
     }
+
+    public PeerConnection invert() {
+        return PeerConnection.builder()
+            .localPeer(this.remotePeer.invert())
+            .remotePeer(this.localPeer.invert())
+            .build();
+    }
+
+    PeerEntry getLocalPeerEntry() {
+        return toPeerEntry(localPeer);
+    }
+
+    PeerEntry getRemotePeerEntry() {
+        return toPeerEntry(remotePeer);
+    }
+
+    private PeerEntry toPeerEntry(Peer peer) {
+        return PeerEntry.builder()
+            .subrack(peer.getSubrack().getValue())
+            .slot(peer.getSlot().getValue())
+            .port(peer.getPort())
+            .mpoIdentifier(peer.getMpoIdentifier())
+            .build();
+    }
+
+    Attributes getPeerConfiguration(PeerEntry localPeerEntry, Node node, PeerEntry remotePeerEntry) {
+        return Attributes.builder()
+            .attribute(Attribute.of("topoPeerLocalLabel", localPeerEntry.getLocalLabel()))
+            .attribute(Attribute.of("topoPeerRemoteIpAddress", node.getIpAddress()))
+            .attribute(Attribute.of("topoPeerRemoteLabel", remotePeerEntry.getLocalLabel()))
+            .build();
+    }
+
+
 }

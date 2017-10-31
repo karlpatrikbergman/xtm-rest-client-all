@@ -10,7 +10,7 @@ import com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.clie
 import com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.line.LinePortSetAttributes;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.board.Mdu40EvenL;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.board.Tpd10gbe;
-import com.infinera.metro.dnam.acceptance.test.node.configuration.deserialize.ObjectFromFileUtilJackson;
+import com.infinera.metro.dnam.acceptance.test.node.configuration.serializedeserialize.ObjectFromFileUtilJackson;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.port.ClientPort;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.port.LinePort;
 import com.infinera.metro.dnam.acceptance.test.node.mib.Attribute;

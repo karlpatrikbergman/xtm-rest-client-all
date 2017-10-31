@@ -1,8 +1,0 @@
-!<com.infinera.metro.dnam.acceptance.test.node.mib.entry.ClientPortEntry>
-moduleType: client
-groupOrTableType: if
-clientPortType: client
-subrack: 1
-slot: 2
-transmitport: 1
-receiveport: 2

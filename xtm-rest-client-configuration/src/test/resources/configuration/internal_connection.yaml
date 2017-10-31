@@ -1,15 +1,15 @@
 ---
-localPeer:
+fromPeer:
   subrack: "subrack1"
   slot: "slot2"
   mpoIdentifier:
     xtmVersionEqualOrHigherThan27: true
     mtoIdentifier: ":0"
   port: 3
-remotePeer:
+toPeer:
   subrack: "subrack2"
-  slot: "slot3"
+  slot: "slot4"
   mpoIdentifier:
     xtmVersionEqualOrHigherThan27: true
     mtoIdentifier: ":0"
-  port: 8
+  port: 42

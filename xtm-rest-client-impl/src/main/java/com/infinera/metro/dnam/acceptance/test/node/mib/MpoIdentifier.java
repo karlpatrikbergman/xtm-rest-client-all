@@ -2,15 +2,17 @@ package com.infinera.metro.dnam.acceptance.test.node.mib;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.google.common.base.Preconditions;
+import lombok.EqualsAndHashCode;
 
 /**
  * TODO: Should the numerical value of MPO idendifier be named "port"?
+ * TODO: Fix this class, it is ugly
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
+@EqualsAndHashCode
 public class MpoIdentifier {
     private final boolean xtmVersionEqualOrHigherThan27;
     private final int mpoPort;
-    public static final String MODULE_NOT_PRESENT = ":0";
 
     public MpoIdentifier(int mpoPort) {
         Preconditions.checkArgument(mpoPort >= 0, "mtoIdentifier cannot be negative");

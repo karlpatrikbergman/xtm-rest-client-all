@@ -8,7 +8,6 @@ import com.infinera.metro.dnam.acceptance.test.node.configuration.board.Tpd10gbe
 import com.infinera.metro.dnam.acceptance.test.node.configuration.port.LinePort;
 import com.infinera.metro.dnam.acceptance.test.node.mib.Attribute;
 import com.infinera.metro.dnam.acceptance.test.node.mib.Attributes;
-import com.infinera.metro.dnam.acceptance.test.node.mib.MpoIdentifier;
 import com.infinera.metro.dnam.acceptance.test.node.mib.entry.PeerEntry;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
@@ -19,7 +18,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 @Slf4j
-public class PeerConnectionTest {
+public class PeerConnec tionTest {
 
     private final Node nodeA = NodeImpl.createDefault("172.17.0.2");
     private final Node nodeZ = NodeImpl.createDefault("172.17.0.3");
@@ -45,16 +44,18 @@ public class PeerConnectionTest {
         .build();
 
     private final PeerConnection peerConnectionNodeAtoNodeZ = PeerConnection.builder()
-        .fromPort(tpd10gbeOnNodeA.getLinePortEntry(linePortTx3Rx4))
-        .fromMpoIdentifier(MpoIdentifier.NotPresent())
-        .toPort(tpd10gbeOnNodeZ.getLinePortEntry(linePortTx7Rx8))
-        .toMpoIdentifier(MpoIdentifier.NotPresent())
+        .localPeer(tpd10gbeOnNodeA.getPeer(linePortTx3Rx4.getTransmitPort()))
+        .remotePeer(tpd10gbeOnNodeZ.getPeer(linePortTx7Rx8.getReceivePort()))
         .build();
 
     private final PeerEntry localPeerEntry_1_2_0_3_peerConnectionNodeAtoNodeZ = peerConnectionNodeAtoNodeZ.getLocalPeerEntry();
     private final PeerEntry remotePeerEntry_2_3_0_8_peerConnectionNodeAtoNodeZ = peerConnectionNodeAtoNodeZ.getRemotePeerEntry();
 
     private final PeerConnection peerConnectionNodeZtoNodeA = peerConnectionNodeAtoNodeZ.invert();
+//    private final PeerConnection peerConnectionNodeZtoNodeA = PeerConnection.builder()
+//        .localPeer(tpd10gbeOnNodeZ.getPeer(linePortTx7Rx8.getTransmitPort()))
+//        .remotePeer(tpd10gbeOnNodeA.getPeer(linePortTx3Rx4.getReceivePort()))
+//        .build();
     private final PeerEntry localPeerEntry_2_3_0_7_peerConnectionNodeZtoNodeA = peerConnectionNodeZtoNodeA.getLocalPeerEntry();
     private final PeerEntry remotePeerEntry_1_2_0_4_peerConnectionNodeZtoNodeA = peerConnectionNodeZtoNodeA.getRemotePeerEntry();
 

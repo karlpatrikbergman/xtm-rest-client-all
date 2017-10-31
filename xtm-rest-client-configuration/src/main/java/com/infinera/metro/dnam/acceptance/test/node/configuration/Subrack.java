@@ -21,4 +21,13 @@ public enum Subrack {
         }
         throw new IllegalArgumentException("Failed to create Subrack from string" + subrackString);
     }
+
+    public static Subrack fromInteger(Integer subrackInteger) {
+        for (Subrack subrack : Subrack.values()) {
+            if (subrack.getValue().equals(subrackInteger)) {
+                return subrack;
+            }
+        }
+        throw new IllegalArgumentException("Failed to create Subrack from Integer" + subrackInteger);
+    }
 }

@@ -1,0 +1,8 @@
+---
+subrack: "subrack1"
+slot: "slot2"
+mpoIdentifier:
+  xtmVersionEqualOrHigherThan27: true
+  mtoIdentifier: ":0"
+port: 3
+

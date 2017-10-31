@@ -1,3 +1,3 @@
-operation: CONFIGURE
-key: clientIfConfigurationCommand
-value: lan10GbE yes
+---
+key: "clientIfConfigurationCommand"
+value: "lan10GbE yes"

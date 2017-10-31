@@ -16,7 +16,6 @@ import lombok.Value;
 @EqualsAndHashCode(callSuper = true)
 @Value
 public class PeerEntry extends AbstractMibEntry implements MibEntry {
-
     private final Integer port;
     private final MpoIdentifier mpoIdentifier;
 

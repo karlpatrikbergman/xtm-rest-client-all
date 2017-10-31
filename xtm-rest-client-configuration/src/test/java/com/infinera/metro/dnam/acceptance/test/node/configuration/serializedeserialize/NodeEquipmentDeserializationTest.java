@@ -1,4 +1,4 @@
-package com.infinera.metro.dnam.acceptance.test.node.configuration.deserialize;
+package com.infinera.metro.dnam.acceptance.test.node.configuration.serializedeserialize;
 
 import com.infinera.metro.dnam.acceptance.test.node.configuration.NodeEquipment;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.Slot;
@@ -12,7 +12,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 @Slf4j
-public class NodeEquipmentDeserializationTest extends YamlDeserializationTest {
+public class NodeEquipmentDeserializationTest extends AbstractYamlSerializeDeserializeTest {
 
     @Test
     public void test() {

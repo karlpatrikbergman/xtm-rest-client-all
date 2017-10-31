@@ -1,4 +1,4 @@
-package com.infinera.metro.dnam.acceptance.test.node.configuration.deserialize;
+package com.infinera.metro.dnam.acceptance.test.node.configuration.serializedeserialize;
 
 import com.infinera.metro.dnam.acceptance.test.node.NodeAccessData;
 import lombok.extern.slf4j.Slf4j;
@@ -9,7 +9,7 @@ import org.junit.Test;
 import java.io.IOException;
 
 @Slf4j
-public class NodeAccessDataDeserializationTest extends YamlDeserializationTest {
+public class NodeAccessDataDeserializationTest extends AbstractYamlSerializeDeserializeTest {
 
     @Test
     public void test() throws IOException {

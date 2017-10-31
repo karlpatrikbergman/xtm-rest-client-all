@@ -5,13 +5,13 @@ import com.infinera.metro.dnam.acceptance.test.node.configuration.Subrack;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.board.BoardAttributes;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.port.ClientPort;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.port.LinePort;
+import com.infinera.metro.dnam.acceptance.test.node.configuration.topology.Peer;
+import com.infinera.metro.dnam.acceptance.test.node.mib.MpoIdentifier;
 import com.infinera.metro.dnam.acceptance.test.node.mib.type.BoardType;
 import lombok.AccessLevel;
 import lombok.Getter;
 
 import java.util.List;
-
-//TODO: Cane board List<MibEntryAttributes> be converted to List<BordEntryAttributes>?
 
 @Getter(AccessLevel.PUBLIC)
 abstract class AbstractClientAndLinePortBoard extends AbstractBoard {
@@ -22,5 +22,15 @@ abstract class AbstractClientAndLinePortBoard extends AbstractBoard {
         super(boardType, subrack, slot, boardAttributes);
         this.clientPorts = clientPorts;
         this.linePorts = linePorts;
+    }
+
+    public Peer getPeer(Integer port) {
+        return Peer.builder()
+            .subrack(getSubrack())
+            .slot(getSlot())
+            .mpoIdentifier(MpoIdentifier.NotPresent())
+            .port(port)
+            .build();
+
     }
 }

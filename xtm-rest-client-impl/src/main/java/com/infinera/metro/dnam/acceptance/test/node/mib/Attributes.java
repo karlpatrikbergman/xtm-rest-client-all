@@ -1,27 +1,36 @@
 package com.infinera.metro.dnam.acceptance.test.node.mib;
 
-import lombok.Builder;
 import lombok.NonNull;
-import lombok.Singular;
 import lombok.Value;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-
-//TODO: Force type check?
-//Can only be a list with attributes that are set with the same operation (set.json or configure.json)
-//At least I think so. How add type safety? Is it necessary?
-
 @Value
-@Builder
 public class Attributes {
+    /**
+     * This list should ideally be a ConcurrentHashMap or similar, but I have so far failed
+     * when serializing/deserializing Maps.
+     * TODO: Fix serialization/deserialization problem with Maps, and replace ArrayList with ConcurrentHashMap
+     */
     @NonNull
-    @Singular
     private final List<Attribute> attributes;
+
+    @java.beans.ConstructorProperties({"attributes"})
+    private Attributes(List<Attribute> attributes) {
+        this.attributes = attributes;
+    }
+
+    public static AttributesBuilder builder() {
+        return new AttributesBuilder();
+    }
+
+    public Optional<Attribute> getAttributeByKey(String key) {
+        return attributes.stream()
+            .filter(attribute -> attribute.getKey().equals(key))
+            .findFirst();
+    }
 
     @Override
     public String toString() {
@@ -90,5 +99,65 @@ public class Attributes {
                 .key(attribute.getKey())
                 .build()));
         return attributesOnlyKeysBuilder.build();
+    }
+
+    public static class AttributesBuilder {
+        private ArrayList<Attribute> attributes;
+
+        AttributesBuilder() {
+        }
+
+        public AttributesBuilder attribute(Attribute attribute) {
+            if (this.attributes == null) this.attributes = new ArrayList<>();
+            assertNoDuplicateKeys(attribute);
+            this.attributes.add(attribute);
+            return this;
+        }
+
+        public AttributesBuilder attributes(Collection<? extends Attribute> attributes) {
+            if (this.attributes == null) this.attributes = new ArrayList<>();
+            assertNoDuplicateKeys(attributes);
+            this.attributes.addAll(attributes);
+            return this;
+        }
+
+        public AttributesBuilder clearAttributes() {
+            if (this.attributes != null)
+                this.attributes.clear();
+
+            return this;
+        }
+
+        public Attributes build() {
+            List<Attribute> attributes;
+            switch (this.attributes == null ? 0 : this.attributes.size()) {
+                case 0:
+                    attributes = java.util.Collections.emptyList();
+                    break;
+                case 1:
+                    attributes = java.util.Collections.singletonList(this.attributes.get(0));
+                    break;
+                default:
+                    attributes = java.util.Collections.unmodifiableList(new ArrayList<>(this.attributes));
+            }
+
+            return new Attributes(attributes);
+        }
+
+        public String toString() {
+            return "Attributes.AttributesBuilder(attributes=" + this.attributes + ")";
+        }
+
+        private void assertNoDuplicateKeys(Collection<? extends Attribute> attributes) {
+            attributes.stream()
+                .forEach(attribute -> assertNoDuplicateKeys(attribute));
+        }
+
+        private void assertNoDuplicateKeys(Attribute attribute) {
+            attributes.stream()
+                .filter(attribute1 -> attribute1.getKey().equals(attribute.getKey()))
+                .findAny()
+                .ifPresent(attribute1 -> {throw new IllegalArgumentException("Attribute " + attribute + " was already added to builder");});
+        }
     }
 }

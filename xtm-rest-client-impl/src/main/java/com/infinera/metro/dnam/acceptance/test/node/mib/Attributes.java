@@ -10,9 +10,9 @@ import java.util.stream.Stream;
 @Value
 public class Attributes {
     /**
-     * This list should ideally be a ConcurrentHashMap or similar, but I have so far failed
-     * when serializing/deserializing Maps.
-     * TODO: Fix serialization/deserialization problem with Maps, and replace ArrayList with ConcurrentHashMap
+     * This list should ideally be a ConcurrentHashMap or similar, but I have so far failed when
+     * serializing/deserializing Maps. TODO: Fix serialization/deserialization problem with Maps, and replace ArrayList
+     * with ConcurrentHashMap
      */
     @NonNull
     private final List<Attribute> attributes;
@@ -26,29 +26,38 @@ public class Attributes {
         return new AttributesBuilder();
     }
 
-    public Optional<Attribute> getAttributeByKey(String key) {
+    public Attribute getAttributeByKey(String key) {
         return attributes.stream()
             .filter(attribute -> attribute.getKey().equals(key))
-            .findFirst();
+            .findFirst()
+            .orElseThrow(() -> new RuntimeException(
+                new StringBuilder()
+                    .append("No ")
+                    .append(Attribute.class.getSimpleName())
+                    .append("with key ")
+                    .append(key)
+                    .append("was found")
+                    .toString()
+            ));
     }
 
     @Override
     public String toString() {
         return attributes.stream()
-                .map(Attribute::asParameters)
-                .collect(Collectors.joining("&"));
+            .map(Attribute::asParameters)
+            .collect(Collectors.joining("&"));
     }
 
     public static Attributes of(Attribute attribute) {
         return Attributes.builder()
-                .attribute(attribute)
-                .build();
+            .attribute(attribute)
+            .build();
     }
 
     public static Attributes of(List<Attribute> attributeList) {
         return Attributes.builder()
-                .attributes(attributeList)
-                .build();
+            .attributes(attributeList)
+            .build();
     }
 
     public static Attributes of(Attribute... attribute) {
@@ -73,18 +82,18 @@ public class Attributes {
         return Attributes.of(
             values.stream()
                 .map(value -> Attribute.builder()
-                .key(key)
-                .value(value)
-                .build())
+                    .key(key)
+                    .value(value)
+                    .build())
                 .collect(Collectors.toList())
         );
     }
 
     public static Attributes of(String key, String value) {
         return of(Attribute.builder()
-        .key(key)
-        .value(value)
-        .build());
+            .key(key)
+            .value(value)
+            .build());
     }
 
     /**
@@ -157,7 +166,9 @@ public class Attributes {
             attributes.stream()
                 .filter(attribute1 -> attribute1.getKey().equals(attribute.getKey()))
                 .findAny()
-                .ifPresent(attribute1 -> {throw new IllegalArgumentException("Attribute " + attribute + " was already added to builder");});
+                .ifPresent(attribute1 -> {
+                    throw new IllegalArgumentException("Attribute " + attribute + " was already added to builder");
+                });
         }
     }
 }

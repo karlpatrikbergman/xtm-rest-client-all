@@ -7,7 +7,7 @@ import com.infinera.metro.dnam.acceptance.test.node.mib.entry.AddDropPortEntry;
 
 import java.util.List;
 
-public interface AddDropPortBoard {
+interface AddDropPortBoard {
     default void configureAddDropPorts(Node node) {
         getAddDropPorts().forEach(addDropPort -> configureAddDropPort(node, addDropPort));
     }

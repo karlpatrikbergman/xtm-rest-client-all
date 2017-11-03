@@ -1,5 +1,6 @@
 package com.infinera.metro.dnam.acceptance.test.node.configuration.serializedeserialize;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
@@ -10,7 +11,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 @Slf4j
-public enum ObjectFromFileUtilJackson implements ObjectFromFileUtil {
+public enum ObjectFromFileUtilJackson {
     INSTANCE;
 
     private final ObjectMapper mapper;
@@ -32,6 +33,7 @@ public enum ObjectFromFileUtilJackson implements ObjectFromFileUtil {
         mapper.configure(MapperFeature.ACCEPT_CASE_INSENSITIVE_PROPERTIES, true);
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+        mapper.setVisibility(mapper.getVisibilityChecker().withFieldVisibility(JsonAutoDetect.Visibility.ANY));
     }
 
     public ObjectMapper getMapper() {

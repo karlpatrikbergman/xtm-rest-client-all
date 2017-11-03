@@ -13,29 +13,16 @@ boards:
   - transmitPort: 1
     receivePort: 2
     clientPortAttributes:
+    - !<com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.client.ClientPortSetAttributes>
+      clientPortSetAttributes:
+        attributes:
+        - key: "clientIfExpectedTxFrequency"
+          value: "w1530"
     - !<com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.client.ClientPortConfigAttributes>
       ? clientPortConfigAttributes
       : attributes:
         - key: "clientIfConfigurationCommand"
           value: "wan10GbE yes"
-    - !<com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.client.ClientPortSetAttributes>
-      clientPortSetAttributes:
-        attributes:
-        - key: "expectedFrequency"
-          value: "w1530"
-  - transmitPort: 5
-    receivePort: 6
-    clientPortAttributes:
-    - !<com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.client.ClientPortConfigAttributes>
-      ? clientPortConfigAttributes
-      : attributes:
-        - key: "clientIfConfigurationCommand"
-          value: "wan10GbE yes"
-    - !<com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.client.ClientPortSetAttributes>
-      clientPortSetAttributes:
-        attributes:
-        - key: "expectedFrequency"
-          value: "w1530"
   linePorts:
   - transmitPort: 3
     receivePort: 4
@@ -44,15 +31,7 @@ boards:
       linePortSetAttributes:
         attributes:
         - key: "expectedFrequency"
-          value: "ch926"
-  - transmitPort: 7
-    receivePort: 8
-    linePortAttributes:
-    - !<com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.line.LinePortSetAttributes>
-      linePortSetAttributes:
-        attributes:
-        - key: "expectedFrequency"
-          value: "ch927"
+          value: "ch939"
 - !<com.infinera.metro.dnam.acceptance.test.node.configuration.board.Mdu40EvenL>
   subrack: "subrack1"
   slot: "slot3"
@@ -70,7 +49,7 @@ boards:
       clientPortSetAttributes:
         attributes:
         - key: "descr"
-          value: "Some relevant description"
+          value: "My description"
   linePorts:
   - transmitPort: 81
     receivePort: 82
@@ -79,4 +58,4 @@ boards:
       linePortSetAttributes:
         attributes:
         - key: "descr"
-          value: "Some relevant description"
+          value: "My description"

@@ -1,8 +1,10 @@
 package com.infinera.metro.dnam.acceptance.test.node.configuration.port;
 
 import com.google.common.base.Preconditions;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
+@EqualsAndHashCode
 class Port {
     @Getter private final Integer transmitPort;
     @Getter private final Integer receivePort;

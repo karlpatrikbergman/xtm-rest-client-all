@@ -9,10 +9,12 @@ import com.infinera.metro.dnam.acceptance.test.node.configuration.topology.Peer;
 import com.infinera.metro.dnam.acceptance.test.node.mib.MpoIdentifier;
 import com.infinera.metro.dnam.acceptance.test.node.mib.type.BoardType;
 import lombok.AccessLevel;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 import java.util.List;
 
+@EqualsAndHashCode(callSuper = true)
 @Getter(AccessLevel.PUBLIC)
 abstract class AbstractClientAndLinePortBoard extends AbstractBoard {
     private final List<ClientPort> clientPorts;

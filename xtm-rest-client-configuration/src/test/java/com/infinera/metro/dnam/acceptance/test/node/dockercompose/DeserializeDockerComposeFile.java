@@ -1,8 +1,7 @@
 package com.infinera.metro.dnam.acceptance.test.node.dockercompose;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.infinera.metro.dnam.acceptance.test.node.configuration.serializedeserialize.ObjectFromFileUtil;
-import com.infinera.metro.dnam.acceptance.test.node.configuration.serializedeserialize.ObjectFromFileUtilFactory;
+import com.infinera.metro.dnam.acceptance.test.node.configuration.serializedeserialize.ObjectFromFileUtilJackson;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -15,8 +14,7 @@ public class DeserializeDockerComposeFile {
 
     @Test
     public void test() throws IOException {
-        ObjectFromFileUtil objectFromFileUtil = ObjectFromFileUtilFactory.INSTANCE.getObjectFromFileUtil();
-        DockerCompose dockerCompose = objectFromFileUtil.getObject("dockercompose/docker-compose.yml", DockerCompose.class);
+        DockerCompose dockerCompose = ObjectFromFileUtilJackson.INSTANCE.getObject("dockercompose/docker-compose.yml", DockerCompose.class);
 
         Service alarmService = dockerCompose.getServices().get("alarmservice");
         assertNotNull(alarmService);

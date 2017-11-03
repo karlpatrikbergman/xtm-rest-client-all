@@ -12,13 +12,10 @@ import com.infinera.metro.dnam.acceptance.test.node.mib.entry.PeerEntry;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 
-import java.util.Optional;
-
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 @Slf4j
-public class PeerConnec tionTest {
+public class PeerConnectionTest {
 
     private final Node nodeA = NodeImpl.createDefault("172.17.0.2");
     private final Node nodeZ = NodeImpl.createDefault("172.17.0.3");
@@ -131,9 +128,8 @@ public class PeerConnec tionTest {
 
     /**/
 
-    private void verifyAttribute(Optional<Attribute> attributeOptional, String expectedValue) {
-        assertTrue(attributeOptional.isPresent());
-        assertEquals(expectedValue, attributeOptional.get().getValue());
+    private void verifyAttribute(Attribute attribute, String expectedValue) {
+        assertEquals(expectedValue, attribute.getValue());
     }
 
 }

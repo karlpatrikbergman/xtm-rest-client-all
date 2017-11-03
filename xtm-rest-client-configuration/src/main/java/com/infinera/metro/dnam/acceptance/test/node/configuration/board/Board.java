@@ -7,8 +7,6 @@ import com.infinera.metro.dnam.acceptance.test.node.configuration.Slot;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.Subrack;
 import com.infinera.metro.dnam.acceptance.test.node.mib.entry.BoardEntry;
 
-//TODO: Do we need @JsonSubTypes? Test to remove
-
 @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "@class")
 @JsonSubTypes({
         @JsonSubTypes.Type(value = Tpd10gbe.class, name = "tpd10gbe"),

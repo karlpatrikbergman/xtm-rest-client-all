@@ -2,8 +2,8 @@ package com.infinera.metro.dnam.acceptance.test.node;
 
 import lombok.*;
 
-@NoArgsConstructor(access = AccessLevel.PRIVATE, force = true) //Needed by Hibernate
-@AllArgsConstructor(access = AccessLevel.PUBLIC) //Needed by Orika
+//@NoArgsConstructor(access = AccessLevel.PRIVATE, force = true) //Needed by Hibernate
+//@AllArgsConstructor(access = AccessLevel.PUBLIC) //Needed by Orika
 @Value
 @Builder
 public class NodeAccessData {

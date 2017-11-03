@@ -14,12 +14,12 @@ import static org.junit.Assert.assertEquals;
 @Slf4j
 public class InternalConnectionTest {
 
-    final LinePort linePortTx3Rx4 = LinePort.builder()
+    private final LinePort linePortTx3Rx4 = LinePort.builder()
         .transmitPort(3)
         .receivePort(4)
         .build();
 
-    final Tpd10gbe tpd10gbe = Tpd10gbe.builder()
+    private final Tpd10gbe tpd10gbe = Tpd10gbe.builder()
         .subrack(Subrack.subrack1)
         .slot(Slot.slot2)
         .clientPort(ClientPort.builder()
@@ -30,12 +30,12 @@ public class InternalConnectionTest {
         .linePort(linePortTx3Rx4)
         .build();
 
-    final ClientPort clientPortTx41_Rx42 = ClientPort.builder()
+    private final ClientPort clientPortTx41_Rx42 = ClientPort.builder()
         .transmitPort(41)
         .receivePort(42)
         .build();
 
-    final Mdu40EvenL mdu40EvenL = Mdu40EvenL.builder()
+    private final Mdu40EvenL mdu40EvenL = Mdu40EvenL.builder()
         .subrack(Subrack.subrack2)
         .slot(Slot.slot4)
         .clientPort(clientPortTx41_Rx42)
@@ -45,7 +45,7 @@ public class InternalConnectionTest {
             .build())
         .build();
 
-    final InternalConnection internalConnection = InternalConnection.builder()
+    private final InternalConnection internalConnection = InternalConnection.builder()
         .fromPeer(tpd10gbe.getPeer(linePortTx3Rx4.getTransmitPort()))
         .toPeer(mdu40EvenL.getPeer(clientPortTx41_Rx42.getReceivePort()))
         .build();

@@ -1,0 +1,28 @@
+---
+fromNodeAccessData:
+  ipAddress: "172.17.0.2"
+  port: 80
+  userName: "root"
+  password: "root"
+toNodeAccessData:
+  ipAddress: "172.17.0.3"
+  port: 80
+  userName: "root"
+  password: "root"
+peerConnections:
+- localPeer:
+    subrack: "subrack1"
+    slot: "slot3"
+    mpoIdentifier:
+      xtmVersionEqualOrHigherThan27: true
+      mpoPort: 0
+      mtoIdentifier: ":0"
+    port: 81
+  remotePeer:
+    subrack: "subrack1"
+    slot: "slot3"
+    mpoIdentifier:
+      xtmVersionEqualOrHigherThan27: true
+      mpoPort: 0
+      mtoIdentifier: ":0"
+    port: 82

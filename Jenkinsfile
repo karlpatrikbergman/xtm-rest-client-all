@@ -17,7 +17,8 @@ node('docker') {
         }
     }
     finally {
-        junit 'build/reports/**/*.xml'
+        //junit allowEmptyResults: true, testResults: '**/build/test-results/TEST-*.xml'
+        junit '**/build/test-results/test/TEST-*.xml'
     }
     try {
         stage('Integration Test') {
@@ -26,9 +27,8 @@ node('docker') {
         }
     }
     finally {
-        junit 'build/reports/**/*.xml'
-//        junit allowEmptyResults: true, testResults: '**/build/test-results/INTEGRATION_TEST-*.xml'
-
+        //junit allowEmptyResults: true, testResults: '**/build/test-results/TEST-*.xml'
+        junit '**/build/test-results/integrationTest/TEST-*.xml'
     }
     stage('Publish') {
         sh('git rev-parse HEAD > GIT_COMMIT')

@@ -1,4 +1,4 @@
-version: "2"
+version: "3"
 
 services:
 
@@ -9,7 +9,7 @@ services:
     ports:
       - "80"
     networks:
-      dnam_network:
+      nodeimpl_smoke_test_network:
         ipv4_address: 172.35.0.100
   nodeZ:
     image: se-artif-prd.infinera.com/tm3k/trunk-hostenv:29.0
@@ -18,10 +18,10 @@ services:
     ports:
       - "80"
     networks:
-      dnam_network:
+      nodeimpl_smoke_test_network:
         ipv4_address: 172.35.0.101
 networks:
-  dnam_network:
+  nodeimpl_smoke_test_network:
     driver: bridge
     ipam:
       config:

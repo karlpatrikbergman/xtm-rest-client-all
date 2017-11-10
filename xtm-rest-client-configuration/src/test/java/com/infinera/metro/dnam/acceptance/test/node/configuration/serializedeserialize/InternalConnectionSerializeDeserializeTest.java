@@ -7,7 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 public class InternalConnectionSerializeDeserializeTest extends AbstractYamlSerializeDeserializeTest<InternalConnection> {
 
     public InternalConnectionSerializeDeserializeTest() {
-        super(InternalConnection.class, ExpectedDataFactory.INSTANCE.getInternalConnection(), "configuration/internal_connection.yaml");
+        super(InternalConnection.class, ExpectedTestDataFactory.INSTANCE.getInternalConnection(), "configuration/internal_connection.yaml");
     }
 
 }

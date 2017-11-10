@@ -1,4 +1,4 @@
-version: "2"
+version: "3"
 
 services:
   nodeA:
@@ -6,7 +6,7 @@ services:
     container_name: nodeA
     privileged: true
     networks:
-      xtm_rest_client_network:
+      node_connect_test_network:
         ipv4_address: 172.45.0.101
     ports:
       - 80
@@ -16,13 +16,13 @@ services:
     container_name: nodeZ
     privileged: true
     networks:
-      xtm_rest_client_network:
+      node_connect_test_network:
         ipv4_address: 172.45.0.102
     ports:
       - 80
     hostname: nodeZ
 networks:
-  xtm_rest_client_network:
+  node_connect_test_network:
     driver: bridge
     ipam:
       config:

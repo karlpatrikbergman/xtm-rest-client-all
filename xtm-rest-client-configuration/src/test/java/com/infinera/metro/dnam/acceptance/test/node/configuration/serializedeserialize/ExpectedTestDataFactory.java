@@ -1,8 +1,6 @@
 package com.infinera.metro.dnam.acceptance.test.node.configuration.serializedeserialize;
 
-import com.infinera.metro.dnam.acceptance.test.node.Node;
 import com.infinera.metro.dnam.acceptance.test.node.NodeAccessData;
-import com.infinera.metro.dnam.acceptance.test.node.NodeImpl;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.*;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.board.BoardSetAttributes;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.client.ClientPortConfigAttributes;
@@ -17,6 +15,8 @@ import com.infinera.metro.dnam.acceptance.test.node.configuration.topology.Inter
 import com.infinera.metro.dnam.acceptance.test.node.configuration.topology.Peer;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.topology.PeerConnection;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Optional;
 
 /**
@@ -26,28 +26,19 @@ import java.util.Optional;
  * Only add one instance of items (as for example NodeEquipmentApplier) to lists if items, since we us findFirst().
  * Else data verification may fail.
  */
-enum ExpectedDataFactory {
+enum ExpectedTestDataFactory {
     INSTANCE;
 
-    private final NodeNetworkApplier nodeNetworkApplier;
+    private final NodeNetwork nodeNetwork;
+    private final String NODE_A = "nodeA", NODE_Z = "nodeZ";
+    private final Peers FROM_NODEA_TO_NODEZ = Peers.of(NODE_A, NODE_Z), FROM_NODEZ_TO_NODEA = FROM_NODEA_TO_NODEZ.invert();
 
-    ExpectedDataFactory() {
-        this.nodeNetworkApplier = createNodeNetworkApplier();
+    ExpectedTestDataFactory() {
+        this.nodeNetwork = createNodeNetwork();
     }
 
-
-    NodeNetworkApplier getNodeNetworkApplier() {
-        return this.nodeNetworkApplier;
-    }
-
-    NodeEquipmentApplier getNodeEquipmentApplier() {
-        return nodeNetworkApplier.getNodeEquipmentAppliers().stream()
-            .findFirst()
-            .orElseThrow(() -> new RuntimeException("No " + NodeEquipmentApplier.class.getSimpleName() + " found"));
-    }
-
-    NodeEquipment getNodeEquipment() {
-        return getNodeEquipmentApplier().getNodeEquipment();
+    NodeNetwork getNodeNetwork() {
+        return this.nodeNetwork;
     }
 
     Tpd10gbe getTpd10Gbe() {
@@ -59,27 +50,18 @@ enum ExpectedDataFactory {
         }
     }
 
-
-    InternalConnectionApplier getInternalConnectionApplier() {
-        return nodeNetworkApplier.getInternalConnectionAppliers().stream()
-            .findFirst()
-            .orElseThrow(() -> new RuntimeException("No " + InternalConnectionApplier.class.getSimpleName() + " found"));
+    NodeEquipment getNodeEquipment() {
+        return getNodeNetwork().getNodeEquipmentMap().get(NODE_A);
     }
 
     InternalConnection getInternalConnection() {
-        return getInternalConnectionApplier().getInternalConnections().stream()
+        return getNodeNetwork().getInternalConnectionMap().get(NODE_Z).stream()
             .findFirst()
             .orElseThrow(() -> new RuntimeException("No " + InternalConnection.class.getSimpleName() + " found"));
     }
 
-    PeerConnectionApplier getPeerConnectionApplier() {
-        return nodeNetworkApplier.getPeerConnectionAppliers().stream()
-            .findFirst()
-            .orElseThrow(() -> new RuntimeException("No " + PeerConnectionApplier.class.getSimpleName() + " found"));
-    }
-
     PeerConnection getPeerConnection() {
-        return getPeerConnectionApplier().getPeerConnections().stream()
+        return getNodeNetwork().getPeerConnectionMap().get(FROM_NODEA_TO_NODEZ).stream()
             .findFirst()
             .orElseThrow(() -> new RuntimeException("No " + PeerConnection.class.getSimpleName() + " found"));
     }
@@ -88,12 +70,7 @@ enum ExpectedDataFactory {
         return getPeerConnection().getLocalPeer();
     }
 
-    private NodeNetworkApplier createNodeNetworkApplier() {
-        final Node nodeA = NodeImpl.createDefault("172.17.0.2");
-        final Node nodeZ = NodeImpl.createDefault("172.17.0.3");
-        final NodeAccessData accessDataNodeA = NodeAccessData.createDefault("172.17.0.2");
-        final NodeAccessData accessDataNodeZ = NodeAccessData.createDefault("172.17.0.3");
-
+    private NodeNetwork createNodeNetwork() {
         final LinePort linePortTx3Rx4 = LinePort.builder()
             .transmitPort(3)
             .receivePort(4)
@@ -141,31 +118,9 @@ enum ExpectedDataFactory {
             .board(mdu40EvenL)
             .build();
 
-        final NodeEquipmentApplier nodeAEquipmentApplier = NodeEquipmentApplier.builder()
-            .nodeEquipment(tdb10bgeAndMdu40EvenlNodeEquipment)
-            .nodeAccessData(accessDataNodeA)
-            .build();
-
-        final NodeEquipmentApplier nodeZEquipmentApplier = NodeEquipmentApplier.builder()
-            .nodeEquipment(tdb10bgeAndMdu40EvenlNodeEquipment)
-            .nodeAccessData(accessDataNodeZ)
-            .build();
-
         final InternalConnection internalConnectionTpd10gbeTx3ToMdu40EvenLRx42 = InternalConnection.builder()
             .fromPeer(tpd10gbe.getPeer(linePortTx3Rx4.getTransmitPort()))
             .toPeer(mdu40EvenL.getPeer(clientPortTx41_Rx42.getReceivePort()))
-            .build();
-
-        final InternalConnectionApplier nodeAinternalConnectionApplier = InternalConnectionApplier.builder()
-            .internalConnection(internalConnectionTpd10gbeTx3ToMdu40EvenLRx42)
-            .internalConnection(internalConnectionTpd10gbeTx3ToMdu40EvenLRx42.invert())
-            .nodeAccessData(accessDataNodeA)
-            .build();
-
-        final InternalConnectionApplier nodeZinternalConnectionApplier = InternalConnectionApplier.builder()
-            .internalConnection(internalConnectionTpd10gbeTx3ToMdu40EvenLRx42)
-            .internalConnection(internalConnectionTpd10gbeTx3ToMdu40EvenLRx42.invert())
-            .nodeAccessData(accessDataNodeZ)
             .build();
 
         final PeerConnection peerConnectionNodeANodeZ = PeerConnection.builder()
@@ -173,25 +128,15 @@ enum ExpectedDataFactory {
             .remotePeer(mdu40EvenL.getPeer(linePortTx81Rx82.getReceivePort()))
             .build();
 
-        final PeerConnectionApplier nodeAtoNodeZpeerConnectionApplier = PeerConnectionApplier.builder()
-            .fromNodeAccessData(accessDataNodeA)
-            .toNodeAccessData(accessDataNodeZ)
-            .peerConnection(peerConnectionNodeANodeZ)
-            .build();
-
-        final PeerConnectionApplier nodeZtoNodeApeerConnectionApplier = PeerConnectionApplier.builder()
-            .fromNodeAccessData(accessDataNodeZ)
-            .toNodeAccessData(accessDataNodeA)
-            .peerConnection(peerConnectionNodeANodeZ.invert())
-            .build();
-
-        return NodeNetworkApplier.builder()
-            .nodeEquipmentApplier(nodeAEquipmentApplier)
-            .nodeEquipmentApplier(nodeZEquipmentApplier)
-            .internalConnectionApplier(nodeAinternalConnectionApplier)
-            .internalConnectionApplier(nodeZinternalConnectionApplier)
-            .peerConnectionApplier(nodeAtoNodeZpeerConnectionApplier)
-            .peerConnectionApplier(nodeZtoNodeApeerConnectionApplier)
+        return NodeNetwork.builder()
+            .accessDataForNode(NODE_A, NodeAccessData.createDefault("172.17.0.2"))
+            .accessDataForNode(NODE_Z, NodeAccessData.createDefault("172.17.0.3"))
+            .nodeEquipmentForNode(NODE_A, tdb10bgeAndMdu40EvenlNodeEquipment)
+            .nodeEquipmentForNode(NODE_Z, tdb10bgeAndMdu40EvenlNodeEquipment)
+            .internalConnectionForNode(NODE_A, Arrays.asList(internalConnectionTpd10gbeTx3ToMdu40EvenLRx42, internalConnectionTpd10gbeTx3ToMdu40EvenLRx42.invert()))
+            .internalConnectionForNode(NODE_Z, Arrays.asList(internalConnectionTpd10gbeTx3ToMdu40EvenLRx42, internalConnectionTpd10gbeTx3ToMdu40EvenLRx42.invert()))
+            .peerConnectionForPeers(FROM_NODEA_TO_NODEZ, Collections.singletonList(peerConnectionNodeANodeZ))
+            .peerConnectionForPeers(FROM_NODEZ_TO_NODEA, Collections.singletonList(peerConnectionNodeANodeZ))
             .build();
     }
 }

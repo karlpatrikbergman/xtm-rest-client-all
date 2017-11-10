@@ -5,7 +5,7 @@ import com.infinera.metro.dnam.acceptance.test.node.configuration.topology.PeerC
 public class PeerConnectionSerializeDeserializeTest extends AbstractYamlSerializeDeserializeTest<PeerConnection> {
 
     public PeerConnectionSerializeDeserializeTest() {
-        super(PeerConnection.class, ExpectedDataFactory.INSTANCE.getPeerConnection(), "configuration/peer_connection.yaml");
+        super(PeerConnection.class, ExpectedTestDataFactory.INSTANCE.getPeerConnection(), "configuration/peer_connection.yaml");
     }
 
 }

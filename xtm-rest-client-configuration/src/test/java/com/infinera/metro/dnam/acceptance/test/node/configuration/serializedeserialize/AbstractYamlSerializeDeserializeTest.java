@@ -9,7 +9,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 abstract class AbstractYamlSerializeDeserializeTest<T> {
-    private final ObjectMapper mapper = ObjectFromFileUtilJackson.INSTANCE.getMapper();
 
     private final Class<T> typeParameterClass;
     private final  T expectedObject;
@@ -24,6 +23,7 @@ abstract class AbstractYamlSerializeDeserializeTest<T> {
     @Test
     public void serializeObject() throws JsonProcessingException {
         final String expectedYamlString = new ResourceString(pathToYamlFile).toString();
+        final ObjectMapper mapper = ObjectFromFileUtilJackson.INSTANCE.getMapper();
         final String serializedObject = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(expectedObject).trim();
         assertEquals(expectedYamlString, serializedObject);
     }

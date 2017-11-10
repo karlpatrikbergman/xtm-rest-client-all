@@ -2,6 +2,7 @@ package com.infinera.metro.dnam.acceptance.test.node.configuration.serializedese
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.infinera.metro.dnam.acceptance.test.util.ResourceInputStream;
@@ -10,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.io.IOException;
 import java.io.InputStream;
 
+//TODO: Rename
 @Slf4j
 public enum ObjectFromFileUtilJackson {
     INSTANCE;
@@ -38,5 +40,9 @@ public enum ObjectFromFileUtilJackson {
 
     public ObjectMapper getMapper() {
         return mapper;
+    }
+
+    public String objectToString(Object object) throws JsonProcessingException {
+        return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(object).trim();
     }
 }

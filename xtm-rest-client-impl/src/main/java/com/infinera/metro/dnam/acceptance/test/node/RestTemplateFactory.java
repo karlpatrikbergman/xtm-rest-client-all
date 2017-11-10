@@ -7,8 +7,8 @@ enum RestTemplateFactory {
     REST_TEMPLATE_FACTORY;
 
     RestTemplate createRestTemplate() {
-        int timeout = 3000;
-        HttpComponentsClientHttpRequestFactory clientHttpRequestFactory = new HttpComponentsClientHttpRequestFactory();
+        final int timeout = 3000;
+        final HttpComponentsClientHttpRequestFactory clientHttpRequestFactory = new HttpComponentsClientHttpRequestFactory();
         clientHttpRequestFactory.setConnectTimeout(timeout);
         return new RestTemplate(clientHttpRequestFactory);
     }

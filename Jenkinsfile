@@ -6,25 +6,20 @@ def projectProperties = [
 
 node('docker') {
     stage('Clone') {
-        echo 'Cloning from bitbucket'
         git credentialsId: '64c67773-022f-4330-97bc-70201486dd8f', url: 'ssh://bitbucket.transmode.se:7999/nm/xtm-rest-client-all.git'
     }
     stage('Build') {
-        echo 'Building....'
         sh('./gradlew clean build -x test -x IntegrationTest')
     }
     stage('Test') {
-        echo 'Running unit tests....'
         sh('./gradlew test')
         junit allowEmptyResults: true, testResults: '**/build/test-results/TEST-*.xml'
     }
-    stage('Clean up docker environment') {
-        echo 'Clean up docker environment....'
-        sh('chmod +x scripts/docker_clean_up.sh')
-        sh('./scripts/docker_clean_up.sh')
-    }
+//    stage('Clean up docker environment') {
+//        sh('chmod +x scripts/docker_clean_up.sh')
+//        sh('./scripts/docker_clean_up.sh')
+//    }
     stage('Integration Test') {
-        echo 'Running integration tests....'
         sh('./gradlew IntegrationTest')
         junit allowEmptyResults: true, testResults: '**/build/test-results/INTEGRATION_TEST-*.xml'
     }

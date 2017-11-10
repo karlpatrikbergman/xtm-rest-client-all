@@ -5,25 +5,6 @@ services:
     image: se-artif-prd.infinera.com/tm3k/trunk-hostenv:29.0
     container_name: nodeA
     privileged: true
-    networks:
-      node_connect_test_network:
-        ipv4_address: 172.45.0.101
     ports:
       - 80
     hostname: nodeA
-  nodeZ:
-    image: se-artif-prd.infinera.com/tm3k/trunk-hostenv:29.0
-    container_name: nodeZ
-    privileged: true
-    networks:
-      node_connect_test_network:
-        ipv4_address: 172.45.0.102
-    ports:
-      - 80
-    hostname: nodeZ
-networks:
-  node_connect_test_network:
-    driver: bridge
-    ipam:
-      config:
-      - subnet: 172.45.0.0/24 # Allows for 255 addresses

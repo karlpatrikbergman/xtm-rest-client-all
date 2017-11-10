@@ -6,30 +6,32 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.ClassRule;
 import org.junit.Test;
 
+import java.io.IOException;
+
 import static com.infinera.metro.dnam.acceptance.test.node.RestTemplateFactory.REST_TEMPLATE_FACTORY;
 import static org.junit.Assert.assertNotEquals;
 
 @Slf4j
 public class NodeConnectionTest {
-    private final String nodeIpAddress = "172.45.0.101";
-    private final NodeConnection nodeConnection = new NodeConnection(
-        NodeAccessData.builder()
-            .ipAddress(nodeIpAddress)
-            .port(80)
-            .userName("root")
-            .password("root")
-            .build(),
-        REST_TEMPLATE_FACTORY.createRestTemplate()
-    );
 
     @ClassRule
-    public static DockerComposeRule docker = DockerComposeRule.builder()
+    public static DockerComposeRule dockerComposeRule = DockerComposeRule.builder()
         .file("src/integrationTest/resources/node-connection-test/docker-compose.yml")
         .waitingForService("nodeA", HealthChecks.toHaveAllPortsOpen())
         .build();
 
     @Test
-    public void loginAndSetSessionId() {
+    public void loginAndSetSessionId() throws IOException {
+        DockerUtil dockerUtil = DockerUtil.DOCKER_UTIL;
+        final String nodeIpAddress = dockerUtil.getContainerIpAddress(dockerComposeRule, "nodeA");
+        final NodeConnection nodeConnection = new NodeConnection(
+            NodeAccessData.builder()
+                .ipAddress(nodeIpAddress)
+                .port(80)
+                .userName("root")
+                .password("root")
+                .build(),
+            REST_TEMPLATE_FACTORY.createRestTemplate());
         nodeConnection.loginAndSetSessionId();
         assertNotEquals(0, nodeConnection.getSessionId());
     }

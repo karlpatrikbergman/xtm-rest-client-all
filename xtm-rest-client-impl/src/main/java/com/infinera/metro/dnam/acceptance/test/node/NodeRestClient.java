@@ -39,7 +39,7 @@ class NodeRestClient {
         final String all = mibPathAndCommand + "?" + flags + colon + parameters;
 
         int attempts = 0;
-        while(attempts++ < 4) {
+        while(attempts++ < 6) {
             try  {
                 ResponseEntity<String> responseEntity = nodeConnection.performRestAction(all);
 

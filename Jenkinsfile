@@ -17,17 +17,14 @@ node('docker') {
         }
     }
     finally {
-        //junit allowEmptyResults: true, testResults: '**/build/test-results/TEST-*.xml'
         junit '**/build/test-results/test/TEST-*.xml'
     }
     try {
         stage('Integration Test') {
             sh('./gradlew IntegrationTest')
-            junit 'build/reports/**/*.xml'
         }
     }
     finally {
-        //junit allowEmptyResults: true, testResults: '**/build/test-results/TEST-*.xml'
         junit '**/build/test-results/integrationTest/TEST-*.xml'
     }
     stage('Publish') {

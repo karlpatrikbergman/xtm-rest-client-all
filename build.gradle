@@ -1,15 +1,17 @@
-def spring_version = "4.3.8.RELEASE"
-def jackson_version = "2.9.0.pr2"
-def docker_compose_rule_version = "0.32.0"
-def slf4j_version = "1.7.25"
-def guava_version = "23.0"
-def lombok_version = "1.16.18"
-def jackson_data_format_yaml_version = "2.9.1"
-def http_client_version = "4.5.3"
-def docker_client_version = "8.9.1"
-def stringtemplate_version = "4.0.2"
-def junit_version = "4.12"
-def commons_lang3_version = "3.6"
+ext {
+    spring_version = "4.3.8.RELEASE"
+    jackson_version = "2.9.0.pr2"
+    docker_compose_rule_version = "0.33.0"
+    slf4j_version = "1.7.25"
+    guava_version = "23.0"
+    lombok_version = "1.16.18"
+    jackson_data_format_yaml_version = "2.9.1"
+    http_client_version = "4.5.3"
+    docker_client_version = "8.9.1"
+    stringtemplate_version = "4.0.2"
+    junit_version = "4.12"
+    commons_lang3_version = "3.6"
+}
 
 buildscript {
     repositories {

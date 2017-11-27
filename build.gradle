@@ -133,7 +133,6 @@ project(':xtm-rest-client-impl') {
         compile "org.antlr:stringtemplate:${stringtemplate_version}"
         compile "com.fasterxml.jackson.core:jackson-annotations:${jackson_version}"
         compile "com.fasterxml.jackson.core:jackson-databind:${jackson_version}"
-        compile "com.palantir.docker.compose:docker-compose-rule-junit4:${docker_compose_rule_version}"
         compile "com.spotify:docker-client:${docker_client_version}"
     }
 }
@@ -144,6 +143,7 @@ project(':xtm-rest-client-common') {
         compile "com.fasterxml.jackson.core:jackson-databind:${jackson_version}"
         compile "org.springframework:spring-core:${spring_version}"
         compile "junit:junit:${junit_version}"
+        compile "com.palantir.docker.compose:docker-compose-rule-junit4:${docker_compose_rule_version}"
     }
 }
 

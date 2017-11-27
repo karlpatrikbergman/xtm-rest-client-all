@@ -1,5 +1,6 @@
 package com.infinera.metro.dnam.acceptance.test.node;
 
+import com.infinera.metro.dnam.acceptance.test.docker.DockerUtil;
 import com.infinera.metro.dnam.acceptance.test.node.mib.Attribute;
 import com.infinera.metro.dnam.acceptance.test.node.mib.Attributes;
 import com.infinera.metro.dnam.acceptance.test.node.mib.MpoIdentifier;

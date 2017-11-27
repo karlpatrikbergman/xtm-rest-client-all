@@ -1,5 +1,6 @@
 package com.infinera.metro.dnam.acceptance.test.node;
 
+import com.infinera.metro.dnam.acceptance.test.docker.DockerUtil;
 import com.palantir.docker.compose.DockerComposeRule;
 import com.palantir.docker.compose.connection.waiting.HealthChecks;
 import lombok.extern.slf4j.Slf4j;

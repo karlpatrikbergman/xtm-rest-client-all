@@ -1,4 +1,4 @@
-package com.infinera.metro.dnam.acceptance.test.node;
+package com.infinera.metro.dnam.acceptance.test.docker;
 
 import com.palantir.docker.compose.DockerComposeRule;
 import org.apache.commons.io.IOUtils;

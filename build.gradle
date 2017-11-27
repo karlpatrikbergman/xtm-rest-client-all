@@ -7,7 +7,7 @@ ext {
     lombok_version = "1.16.18"
     jackson_data_format_yaml_version = "2.9.1"
     http_client_version = "4.5.3"
-    docker_client_version = "8.9.1"
+    docker_client_version = "8.9.2"
     stringtemplate_version = "4.0.2"
     junit_version = "4.12"
     commons_lang3_version = "3.6"

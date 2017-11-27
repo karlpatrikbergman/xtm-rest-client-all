@@ -25,13 +25,13 @@ public enum XtmDockerRunner {
         try {
             final String xtmDockerImage = "se-artif-prd.infinera.com/tm3k/trunk-hostenv";
             final String xtmDockerImageAndVersion = xtmDockerImage.concat(":").concat(xtmVersion);
-            dockerClient.pull(xtmDockerImageAndVersion);
+//            dockerClient.pull(xtmDockerImageAndVersion);
             final HostConfig hostConfig = HostConfig.builder()
                     .privileged(Boolean.TRUE)
                     .build();
             final ContainerConfig containerConfig = ContainerConfig.builder()
                     .hostConfig(hostConfig)
-                    .env("DEMO=true", "NOSIM=1")
+//                    .env("DEMO=true", "NOSIM=1")
                     .attachStdin(Boolean.TRUE)
                     .attachStderr(Boolean.TRUE)
                     .tty(Boolean.TRUE)

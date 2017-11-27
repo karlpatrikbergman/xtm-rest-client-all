@@ -1,6 +1,6 @@
 package com.infinera.metro.dnam.acceptance.test.node;
 
-import com.infinera.metro.dnam.acceptance.test.docker.DockerUtil;
+import com.infinera.metro.dnam.acceptance.test.docker.DockerUtil2;
 import com.infinera.metro.dnam.acceptance.test.node.mib.Attribute;
 import com.infinera.metro.dnam.acceptance.test.node.mib.Attributes;
 import com.infinera.metro.dnam.acceptance.test.node.mib.MpoIdentifier;
@@ -33,9 +33,9 @@ public class NodeImplSmokeTest extends DefaultXtmNodesSetupUtilizer {
     private final String ipAddressNodeZ;
 
     public NodeImplSmokeTest() throws IOException {
-        DockerUtil dockerUtil = DockerUtil.DOCKER_UTIL;
-        ipAddressNodeA = dockerUtil.getContainerIpAddress(dockerComposeRule, "nodeA");
-        ipAddressNodeZ = dockerUtil.getContainerIpAddress(dockerComposeRule, "nodeZ");
+        DockerUtil2 dockerUtil2 = DockerUtil2.DOCKER_UTIL;
+        ipAddressNodeA = dockerUtil2.getContainerIpAddress(dockerComposeRule, "nodeA");
+        ipAddressNodeZ = dockerUtil2.getContainerIpAddress(dockerComposeRule, "nodeZ");
     }
 
     @Test

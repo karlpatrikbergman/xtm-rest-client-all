@@ -1,6 +1,6 @@
 package com.infinera.metro.dnam.acceptance.test.node;
 
-import com.infinera.metro.dnam.acceptance.test.docker.DockerUtil;
+import com.infinera.metro.dnam.acceptance.test.docker.DockerUtil2;
 import com.palantir.docker.compose.DockerComposeRule;
 import com.palantir.docker.compose.connection.waiting.HealthChecks;
 import lombok.extern.slf4j.Slf4j;
@@ -23,8 +23,8 @@ public class NodeConnectionTest {
 
     @Test
     public void loginAndSetSessionId() throws IOException {
-        DockerUtil dockerUtil = DockerUtil.DOCKER_UTIL;
-        final String nodeIpAddress = dockerUtil.getContainerIpAddress(dockerComposeRule, "nodeA");
+        DockerUtil2 dockerUtil2 = DockerUtil2.DOCKER_UTIL;
+        final String nodeIpAddress = dockerUtil2.getContainerIpAddress(dockerComposeRule, "nodeA");
         final NodeConnection nodeConnection = new NodeConnection(
             NodeAccessData.builder()
                 .ipAddress(nodeIpAddress)

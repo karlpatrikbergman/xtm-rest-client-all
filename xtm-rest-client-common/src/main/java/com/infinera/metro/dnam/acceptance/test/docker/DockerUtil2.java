@@ -8,8 +8,8 @@ import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 
 
-//TODO: Check (new) dnam-functional-acceptance-tests an replace docker-rule with docker-client
-public enum DockerUtil {
+//TODO: Merge with DockerUtil in dnam-functional-acceptance-tests
+public enum DockerUtil2 {
     DOCKER_UTIL;
 
     public String getContainerIpAddress(DockerComposeRule dockerComposeRule, String nodeName) throws IOException {

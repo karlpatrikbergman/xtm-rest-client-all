@@ -50,24 +50,21 @@ pipeline {
             }
 
         }
-//        stage('Integration test') {
-//            agent {
-//                docker {
-//                    label 'docker'
-//                    image 'se-artif-prd.infinera.com/gradle:4.3.1'
-//                }
-//            }
-//            steps {
-//                unstash 'assemble'
-//                sh 'gradle integrationTest -x test'
-//            }
-//            post {
-//                always {
-//                    junit '**/build/test-results/integrationTest/TEST-*.xml'
-//                    cleanWs()
-//                }
-//            }
-//        }
+        stage('Integration test') {
+            agent {
+                label 'docker'
+            }
+            steps {
+                unstash 'assemble'
+                sh 'gradle integrationTest -x test'
+            }
+            post {
+                always {
+                    junit '**/build/test-results/integrationTest/TEST-*.xml'
+                    cleanWs()
+                }
+            }
+        }
         stage('Publish') {
             agent {
                 docker {

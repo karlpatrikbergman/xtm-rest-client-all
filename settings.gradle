@@ -4,3 +4,4 @@ include 'xtm-rest-client-common'
 include 'xtm-rest-client-configuration'
 include 'xtm-docker-runner'
 
+includeBuild '../toolbox'

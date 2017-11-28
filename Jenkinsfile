@@ -6,7 +6,9 @@ def projectProperties = [
 
 node('docker') {
     stage('Clone') {
-        git credentialsId: '64c67773-022f-4330-97bc-70201486dd8f', url: 'ssh://bitbucket.transmode.se:7999/nm/xtm-rest-client-all.git'
+        checkout scm
+//        git credentialsId: '64c67773-022f-4330-97bc-70201486dd8f', url: 'ssh://bitbucket.transmode.se:7999/nm/xtm-rest-client-all.git'
+        //se-bitbucket.infinera.com/scm/bitbucket/nm/xtm-rest-client-all.git
 //        git credentialsId: '64c67773-022f-4330-97bc-70201486dd8f', url: 'ssh://bitbucket.infinera.com/scm/nm/xtm-rest-client-all.git'
     }
     stage('Build') {
@@ -29,11 +31,12 @@ node('docker') {
         junit '**/build/test-results/integrationTest/TEST-*.xml'
     }
     stage('Publish') {
-        sh('git rev-parse HEAD > GIT_COMMIT')
-        git_commit = readFile('GIT_COMMIT')
-        short_commit = git_commit.take(7)
-        sh("echo short git commit hash: ${short_commit}")
-        echo 'Publishing to Artifactory...'
-        sh("./gradlew artifactoryPublish -PpartOfLatestCommitHash=${short_commit}")
+//        sh('git rev-parse HEAD > GIT_COMMIT')
+//        git_commit = readFile('GIT_COMMIT')
+//        short_commit = git_commit.take(7)
+//        sh("echo short git commit hash: ${short_commit}")
+//        echo 'Publishing to Artifactory...'
+//        sh("./gradlew artifactoryPublish -PpartOfLatestCommitHash=${short_commit}")
+        sh("./gradlew artifactoryPublish -PpartOfLatestCommitHash=999")
     }
 }

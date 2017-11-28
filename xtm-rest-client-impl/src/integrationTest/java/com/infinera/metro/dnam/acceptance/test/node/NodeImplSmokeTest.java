@@ -1,12 +1,13 @@
 package com.infinera.metro.dnam.acceptance.test.node;
 
-import com.infinera.metro.dnam.acceptance.test.docker.DockerUtil2;
+
 import com.infinera.metro.dnam.acceptance.test.node.mib.Attribute;
 import com.infinera.metro.dnam.acceptance.test.node.mib.Attributes;
 import com.infinera.metro.dnam.acceptance.test.node.mib.MpoIdentifier;
 import com.infinera.metro.dnam.acceptance.test.node.mib.OperationType;
 import com.infinera.metro.dnam.acceptance.test.node.mib.entry.*;
 import com.infinera.metro.dnam.acceptance.test.node.mib.type.*;
+import com.infinera.metro.networkmanager.tools.docker.DockerUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -33,9 +34,9 @@ public class NodeImplSmokeTest extends DefaultXtmNodesSetupUtilizer {
     private final String ipAddressNodeZ;
 
     public NodeImplSmokeTest() throws IOException {
-        DockerUtil2 dockerUtil2 = DockerUtil2.DOCKER_UTIL;
-        ipAddressNodeA = dockerUtil2.getContainerIpAddress(dockerComposeRule, "nodeA");
-        ipAddressNodeZ = dockerUtil2.getContainerIpAddress(dockerComposeRule, "nodeZ");
+        DockerUtil dockerUtil = DockerUtil.DOCKER_UTIL;
+        ipAddressNodeA = dockerUtil.getContainerIpAddress(dockerComposeRule, "nodeA");
+        ipAddressNodeZ = dockerUtil.getContainerIpAddress(dockerComposeRule, "nodeZ");
     }
 
     @Test

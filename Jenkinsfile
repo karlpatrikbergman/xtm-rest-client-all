@@ -6,7 +6,8 @@ def projectProperties = [
 
 node('docker') {
     stage('Clone') {
-        git credentialsId: '64c67773-022f-4330-97bc-70201486dd8f', url: 'ssh://bitbucket.transmode.se:7999/nm/xtm-rest-client-all.git'
+//        git credentialsId: '64c67773-022f-4330-97bc-70201486dd8f', url: 'ssh://bitbucket.transmode.se:7999/nm/xtm-rest-client-all.git'
+        git credentialsId: '64c67773-022f-4330-97bc-70201486dd8f', url: 'ssh://bitbucket.infinera.com/scm/nm/xtm-rest-client-all.git'
     }
     stage('Build') {
         sh('./gradlew clean build -x test -x IntegrationTest')

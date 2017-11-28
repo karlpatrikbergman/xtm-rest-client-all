@@ -4,9 +4,8 @@ def projectProperties = [
         [$class: 'BuildDiscarderProperty', strategy: [$class: 'LogRotator', numToKeepStr: '10']],
 ]
 
-node('docker') {
+node('infinera') {
     stage('Clone') {
-        label 'infinera'
         checkout scm
     }
     stage('Build') {

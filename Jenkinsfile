@@ -28,12 +28,11 @@ node('infinera') {
         junit '**/build/test-results/integrationTest/TEST-*.xml'
     }
     stage('Publish') {
-//        sh('git rev-parse HEAD > GIT_COMMIT')
-//        git_commit = readFile('GIT_COMMIT')
-//        short_commit = git_commit.take(7)
-//        sh("echo short git commit hash: ${short_commit}")
-//        echo 'Publishing to Artifactory...'
-//        sh("./gradlew artifactoryPublish -PpartOfLatestCommitHash=${short_commit}")
-        sh("./gradlew artifactoryPublish -PpartOfLatestCommitHash=999")
+        sh('git rev-parse HEAD > GIT_COMMIT')
+        git_commit = readFile('GIT_COMMIT')
+        short_commit = git_commit.take(7)
+        sh("echo short git commit hash: ${short_commit}")
+        echo 'Publishing to Artifactory...'
+        sh("./gradlew artifactoryPublish -PpartOfLatestCommitHash=${short_commit}")
     }
 }

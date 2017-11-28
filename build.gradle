@@ -128,7 +128,7 @@ project(':xtm-rest-client-impl') {
 
     dependencies {
         compile project(':xtm-rest-client-common')
-//        compile "com.infinera.metro.networkmanagment.tools:toolbox:1.0"
+        compile "com.infinera.metro.networkmanager.tools:toolbox:1.0.1"
         compile "org.apache.httpcomponents:httpclient:${http_client_version}"
         compile "org.springframework:spring-web:${spring_version}"
         compile "org.antlr:stringtemplate:${stringtemplate_version}"

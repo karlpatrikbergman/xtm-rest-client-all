@@ -103,3 +103,4 @@ xtm-rest-client-impl/src/main/resources/
 /My comments.txt
 /xtm-rest-client.properties
 /xtm-rest-client-usage-example/
+!/Jenkinsfile

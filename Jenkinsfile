@@ -1,38 +1,84 @@
-#!groovy
-
-def projectProperties = [
-        [$class: 'BuildDiscarderProperty', strategy: [$class: 'LogRotator', numToKeepStr: '10']],
-]
-
-node('infinera') {
-    stage('Clone') {
-        checkout scm
+pipeline {
+    agent none
+    triggers {
+        pollSCM('H/5 * * * *')
     }
-    stage('Build') {
-        sh('./gradlew clean build -x test -x IntegrationTest')
+    options {
+        timestamps()
+        buildDiscarder(logRotator(numToKeepStr: '10'))
+        ansiColor('xterm')
+        timeout(time: 1, unit: 'HOURS')
+        skipDefaultCheckout()
     }
-    try {
+    stages {
+        stage('Build') {
+            agent {
+                docker {
+                    label 'docker && infinera'
+                    image 'se-artif-prd.infinera.com/gradle:4.3.1'
+                }
+            }
+            steps {
+                checkout scm
+                stash 'checkout'
+                sh 'gradle assemble'
+                stash 'assemble'
+            }
+            post {
+                always {
+                    cleanWs()
+                }
+            }
+        }
         stage('Test') {
-            sh('./gradlew test')
+            // parallelize unit tests / api tests?
+            agent {
+                docker {
+                    label 'docker'
+                    image 'se-artif-prd.infinera.com/gradle:4.3.1'
+                }
+            }
+            steps {
+                unstash 'assemble'
+                sh 'gradle test'
+            }
+            post {
+                always {
+                    junit '**/build/test-results/test/TEST-*.xml'
+                    cleanWs()
+                }
+            }
+
         }
-    }
-    finally {
-        junit '**/build/test-results/test/TEST-*.xml'
-    }
-    try {
-        stage('Integration Test') {
-            sh('./gradlew IntegrationTest')
+        stage('Integration test') {
+            agent {
+                docker {
+                    label 'docker'
+                    image 'se-artif-prd.infinera.com/gradle:4.3.1'
+                }
+            }
+            steps {
+                unstash 'assemble'
+                sh 'gradle integrationTest -x test'
+            }
+            post {
+                always {
+                    junit '**/build/test-results/integrationTest/TEST-*.xml'
+                    cleanWs()
+                }
+            }
         }
-    }
-    finally {
-        junit '**/build/test-results/integrationTest/TEST-*.xml'
-    }
-    stage('Publish') {
-        sh('git rev-parse HEAD > GIT_COMMIT')
-        git_commit = readFile('GIT_COMMIT')
-        short_commit = git_commit.take(7)
-        sh("echo short git commit hash: ${short_commit}")
-        echo 'Publishing to Artifactory...'
-        sh("./gradlew artifactoryPublish -PpartOfLatestCommitHash=${short_commit}")
+        stage('Publish') {
+            agent {
+                docker {
+                    label 'docker'
+                    image 'se-artif-prd.infinera.com/gradle:4.3.1'
+                }
+            }
+            steps {
+                unstash 'assemble'
+                sh("./gradlew artifactoryPublish -PpartOfLatestCommitHash=1")
+            }
+        }
     }
 }

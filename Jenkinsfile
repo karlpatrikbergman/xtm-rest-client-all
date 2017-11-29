@@ -20,9 +20,10 @@ pipeline {
             }
             steps {
                 checkout scm
-                stash 'checkout', useDefaultExcludes: false
+                stash 'checkout'
+                stash name: 'checkout', useDefaultExcludes: false
                 sh 'gradle assemble'
-                stash 'assemble'
+                stash name: 'assemble', useDefaultExcludes: false
             }
             post {
                 always {

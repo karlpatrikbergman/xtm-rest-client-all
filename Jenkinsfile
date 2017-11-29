@@ -75,7 +75,7 @@ pipeline {
             steps {
                 unstash 'assemble'
                 script {
-                    GIT_COMMIT = sh (script: 'git --no-pager show -s --format=\'%h\'', returnStdout: true).trim()
+                    GIT_COMMIT = sh (script: 'git --no-pager show -s --format=\'%h\'', returnStdout: true).trim().take(7)
                     withEnv(["TAG=1.0.0-$GIT_COMMIT"]) {
                         sh "./gradlew artifactoryPublish -PpartOfLatestCommitHash=1"
                     }

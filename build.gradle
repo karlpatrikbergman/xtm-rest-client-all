@@ -11,6 +11,7 @@ ext {
     stringtemplate_version = "4.0.2"
     junit_version = "4.12"
     commons_lang3_version = "3.6"
+    ext.logbackVersion = '1.2.3'
 }
 
 buildscript {
@@ -105,7 +106,7 @@ subprojects {
 
     dependencies {
         compile "org.slf4j:slf4j-api:${slf4j_version}"
-        compile "org.slf4j:slf4j-simple:${slf4j_version}"
+        compile "ch.qos.logback:logback-classic:${logbackVersion}"
         compile "com.google.guava:guava:${guava_version}"
         compile "org.projectlombok:lombok:${lombok_version}"
         testCompile "junit:junit:${junit_version}"
@@ -128,7 +129,7 @@ project(':xtm-rest-client-impl') {
 
     dependencies {
         compile project(':xtm-rest-client-common')
-        compile "com.infinera.metro.networkmanager.tools:toolbox:1.0.1"
+        compile "com.infinera.metro.networkmanager.tools:toolbox:1.0.61894d0"
         compile "org.apache.httpcomponents:httpclient:${http_client_version}"
         compile "org.springframework:spring-web:${spring_version}"
         compile "org.antlr:stringtemplate:${stringtemplate_version}"

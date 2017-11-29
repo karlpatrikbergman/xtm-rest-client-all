@@ -23,13 +23,6 @@ pipeline {
                 stash 'checkout'
                 sh 'gradle assemble'
                 stash 'assemble'
-                script {
-                    GIT_COMMIT = sh (
-                            script: 'git rev-parse HEAD',
-                            returnStdout: true
-                    ).trim()
-                    echo "GIT_COMMIT: ${GIT_COMMIT}"
-                }
             }
             post {
                 always {
@@ -81,7 +74,12 @@ pipeline {
             }
             steps {
                 unstash 'assemble'
-                sh("./gradlew artifactoryPublish -PpartOfLatestCommitHash=1")
+                script {
+                    GIT_COMMIT = sh (script: 'git --no-pager show -s --format=\'%h\'', returnStdout: true).trim()
+                    withEnv(["TAG=1.0.0-$GIT_COMMIT"]) {
+                        sh "./gradlew artifactoryPublish -PpartOfLatestCommitHash=1"
+                    }
+                }
             }
         }
     }

@@ -35,14 +35,19 @@ public class NodeNetwork {
         applyNodeNetwork(nodesMap);
     }
 
-    /**
-     * Use this method to override NodeAccessData
-     *
-     * @param nodeAccessDataMap
-     */
     public void apply(Map<String, NodeAccessData> nodeAccessDataMap) {
         Map<String, Node> nodesMap = createNodesMapFromNodeAccessDataMap(nodeAccessDataMap);
         applyNodeNetwork(nodesMap);
+    }
+
+    public void delete() {
+        Map<String, Node> nodesMap = createNodesMapFromNodeAccessDataMap(this.nodeAccessDataMap);
+        deleteNodeNetwork(nodesMap);
+    }
+
+    public void delete(Map<String, NodeAccessData> nodeAccessDataMap) {
+        Map<String, Node> nodesMap = createNodesMapFromNodeAccessDataMap(nodeAccessDataMap);
+        deleteNodeNetwork(nodesMap);
     }
 
     private void applyNodeNetwork(Map<String, Node> nodesMap) {
@@ -57,6 +62,10 @@ public class NodeNetwork {
                 (peers, peerConnectionList) -> peerConnectionList.forEach(
                     peerConnection -> peerConnection.applyTo(nodesMap.get(peers.getFromNode()), nodesMap.get(peers.getToNode()))));
         }
+    }
+
+    private void deleteNodeNetwork(Map<String, Node> nodesMap) {
+        nodeEquipmentMap.forEach((nodeName, nodeEquipment) -> nodeEquipment.deleteFrom(nodesMap.get(nodeName)));
     }
 
     private Map<String, Node> createNodesMapFromNodeAccessDataMap(Map<String, NodeAccessData> nodeAccessDataMap) {

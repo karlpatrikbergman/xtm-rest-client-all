@@ -1,6 +1,7 @@
 package com.infinera.metro.dnam.acceptance.test.node.configuration;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.google.common.base.Preconditions;
 import com.infinera.metro.dnam.acceptance.test.node.Node;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.board.Board;
 import lombok.Builder;
@@ -21,11 +22,12 @@ public class NodeEquipment {
     }
 
     public void applyTo(Node node) {
-        assert node != null;
+        Preconditions.checkNotNull(node, "Node cannot be null");
         boards.forEach(board -> board.applyTo(node));
     }
 
-    public void deleteBoards(Node node) {
+    public void deleteFrom(Node node) {
+        Preconditions.checkNotNull(node, "Node cannot be null");
         boards.forEach(board-> board.deleteFrom(node));
     }
 

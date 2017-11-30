@@ -74,6 +74,8 @@ NodeConnection {
         String baseUrl = xtmRestBaseUtil.baseUrl(nodeAccessData.getIpAddress(), nodeAccessData.getPort());
         String url = xtmRestBaseUtil.url(baseUrl, path);
 
+        log.info("Http request: {}", url);
+
         int attempts = 0;
         int maxAttempts = 10;
         RestClientException lastAttemptException = null;

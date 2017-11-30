@@ -29,16 +29,16 @@ import java.util.Optional;
 enum ExpectedTestDataFactory {
     INSTANCE;
 
-    private final NodeNetwork nodeNetwork;
+    private final NodeConfiguration nodeConfiguration;
     private final String NODE_A = "nodeA", NODE_Z = "nodeZ";
     private final Peers FROM_NODEA_TO_NODEZ = Peers.of(NODE_A, NODE_Z), FROM_NODEZ_TO_NODEA = FROM_NODEA_TO_NODEZ.invert();
 
     ExpectedTestDataFactory() {
-        this.nodeNetwork = createNodeNetwork();
+        this.nodeConfiguration = createNodeNetwork();
     }
 
-    NodeNetwork getNodeNetwork() {
-        return this.nodeNetwork;
+    NodeConfiguration getNodeConfiguration() {
+        return this.nodeConfiguration;
     }
 
     Tpd10gbe getTpd10Gbe() {
@@ -51,17 +51,17 @@ enum ExpectedTestDataFactory {
     }
 
     NodeEquipment getNodeEquipment() {
-        return getNodeNetwork().getNodeEquipmentMap().get(NODE_A);
+        return getNodeConfiguration().getNodeEquipmentMap().get(NODE_A);
     }
 
     InternalConnection getInternalConnection() {
-        return getNodeNetwork().getInternalConnectionMap().get(NODE_Z).stream()
+        return getNodeConfiguration().getInternalConnectionMap().get(NODE_Z).stream()
             .findFirst()
             .orElseThrow(() -> new RuntimeException("No " + InternalConnection.class.getSimpleName() + " found"));
     }
 
     PeerConnection getPeerConnection() {
-        return getNodeNetwork().getPeerConnectionMap().get(FROM_NODEA_TO_NODEZ).stream()
+        return getNodeConfiguration().getPeerConnectionMap().get(FROM_NODEA_TO_NODEZ).stream()
             .findFirst()
             .orElseThrow(() -> new RuntimeException("No " + PeerConnection.class.getSimpleName() + " found"));
     }
@@ -70,7 +70,7 @@ enum ExpectedTestDataFactory {
         return getPeerConnection().getLocalPeer();
     }
 
-    private NodeNetwork createNodeNetwork() {
+    private NodeConfiguration createNodeNetwork() {
         final LinePort linePortTx3Rx4 = LinePort.builder()
             .transmitPort(3)
             .receivePort(4)
@@ -128,7 +128,7 @@ enum ExpectedTestDataFactory {
             .remotePeer(mdu40EvenL.getPeer(linePortTx81Rx82.getReceivePort()))
             .build();
 
-        return NodeNetwork.builder()
+        return NodeConfiguration.builder()
             .accessDataForNode(NODE_A, NodeAccessData.createDefault("172.17.0.2"))
             .accessDataForNode(NODE_Z, NodeAccessData.createDefault("172.17.0.3"))
             .nodeEquipmentForNode(NODE_A, tdb10bgeAndMdu40EvenlNodeEquipment)

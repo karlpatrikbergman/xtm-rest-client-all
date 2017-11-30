@@ -14,9 +14,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+/**
+ *
+ * TODO: Is NodeConfiguration a good name really? Mabye NodeConfiguration is better?
+ */
 @Value
 @Builder
-public class NodeNetwork {
+public class NodeConfiguration {
     private final @NonNull
     @Singular("accessDataForNode")
     Map<String, NodeAccessData> nodeAccessDataMap;
@@ -74,5 +78,14 @@ public class NodeNetwork {
                 Map.Entry::getKey,
                 entry -> NodeImpl.create(entry.getValue()))
             );
+    }
+
+    public NodeConfiguration copyUpdate(Map<String, NodeAccessData> nodeAcessDataMap) {
+        return NodeConfiguration.builder()
+            .nodeAccessDataMap(nodeAccessDataMap)
+            .nodeEquipmentMap(this.nodeEquipmentMap)
+            .peerConnectionMap(this.peerConnectionMap)
+            .internalConnectionMap(this.internalConnectionMap)
+            .build();
     }
 }

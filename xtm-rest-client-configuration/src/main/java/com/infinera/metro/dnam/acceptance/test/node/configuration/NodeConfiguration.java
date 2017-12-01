@@ -80,12 +80,15 @@ public class NodeConfiguration {
             );
     }
 
-    public NodeConfiguration copyUpdate(Map<String, NodeAccessData> nodeAcessDataMap) {
-        return NodeConfiguration.builder()
+    public NodeConfiguration copyWithNew(Map<String, NodeAccessData> nodeAccessDataMap) {
+        NodeConfigurationBuilder nodeConfigurationBuilder = NodeConfiguration.builder()
             .nodeAccessDataMap(nodeAccessDataMap)
-            .nodeEquipmentMap(this.nodeEquipmentMap)
-            .peerConnectionMap(this.peerConnectionMap)
-            .internalConnectionMap(this.internalConnectionMap)
-            .build();
+            .nodeEquipmentMap(this.nodeEquipmentMap);
+        if(this.peerConnectionMap != null)
+            nodeConfigurationBuilder.peerConnectionMap(this.peerConnectionMap);
+        if(this.internalConnectionMap != null) {
+            nodeConfigurationBuilder.internalConnectionMap(this.internalConnectionMap);
+        }
+        return nodeConfigurationBuilder.build();
     }
 }

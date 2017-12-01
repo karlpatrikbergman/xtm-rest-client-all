@@ -35,7 +35,6 @@ NodeConnection {
     void loginAndSetSessionId() {
         while(this.sessionId == 0) {
             ResponseEntity<String> loginResponse = login();
-            log.info("loginResponse {}", loginResponse);
             if(SessionIdParser.parseSessionId(loginResponse.getBody()) == 0) {
                 try {
                     log.info("Sleeping for 2 seconds");

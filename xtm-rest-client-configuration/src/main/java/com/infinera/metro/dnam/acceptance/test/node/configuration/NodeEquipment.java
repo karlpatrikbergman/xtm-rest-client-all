@@ -8,17 +8,25 @@ import lombok.Builder;
 import lombok.Singular;
 
 import java.util.List;
-import java.util.Optional;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.MINIMAL_CLASS, include = JsonTypeInfo.As.PROPERTY, property = "@class")
 @Builder
 public class NodeEquipment {
-    @Singular  private final List<Board> boards;
+    @Singular
+    private final List<Board> boards;
 
-    public Optional<Board>getBoard(Subrack subrack, Slot slot) {
+    public Board getBoard(Subrack subrack, Slot slot) {
         return boards.stream()
             .filter(board -> board.getSubrack().equals(subrack) && board.getSlot().equals(slot))
-            .findFirst();
+            .findFirst()
+            .orElseThrow(() -> new RuntimeException("Failed to find board in subrack "
+                .concat(subrack.name())
+                .concat("slot ")
+                .concat(slot.name())));
+    }
+
+    public <T> T getBoard(Subrack subrack, Slot slot, Class<T> clazz) {
+        return clazz.cast(getBoard(subrack, slot));
     }
 
     public void applyTo(Node node) {
@@ -28,7 +36,7 @@ public class NodeEquipment {
 
     public void deleteFrom(Node node) {
         Preconditions.checkNotNull(node, "Node cannot be null");
-        boards.forEach(board-> board.deleteFrom(node));
+        boards.forEach(board -> board.deleteFrom(node));
     }
 
     public List<Board> getBoards() {

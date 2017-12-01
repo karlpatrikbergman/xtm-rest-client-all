@@ -6,7 +6,6 @@ import com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.boar
 import com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.client.ClientPortConfigAttributes;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.client.ClientPortSetAttributes;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.line.LinePortSetAttributes;
-import com.infinera.metro.dnam.acceptance.test.node.configuration.board.Board;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.board.Mdu40EvenL;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.board.Tpd10gbe;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.port.ClientPort;
@@ -17,7 +16,6 @@ import com.infinera.metro.dnam.acceptance.test.node.configuration.topology.PeerC
 
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Optional;
 
 /**
  * This class creates test data for serialization and deserialization tests
@@ -42,12 +40,7 @@ enum ExpectedTestDataFactory {
     }
 
     Tpd10gbe getTpd10Gbe() {
-        Optional<Board> boardOptional = getNodeEquipment().getBoard(Subrack.subrack1, Slot.slot2);
-        if(boardOptional.isPresent() && boardOptional.get() instanceof  Tpd10gbe) {
-            return (Tpd10gbe) boardOptional.get();
-        } else {
-            throw new RuntimeException("No " + Tpd10gbe.class.getSimpleName() + " found");
-        }
+        return getNodeEquipment().getBoard(Subrack.subrack1, Slot.slot2, Tpd10gbe.class);
     }
 
     NodeEquipment getNodeEquipment() {

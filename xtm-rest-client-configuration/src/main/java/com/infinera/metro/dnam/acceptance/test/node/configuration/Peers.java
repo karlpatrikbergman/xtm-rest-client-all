@@ -39,7 +39,6 @@ public class Peers {
     @JsonIgnore
     public Peers invert() {
         return new Peers(this.toNode, this.fromNode);
-
     }
 
     static boolean isValidPeersConstructorStringArgument(String string) {

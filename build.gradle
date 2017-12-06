@@ -1,18 +1,19 @@
 ext {
-    spring_version = "4.3.8.RELEASE"
-    jackson_version = "2.9.0.pr2"
-    docker_compose_rule_version = "0.33.0"
-    slf4j_version = "1.7.25"
-    guava_version = "23.0"
-    lombok_version = "1.16.18"
-    jackson_data_format_yaml_version = "2.9.1"
-    http_client_version = "4.5.3"
-    docker_client_version = "8.9.2"
-    stringtemplate_version = "4.0.2"
-    junit_version = "4.12"
-    commons_lang3_version = "3.6"
+    springVersion = "4.3.8.RELEASE"
+    jacksonVersion = "2.9.0.pr2"
+    dockerComposeRuleVersion = "0.33.0"
+    slf4jVersion = "1.7.25"
+    guavaVersion = "23.0"
+    lombokVersion = "1.16.18"
+    jacksonDataFormatYamlVersion = "2.9.1"
+    httpClientVersion = "4.5.3"
+    dockerClientVersion = "8.9.2"
+    stringTemplateVersion = "4.0.2"
+    junitVersion = "4.12"
+    commonsLang3Version = "3.6"
     logbackVersion = '1.2.3'
     toolboxVersion = "1.0.5649c27"
+    jsoupVersion = "1.11.2"
 
 }
 
@@ -108,11 +109,11 @@ subprojects {
     }
 
     dependencies {
-        compile "org.slf4j:slf4j-api:${slf4j_version}"
+        compile "org.slf4j:slf4j-api:${slf4jVersion}"
         compile "ch.qos.logback:logback-classic:${logbackVersion}"
-        compile "com.google.guava:guava:${guava_version}"
-        compile "org.projectlombok:lombok:${lombok_version}"
-        testCompile "junit:junit:${junit_version}"
+        compile "com.google.guava:guava:${guavaVersion}"
+        compile "org.projectlombok:lombok:${lombokVersion}"
+        testCompile "junit:junit:${junitVersion}"
     }
 }
 
@@ -121,9 +122,9 @@ project(':xtm-rest-client-configuration') {
         compile project(':xtm-rest-client-common')
         compile project(':xtm-rest-client-impl')
         compile project(':xtm-docker-runner')
-        compile "com.fasterxml.jackson.core:jackson-databind:${jackson_version}"
-        compile "org.apache.commons:commons-lang3:${commons_lang3_version}"
-        compile "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:${jackson_data_format_yaml_version}"
+        compile "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}"
+        compile "org.apache.commons:commons-lang3:${commonsLang3Version}"
+        compile "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:${jacksonDataFormatYamlVersion}"
     }
 }
 
@@ -133,28 +134,28 @@ project(':xtm-rest-client-impl') {
     dependencies {
         compile project(':xtm-rest-client-common')
         compile "com.infinera.metro.networkmanager.tools:toolbox:${toolboxVersion}"
-        compile "org.apache.httpcomponents:httpclient:${http_client_version}"
-        compile "org.springframework:spring-web:${spring_version}"
-        compile "org.antlr:stringtemplate:${stringtemplate_version}"
-        compile "com.fasterxml.jackson.core:jackson-annotations:${jackson_version}"
-        compile "com.fasterxml.jackson.core:jackson-databind:${jackson_version}"
-        compile "com.spotify:docker-client:${docker_client_version}"
-        compile "org.jsoup:jsoup:1.11.2"
+        compile "org.apache.httpcomponents:httpclient:${httpClientVersion}"
+        compile "org.springframework:spring-web:${springVersion}"
+        compile "org.antlr:stringtemplate:${stringTemplateVersion}"
+        compile "com.fasterxml.jackson.core:jackson-annotations:${jacksonVersion}"
+        compile "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}"
+        compile "com.spotify:docker-client:${dockerClientVersion}"
+        compile "org.jsoup:jsoup:${jsoupVersion}"
         compile "com.infinera.metro.networkmanager.tools:toolbox:-1.0.5649c27"
     }
 }
 
 project(':xtm-rest-client-common') {
     dependencies {
-        compile "com.fasterxml.jackson.core:jackson-databind:${jackson_version}"
-        compile "org.springframework:spring-core:${spring_version}"
-        compile "junit:junit:${junit_version}"
-        compile "com.palantir.docker.compose:docker-compose-rule-junit4:${docker_compose_rule_version}"
+        compile "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}"
+        compile "org.springframework:spring-core:${springVersion}"
+        compile "junit:junit:${junitVersion}"
+        compile "com.palantir.docker.compose:docker-compose-rule-junit4:${dockerComposeRuleVersion}"
     }
 }
 
 project(':xtm-docker-runner') {
     dependencies {
-        compile "com.spotify:docker-client:${docker_client_version}"
+        compile "com.spotify:docker-client:${dockerClientVersion}"
     }
 }

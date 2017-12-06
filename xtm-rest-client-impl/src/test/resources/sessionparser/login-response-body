@@ -1,0 +1,13 @@
+<form action="" name="sessionForm" method="post">
+  <p>
+  <input type="hidden" name="neUserNodeName" value="" />
+  <input type="hidden" name="sessionId" value="fe644b36a3cc361913c5961fd2010d6d" />
+  <input type="hidden" name="rcText" value='OK' />
+  <input type="hidden" name="rcText2" value='' />
+  <input type="hidden" name="inactivityTimeout" value="3600" />
+  <input type="hidden" name="culess" value="false" />
+  <input type="hidden" name="oldCu" value="false" />
+  <input type="hidden" name="user" value='root' />
+  <input type="hidden" name="profile" value='administrator' />
+  </p>
+</form>

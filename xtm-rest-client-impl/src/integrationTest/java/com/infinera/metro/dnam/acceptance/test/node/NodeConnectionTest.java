@@ -34,6 +34,9 @@ public class NodeConnectionTest {
                 .build(),
             REST_TEMPLATE_FACTORY.createRestTemplate());
         nodeConnection.loginAndSetSessionId();
-        assertNotEquals(0, nodeConnection.getSessionId());
+        String sessionId = nodeConnection.getSessionId();
+        assertNotEquals(null, nodeConnection.getSessionId());
+        assertNotEquals("", nodeConnection.getSessionId());
+        assertNotEquals(SessionIdParser.NODE_IS_STARTING_UP, nodeConnection.getSessionId());
     }
 }

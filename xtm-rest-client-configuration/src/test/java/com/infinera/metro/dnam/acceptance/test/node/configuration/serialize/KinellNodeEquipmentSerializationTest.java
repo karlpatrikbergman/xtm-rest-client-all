@@ -50,7 +50,7 @@
 //        NodeEquipment nodeEquipment = NodeEquipment.builder()
 //                .boards(boards)
 //                .build();
-//        ObjectMapper mapper = ObjectFromFileUtilJackson.INSTANCE.getMapper();
+//        ObjectMapper mapper = ObjectFromFileUtilJackson.SESSION_ID_PARSER.getMapper();
 //
 //        log.info(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(nodeEquipment));
 //    }

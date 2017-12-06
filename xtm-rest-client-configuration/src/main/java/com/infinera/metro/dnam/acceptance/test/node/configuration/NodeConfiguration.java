@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 
 /**
  *
- * TODO: Is NodeConfiguration a good name really? Mabye NodeConfiguration is better?
+ * TODO: Create enums to be used as Map keys (must solve problem with Jackson serialization/deserialization first)
  */
 @Value
 @Builder

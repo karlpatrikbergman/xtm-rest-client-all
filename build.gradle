@@ -11,7 +11,9 @@ ext {
     stringtemplate_version = "4.0.2"
     junit_version = "4.12"
     commons_lang3_version = "3.6"
-    ext.logbackVersion = '1.2.3'
+    logbackVersion = '1.2.3'
+    toolboxVersion = "1.0.5649c27"
+
 }
 
 buildscript {
@@ -62,6 +64,7 @@ subprojects {
             }
         }
     }
+
     publishing {
         publications {
             impl(MavenPublication) {
@@ -129,18 +132,19 @@ project(':xtm-rest-client-impl') {
 
     dependencies {
         compile project(':xtm-rest-client-common')
-        compile "com.infinera.metro.networkmanager.tools:toolbox:1.0.61894d0"
+        compile "com.infinera.metro.networkmanager.tools:toolbox:${toolboxVersion}"
         compile "org.apache.httpcomponents:httpclient:${http_client_version}"
         compile "org.springframework:spring-web:${spring_version}"
         compile "org.antlr:stringtemplate:${stringtemplate_version}"
         compile "com.fasterxml.jackson.core:jackson-annotations:${jackson_version}"
         compile "com.fasterxml.jackson.core:jackson-databind:${jackson_version}"
         compile "com.spotify:docker-client:${docker_client_version}"
+        compile "org.jsoup:jsoup:1.11.2"
+        compile "com.infinera.metro.networkmanager.tools:toolbox:-1.0.5649c27"
     }
 }
 
 project(':xtm-rest-client-common') {
-
     dependencies {
         compile "com.fasterxml.jackson.core:jackson-databind:${jackson_version}"
         compile "org.springframework:spring-core:${spring_version}"

@@ -8,13 +8,16 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.concurrent.TimeUnit;
 
+import static com.infinera.metro.dnam.acceptance.test.node.SessionIdParser.NODE_IS_STARTING_UP;
+import static com.infinera.metro.dnam.acceptance.test.node.SessionIdParser.SESSION_ID_PARSER;
+
 @Slf4j
 class
 NodeConnection {
     private final RestTemplate restTemplate;
     private final NodeAccessData nodeAccessData;
     private final XtmRestBaseUtil xtmRestBaseUtil;
-    private int sessionId;
+    private String sessionId = "";
 
     NodeConnection(NodeAccessData nodeAccessData, RestTemplate restTemplate) {
         this.nodeAccessData = nodeAccessData;
@@ -23,7 +26,7 @@ NodeConnection {
     }
 
     ResponseEntity<String> performRestAction(String mibPath) throws RuntimeException {
-        if(sessionId == 0) {
+        if(sessionId.isEmpty()) {
             loginAndSetSessionId();
         }
         return performHttpGetRequest(mibPath, createHttpEntityWithSessionId());
@@ -33,9 +36,9 @@ NodeConnection {
      * * TODO: Implement back-off policy and max nr of attempts
      */
     void loginAndSetSessionId() {
-        while(this.sessionId == 0) {
+        while(sessionId.isEmpty()) {
             ResponseEntity<String> loginResponse = login();
-            if(SessionIdParser.parseSessionId(loginResponse.getBody()) == 0) {
+            if(SESSION_ID_PARSER.parseSessionId(loginResponse.getBody()) == NODE_IS_STARTING_UP) {
                 try {
                     log.info("Sleeping for 2 seconds");
                     TimeUnit.SECONDS.sleep(2);
@@ -43,12 +46,12 @@ NodeConnection {
                     log.error(e.getMessage());
                 }
             } else {
-                this.sessionId = SessionIdParser.parseSessionId(loginResponse.getBody());
+                this.sessionId = SESSION_ID_PARSER.parseSessionId(loginResponse.getBody());
             }
         }
     }
 
-    int getSessionId() {
+    String getSessionId() {
         return this.sessionId;
     }
 
@@ -72,9 +75,6 @@ NodeConnection {
     private ResponseEntity<String> performHttpGetRequest(String path, HttpEntity httpEntity) throws RuntimeException {
         String baseUrl = xtmRestBaseUtil.baseUrl(nodeAccessData.getIpAddress(), nodeAccessData.getPort());
         String url = xtmRestBaseUtil.url(baseUrl, path);
-
-        log.info("Http request: {}", url);
-
         int attempts = 0;
         int maxAttempts = 10;
         RestClientException lastAttemptException = null;

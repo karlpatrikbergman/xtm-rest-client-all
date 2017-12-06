@@ -1,0 +1,12 @@
+<form action="" name="sessionForm" method="post">
+  <p>
+  <input type="hidden" name="neUserNodeName" value="" />
+  <input type="hidden" name="sessionId" value="(null)" />
+  <input type="hidden" name="rcText" value='NOK' />
+  <input type="hidden" name="rcText2" value='The node is starting up. Please wait and try to login later.' />
+  <input type="hidden" name="inactivityTimeout" value="3600" />
+  <input type="hidden" name="culess" value="false" />
+  <input type="hidden" name="oldCu" value="false" />
+  <input type="hidden" name="user" value='root' />
+  </p>
+</form>

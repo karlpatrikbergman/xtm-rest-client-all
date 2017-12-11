@@ -25,7 +25,6 @@ interface LinePortBoard extends Board {
             .build();
     }
 
-
     List<LinePort> getLinePorts();
     LinePortEntry.LinePortEntryBuilder getLinePortEntryBuilder();
 }

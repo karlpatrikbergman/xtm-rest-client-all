@@ -22,7 +22,8 @@ public enum BoardType implements MibType {
     OIUC50100("oiuc50100"),
     FXP400GOTN("fxp400gotn"),
     AD4EVEN50("ad4even50"),
-    OCU2("ocu2");
+    OCU2("ocu2"),
+    TPDDGBE("tpddgbe");
 //    TP10G("tp10g"),
 //    OCM2P("oa2x17dBm"),
 //    OIUC50100("oiuc50100");

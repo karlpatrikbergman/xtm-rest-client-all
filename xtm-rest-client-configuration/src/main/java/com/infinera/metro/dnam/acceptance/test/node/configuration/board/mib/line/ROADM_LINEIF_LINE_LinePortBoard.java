@@ -1,8 +1,9 @@
-package com.infinera.metro.dnam.acceptance.test.node.configuration.board;
+package com.infinera.metro.dnam.acceptance.test.node.configuration.board.mib.line;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.Slot;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.Subrack;
+import com.infinera.metro.dnam.acceptance.test.node.configuration.board.LinePortBoard;
 import com.infinera.metro.dnam.acceptance.test.node.mib.entry.LinePortEntry;
 import com.infinera.metro.dnam.acceptance.test.node.mib.type.GroupOrTableType;
 import com.infinera.metro.dnam.acceptance.test.node.mib.type.LinePortType;

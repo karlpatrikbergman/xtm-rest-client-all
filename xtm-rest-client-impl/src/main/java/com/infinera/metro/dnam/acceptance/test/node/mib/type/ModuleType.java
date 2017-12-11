@@ -14,7 +14,9 @@ public enum ModuleType implements MibType {
     CLIENT("client"),
     TOPO("topo"),
     ROADM("roadm"),
-    OA("oa");
+    OA("oa"),
+    MUX("mux"),
+    MRT("mrt");
 
     private final String value;
 

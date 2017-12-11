@@ -1,5 +1,6 @@
 package com.infinera.metro.dnam.acceptance.test.node.configuration.board;
 
+import com.infinera.metro.dnam.acceptance.test.node.Node;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.Slot;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.Subrack;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.board.BoardAttributes;
@@ -16,7 +17,7 @@ import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
 @Getter(AccessLevel.PUBLIC)
-abstract class AbstractClientAndLinePortBoard extends AbstractBoard {
+abstract class AbstractClientAndLinePortBoard extends AbstractBoard implements ClientPortBoard, LinePortBoard{
     private final List<ClientPort> clientPorts;
     private final List<LinePort> linePorts;
 
@@ -34,5 +35,12 @@ abstract class AbstractClientAndLinePortBoard extends AbstractBoard {
             .port(port)
             .build();
 
+    }
+
+    @Override
+    public void applyTo(Node node) throws RuntimeException {
+        super.applyTo(node);
+        configureLinePorts(node);
+        configureClientPorts(node);
     }
 }

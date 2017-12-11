@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public enum LinePortType implements MibType {
-    WDM("wdm"), LINE("line");
+    WDM("wdm"), LINE("line"), MUX("mux");
 
     private final String value;
 

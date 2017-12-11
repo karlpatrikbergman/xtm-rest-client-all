@@ -13,18 +13,11 @@ import lombok.Singular;
 
 import java.util.List;
 
-public class Tpddgbe extends AbstractClientAndLinePortBoard implements WDM_IF_WDM_LinePortBoard, CLIENT_IF_CLIENT_ClientPortBoard {
+public class Gxp2500Sfp extends AbstractClientAndLinePortBoard implements WDM_IF_WDM_LinePortBoard, CLIENT_IF_CLIENT_ClientPortBoard {
 
     @Builder
     @java.beans.ConstructorProperties({"subrack", "slot", "boardAttributes", "clientPorts", "linePorts"})
-    private Tpddgbe(Subrack subrack, Slot slot, @Singular List<BoardAttributes> boardAttributes, @Singular  List<ClientPort> clientPorts, @Singular List<LinePort> linePorts) {
-        super(BoardType.TPDDGBE, subrack, slot, boardAttributes, clientPorts, linePorts);
+    private Gxp2500Sfp(Subrack subrack, Slot slot, @Singular List<BoardAttributes> boardAttributes, @Singular List<ClientPort> clientPorts, @Singular List<LinePort> linePorts) {
+        super(BoardType.GXP2500SFP, subrack, slot, boardAttributes, clientPorts, linePorts);
     }
-
-//    @Override
-//    public void applyTo(Node node) throws RuntimeException {
-//        super.applyTo(node);
-//        configureClientPorts(node);
-//        configureLinePorts(node);
-//    }
 }

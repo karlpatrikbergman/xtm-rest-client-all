@@ -11,7 +11,7 @@ public class LinePortConfigAttributes implements LinePortAttributes {
     private Attributes linePortConfigAttributes;
 
     public void applyTo(Node node, LinePortEntry linePortEntry) {
-        node.setLinePortAttributes(linePortEntry, linePortConfigAttributes);
+        node.configureLinePortAttributes(linePortEntry, linePortConfigAttributes);
     }
 
     public static LinePortConfigAttributes of(Attributes attributes) {

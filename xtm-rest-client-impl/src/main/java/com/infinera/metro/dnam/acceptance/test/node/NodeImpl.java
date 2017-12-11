@@ -77,6 +77,11 @@ public class NodeImpl implements Node {
     }
 
     @Override
+    public AnswerObjects configureLinePortAttributes(LinePortEntry linePortEntry, Attributes attributes) throws RuntimeException {
+        return nodeRestClient.performRestAction(linePortEntry, CommandType.CONFIGURE_JSON, attributes);
+    }
+
+    @Override
     public AnswerObjects getLinePortAttributes(LinePortEntry linePortEntry, Attributes attributes) throws RuntimeException {
         return nodeRestClient.performRestAction(linePortEntry, CommandType.GET_JSON, attributes);
     }

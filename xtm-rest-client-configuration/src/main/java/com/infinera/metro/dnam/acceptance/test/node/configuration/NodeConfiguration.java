@@ -1,8 +1,10 @@
 package com.infinera.metro.dnam.acceptance.test.node.configuration;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.infinera.metro.dnam.acceptance.test.node.Node;
 import com.infinera.metro.dnam.acceptance.test.node.NodeAccessData;
 import com.infinera.metro.dnam.acceptance.test.node.NodeImpl;
+import com.infinera.metro.dnam.acceptance.test.node.configuration.serializedeserialize.ObjectFromFileUtilJackson;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.topology.InternalConnection;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.topology.PeerConnection;
 import lombok.Builder;
@@ -10,6 +12,9 @@ import lombok.NonNull;
 import lombok.Singular;
 import lombok.Value;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -90,5 +95,11 @@ public class NodeConfiguration {
             nodeConfigurationBuilder.internalConnectionMap(this.internalConnectionMap);
         }
         return nodeConfigurationBuilder.build();
+    }
+
+    public void writeToFile(String path) throws IOException {
+        final ObjectMapper mapper = ObjectFromFileUtilJackson.INSTANCE.getMapper();
+        final String serializedObject = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(this).trim();
+        Files.write(Paths.get(path), serializedObject.getBytes());
     }
 }

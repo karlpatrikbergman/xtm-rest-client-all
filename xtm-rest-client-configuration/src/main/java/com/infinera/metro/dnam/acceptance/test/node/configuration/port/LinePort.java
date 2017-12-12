@@ -1,7 +1,10 @@
 package com.infinera.metro.dnam.acceptance.test.node.configuration.port;
 
 import com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.line.LinePortAttributes;
-import lombok.*;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.Singular;
+import lombok.Value;
 
 import java.util.List;
 
